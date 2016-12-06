@@ -1,0 +1,21 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>SoundProv</title>
+    <meta charset="utf-8">
+    <script src="test.js"></script>
+  </head>
+
+  <body onload="init()">
+    <div class="sound-box" id="sb1" onclick="playSound(this)" style="background-color: orange;">Hello World!</div>
+    <form action="/file-upload" class="dropzone" id="my-awesome-dropzone"></form>
+    <!-- Include Buzz for audio processing-->
+    <script src="js/howler.min.js"></script>
+    <!-- Include Dropzone for drag n' drop -->
+    <script src="js/dropzone-4.3.0/dropzone.min.js"></script>
+    <!-- Include wavesurfer for waveforms -->
+    <script src="js/wavesurfer/wavesurfer.js"></script>
+  </body>
+
+</html>
