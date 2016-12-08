@@ -1,3 +1,6 @@
+var wavesurfer;
+const holder = document.getElementById('holder');
+
 function init(){
 
 
@@ -5,21 +8,13 @@ function init(){
 }
 
 function playSound(box){
-
-  var mySound = new Howl({
-    src: [box.innerHTML],
-    preload: true,
-    autoplay: false,
-    loop: false
-  });
-
   mySound.play();
+  wavesurfer.playPause();
 }
 
 /*******************************
 **** Drag and Drop new audio ***
 *******************************/
-const holder = document.getElementById('holder');
 holder.ondragover = () => {
   return false;
 }
@@ -27,10 +22,15 @@ holder.ondragleave = holder.ondragend = () => {
   return false;
 }
 holder.ondrop = (e) => {
-  e.preventDefault()
+  e.preventDefault();
   for (let f of e.dataTransfer.files) {
-    holder.textContent = f.path;
-    console.log('File(s) you dragged here: ', f.path)
+    holder.textContent = f.name;
+    wavesurfer = WaveSurfer.create({
+      container: '#waveform',
+      waveColor: 'blue',
+      progressColor: 'purple'
+    });
+    wavesurfer.load(f.path);
   }
   return false;
 }

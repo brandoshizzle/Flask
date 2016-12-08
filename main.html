@@ -9,16 +9,17 @@
   </head>
 
   <body onload="init()">
-    <div class="sound-box" id="sb1" onclick="playSound(this)" style="background-color: orange;">Hello World!</div>
+    <div id="waveform" width=100%></div>
 
     <div id="holder" style="background-color: yellow; height: 300px; width: 300px; margin: 100px;" onclick="playSound(this)">
       Drag your file here
     </div>
 
+
     <!-- Main JS script -->
     <script src="main.js"></script>
-    <!-- Include Buzz for audio processing-->
-    <script src="js/howler.min.js"></script>
+    <!-- Include Howler for audio processing
+    <script src="js/howler.min.js"></script>-->
     <!-- Include wavesurfer for waveforms -->
     <script src="js/wavesurfer/wavesurfer.js"></script>
   </body>
