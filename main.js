@@ -3,12 +3,9 @@ const holder = document.getElementById('holder');
 
 function init(){
 
-
-
 }
 
 function playSound(box){
-  mySound.play();
   wavesurfer.playPause();
 }
 
