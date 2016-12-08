@@ -8,5 +8,5 @@ app.on('ready', function(){
     height: 600
   });
   win.loadURL('file://' + __dirname + '/main.html');
-  win.openDevTools();
+  //win.openDevTools();
 })

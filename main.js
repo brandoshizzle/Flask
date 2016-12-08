@@ -1,5 +1,5 @@
 var wavesurfer;
-const holder = document.getElementById('holder');
+var keys = $('.btn-key');
 
 function init(){
   // Create wavesurfer instance
@@ -12,25 +12,27 @@ function init(){
   wavesurfer.empty();
 
 }
-
-function playSound(box){
+/**
+* Click on button, play/pause audio
+**/
+$(document).on('click', keys, function(){
   wavesurfer.playPause();
-}
+});
 
-/*******************************
-**** Drag and Drop new audio ***
-*******************************/
-holder.ondragover = () => {
+/**
+* Drag and Drop Audio onto keys
+**/
+$(document).on('dragover', keys, function() {
   return false;
-}
-holder.ondragleave = holder.ondragend = () => {
+});
+$(document).on('dragleave', keys,function(){
   return false;
-}
-holder.ondrop = (e) => {
-  e.preventDefault();
-  for (let f of e.dataTransfer.files) {
-    holder.textContent = f.name;
+});
+$(document).on('drop', keys, function(e){
+  e.originalEvent.preventDefault();
+  for (let f of e.originalEvent.dataTransfer.files) {
+    document.getElementById('Q').textContent = f.name;
     wavesurfer.load(f.path);
-  }
+  };
   return false;
-}
+});
