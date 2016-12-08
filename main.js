@@ -15,24 +15,36 @@ function init(){
 /**
 * Click on button, play/pause audio
 **/
-$(document).on('click', keys, function(){
+keys.on('click', function(){
   wavesurfer.playPause();
 });
 
 /**
 * Drag and Drop Audio onto keys
 **/
-$(document).on('dragover', keys, function() {
+keys.on('dragover', function() {
   return false;
 });
-$(document).on('dragleave', keys,function(){
+keys.on('dragleave',function(){
   return false;
 });
-$(document).on('drop', keys, function(e){
+keys.on('drop', function(e){
   e.originalEvent.preventDefault();
   for (let f of e.originalEvent.dataTransfer.files) {
     document.getElementById('Q').textContent = f.name;
     wavesurfer.load(f.path);
   };
+  return false;
+});
+
+/**
+* Prevent dragging files onto page
+**/
+$(document).on('drop', function(e){
+  e.preventDefault();
+  return false;
+});
+$(document).on('dragover', function(e){
+  e.preventDefault();
   return false;
 });
