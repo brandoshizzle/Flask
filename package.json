@@ -1,0 +1,20 @@
+{
+  "name": "soundprov",
+  "version": "0.1.0",
+  "description": "A program designed for improv theatre sound technicians",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandoshizzle/SoundProv.git"
+  },
+  "author": "Brandon Cathcart <cathcart.brandon@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandoshizzle/SoundProv/issues"
+  },
+  "homepage": "https://github.com/brandoshizzle/SoundProv#readme"
+}
