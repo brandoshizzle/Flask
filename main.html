@@ -8,15 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
+    <!--Import materialize.css and main.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"/>
   </head>
 
   <body onload="init()">
-    <div id="waveform" width=100%></div>
+    <div id="waveform"></div>
 
-    <div id="holder" style="background-color: yellow; height: 300px; width: 300px; margin: 100px;" onclick="playSound(this)">
-      Drag your file here
+    <div id="holder" class="btn btn-key z-depth-4 waves-effect waves-light" onclick="playSound(this)">
+      Q
     </div>
 
     <!-- JS SCRIPT IMPORTS  -->
