@@ -2,6 +2,14 @@ var wavesurfer;
 const holder = document.getElementById('holder');
 
 function init(){
+  // Create wavesurfer instance
+  wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'blue',
+    progressColor: 'purple',
+  });
+
+  wavesurfer.empty();
 
 }
 
@@ -22,11 +30,6 @@ holder.ondrop = (e) => {
   e.preventDefault();
   for (let f of e.dataTransfer.files) {
     holder.textContent = f.name;
-    wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      waveColor: 'blue',
-      progressColor: 'purple'
-    });
     wavesurfer.load(f.path);
   }
   return false;
