@@ -1,14 +1,15 @@
-.btn-key{
-  line-height: 1.2;
-  padding: 5px;
-  height: 100px;
-  width: 100px;
-  margin: 100px;
+.btn-key {
+    line-height: 1.2;
+    font-size: 1vw;
+    padding: 5px;
+    height: 5vw;
+    width: 5vw;
+    margin: 100px;
 }
 
-#waveform{
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  background-color: lightgray;
+#waveform {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: lightgray;
 }
