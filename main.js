@@ -1,26 +1,78 @@
 var wavesurfer;
-var keys = $('.btn-key');
+var keys = $('.audioName');
 var keyInfo = {};
 var lastLoadedPath
 
-function init() {
+/**
+ * Set up program
+ **/
+$(document).ready(function() {
+
+	createInterface();
+
+	/********************************
+	 * Drag and Drop Audio onto keys
+	 *******************************/
+	keys.on('drop', function(e) {
+		e.originalEvent.preventDefault(); // Prevent default action
+		console.log("hi");
+		for (let f of e.originalEvent.dataTransfer.files) {
+			// grab the id of the target key
+			var key = e.target.id;
+			checkKeyInfo(key);
+			// write file info to array for later
+			keyInfo[key].name = f.name;
+			keyInfo[key].path = f.path;
+			$("#" + key).text(keyInfo[key].name);
+			loadWavesurfer(key);
+		};
+		return false;
+	});
+
+	keys.on('dragover', function(e) {
+		//$('#' + e.target.id).css("box-shadow", "0px 0px 26px 9px rgba(255,247,99,1)");
+		return false;
+	});
+	keys.on('dragleave', function() {
+		//$('#' + e.target.id).css("box-shadow", "0px 0px");
+		return false;
+	});
+
+	/*
+	 * Click to show audio waveform
+	 */
+	keys.on('click', function(e) {
+		var key = e.target.id;
+		checkKeyInfo(key);
+		loadWavesurfer(key);
+		//wavesurfer.playPause();
+	});
+
+});
+
+function createInterface() {
+	// Create keyboard buttons
+	var rows = [
+		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '['],
+		['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'"],
+		['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', ]
+	];
+	for (var i = 0; i < rows.length; i++) {
+		var rowNum = i + 1;
+		for (var j = 0; j < rows[i].length; j++) {
+			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light'><div class='keyLetter'>" + rows[i][j] + "</div><div id='" + rows[i][j] + "' class='audioName'></div></div>");
+		}
+	}
+	keys = $('.audioName'); // set keys to be an array of the audioName divs
+
 	// Create wavesurfer instance
 	wavesurfer = WaveSurfer.create({
 		container: '#waveform',
-		waveColor: 'blue',
-		progressColor: 'purple',
+		waveColor: '#ffeb3b',
+		progressColor: '#ffd600',
 	});
 	wavesurfer.empty();
 }
-/**
- * Click on button to play/pause audio
- **/
-keys.on('click', function(e) {
-	var key = e.target.id;
-	checkKeyInfo(key);
-	loadWavesurfer(key);
-	//wavesurfer.playPause();
-});
 
 $(document).keydown(function(e) {
 	if (e.which > 64 && e.which < 91) {
@@ -30,31 +82,8 @@ $(document).keydown(function(e) {
 	}
 });
 
-/********************************
- * Drag and Drop Audio onto keys
- *******************************/
-keys.on('dragover', function(e) {
-	//$('#' + e.target.id).css("box-shadow", "0px 0px 26px 9px rgba(255,247,99,1)");
-	return false;
-});
-keys.on('dragleave', function() {
-	//$('#' + e.target.id).css("box-shadow", "0px 0px");
-	return false;
-});
-keys.on('drop', function(e) {
-	e.originalEvent.preventDefault(); // Prevent default action
-	for (let f of e.originalEvent.dataTransfer.files) {
-		// grab the id of the target key
-		var key = e.target.id;
-		checkKeyInfo(key);
-		// write file info to array for later
-		keyInfo[key].name = f.name;
-		keyInfo[key].path = f.path;
-		document.getElementById(key).innerHTML = key + "<br>" + keyInfo[key].name;
-		loadWavesurfer(key);
-	};
-	return false;
-});
+
+
 
 /**
  * Prevent dragging files onto page
