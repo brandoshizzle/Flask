@@ -1,15 +1,27 @@
 .btn-key {
-    line-height: 1.2;
-    font-size: 1vw;
-    padding: 5px;
-    height: 5vw;
-    width: 5vw;
-    margin: 100px;
+  line-height: 1.2;
+  font-size: 1vw;
+  padding: 5px;
+  height: 5vw;
+  width: 5vw;
+  margin: 0.3vw;
+}
+
+#row2 {
+  padding-left: 1.6vw;
+}
+
+#row3 {
+  padding-left: 3.2vw;
+}
+
+#keyboard {
+  padding: 2.5vw;
 }
 
 #waveform {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    background-color: lightgray;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-color: lightgray;
 }

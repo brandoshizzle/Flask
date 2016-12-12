@@ -2,46 +2,69 @@
 
 <html>
 
-<head>
-    <title>SoundProv</title>
-    <meta charset="utf-8">
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css and main.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-    <link type="text/css" rel="stylesheet" href="css/main.css" />
-</head>
+	<head>
+		<title>SoundProv</title>
+		<meta charset="utf-8">
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css and main.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/main.css" />
+	</head>
 
-<body onload="init()">
-    <div id="waveform"></div>
+	<body onload="init()">
 
-    <div id="Q" class="btn btn-key z-depth-4 waves-effect waves-light">
-        Q
-    </div>
+		<div id="keyboard">
+			<div id="row1">
+				<div id="Q" class="btn btn-key z-depth-4 waves-effect waves-light">Q</div>
+				<div id="W" class="btn btn-key z-depth-4 waves-effect waves-light">W</div>
+				<div id="E" class="btn btn-key z-depth-4 waves-effect waves-light">E</div>
+				<div id="R" class="btn btn-key z-depth-4 waves-effect waves-light">R</div>
+				<div id="T" class="btn btn-key z-depth-4 waves-effect waves-light">T</div>
+				<div id="Y" class="btn btn-key z-depth-4 waves-effect waves-light">Y</div>
+			</div>
+			<div id="row2">
+				<div id="A" class="btn btn-key z-depth-4 waves-effect waves-light">A</div>
+				<div id="S" class="btn btn-key z-depth-4 waves-effect waves-light">S</div>
+				<div id="D" class="btn btn-key z-depth-4 waves-effect waves-light">D</div>
+				<div id="F" class="btn btn-key z-depth-4 waves-effect waves-light">F</div>
+				<div id="G" class="btn btn-key z-depth-4 waves-effect waves-light">G</div>
+				<div id="H" class="btn btn-key z-depth-4 waves-effect waves-light">H</div>
+			</div>
+			<div id="row3">
+				<div id="Z" class="btn btn-key z-depth-4 waves-effect waves-light">Z</div>
+				<div id="X" class="btn btn-key z-depth-4 waves-effect waves-light">X</div>
+				<div id="C" class="btn btn-key z-depth-4 waves-effect waves-light">C</div>
+				<div id="V" class="btn btn-key z-depth-4 waves-effect waves-light">V</div>
+				<div id="B" class="btn btn-key z-depth-4 waves-effect waves-light">B</div>
+				<div id="N" class="btn btn-key z-depth-4 waves-effect waves-light">N</div>
+			</div>
+		</div>
 
 
+		<!-- The waveform box-->
+		<div id="waveform"></div>
 
-
-    <!-- JS SCRIPT IMPORTS  -->
-    <script>
-        if (typeof module === 'object') {
-            window.module = module;
-            module = undefined;
-        }
-    </script>
-    <!-- Main JS script and jQuery -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="main.js"></script>
-    <!-- Include wavesurfer for waveforms -->
-    <script src="js/wavesurfer.js"></script>
-    <!-- Include Materialize script -->
-    <script src="js/materialize.min.js"></script>
-    <!-- Insert this line after script imports -->
-    <script>
-        if (window.module) module = window.module;
-    </script>
-</body>
+		<!-- JS SCRIPT IMPORTS  -->
+		<script>
+			if (typeof module === 'object') {
+				window.module = module;
+				module = undefined;
+			}
+		</script>
+		<!-- Main JS script and jQuery -->
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="main.js"></script>
+		<!-- Include wavesurfer for waveforms -->
+		<script src="js/wavesurfer.js"></script>
+		<!-- Include Materialize script -->
+		<script src="js/materialize.min.js"></script>
+		<!-- Insert this line after script imports -->
+		<script>
+			if (window.module) module = window.module;
+		</script>
+	</body>
 
 </html>
