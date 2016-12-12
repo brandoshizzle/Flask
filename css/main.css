@@ -11,12 +11,12 @@
 }
 
 .audioName {
-  padding-top: 5px;
+  padding-top: 0px;
   font-size: 0.8vw;
   text-transform: none;
   height: 100%;
   width: 100%;
-  background-color: #00bfa5;
+  /*background-color: #00bfa5;*/
   white-space: pre-wrap;
 }
 
@@ -43,9 +43,4 @@
 
 body {
   background-color: #263238;
-}
-
-
-}
-
 }
