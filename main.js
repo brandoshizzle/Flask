@@ -9,13 +9,14 @@ var lastLoadedPath
 $(document).ready(function() {
 
 	createInterface();
+	loadSavedSounds();
 
 	/********************************
 	 * Drag and Drop Audio onto keys
 	 *******************************/
 	keys.on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
-		console.log("hi");
+
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
 			var key = e.target.id;
@@ -25,6 +26,7 @@ $(document).ready(function() {
 			keyInfo[key].path = f.path;
 			$("#" + key).text(keyInfo[key].name);
 			loadWavesurfer(key);
+			keyInfoChange();
 		};
 		return false;
 	});
@@ -119,5 +121,29 @@ function loadWavesurfer(key) {
 	if (path != lastLoadedPath) {
 		wavesurfer.load(path);
 		lastLoadedPath = path;
+	}
+}
+
+
+/********************************
+ * Save changes to local storage
+ *******************************/
+function keyInfoChange() {
+	var keyInfoString = JSON.stringify(keyInfo);
+	localStorage.setItem("keyInfo", keyInfoString);
+	console.log("Stored new settings!");
+
+}
+
+function loadSavedSounds() {
+	var keyInfoString = localStorage.getItem("keyInfo");
+	console.log(keyInfoString);
+	if (keyInfoString != null) {
+		keyInfo = JSON.parse(keyInfoString);
+		console.log(keyInfo);
+		Object.keys(keyInfo).map(function(key, index) {
+			console.log(key);
+			$("#" + key).text(keyInfo[key].name);
+		});
 	}
 }
