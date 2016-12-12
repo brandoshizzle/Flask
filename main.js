@@ -1,6 +1,7 @@
 var wavesurfer;
 var keys = $('.btn-key');
 var keyInfo = {};
+var lastLoadedPath
 
 function init() {
 	// Create wavesurfer instance
@@ -17,14 +18,16 @@ function init() {
 keys.on('click', function(e) {
 	var key = e.target.id;
 	checkKeyInfo(key);
-	wavesurfer.load(keyInfo[key].path);
+	loadWavesurfer(key);
 	//wavesurfer.playPause();
 });
 
-keys.keydown(function(e) {
-	var key = e.target.id;
-	wavesurfer.load(keyInfo[key].path);
-	wavesurfer.play();
+$(document).keydown(function(e) {
+	if (e.which > 64 && e.which < 91) {
+		var key = keyboardMap[e.which];
+		loadWavesurfer(key);
+		wavesurfer.play();
+	}
 });
 
 /********************************
@@ -47,8 +50,8 @@ keys.on('drop', function(e) {
 		// write file info to array for later
 		keyInfo[key].name = f.name;
 		keyInfo[key].path = f.path;
-		document.getElementById(key).textContent = keyInfo[key].name;
-		wavesurfer.load(keyInfo[key].path);
+		document.getElementById(key).innerHTML = key + "<br>" + keyInfo[key].name;
+		loadWavesurfer(key);
 	};
 	return false;
 });
@@ -65,6 +68,9 @@ $(document).on('dragover', function(e) {
 	return false;
 });
 
+/********************************
+ * Check Key Info Object
+ *******************************/
 function checkKeyInfo(key) {
 	try { // test whether the key exists in the info array
 		var test = keyInfo[key].name;
@@ -73,5 +79,16 @@ function checkKeyInfo(key) {
 			"name": "",
 			"path": ""
 		}
+	}
+}
+
+/********************************
+ * Loading Audio waveform
+ *******************************/
+function loadWavesurfer(key) {
+	var path = keyInfo[key].path;
+	if (path != lastLoadedPath) {
+		wavesurfer.load(path);
+		lastLoadedPath = path;
 	}
 }
