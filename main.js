@@ -10,6 +10,7 @@ $(document).ready(function() {
 
 	createInterface();
 	loadSavedSounds();
+	createjs.Sound.on("fileload", handleFileLoad);
 
 	/********************************
 	 * Drag and Drop Audio onto keys
@@ -25,8 +26,9 @@ $(document).ready(function() {
 			keyInfo[key].name = nameCleaner(f.name);
 			keyInfo[key].path = f.path;
 			$("#" + key).text(keyInfo[key].name);
-			loadWavesurfer(key);
+			registerSound(key);
 			keyInfoChange();
+			loadWavesurfer(key);
 		};
 		return false;
 	});
@@ -79,8 +81,8 @@ function createInterface() {
 $(document).keydown(function(e) {
 	if (e.which > 64 && e.which < 91) {
 		var key = keyboardMap[e.which];
+		createjs.Sound.play(keyInfo[key].name);
 		loadWavesurfer(key);
-		wavesurfer.play();
 	}
 });
 
@@ -137,17 +139,36 @@ function keyInfoChange() {
 }
 
 function loadSavedSounds() {
+	// Pull keyInfo string from localStorage
 	var keyInfoString = localStorage.getItem("keyInfo");
+	// Only parse it if it exists!
 	if (keyInfoString != null) {
 		keyInfo = JSON.parse(keyInfoString);
 		console.log(keyInfo);
+
 		Object.keys(keyInfo).map(function(key, index) {
+			// Print the name of each sound on it's corresponding key
 			$("#" + key).text(keyInfo[key].name);
+			// Register sound with SoundJS
+			registerSound(key);
 		});
 	}
+}
+
+function handleFileLoad(event) {
+	// A sound has been preloaded.
+	console.log("Preloaded:", event.id, event.src);
 }
 
 function nameCleaner(name) {
 	var pos = name.lastIndexOf(".");
 	return name.substring(0, pos);
+}
+
+function registerSound(key) {
+	// Register sound with SoundJS
+	createjs.Sound.registerSound({
+		id: keyInfo[key].name,
+		src: keyInfo[key].path
+	});
 }
