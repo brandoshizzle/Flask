@@ -22,7 +22,7 @@ $(document).ready(function() {
 			var key = e.target.id;
 			checkKeyInfo(key);
 			// write file info to array for later
-			keyInfo[key].name = f.name;
+			keyInfo[key].name = nameCleaner(f.name);
 			keyInfo[key].path = f.path;
 			$("#" + key).text(keyInfo[key].name);
 			loadWavesurfer(key);
@@ -137,13 +137,15 @@ function keyInfoChange() {
 
 function loadSavedSounds() {
 	var keyInfoString = localStorage.getItem("keyInfo");
-	console.log(keyInfoString);
 	if (keyInfoString != null) {
 		keyInfo = JSON.parse(keyInfoString);
-		console.log(keyInfo);
 		Object.keys(keyInfo).map(function(key, index) {
-			console.log(key);
 			$("#" + key).text(keyInfo[key].name);
 		});
 	}
+}
+
+function nameCleaner(name) {
+	var pos = name.lastIndexOf(".");
+	return name.substring(0, pos);
 }
