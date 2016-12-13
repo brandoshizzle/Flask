@@ -2,6 +2,10 @@ var wavesurfer;
 var keys = $('.audioName');
 var keyInfo = {};
 var lastLoadedPath
+var currentInstances = {};
+var waveformedInstance;
+var waveformTracking = false;
+var sI;
 
 /**
  * Set up program
@@ -10,6 +14,7 @@ $(document).ready(function() {
 
 	createInterface();
 	loadSavedSounds();
+	createjs.Sound.on("fileload", handleFileLoad);
 
 	/********************************
 	 * Drag and Drop Audio onto keys
@@ -25,8 +30,9 @@ $(document).ready(function() {
 			keyInfo[key].name = nameCleaner(f.name);
 			keyInfo[key].path = f.path;
 			$("#" + key).text(keyInfo[key].name);
-			loadWavesurfer(key);
+			registerSound(key);
 			keyInfoChange();
+			loadWavesurfer(key);
 		};
 		return false;
 	});
@@ -46,8 +52,7 @@ $(document).ready(function() {
 	keys.on('click', function(e) {
 		var key = e.target.id;
 		checkKeyInfo(key);
-		loadWavesurfer(key);
-		//wavesurfer.playPause();
+		setWaveformTracking(key);
 	});
 
 });
@@ -76,16 +81,28 @@ function createInterface() {
 	wavesurfer.empty();
 }
 
+/**
+ * Handle keyboard presses to trigger sounds
+ **/
 $(document).keydown(function(e) {
 	if (e.which > 64 && e.which < 91) {
 		var key = keyboardMap[e.which];
-		loadWavesurfer(key);
-		wavesurfer.play();
+
+		// Check currentInstances to see if the key is playing or not
+		if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
+			currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
+			setWaveformTracking(key);
+		} else if (currentInstances[key].playState == 'playSucceeded') {
+			// It is playing, so stop it
+			currentInstances[key].stop();
+		} else {
+			// It is not playing and does exist. Play it.
+			currentInstances[key].play();
+			setWaveformTracking(key);
+		}
+
 	}
 });
-
-
-
 
 /**
  * Prevent dragging files onto page
@@ -107,6 +124,7 @@ function checkKeyInfo(key) {
 		var test = keyInfo[key].name;
 	} catch (err) { // if it doesn't, create it with empty variables
 		keyInfo[key] = {
+			"key": key,
 			"name": "",
 			"path": ""
 		}
@@ -136,16 +154,56 @@ function keyInfoChange() {
 }
 
 function loadSavedSounds() {
+	// Pull keyInfo string from localStorage
 	var keyInfoString = localStorage.getItem("keyInfo");
+	// Only parse it if it exists!
 	if (keyInfoString != null) {
 		keyInfo = JSON.parse(keyInfoString);
+		console.log(keyInfo);
+
 		Object.keys(keyInfo).map(function(key, index) {
+			// Print the name of each sound on it's corresponding key
 			$("#" + key).text(keyInfo[key].name);
+			// Register sound with SoundJS
+			registerSound(key);
 		});
 	}
+}
+
+function handleFileLoad(event) {
+	// A sound has been preloaded.
+	console.log("Preloaded:", event.id);
 }
 
 function nameCleaner(name) {
 	var pos = name.lastIndexOf(".");
 	return name.substring(0, pos);
+}
+
+function registerSound(key) {
+	// Register sound with SoundJS
+	createjs.Sound.registerSound({
+		id: keyInfo[key].name,
+		src: keyInfo[key].path
+	});
+}
+
+function setWaveformTracking(key) {
+	loadWavesurfer(key);
+	try {
+		waveformedInstance = currentInstances[key];
+		var playState = waveformedInstance.playState;
+		clearInterval(sI);
+		if (playState == 'playSucceeded') {
+			sI = setInterval(trackOnWaveform, 50);
+		}
+	} catch (err) {
+		console.log("Track is not playing. Waveform will not be tracked.");
+	}
+}
+
+function trackOnWaveform() {
+	var sound = waveformedInstance;
+	var percentComplete = sound.position / wavesurfer.getDuration() / 1000;
+	wavesurfer.seekTo(percentComplete);
 }
