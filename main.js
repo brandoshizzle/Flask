@@ -88,20 +88,24 @@ function createInterface() {
 $(document).keydown(function(e) {
 	if (e.which > 64 && e.which < 91) {
 		var key = keyboardMap[e.which];
+		// Check if the sound was loaded or not
+		if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
+			// Check currentInstances to see if the key is playing or not
+			if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
+				currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
+				setWaveformTracking(key);
+			} else if (currentInstances[key].playState == 'playSucceeded') {
+				// It is playing, so stop it
+				currentInstances[key].stop();
+			} else {
+				// It is not playing and does exist. Play it.
+				currentInstances[key].play();
+				setWaveformTracking(key);
+			}
 
-		// Check currentInstances to see if the key is playing or not
-		if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
-			currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
-			setWaveformTracking(key);
-		} else if (currentInstances[key].playState == 'playSucceeded') {
-			// It is playing, so stop it
-			currentInstances[key].stop();
-		} else {
-			// It is not playing and does exist. Play it.
-			currentInstances[key].play();
-			setWaveformTracking(key);
+		} else { // User tries to play a not-loaded sound
+			Materialize.toast(keyInfo[key].name + " is not loaded.", 1000)
 		}
-
 	}
 });
 
@@ -191,9 +195,8 @@ function registerSound(key) {
 		});
 	} else {
 		// Let the user know with a toast
-		Materialize.toast(keyInfo[key].name + " was NOT loaded.", 5000);
-		$("#" + key).parent().css('background-color', 'red');
-		$("#" + key).parent().css('opacity', '0.3');
+		Materialize.toast(keyInfo[key].name + " was NOT loaded.", 4000);
+		$("#" + key).parent().addClass("soundNotLoaded");
 	}
 
 

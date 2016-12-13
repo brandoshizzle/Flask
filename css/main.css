@@ -50,3 +50,13 @@ body {
   height: 40px;
   background-color: inherit;
 }
+
+.soundNotLoaded {
+  background-color: #f44336;
+  opacity: 0.3;
+  cursor: default;
+}
+
+.soundNotLoaded:hover {
+  background-color: #c62828;
+}
