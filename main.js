@@ -3,6 +3,9 @@ var keys = $('.audioName');
 var keyInfo = {};
 var lastLoadedPath
 var currentInstances = {};
+var waveformedInstance;
+var waveformTracking = false;
+var sI;
 
 /**
  * Set up program
@@ -49,8 +52,7 @@ $(document).ready(function() {
 	keys.on('click', function(e) {
 		var key = e.target.id;
 		checkKeyInfo(key);
-		loadWavesurfer(key);
-		//wavesurfer.playPause();
+		setWaveformTracking(key);
 	});
 
 });
@@ -86,15 +88,19 @@ $(document).keydown(function(e) {
 	if (e.which > 64 && e.which < 91) {
 		var key = keyboardMap[e.which];
 
-		if (currentInstances[key] == null) {
+		// Check currentInstances to see if the key is playing or not
+		if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
 			currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
+			setWaveformTracking(key);
 		} else if (currentInstances[key].playState == 'playSucceeded') {
+			// It is playing, so stop it
 			currentInstances[key].stop();
 		} else {
+			// It is not playing and does exist. Play it.
 			currentInstances[key].play();
+			setWaveformTracking(key);
 		}
 
-		loadWavesurfer(key);
 	}
 });
 
@@ -180,4 +186,24 @@ function registerSound(key) {
 		id: keyInfo[key].name,
 		src: keyInfo[key].path
 	});
+}
+
+function setWaveformTracking(key) {
+	loadWavesurfer(key);
+	try {
+		waveformedInstance = currentInstances[key];
+		var playState = waveformedInstance.playState;
+		clearInterval(sI);
+		if (playState == 'playSucceeded') {
+			sI = setInterval(trackOnWaveform, 50);
+		}
+	} catch (err) {
+		console.log("Track is not playing. Waveform will not be tracked.");
+	}
+}
+
+function trackOnWaveform() {
+	var sound = waveformedInstance;
+	var percentComplete = sound.position / wavesurfer.getDuration() / 1000;
+	wavesurfer.seekTo(percentComplete);
 }
