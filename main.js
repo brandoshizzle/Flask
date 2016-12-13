@@ -107,6 +107,7 @@ function checkKeyInfo(key) {
 		var test = keyInfo[key].name;
 	} catch (err) { // if it doesn't, create it with empty variables
 		keyInfo[key] = {
+			"key": key,
 			"name": "",
 			"path": ""
 		}
@@ -139,6 +140,7 @@ function loadSavedSounds() {
 	var keyInfoString = localStorage.getItem("keyInfo");
 	if (keyInfoString != null) {
 		keyInfo = JSON.parse(keyInfoString);
+		console.log(keyInfo);
 		Object.keys(keyInfo).map(function(key, index) {
 			$("#" + key).text(keyInfo[key].name);
 		});
