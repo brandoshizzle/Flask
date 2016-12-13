@@ -6,6 +6,7 @@ var currentInstances = {};
 var waveformedInstance;
 var waveformTracking = false;
 var sI;
+const fs = require("fs");
 
 /**
  * Set up program
@@ -181,11 +182,21 @@ function nameCleaner(name) {
 }
 
 function registerSound(key) {
-	// Register sound with SoundJS
-	createjs.Sound.registerSound({
-		id: keyInfo[key].name,
-		src: keyInfo[key].path
-	});
+	// Check if path to sound file exists
+	if (fs.existsSync(keyInfo[key].path)) {
+		// Register sound with SoundJS
+		createjs.Sound.registerSound({
+			id: keyInfo[key].name,
+			src: keyInfo[key].path
+		});
+	} else {
+		// Let the user know with a toast
+		Materialize.toast(keyInfo[key].name + " was NOT loaded.", 5000);
+		$("#" + key).parent().css('background-color', 'red');
+		$("#" + key).parent().css('opacity', '0.3');
+	}
+
+
 }
 
 function setWaveformTracking(key) {
