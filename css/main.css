@@ -44,3 +44,9 @@
 body {
   background-color: #263238;
 }
+
+.tabs {
+  margin-top: -5px;
+  height: 40px;
+  background-color: inherit;
+}
