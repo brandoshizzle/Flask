@@ -2,6 +2,7 @@ var wavesurfer;
 var keys = $('.audioName');
 var keyInfo = {};
 var lastLoadedPath
+var currentInstances = {};
 
 /**
  * Set up program
@@ -78,16 +79,24 @@ function createInterface() {
 	wavesurfer.empty();
 }
 
+/**
+ * Handle keyboard presses to trigger sounds
+ **/
 $(document).keydown(function(e) {
 	if (e.which > 64 && e.which < 91) {
 		var key = keyboardMap[e.which];
-		createjs.Sound.play(keyInfo[key].name);
+
+		if (currentInstances[key] == null) {
+			currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
+		} else if (currentInstances[key].playState == 'playSucceeded') {
+			currentInstances[key].stop();
+		} else {
+			currentInstances[key].play();
+		}
+
 		loadWavesurfer(key);
 	}
 });
-
-
-
 
 /**
  * Prevent dragging files onto page
@@ -157,7 +166,7 @@ function loadSavedSounds() {
 
 function handleFileLoad(event) {
 	// A sound has been preloaded.
-	console.log("Preloaded:", event.id, event.src);
+	console.log("Preloaded:", event.id);
 }
 
 function nameCleaner(name) {
