@@ -27,18 +27,39 @@
 			</div>
 		</div>
 
+		<div class="row keyboard-transitions">
+			<!-- Keyboard -->
+			<div class="col s9">
+				<div id="keyboard">
+					<div id="row1"></div>
+					<div id="row2"></div>
+					<div id="row3"></div>
+				</div>
+			</div>
 
-
-		<div id="keyboard">
-			<div id="row1"></div>
-			<div id="row2"></div>
-			<div id="row3"></div>
+			<!-- Search bar/transition songs -->
+			<div class="input-field col s3">
+				<i class="material-icons prefix">search</i>
+				<input id="icon_prefix" type="text" class="validate">
+				<label for="icon_prefix">Search</label>
+			</div>
+			<div class="transitionsBox col s3 z-depth-4" style="background-color: #37474f; height: 100%;">
+				<ul id="transition-songs">
+					<li>Artist - Song 1</li>
+					<li>Artist - Song 2</li>
+					<li>Artist - Song 3</li>
+					<li>Artist - Song 4</li>
+					<li>Artist - Song 5</li>
+					<li>Artist - Song 6</li>
+					<li>Artist - Song 7</li>
+				</ul>
+			</div>
 		</div>
 
-
 		<!-- The waveform box-->
-		<div id="waveform"></div>
-
+		<div class="row">
+			<div id="waveform"></div>
+		</div>
 		<!-- JS SCRIPT IMPORTS  -->
 		<script>
 			if (typeof module === 'object') {
@@ -49,7 +70,8 @@
 		<!-- Main JS script and jQuery -->
 		<script src="js/jquery-3.1.1.min.js"></script>
 		<script src="data/keyCodes.js"></script>
-		<script src="main.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/sortable.js"></script>
 		<!-- Include wavesurfer for waveforms -->
 		<script src="js/wavesurfer.js"></script>
 		<!-- Include SoundJS for sounds -->

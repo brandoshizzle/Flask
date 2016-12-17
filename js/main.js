@@ -56,6 +56,11 @@ $(document).ready(function() {
 		setWaveformTracking(key);
 	});
 
+	var el = document.getElementById('transition-songs');
+	var sortable = Sortable.create(el, {
+		animation: 150
+	});
+
 });
 
 function createInterface() {
@@ -104,7 +109,7 @@ $(document).keydown(function(e) {
 			}
 
 		} else { // User tries to play a not-loaded sound
-			Materialize.toast(keyInfo[key].name + " is not loaded.", 1000)
+			Materialize.toast(keyInfo[key].name + " is not loaded.", 1500)
 		}
 	}
 });

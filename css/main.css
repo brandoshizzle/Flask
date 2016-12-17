@@ -29,7 +29,7 @@
 }
 
 #keyboard {
-  padding: 2.5vw;
+  padding: 0;
 }
 
 #waveform {
@@ -43,12 +43,16 @@
 
 body {
   background-color: #263238;
+  margin: 0;
+  padding: 0;
 }
 
 .tabs {
-  margin-top: -5px;
+  margin: 0;
+  padding: 0;
   height: 40px;
   background-color: inherit;
+  border: 2px solid purple;
 }
 
 .soundNotLoaded {
@@ -59,4 +63,34 @@ body {
 
 .soundNotLoaded:hover {
   background-color: #c62828;
+}
+
+#transition-songs {
+  height: 100%;
+}
+
+#transition-songs li {
+  background-color: #455a64;
+  padding: 3px;
+  margin: 3px;
+}
+
+#transition-songs li:hover {
+  cursor: pointer;
+}
+
+.sortable-ghost {
+  color: yellow;
+  border: 1px dashed white;
+}
+
+.sortable-drag {
+  opacity: 0.8;
+}
+
+.keyboard-transitions {
+  height: 100%;
+  border: 2px solid black;
+  margin: 0;
+  padding: 0;
 }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron index.js"
+    "start": "electron index.js",
+		"build": "echo \"Error: no build specified\" && exit 1"
   },
   "repository": {
     "type": "git",
