@@ -1,20 +1,3 @@
-function loadSavedSounds() {
-	// Pull keyInfo string from localStorage
-	var keyInfoString = localStorage.getItem("keyInfo");
-	// Only parse it if it exists!
-	if (keyInfoString != null) {
-		keyInfo = JSON.parse(keyInfoString);
-		console.log(keyInfo);
-
-		Object.keys(keyInfo).map(function(key, index) {
-			// Print the name of each sound on it's corresponding key
-			$("#" + key).text(keyInfo[key].name);
-			// Register sound with SoundJS
-			registerSound(key);
-		});
-	}
-}
-
 function registerSound(key) {
 	// Check if path to sound file exists
 	if (fs.existsSync(keyInfo[key].path)) {
@@ -36,7 +19,6 @@ function fileLoaded(song) {
 }
 
 module.exports = {
-	loadSavedSounds: loadSavedSounds,
 	register: registerSound,
 	fileLoaded: fileLoaded
 }

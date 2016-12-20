@@ -11,14 +11,45 @@ function storeObj(keyName, obj) {
  * Check Key Info Object
  **/
 function checkKeyInfo(key) {
-	try { // test whether the key exists in the info array
-		var test = keyInfo[key].name;
-	} catch (err) { // if it doesn't, create it with empty variables
-		keyInfo[key] = {
-			"key": key,
-			"name": "",
-			"path": ""
+	var chosenKey = keyInfo[key];
+	var defaultArray = {
+		"key": key,
+		"name": "",
+		"path": "",
+		"autoplay": false
+	};
+	// Check that the key has all properties - set default if it doesn't have it.
+	Object.keys(
+		defaultArray).map(function(prop, index) {
+		if (!keyInfo[key].hasOwnProperty(prop)) {
+			keyInfo[key][prop] = defaultArray[prop];
 		}
+	});
+
+	// Check that the key does not have depreciated properties (and delete them)
+	Object.keys(chosenKey).map(function(prop, index) {
+		if (!defaultArray.hasOwnProperty(prop)) {
+			delete keyInfo[key][prop];
+		}
+	});
+
+}
+
+function loadKeyInfo() {
+	// Pull keyInfo string from localStorage
+	var keyInfoString = localStorage.getItem("keyInfo");
+	// Only parse it if it exists!
+	if (keyInfoString != null) {
+		keyInfo = JSON.parse(keyInfoString);
+		console.log(keyInfo);
+		Object.keys(keyInfo).map(function(key, index) {
+			// Ensure all parameters are up to date
+			checkKeyInfo(key);
+			// Print the name of each sound on it's corresponding key
+			$("#" + key).text(keyInfo[key].name);
+			// Register sound with SoundJS
+			sounds.register(key);
+		});
 	}
 }
 
@@ -32,5 +63,6 @@ function cleanName(name) {
 module.exports = {
 	storeObj: storeObj,
 	checkKeyInfo: checkKeyInfo,
+	loadKeyInfo: loadKeyInfo,
 	cleanName: cleanName
 }

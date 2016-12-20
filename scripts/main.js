@@ -3,6 +3,7 @@ const jsPath = "./scripts/";
 const view = require(jsPath + 'view');
 const events = require(jsPath + 'events');
 const sounds = require(jsPath + 'sounds');
+const util = require(jsPath + 'util');
 
 var wavesurfer;
 var keys;
@@ -17,11 +18,10 @@ var sI;
  **/
 $(document).ready(function() {
 
-	//createInterface();
 	view.buildKeyboard();
 	view.buildTransitionsList();
 	view.buildWaveform();
-	sounds.loadSavedSounds();
+	util.loadKeyInfo();
 	events.setKeyEvents();
 
 	createjs.Sound.on("fileload", sounds.fileLoaded);
