@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron index.js",
-		"build": "echo \"Error: no build specified\" && exit 1"
+    "build": "echo \"Error: no build specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/brandoshizzle/SoundProv/issues"
   },
-  "homepage": "https://github.com/brandoshizzle/SoundProv#readme"
+  "homepage": "https://github.com/brandoshizzle/SoundProv#readme",
+  "devDependencies": {
+    "createjs-soundjs": "^0.6.2"
+  }
 }
