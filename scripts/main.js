@@ -8,9 +8,7 @@ const util = require(jsPath + 'util');
 var wavesurfer;
 var keys;
 var keyInfo = {};
-var lastLoadedPath
 var currentInstances = {};
-var waveformTracking = false;
 var sI;
 
 /**
@@ -23,6 +21,8 @@ $(document).ready(function() {
 	view.buildWaveform();
 	util.loadKeyInfo();
 	events.setKeyEvents();
+
+	$('.modal').modal();
 
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 

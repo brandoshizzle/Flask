@@ -60,6 +60,52 @@
 		<div class="row">
 			<div id="waveform"></div>
 		</div>
+
+		<a href="#sound-settings" class="btn modal-trigger">Modal</a>
+		<!-- Settings box -->
+		<div id="sound-settings" class="modal modal-fixed-footer" style="width:400px">
+			<div class="modal-content">
+				<h5 id="sound-settings-name" class="header" style="text-align: center">Song Name</h5>
+				<table style="padding: 20px;">
+					<tbody>
+						<tr>
+							<td>Path</td>
+							<td>
+								<input id="sound-settings-path" class="" type="text" style="display: inline-block; width: 180px; font-size: 12px"></input>
+								<div class="btn waves-effect" style="display: inline-block; width: 80px; padding-left: 0; padding-right: 0; text-align: center;">Browse</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Loop</td>
+							<td>
+								<div class="switch">
+									<label>
+										<input id="sound-settings-loop" type="checkbox">
+										<span class="lever"></span>
+									</label>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Start</td>
+							<td>
+								<input id="sound-settings-start-time" type="text" style="width: 50px;"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>End</td>
+							<td>
+								<input id="sound-settings-end-time" type="text" style="width: 50px;"></input>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer ">
+				<a href="# " class="modal-action modal-close waves-effect btn-flat ">Save</a>
+				<a href="# " class="modal-action modal-close waves-effect btn-flat ">Close</a>
+			</div>
+		</div>
 		<!-- JS SCRIPT IMPORTS -->
 		<script>
 			if (typeof module === 'object') {
@@ -68,16 +114,16 @@
 			}
 		</script>
 		<!-- Main JS script and jQuery -->
-		<script src="scripts/vendor/jquery-3.1.1-min.js"></script>
-		<script src="data/keyCodes.js"></script>
-		<script src="scripts/main.js"></script>
-		<script src="scripts/vendor/sortable.js"></script>
+		<script src="scripts/vendor/jquery-3.1.1-min.js "></script>
+		<script src="data/keyCodes.js "></script>
+		<script src="scripts/main.js "></script>
+		<script src="scripts/vendor/sortable.js "></script>
 		<!-- Include wavesurfer for waveforms -->
-		<script src="scripts/vendor/wavesurfer.js"></script>
+		<script src="scripts/vendor/wavesurfer.js "></script>
 		<!-- Include SoundJS for sounds -->
-		<script src="scripts/vendor/soundjs-0.6.2.min.js"></script>
+		<script src="scripts/vendor/soundjs-0.6.2.min.js "></script>
 		<!-- Include Materialize script -->
-		<script src="scripts/vendor/materialize.min.js"></script>
+		<script src="scripts/vendor/materialize.min.js "></script>
 		<!-- Insert this line after script imports -->
 		<script>
 			if (window.module) module = window.module;

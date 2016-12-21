@@ -51,6 +51,12 @@ function setKeyEvents() {
 		}
 	});
 
+	// Right click to bring up settings and populate them
+	keys.on('contextmenu', function(e) {
+		var key = e.target.id;
+		view.openSoundSettings(key);
+	});
+
 	// Handles pressing a real key anywhere on the page
 	$(document).keydown(function(e) {
 		// If keys A-Z have been pressed

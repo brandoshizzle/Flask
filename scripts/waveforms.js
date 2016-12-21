@@ -1,4 +1,6 @@
 var waveformedInstance;
+var waveformTracking = false;
+var lastLoadedPath;
 
 function loadWavesurfer(key) {
 	var path = keyInfo[key].path;
@@ -27,8 +29,6 @@ function trackOnWaveform() {
 	var percentComplete = sound.position / wavesurfer.getDuration() / 1000;
 	wavesurfer.seekTo(percentComplete);
 }
-
-
 
 module.exports = {
 	load: loadWavesurfer,

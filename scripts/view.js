@@ -38,9 +38,22 @@ function buildWaveform() {
 	wavesurfer.empty();
 }
 
+function openSoundSettings(key) {
+	var idStart = "#sound-settings-";
+	var soundProps = keyInfo[key];
+	$(idStart + "name").text(soundProps.name);
+	$(idStart + "path").val(soundProps.path);
+	if (soundProps.loop == true) {
+		$(idStart + "loop").attr("checked", "checked");
+	} else {
+		$(idStart + "loop").removeAttr("checked");
+	}
+	$('#sound-settings').modal('open');
+}
 
 module.exports = {
 	buildKeyboard: buildKeyboard,
 	buildTransitionsList: buildTransList,
-	buildWaveform: buildWaveform
+	buildWaveform: buildWaveform,
+	openSoundSettings: openSoundSettings
 };
