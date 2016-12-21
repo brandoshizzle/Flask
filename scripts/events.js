@@ -55,6 +55,7 @@ function setKeyEvents() {
 	keys.on('contextmenu', function(e) {
 		var key = e.target.id;
 		view.openSoundSettings(key);
+		waveforms.load(key);
 	});
 
 	// Handles pressing a real key anywhere on the page
