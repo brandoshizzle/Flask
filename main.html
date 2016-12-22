@@ -65,16 +65,36 @@
 		<div id="sound-settings" class="modal modal-fixed-footer" style="width:400px">
 			<div class="modal-content">
 				<h5 id="sound-settings-name" class="header" style="text-align: center">Song Name</h5>
-				<table style="padding: 20px;">
+				<table class="highlight" style="padding: 20px;">
 					<tbody>
-						<tr>
+						<tr class="settings-row">
 							<td>Path</td>
 							<td>
-								<input id="sound-settings-path" class="" type="text" style="display: inline-block; width: 180px; font-size: 12px"></input>
+								<input id="sound-settings-path" type="text"></input>
 								<div class="btn waves-effect" style="display: inline-block; width: 80px; padding-left: 0; padding-right: 0; text-align: center;">Browse</div>
 							</td>
 						</tr>
-						<tr>
+						<tr class="settings-row">
+							<td>Color</td>
+							<td>
+								<div class="input-field" style="width:180px;">
+									<select>
+										<option value="default" selected>Default</option>
+									 	<option value="red">Red</option>
+									 	<option value="pink">Pink</option>
+									 	<option value="purple">Purple</option>
+										<option value="deep-purple">Deep Purple</option>
+										<option value="indigo">Indigo</option>
+										<option value="blue">Blue</option>
+										<option value="light-blue">Light Blue</option>
+										<option value="cyan">Cyan</option>
+										<option value="teal">Teal</option>
+										<option value="green">Green</option>
+								 	</select>
+								</div>
+							</td>
+						</tr>
+						<tr class="settings-row">
 							<td>Loop</td>
 							<td>
 								<div class="switch">
@@ -85,13 +105,13 @@
 								</div>
 							</td>
 						</tr>
-						<tr>
+						<tr class="settings-row">
 							<td>Start</td>
 							<td>
 								<input id="sound-settings-start-time" type="text" style="width: 50px;"></input>
 							</td>
 						</tr>
-						<tr>
+						<tr class="settings-row">
 							<td>End</td>
 							<td>
 								<input id="sound-settings-end-time" type="text" style="width: 50px;"></input>

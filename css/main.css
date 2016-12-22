@@ -1,10 +1,11 @@
+@import 'colors.css';
+@import 'preserveButtonHover.css';
 .btn-key {
   line-height: 1.2;
   padding: 0px;
   height: 5.5vw;
   width: 5.5vw;
   margin: 0.3vw;
-  box-shadow: 0px 4px 0px 0px teal;
 }
 
 .btn-key:hover {
@@ -17,11 +18,11 @@
 
 .audioName {
   padding-top: 0px;
-  font-size: 0.8vw;
   text-transform: none;
   height: 100%;
   width: 100%;
-  white-space: pre-wrap;
+  font-size: 1vw;
+  /*white-space: pre-wrap;*/
 }
 
 #row2 {
@@ -46,7 +47,6 @@
 }
 
 body {
-  background-color: #263238;
   margin: 0;
   padding: 0;
 }
@@ -74,13 +74,13 @@ body {
 
 .transitionsBox {
   box-shadow: -3px 8px 0px 0px #15252d;
-  background-color: #37474f;
+  background-color: #aaaaaa;
   height: 100%;
   border-radius: 2px;
 }
 
 #transition-songs li {
-  background-color: #455a64;
+  background-color: #aaaaaa;
   padding: 3px;
   margin: 3px;
   box-shadow: 0px 1px 0px 0px #233a11;
@@ -105,7 +105,22 @@ body {
   padding: 0;
 }
 
+#sound-settings-path {
+  display: inline-block;
+  width: 180px;
+  font-size: 12px;
+}
+
+.settings-row {
+  position: relative;
+  height: 60px;
+}
+
 tr td {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+#sound-settings input {
+  margin: 2px;
 }

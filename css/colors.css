@@ -1,0 +1,21 @@
+/**
+* CSS color sheet
+* Recommended color scheme at http://materializecss.com/color.html
+*/
+
+:root {
+  --color-primary: #80cbc4;
+  --color-secondary: yellow;
+  --color-text-dark: #212121;
+  --color-background: #263238;
+}
+
+.btn-key {
+  background-color: var(--color-primary);
+  color: var(--color-text-dark);
+  box-shadow: 0px 4px 0px 0px var(--color-primary);
+}
+
+body {
+  background-color: var(--color-background);
+}

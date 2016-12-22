@@ -23,6 +23,7 @@ $(document).ready(function() {
 	events.setKeyEvents();
 
 	$('.modal').modal();
+	$('select').material_select();
 
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 
