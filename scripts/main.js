@@ -7,8 +7,8 @@ const util = require(jsPath + 'util');
 
 var wavesurfer;
 var keys;
-var keyInfo = {};
 var currentInstances = {};
+var keyInfo = {};
 var sI;
 
 /**

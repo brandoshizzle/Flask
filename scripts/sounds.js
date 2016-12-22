@@ -4,6 +4,7 @@
  *	Functions:
  *		registerSound, fildLoaded
  */
+const waveforms = require("./waveforms");
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
@@ -25,6 +26,21 @@ function registerSound(key) {
 	}
 }
 
+function playSound(key) {
+	// Check currentInstances to see if the key is playing or not
+	if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
+		currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
+		waveforms.track(key);
+	} else if (currentInstances[key].playState == 'playSucceeded') {
+		// It is playing, so stop it
+		currentInstances[key].stop();
+	} else {
+		// It is not playing and does exist. Play it.
+		currentInstances[key].play();
+		waveforms.track(key);
+	}
+}
+
 /**
  *	@desc:	Fired when a song has been preloaded by soundJS
  *	@param:	song: The registered soundJS object (!!not keyInfo!!)
@@ -37,5 +53,6 @@ function fileLoaded(song) {
 
 module.exports = {
 	register: registerSound,
-	fileLoaded: fileLoaded
+	fileLoaded: fileLoaded,
+	playSound: playSound
 }

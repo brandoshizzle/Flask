@@ -65,19 +65,7 @@ function setKeyEvents() {
 			var key = keyboardMap[e.which];
 			// Check if the sound was loaded or not
 			if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
-				// Check currentInstances to see if the key is playing or not
-				if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
-					currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
-					waveforms.track(key);
-				} else if (currentInstances[key].playState == 'playSucceeded') {
-					// It is playing, so stop it
-					currentInstances[key].stop();
-				} else {
-					// It is not playing and does exist. Play it.
-					currentInstances[key].play();
-					waveforms.track(key);
-				}
-
+				sounds.playSound(key);
 			} else { // User tries to play a not-loaded sound
 				Materialize.toast(keyInfo[key].name + " is not loaded.", 1500)
 			}
