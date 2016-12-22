@@ -24,6 +24,11 @@ $(document).ready(function() {
 
 	$('.modal').modal();
 	$('select').material_select();
+	$('.editable').editable(function(value, settings) {
+		return (value);
+	}, {
+		type: 'text'
+	});
 
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 
