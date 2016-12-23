@@ -78,13 +78,23 @@ function setKeyEvents() {
 		}
 	});
 
-	// Prevent firing sounds when editing numbers/text in sound settings panel
-	$('#sound-settings').bind('keydown', function(e) {
-		e.stopPropagation();
+	// Close/save sound settings when save key is pressed.
+	$('#sound-settings-save').click(function(e) {
+		view.saveSoundSettings();
 	});
 
-	// Prevent firing sounds when editing numbers/text in input fields
-	$('.input-field').bind('keydown', function(e) {
+	// Close/save sound settings when save key is pressed.
+	$('#start-time-reset').click(function(e) {
+		view.resetStartTime();
+	});
+
+	// Close/save sound settings when save key is pressed.
+	$('#end-time-reset').click(function(e) {
+		view.resetEndTime();
+	});
+
+	// Prevent firing sounds when editing input fields
+	$('#sound-settings, .input-field').keydown(function(e) {
 		e.stopPropagation();
 	});
 

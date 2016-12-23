@@ -64,7 +64,7 @@ function openSoundSettings(key) {
  *	@desc: Gets the settings from the sound settings box and save them
  *	@param: settingsKey (global): the key to apply changes to
  */
-function closeSoundSettings() {
+function saveSoundSettings() {
 	var keyArray = keyInfo[settingsKey];
 	keyArray.name = $('#sound-settings-name').text();
 	$('#' + settingsKey).text(keyArray.name);
@@ -76,10 +76,23 @@ function closeSoundSettings() {
 	util.storeObj("keyInfo", keyInfo);
 }
 
+
+function resetStartTime() {
+	keyInfo[settingsKey].startTime = 0;
+	$('#sound-settings-start-time').val(keyInfo[settingsKey].startTime);
+}
+
+function resetEndTime() {
+	keyInfo[settingsKey].endTime = sounds.getDuration(settingsKey);
+	$('#sound-settings-end-time').val(keyInfo[settingsKey].endTime);
+}
+
 module.exports = {
 	buildKeyboard: buildKeyboard,
 	buildTransitionsList: buildTransList,
 	buildWaveform: buildWaveform,
 	openSoundSettings: openSoundSettings,
-	closeSoundSettings: closeSoundSettings
+	saveSoundSettings: saveSoundSettings,
+	resetStartTime: resetStartTime,
+	resetEndTime: resetEndTime
 };

@@ -110,6 +110,7 @@
 							<td>
 								<input id="sound-settings-start-time" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
+								<div class="btn" id="start-time-reset" style="float: right;">Reset</div>
 							</td>
 						</tr>
 						<tr class="settings-row">
@@ -117,13 +118,14 @@
 							<td>
 								<input id="sound-settings-end-time" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
+								<div class="btn" id="end-time-reset" style="float: right;">Reset</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="modal-footer ">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat" onclick="view.closeSoundSettings()">Save</a>
+				<a href="#" class="modal-action modal-close waves-effect btn-flat" id="sound-settings-save">Save</a>
 				<a href="#" class="modal-action modal-close waves-effect btn-flat">Close</a>
 			</div>
 		</div>
