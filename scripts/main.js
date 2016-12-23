@@ -25,7 +25,12 @@ $(document).ready(function() {
 	$('.modal').modal();
 	$('select').material_select();
 	$('.editable').editable(function(value, settings) {
-		return (value);
+		if (value == "") {
+			return "Hit enter after typing!";
+		} else {
+			console.log(value);
+			return value;
+		}
 	}, {
 		type: 'text'
 	});

@@ -26,6 +26,10 @@ function registerSound(key) {
 	}
 }
 
+/**
+ *	@desc:	Plays a sound, creating a sound instance for it if necessary
+ *	@param:	key: The key of the sound to play
+ */
 function playSound(key) {
 	// Check currentInstances to see if the key is playing or not
 	if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
@@ -42,6 +46,18 @@ function playSound(key) {
 }
 
 /**
+ *	@desc:	Plays a sound, creating a sound instance for it if necessary
+ *	@param:	key: The key of the sound to play
+ */
+function getDuration(key) {
+	// Check currentInstances to see if an instance has been created
+	if (currentInstances[key] == null) {
+		currentInstances[key] = createjs.Sound.createInstance(keyInfo[key].name);
+	}
+	return Math.floor(currentInstances[key].duration / 1000);
+}
+
+/**
  *	@desc:	Fired when a song has been preloaded by soundJS
  *	@param:	song: The registered soundJS object (!!not keyInfo!!)
  *								aka, song.id = song name, not key letter
@@ -54,5 +70,6 @@ function fileLoaded(song) {
 module.exports = {
 	register: registerSound,
 	fileLoaded: fileLoaded,
-	playSound: playSound
+	playSound: playSound,
+	getDuration: getDuration
 }

@@ -28,8 +28,10 @@ function checkKeyInfo(key) {
 		"key": key,
 		"name": "",
 		"path": "",
-		"colour": "default",
-		"loop": false
+		"color": "default",
+		"loop": false,
+		"start-time": 0,
+		"end-time": null
 	};
 
 	if (chosenKey == undefined) { // If that key isn't part of the keyInfo array yet...

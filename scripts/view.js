@@ -5,6 +5,9 @@
 			buildTransList
 			buildWaveform
 */
+
+var settingsKey;
+
 // Create keyboard buttons
 function buildKeyboard() {
 	var rows = [
@@ -41,19 +44,42 @@ function buildWaveform() {
 function openSoundSettings(key) {
 	var idStart = "#sound-settings-";
 	var soundProps = keyInfo[key];
+	if (soundProps.name == "") {
+		soundProps.name = "Enter a name"
+	};
 	$(idStart + "name").text(soundProps.name);
 	$(idStart + "path").val(soundProps.path);
-	if (soundProps.loop == true) {
-		$(idStart + "loop").attr("checked", "checked");
+	$(idStart + "loop").prop("checked", soundProps.loop);
+	$(idStart + "start-time").val(soundProps["start-time"]);
+	if (soundProps["end-time"] != null) {
+		$(idStart + "end-time").val(soundProps["end-time"]);
 	} else {
-		$(idStart + "loop").removeAttr("checked");
+		$(idStart + "end-time").val(sounds.getDuration(key));
 	}
+	settingsKey = key;
 	$('#sound-settings').modal('open');
+}
+
+/**
+ *	@desc: Gets the settings from the sound settings box and save them
+ *	@param: settingsKey (global): the key to apply changes to
+ */
+function closeSoundSettings() {
+	var keyArray = keyInfo[settingsKey];
+	keyArray.name = $('#sound-settings-name').text();
+	$('#' + settingsKey).text(keyArray.name);
+	keyArray.color = $('#sound-settings-color').val();
+	keyArray.loop = $('#sound-settings-loop').is(':checked');
+	keyArray["start-time"] = $('#sound-settings-start-time').val();
+	keyArray["end-time"] = $('#sound-settings-end-time').val();
+	keyInfo[settingsKey] = keyArray;
+	util.storeObj("keyInfo", keyInfo);
 }
 
 module.exports = {
 	buildKeyboard: buildKeyboard,
 	buildTransitionsList: buildTransList,
 	buildWaveform: buildWaveform,
-	openSoundSettings: openSoundSettings
+	openSoundSettings: openSoundSettings,
+	closeSoundSettings: closeSoundSettings
 };
