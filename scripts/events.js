@@ -83,6 +83,11 @@ function setKeyEvents() {
 		e.stopPropagation();
 	});
 
+	// Prevent firing sounds when editing numbers/text in input fields
+	$('.input-field').bind('keydown', function(e) {
+		e.stopPropagation();
+	});
+
 	// Prevent Dragging files onto main window
 	$(document).on('drop', function(e) {
 		e.preventDefault();
