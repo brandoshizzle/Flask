@@ -31,18 +31,34 @@ function registerSound(key) {
  *	@param:	key: The key of the sound to play
  */
 function playSound(key) {
+	var ppc = setPPC(key); // Set play properties
 	// Check currentInstances to see if the key is playing or not
 	if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
-		currentInstances[key] = createjs.Sound.play(keyInfo[key].name);
+		currentInstances[key] = createjs.Sound.play(keyInfo[key].name, ppc);
 		waveforms.track(key);
 	} else if (currentInstances[key].playState == 'playSucceeded') {
 		// It is playing, so stop it
 		currentInstances[key].stop();
 	} else {
 		// It is not playing and does exist. Play it.
-		currentInstances[key].play();
+		currentInstances[key].play(ppc);
 		waveforms.track(key);
 	}
+}
+
+function setPPC(key) {
+	var keyArray = keyInfo[key];
+	var loopIt = 0;
+	var durationTime = (keyArray.endTime - keyArray.startTime) * 1000;
+	if (keyArray.loop == true) {
+		loopIt = -1;
+	}
+	return new createjs.PlayPropsConfig().set({
+		loop: loopIt,
+		startTime: keyArray.startTime * 1000,
+		duration: durationTime,
+		volume: 1
+	});
 }
 
 /**
@@ -54,7 +70,7 @@ function getDuration(key) {
 	if (currentInstances[key] == null) {
 		currentInstances[key] = createjs.Sound.createInstance(keyInfo[key].name);
 	}
-	return Math.floor(currentInstances[key].duration / 1000);
+	return (currentInstances[key].duration / 1000).toFixed(2);
 }
 
 /**

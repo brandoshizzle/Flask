@@ -50,9 +50,9 @@ function openSoundSettings(key) {
 	$(idStart + "name").text(soundProps.name);
 	$(idStart + "path").val(soundProps.path);
 	$(idStart + "loop").prop("checked", soundProps.loop);
-	$(idStart + "start-time").val(soundProps["start-time"]);
-	if (soundProps["end-time"] != null) {
-		$(idStart + "end-time").val(soundProps["end-time"]);
+	$(idStart + "start-time").val(soundProps.startTime);
+	if (soundProps.endTime != null) {
+		$(idStart + "end-time").val(soundProps.endTime);
 	} else {
 		$(idStart + "end-time").val(sounds.getDuration(key));
 	}
@@ -70,8 +70,8 @@ function closeSoundSettings() {
 	$('#' + settingsKey).text(keyArray.name);
 	keyArray.color = $('#sound-settings-color').val();
 	keyArray.loop = $('#sound-settings-loop').is(':checked');
-	keyArray["start-time"] = $('#sound-settings-start-time').val();
-	keyArray["end-time"] = $('#sound-settings-end-time').val();
+	keyArray.startTime = $('#sound-settings-start-time').val();
+	keyArray.endTime = $('#sound-settings-end-time').val();
 	keyInfo[settingsKey] = keyArray;
 	util.storeObj("keyInfo", keyInfo);
 }
