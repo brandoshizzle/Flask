@@ -78,6 +78,11 @@ function setKeyEvents() {
 		}
 	});
 
+	// Prevent firing sounds when editing numbers/text in sound settings panel
+	$('#sound-settings').bind('keydown', function(e) {
+		e.stopPropagation();
+	});
+
 	// Prevent Dragging files onto main window
 	$(document).on('drop', function(e) {
 		e.preventDefault();
