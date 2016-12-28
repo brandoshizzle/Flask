@@ -1,15 +1,13 @@
 @import 'colors.css';
-@import 'preserveButtonHover.css';
+
+/*@import 'preserveButtonHover.css';*/
+
 .btn-key {
   line-height: 1.2;
   padding: 0px;
   height: 5.5vw;
   width: 5.5vw;
   margin: 0.3vw;
-}
-
-.btn-key:hover {
-  box-shadow: 0px 6px 0px 0px teal;
 }
 
 .keyLetter {

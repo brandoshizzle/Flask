@@ -3,17 +3,28 @@
 * Recommended color scheme at http://materializecss.com/color.html
 */
 
+@import 'open-color.css';
 :root {
-  --color-primary: #80cbc4;
-  --color-secondary: yellow;
-  --color-text-dark: #212121;
-  --color-background: #263238;
+  --pM: var(--oc-blue-5);
+  --pD: var(--oc-blue-9);
+  --pL: var(--oc-blue-4);
+  --tL: var(--oc-gray-0);
+  --bg: var(--oc-gray-0);
 }
 
 .btn-key {
-  background-color: var(--color-primary);
-  color: var(--color-text-dark);
-  box-shadow: 0px 4px 0px 0px teal;
+  background-color: var(--pM);
+  color: var(--tL);
+  box-shadow: 0px 4px 0px 0px var(--pD);
+}
+
+.btn-key:hover {
+  background-color: var(--pL);
+  box-shadow: 0px 1px 0px 0px var(--pD);
+}
+
+.tabs {
+  background-color: blue;
 }
 
 body {

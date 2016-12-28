@@ -4,11 +4,13 @@ const view = require(jsPath + 'view');
 const events = require(jsPath + 'events');
 const sounds = require(jsPath + 'sounds');
 const util = require(jsPath + 'util');
+//const colors = require(jsPath + 'colors');
 
 var wavesurfer;
 var keys;
 var currentInstances = {};
 var keyInfo = {};
+var transitionsInfo = {};
 var sI;
 
 /**
@@ -21,6 +23,7 @@ $(document).ready(function() {
 	view.buildWaveform();
 	util.loadKeyInfo();
 	events.setKeyEvents();
+	//colors.setColors();
 
 	$('.modal').modal();
 	$('select').material_select();
