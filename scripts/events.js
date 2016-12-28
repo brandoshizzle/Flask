@@ -40,6 +40,22 @@ function setKeyEvents() {
 		return false;
 	});
 
+	// File is dropped onto transition song box - register and add info
+	$('.transitionsBox').on('drop', function(e) {
+		e.originalEvent.preventDefault(); // Prevent default action
+		var tempObj;
+		for (let f of e.originalEvent.dataTransfer.files) {
+			// write file info to array for later
+			tempObj.name = util.cleanName(f.name);
+			tempObj.path = f.path;
+			tempObj.id = tempObj.name;
+			sounds.register(tempObj.id);
+			util.storeObj("transitionsInfo", transitionsInfo);
+			waveforms.load(key);
+		};
+		return false;
+	});
+
 	// Click to show audio waveform and set .clicked-key class
 	keys.on('click', function(e) {
 		var key = e.target.id;
