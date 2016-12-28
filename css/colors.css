@@ -8,8 +8,36 @@
   --pM: var(--oc-blue-5);
   --pD: var(--oc-blue-9);
   --pL: var(--oc-blue-4);
+  --aM: var(--oc-yellow-4);
   --tL: var(--oc-gray-0);
-  --bg: var(--oc-gray-0);
+  --tM: var(--oc-blue-2);
+  --bgD: var(--oc-gray-9);
+  --bgM: var(--oc-gray-8);
+}
+
+body {
+  background-color: var(--bgD);
+}
+
+.transitionsBox {
+  background-color: var(--bgM);
+}
+
+#transition-songs li:first-child {
+  background-color: var(--aM);
+}
+
+#waveform {
+  background-color: var(--pD);
+}
+
+.header-row {
+  background-color: var(--pM);
+  color: var(--tL);
+}
+
+.section-header {
+  color: var(--oc-gray-6);
 }
 
 .btn-key {
@@ -20,13 +48,37 @@
 
 .btn-key:hover {
   background-color: var(--pL);
-  box-shadow: 0px 1px 0px 0px var(--pD);
+  box-shadow: 0px 3px 0px 0px var(--pD);
 }
 
-.tabs {
-  background-color: blue;
+.tabs .tab a {
+  color: var(--tL);
 }
 
-body {
-  background-color: var(--color-background);
+.tabs .tab a:hover, .tabs .tab a.active {
+  background-color: transparent;
+  color: var(--aM);
+}
+
+.tabs .tab.disabled a, .tabs .tab.disabled a:hover {
+  color: rgba(102, 147, 153, 0.7);
+}
+
+.tabs .indicator {
+  background-color: var(--aM);
+}
+
+
+/* label focus color */
+
+.input-field input[type=text]:focus+label {
+  color: var(--pM);
+}
+
+
+/* label underline focus color */
+
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid var(--pM);
+  box-shadow: 0 1px 0 0 var(--pM);
 }

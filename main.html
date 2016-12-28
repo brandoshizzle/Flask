@@ -15,9 +15,11 @@
 	</head>
 
 	<body>
-
-		<div class="row">
-			<div class="col s12">
+		<div class="header-row">
+			<div>
+				<h4><strong>SOUND</strong>prov</h4>
+			</div>
+			<div class="tabs-row">
 				<ul class="tabs">
 					<li class="tab"><a class="active" href="#page1">Page 1</a></li>
 					<li class="tab"><a href="#page2">Page 2 is the best!</a></li>
@@ -36,30 +38,28 @@
 					<div id="row3"></div>
 				</div>
 			</div>
+		</div>
 
+		<div class="transitionsBox col s3 z-depth-4">
+			<p class="section-header">Playlist</p>
 			<!-- Search bar/transition songs -->
-			<div class="input-field col s3">
-				<i class="material-icons prefix">search</i>
+			<div class="input-field">
 				<input id="icon_prefix" type="text" class="validate">
-				<!--<label for="icon_prefix">Search</label>-->
+				<label for="icon_prefix">Search</label>
 			</div>
-			<div class="transitionsBox col s3 z-depth-4">
-				<ul id="transition-songs">
-					<li>Artist - Song 1</li>
-					<li>Artist - Song 2</li>
-					<li>Artist - Song 3</li>
-					<li>Artist - Song 4</li>
-					<li>Artist - Song 5</li>
-					<li>Artist - Song 6</li>
-					<li>Artist - Song 7</li>
-				</ul>
-			</div>
+			<ul id="transition-songs">
+				<li>Artist - Song 1</li>
+				<li>Artist - Song 2</li>
+				<li>Artist - Song 3</li>
+				<li>Artist - Song 4</li>
+				<li>Artist - Song 5</li>
+				<li>Artist - Song 6</li>
+				<li>Artist - Song 7</li>
+			</ul>
 		</div>
 
 		<!-- The waveform box-->
-		<div class="row">
-			<div id="waveform"></div>
-		</div>
+		<div class="z-depth-3" id="waveform"></div>
 
 		<!-- Settings box -->
 		<div id="sound-settings" class="modal modal-fixed-footer" style="width:400px">

@@ -32,21 +32,27 @@
 }
 
 #keyboard {
-  padding: 0;
+  padding-top: 20px;
 }
 
 #waveform {
   position: absolute;
   bottom: 0px;
-  width: 100%;
-  background-color: #37474f;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+  width: 75%;
+  margin: 10px;
+  border-radius: 3px;
 }
 
 body {
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
+}
+
+h4 {
+  padding-left: 20px;
+  padding-top: 10px;
+  margin: 0px;
 }
 
 .tabs {
@@ -66,22 +72,31 @@ body {
   background-color: #c62828;
 }
 
+.section-header {
+  margin-top: 0;
+  border-radius: 10px solid black;
+}
+
 #transition-songs {
   height: 100%;
+  margin: 0;
 }
 
 .transitionsBox {
-  box-shadow: -3px 8px 0px 0px #15252d;
-  background-color: #aaaaaa;
-  height: 100%;
-  border-radius: 2px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  height: 92%;
+  width: 22%;
+  border-radius: 3px;
+  padding: 10px;
 }
 
 #transition-songs li {
   background-color: #aaaaaa;
   padding: 3px;
   margin: 3px;
-  box-shadow: 0px 1px 0px 0px #233a11;
+  box-shadow: 0px 1px 0px 0px var(--oc-gray-7);
 }
 
 #transition-songs li:hover {
