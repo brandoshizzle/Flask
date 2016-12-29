@@ -11,4 +11,7 @@ app.on('ready', function() {
 	});
 	win.loadURL('file://' + __dirname + '/main.html');
 	//win.openDevTools();
-})
+});
+/*app.on('browser-window-created', function(e, window) {
+	window.setMenu(null);
+});*/

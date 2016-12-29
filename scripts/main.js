@@ -23,10 +23,13 @@ $(document).ready(function() {
 	view.buildWaveform();
 	util.loadKeyInfo();
 	events.setKeyEvents();
+	util.startTime();
+
 	//colors.setColors();
 
 	$('.modal').modal();
 	$('select').material_select();
+	$(".menu-icon").sideNav();
 	$('.editable').editable(function(value, settings) {
 		if (value == "") {
 			return "Hit enter after typing!";

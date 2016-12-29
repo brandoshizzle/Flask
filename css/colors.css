@@ -11,8 +11,10 @@
   --aM: var(--oc-yellow-4);
   --tL: var(--oc-gray-0);
   --tM: var(--oc-blue-2);
+  --tD: var(--oc-gray-9);
   --bgD: var(--oc-gray-9);
   --bgM: var(--oc-gray-8);
+  --bgL: var(--oc-gray-6);
 }
 
 body {
@@ -25,6 +27,11 @@ body {
 
 #transition-songs li:first-child {
   background-color: var(--aM);
+}
+
+#transition-songs li {
+  background-color: var(--bgL);
+  color: var(--tD);
 }
 
 #waveform {
@@ -40,14 +47,20 @@ body {
   color: var(--oc-gray-6);
 }
 
-.btn-key {
+.btn {
   background-color: var(--pM);
   color: var(--tL);
+}
+
+.btn:hover {
+  background-color: var(--pL);
+}
+
+.btn-key {
   box-shadow: 0px 4px 0px 0px var(--pD);
 }
 
 .btn-key:hover {
-  background-color: var(--pL);
   box-shadow: 0px 3px 0px 0px var(--pD);
 }
 
@@ -78,7 +91,15 @@ body {
 
 /* label underline focus color */
 
-.input-field input[type=text]:focus {
+input[type=text]:focus {
   border-bottom: 1px solid var(--pM);
   box-shadow: 0 1px 0 0 var(--pM);
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: var(--pL);
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: var(--pM);
 }

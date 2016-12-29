@@ -88,10 +88,34 @@ function cleanName(name) {
 	return name.substring(0, pos);
 }
 
+function startTime() {
+	var today = new Date();
+	var h = today.getHours();
+	var m = today.getMinutes();
+	var s = today.getSeconds();
+	var ampm = 'AM';
+	m = checkTime(m);
+	s = checkTime(s);
+	if (h > 12) {
+		h -= 12;
+		ampm = 'PM';
+	}
+	$('#clock').text(h + ":" + m + ":" + s + " " + ampm);
+	var t = setTimeout(startTime, 500);
+}
+
+function checkTime(i) {
+	if (i < 10) {
+		i = "0" + i
+	}; // add zero in front of numbers < 10
+	return i;
+}
+
 
 module.exports = {
 	storeObj: storeObj,
 	checkKeyInfo: checkKeyInfo,
 	loadKeyInfo: loadKeyInfo,
-	cleanName: cleanName
+	cleanName: cleanName,
+	startTime: startTime
 }
