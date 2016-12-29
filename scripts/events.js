@@ -20,17 +20,11 @@ function setKeyEvents() {
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
 			var key = e.target.id;
-			util.checkKeyInfo(key);
-			// write file info to array for later
-			keyInfo[key].name = util.cleanName(f.name);
-			keyInfo[key].path = f.path;
-			$("#" + key).text(keyInfo[key].name);
-			sounds.register(key);
-			util.storeObj("keyInfo", keyInfo);
-			waveforms.load(key);
+			sounds.loadFile(key, f.path);
 		};
 		return false;
 	});
+
 	keys.on('dragover', function(e) {
 		//$('#' + e.target.id).css("box-shadow", "0px 0px 26px 9px rgba(255,247,99,1)");
 		return false;
@@ -113,6 +107,12 @@ function setKeyEvents() {
 	$('#sound-settings, .input-field').keydown(function(e) {
 		e.stopPropagation();
 	});
+
+	// Open dialog box when browse button is pressed.
+	$('#browse-button').click(function(e) {
+		util.openBrowse($('#sound-settings-path').val());
+	});
+
 
 	// Prevent Dragging files onto main window
 	$(document).on('drop', function(e) {

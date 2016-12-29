@@ -5,6 +5,8 @@
  *		storeObj, checkKeyInfo, loadKeyInfo, cleanName
  */
 
+const dialog = require('electron').remote.dialog;
+
 /**
  *	@desc: Save changed object to local storage
  *	@param: keyName: The name of the localStorage object
@@ -84,8 +86,33 @@ function loadKeyInfo() {
  *	@return: The initial name without the file type ending
  */
 function cleanName(name) {
-	var pos = name.lastIndexOf(".");
+	name = name.toString();
+	var pos = name.lastIndexOf("\\");
+	console.log(name);
+	console.log(pos);
+	if (pos > -1) {
+		name = name.substring(pos + 1);
+	}
+	pos = name.lastIndexOf(".");
 	return name.substring(0, pos);
+}
+
+function openBrowse(currentPath) {
+	var options = {
+		title: 'Replace Sound File',
+		defaultPath: currentPath,
+		filters: [{
+			name: '*.wav, *.mp3, *.m4a, *.wma',
+			extensions: ['wav', 'mp3', 'ogg', 'm4a', 'mp4', 'wma']
+		}],
+		properties: ['openFile']
+	};
+	var newPath = dialog.showOpenDialog(options);
+	if (newPath != null) {
+		$('#sound-settings-path').val(newPath);
+		$('#sound-settings-name').text(cleanName(newPath));
+	}
+
 }
 
 function startTime() {
@@ -117,5 +144,6 @@ module.exports = {
 	checkKeyInfo: checkKeyInfo,
 	loadKeyInfo: loadKeyInfo,
 	cleanName: cleanName,
-	startTime: startTime
+	startTime: startTime,
+	openBrowse: openBrowse
 }

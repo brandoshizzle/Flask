@@ -67,6 +67,9 @@ function openSoundSettings(key) {
  */
 function saveSoundSettings() {
 	var keyArray = keyInfo[settingsKey];
+	if (keyArray.path != $('#sound-settings-path').val()) {
+		sounds.loadFile(settingsKey, $('#sound-settings-path').val());
+	}
 	keyArray.name = $('#sound-settings-name').text();
 	$('#' + settingsKey).text(keyArray.name);
 	keyArray.color = $('#sound-settings-color').val();

@@ -1,7 +1,8 @@
 const electron = require("electron");
 const {
 	app,
-	BrowserWindow
+	BrowserWindow,
+	dialog
 } = electron;
 
 app.on('ready', function() {

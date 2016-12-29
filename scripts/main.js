@@ -24,7 +24,6 @@ $(document).ready(function() {
 	util.loadKeyInfo();
 	events.setKeyEvents();
 	util.startTime();
-
 	//colors.setColors();
 
 	$('.modal').modal();

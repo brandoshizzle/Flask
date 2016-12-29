@@ -26,6 +26,17 @@ function registerSound(key) {
 	}
 }
 
+function loadSoundFromFile(key, path) {
+	util.checkKeyInfo(key);
+	// write file info to array for later
+	keyInfo[key].name = util.cleanName(path);
+	keyInfo[key].path = path;
+	$("#" + key).text(keyInfo[key].name);
+	sounds.register(key);
+	util.storeObj("keyInfo", keyInfo);
+	waveforms.load(key);
+}
+
 /**
  *	@desc:	Plays a sound, creating a sound instance for it if necessary
  *	@param:	key: The key of the sound to play
@@ -34,14 +45,17 @@ function playSound(key) {
 	var ppc = setPPC(key); // Set play properties
 	// Check currentInstances to see if the key is playing or not
 	if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
+		console.log('Creating and playing new instance.');
 		currentInstances[key] = createjs.Sound.play(keyInfo[key].name, ppc);
 		waveforms.track(key);
 	} else if (currentInstances[key].playState == 'playSucceeded') {
 		// It is playing, so stop it
+		console.log('Song stopped')
+		''
 		currentInstances[key].stop();
 	} else {
 		// It is not playing and does exist. Play it.
-		currentInstances[key].play(ppc);
+		currentInstances[key] = createjs.Sound.play(keyInfo[key].name, ppc);
 		waveforms.track(key);
 	}
 }
@@ -49,6 +63,9 @@ function playSound(key) {
 function setPPC(key) {
 	var keyArray = keyInfo[key];
 	var loopIt = 0;
+	if (keyArray.endTime == null) {
+		keyArray.endTime = getDuration(key);
+	}
 	var durationTime = (keyArray.endTime - keyArray.startTime) * 1000;
 	if (keyArray.loop == true) {
 		loopIt = -1;
@@ -85,6 +102,7 @@ function fileLoaded(song) {
 
 module.exports = {
 	register: registerSound,
+	loadFile: loadSoundFromFile,
 	fileLoaded: fileLoaded,
 	playSound: playSound,
 	getDuration: getDuration
