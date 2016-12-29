@@ -69,6 +69,8 @@ function saveSoundSettings() {
 	var keyArray = keyInfo[settingsKey];
 	if (keyArray.path != $('#sound-settings-path').val()) {
 		sounds.loadFile(settingsKey, $('#sound-settings-path').val());
+		view.resetEndTime();
+		view.resetStartTime();
 	}
 	keyArray.name = $('#sound-settings-name').text();
 	$('#' + settingsKey).text(keyArray.name);

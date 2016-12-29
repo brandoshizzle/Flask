@@ -110,7 +110,7 @@ function setKeyEvents() {
 
 	// Open dialog box when browse button is pressed.
 	$('#browse-button').click(function(e) {
-		util.openBrowse($('#sound-settings-path').val());
+		util.openBrowse();
 	});
 
 

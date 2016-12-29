@@ -88,8 +88,6 @@ function loadKeyInfo() {
 function cleanName(name) {
 	name = name.toString();
 	var pos = name.lastIndexOf("\\");
-	console.log(name);
-	console.log(pos);
 	if (pos > -1) {
 		name = name.substring(pos + 1);
 	}
@@ -97,7 +95,8 @@ function cleanName(name) {
 	return name.substring(0, pos);
 }
 
-function openBrowse(currentPath) {
+function openBrowse() {
+	var currentPath = $('#sound-settings-path').val();
 	var options = {
 		title: 'Replace Sound File',
 		defaultPath: currentPath,
@@ -112,7 +111,6 @@ function openBrowse(currentPath) {
 		$('#sound-settings-path').val(newPath);
 		$('#sound-settings-name').text(cleanName(newPath));
 	}
-
 }
 
 function startTime() {

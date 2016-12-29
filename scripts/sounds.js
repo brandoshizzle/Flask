@@ -42,6 +42,9 @@ function loadSoundFromFile(key, path) {
  *	@param:	key: The key of the sound to play
  */
 function playSound(key) {
+	if (keyInfo[key].endTime == "0.00") {
+		keyInfo[key].endTime = sounds.getDuration(key);
+	}
 	var ppc = setPPC(key); // Set play properties
 	// Check currentInstances to see if the key is playing or not
 	if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
@@ -50,8 +53,7 @@ function playSound(key) {
 		waveforms.track(key);
 	} else if (currentInstances[key].playState == 'playSucceeded') {
 		// It is playing, so stop it
-		console.log('Song stopped')
-		''
+		console.log('Song stopped');
 		currentInstances[key].stop();
 	} else {
 		// It is not playing and does exist. Play it.
@@ -84,10 +86,8 @@ function setPPC(key) {
  */
 function getDuration(key) {
 	// Check currentInstances to see if an instance has been created
-	if (currentInstances[key] == null) {
-		currentInstances[key] = createjs.Sound.createInstance(keyInfo[key].name);
-	}
-	return (currentInstances[key].duration / 1000).toFixed(2);
+	var tempInstance = createjs.Sound.createInstance(keyInfo[key].name);
+	return (tempInstance.duration / 1000).toFixed(2);
 }
 
 /**
