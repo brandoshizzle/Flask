@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/brandoshizzle/SoundProv#readme",
   "devDependencies": {
-    "createjs-soundjs": "^0.6.2"
+    "electron": "^1.4.13"
   }
 }
