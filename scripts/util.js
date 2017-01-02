@@ -4,19 +4,8 @@
  * Functions:
  *		storeObj, checkKeyInfo, loadKeyInfo, cleanName
  */
-
+/*jshint esversion: 6 */
 const dialog = require('electron').remote.dialog;
-
-/**
- *	@desc: Save changed object to local storage
- *	@param: keyName: The name of the localStorage object
- *					obj : The object being stringified and stored
- */
-function storeObj(keyName, obj) {
-	var objString = JSON.stringify(obj);
-	localStorage.setItem(keyName, objString);
-	console.log("Stored new " + keyName + " settings!");
-}
 
 /**
  *	@desc: Ensures that all loaded keys have the properties they need
@@ -36,7 +25,7 @@ function checkKeyInfo(key) {
 		"endTime": null
 	};
 
-	if (chosenKey == undefined) { // If that key isn't part of the keyInfo array yet...
+	if (chosenKey === undefined) { // If that key isn't part of the keyInfo array yet...
 		keyInfo[key] = JSON.parse(JSON.stringify(defaultArray));
 	} else { // If key was already defined...
 		// Check that the key has all properties - set default if it doesn't have it.
@@ -54,29 +43,6 @@ function checkKeyInfo(key) {
 			}
 		});
 
-	}
-}
-
-/**
- *	@desc: 	Loads the keyInfo array from localStorage and registers each sound
- *					Also prints the name of the song on the key in the view
- *	@param: none
- */
-function loadKeyInfo() {
-	// Pull keyInfo string from localStorage
-	var keyInfoString = localStorage.getItem("keyInfo");
-	// Only parse it if it exists!
-	if (keyInfoString != null) {
-		keyInfo = JSON.parse(keyInfoString);
-		console.log(keyInfo);
-		Object.keys(keyInfo).map(function(key, index) {
-			// Ensure all parameters are up to date
-			checkKeyInfo(key);
-			// Print the name of each sound on it's corresponding key
-			$("#" + key).text(keyInfo[key].name);
-			// Register sound with SoundJS
-			sounds.register(key);
-		});
 	}
 }
 
@@ -107,7 +73,7 @@ function openBrowse() {
 		properties: ['openFile']
 	};
 	var newPath = dialog.showOpenDialog(options);
-	if (newPath != null) {
+	if (newPath !== null) {
 		$('#sound-settings-path').val(newPath);
 		$('#sound-settings-name').text(cleanName(newPath));
 	}
@@ -131,17 +97,20 @@ function startTime() {
 
 function checkTime(i) {
 	if (i < 10) {
-		i = "0" + i
-	}; // add zero in front of numbers < 10
+		i = "0" + i;
+	} // add zero in front of numbers < 10
 	return i;
+}
+
+function cloneObj(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }
 
 
 module.exports = {
-	storeObj: storeObj,
 	checkKeyInfo: checkKeyInfo,
-	loadKeyInfo: loadKeyInfo,
 	cleanName: cleanName,
 	startTime: startTime,
-	openBrowse: openBrowse
-}
+	openBrowse: openBrowse,
+	cloneObj: cloneObj
+};

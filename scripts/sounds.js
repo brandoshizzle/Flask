@@ -4,77 +4,66 @@
  *	Functions:
  *		registerSound, fildLoaded
  */
+/*jshint esversion: 6 */
 const waveforms = require("./waveforms");
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
  *					Sounds that fail the path check get the soundNotLoaded class
- *	@param:	key: The key that the sound is being registered on (string)
+ *	@param:	soundInfo: Object containing info related to the sound object
  */
-function registerSound(key) {
+function registerSound(soundInfo) {
 	// Check if path to sound file exists
-	if (fs.existsSync(keyInfo[key].path)) {
+	if (fs.existsSync(soundInfo.path)) {
 		// Register sound with SoundJS
 		createjs.Sound.registerSound({
-			id: keyInfo[key].name,
-			src: keyInfo[key].path
+			id: soundInfo.name,
+			src: soundInfo.path
 		});
 	} else {
 		// Let the user know with a toast
-		Materialize.toast(keyInfo[key].name + " was NOT loaded.", 4000);
-		$("#" + key).parent().addClass("soundNotLoaded");
+		Materialize.toast(soundInfo.name + " was NOT loaded.", 4000);
+		$("#" + soundInfo.id).parent().addClass("soundNotLoaded");
 	}
-}
-
-function loadSoundFromFile(key, path) {
-	util.checkKeyInfo(key);
-	// write file info to array for later
-	keyInfo[key].name = util.cleanName(path);
-	keyInfo[key].path = path;
-	$("#" + key).text(keyInfo[key].name);
-	sounds.register(key);
-	util.storeObj("keyInfo", keyInfo);
-	waveforms.load(key);
 }
 
 /**
  *	@desc:	Plays a sound, creating a sound instance for it if necessary
- *	@param:	key: The key of the sound to play
+ *	@param:	soundInfo: Object containing all sound information
  */
-function playSound(key) {
-	if (keyInfo[key].endTime == "0.00") {
-		keyInfo[key].endTime = sounds.getDuration(key);
+function playSound(soundInfo) {
+	if (soundInfo.endTime == "0.00") {
+		soundInfo.endTime = sounds.getDuration(soundInfo);
 	}
-	var ppc = setPPC(key); // Set play properties
+	var ppc = setPPC(soundInfo); // Set play properties
 	// Check currentInstances to see if the key is playing or not
-	if (currentInstances[key] == null) { // if it doesn't exist, it's not playing
-		console.log('Creating and playing new instance.');
-		currentInstances[key] = createjs.Sound.play(keyInfo[key].name, ppc);
-		waveforms.track(key);
-	} else if (currentInstances[key].playState == 'playSucceeded') {
+	if (currentInstances[soundInfo.id] === undefined) { // if it doesn't exist, it's not playing
+		blog('Creating and playing new instance.');
+		currentInstances[soundInfo.id] = createjs.Sound.play(soundInfo.name, ppc);
+		waveforms.track(soundInfo);
+	} else if (currentInstances[soundInfo.id].playState == 'playSucceeded') {
 		// It is playing, so stop it
-		console.log('Song stopped');
-		currentInstances[key].stop();
+		blog('Song stopped');
+		currentInstances[soundInfo.id].stop();
 	} else {
 		// It is not playing and does exist. Play it.
-		currentInstances[key] = createjs.Sound.play(keyInfo[key].name, ppc);
-		waveforms.track(key);
+		currentInstances[soundInfo.id] = createjs.Sound.play(soundInfo.name, ppc);
+		waveforms.track(soundInfo);
 	}
 }
 
-function setPPC(key) {
-	var keyArray = keyInfo[key];
+function setPPC(soundInfo) {
 	var loopIt = 0;
-	if (keyArray.endTime == null) {
-		keyArray.endTime = getDuration(key);
+	if (soundInfo.endTime === null) {
+		soundInfo.endTime = getDuration(soundInfo);
 	}
-	var durationTime = (keyArray.endTime - keyArray.startTime) * 1000;
-	if (keyArray.loop == true) {
+	var durationTime = (soundInfo.endTime - soundInfo.startTime) * 1000;
+	if (soundInfo.loop === true) {
 		loopIt = -1;
 	}
 	return new createjs.PlayPropsConfig().set({
 		loop: loopIt,
-		startTime: keyArray.startTime * 1000,
+		startTime: soundInfo.startTime * 1000,
 		duration: durationTime,
 		volume: 1
 	});
@@ -84,9 +73,11 @@ function setPPC(key) {
  *	@desc:	Plays a sound, creating a sound instance for it if necessary
  *	@param:	key: The key of the sound to play
  */
-function getDuration(key) {
-	// Check currentInstances to see if an instance has been created
-	var tempInstance = createjs.Sound.createInstance(keyInfo[key].name);
+function getDuration(soundInfo) {
+	// Create temporary sound instance
+	blog(soundInfo);
+	createjs.Sound.registerSound(soundInfo.path, 'tempForDuration');
+	tempInstance = createjs.Sound.createInstance('tempForDuration');
 	return (tempInstance.duration / 1000).toFixed(2);
 }
 
@@ -102,8 +93,7 @@ function fileLoaded(song) {
 
 module.exports = {
 	register: registerSound,
-	loadFile: loadSoundFromFile,
 	fileLoaded: fileLoaded,
 	playSound: playSound,
 	getDuration: getDuration
-}
+};

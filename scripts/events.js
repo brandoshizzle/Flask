@@ -4,8 +4,11 @@
  * Functions:
  *		setKeyEvents
  */
+/*jshint esversion: 6 */
+
 // Required js scripts
 const waveforms = require("./waveforms");
+const soundInfo = require("./soundInfoManager");
 
 var prevClickedKey = "Q"; // Key clicked previous to the current one - for removing active-key class
 
@@ -20,8 +23,13 @@ function setKeyEvents() {
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
 			var key = e.target.id;
-			sounds.loadFile(key, f.path);
-		};
+			var newSoundInfo = soundInfo.createSoundInfoFromPath(f.path, key);
+			keyInfo[key] = newSoundInfo;
+			$("#" + key).text(newSoundInfo.name);
+			blog(newSoundInfo);
+			storage.storeObj("keyInfo", keyInfo);
+			waveforms.load(newSoundInfo);
+		}
 		return false;
 	});
 
@@ -46,7 +54,7 @@ function setKeyEvents() {
 			sounds.register(tempObj.id);
 			util.storeObj("transitionsInfo", transitionsInfo);
 			waveforms.load(key);
-		};
+		}
 		return false;
 	});
 
@@ -57,7 +65,7 @@ function setKeyEvents() {
 		$('#' + key).addClass('clicked-key');
 		prevClickedKey = key;
 		if (keyInfo.hasOwnProperty(key)) {
-			waveforms.track(key);
+			waveforms.track(keyInfo[key]);
 		}
 	});
 
@@ -70,18 +78,19 @@ function setKeyEvents() {
 
 	// Handles pressing a real key anywhere on the page
 	$(document).keydown(function(e) {
+		var key;
 		// If keys A-Z have been pressed
 		if (e.which > 64 && e.which < 91) {
-			var key = keyboardMap[e.which];
+			key = keyboardMap[e.which];
 			// Check if the sound was loaded or not
 			if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
-				sounds.playSound(key);
+				sounds.playSound(keyInfo[key]);
 			} else { // User tries to play a not-loaded sound
-				Materialize.toast(keyInfo[key].name + " is not loaded.", 1500)
+				Materialize.toast(keyInfo[key].name + " is not loaded.", 1500);
 			}
 			// User presses the delete key
 		} else if (e.which == 46) {
-			var key = $('.clicked-key')[0].id;
+			key = $('.clicked-key')[0].id;
 			delete keyInfo[key];
 			$("#" + key).text("");
 			util.storeObj("keyInfo", keyInfo);
@@ -127,4 +136,4 @@ function setKeyEvents() {
 
 module.exports = {
 	setKeyEvents: setKeyEvents
-}
+};

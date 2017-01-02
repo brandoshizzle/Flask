@@ -2,25 +2,25 @@ var waveformedInstance;
 var waveformTracking = false;
 var lastLoadedPath;
 
-function loadWavesurfer(key) {
-	var path = keyInfo[key].path;
+function loadWavesurfer(soundInfo) {
+	var path = soundInfo.path;
 	if (path != lastLoadedPath) {
 		wavesurfer.load(path);
 		lastLoadedPath = path;
 	}
 }
 
-function setWaveformTracking(key) {
-	loadWavesurfer(key);
+function setWaveformTracking(soundInfo) {
+	loadWavesurfer(soundInfo);
 	try {
-		waveformedInstance = currentInstances[key];
+		waveformedInstance = currentInstances[soundInfo.id];
 		var playState = waveformedInstance.playState;
 		clearInterval(sI);
 		if (playState == 'playSucceeded') {
 			sI = setInterval(trackOnWaveform, 50);
 		}
 	} catch (err) {
-		console.log("Track is not playing. Waveform will not be tracked.");
+		blog("Track is not playing. Waveform will not be tracked.");
 	}
 }
 
@@ -33,4 +33,4 @@ function trackOnWaveform() {
 module.exports = {
 	load: loadWavesurfer,
 	track: setWaveformTracking
-}
+};

@@ -23,7 +23,7 @@ function buildKeyboard() {
 		}
 	}
 	keys = $('.audioName'); // set keys to be an array of the audioName divs
-};
+}
 
 function buildTransList() {
 	var el = document.getElementById('transition-songs');
@@ -45,14 +45,14 @@ function buildWaveform() {
 function openSoundSettings(key) {
 	var idStart = "#sound-settings-";
 	var soundProps = keyInfo[key];
-	if (soundProps.name == "") {
-		soundProps.name = "Enter a name"
-	};
+	if (soundProps.name === "") {
+		soundProps.name = "Enter a name";
+	}
 	$(idStart + "name").text(soundProps.name);
 	$(idStart + "path").val(soundProps.path);
 	$(idStart + "loop").prop("checked", soundProps.loop);
 	$(idStart + "start-time").val(soundProps.startTime);
-	if (soundProps.endTime != null) {
+	if (soundProps.endTime !== null) {
 		$(idStart + "end-time").val(soundProps.endTime);
 	} else {
 		$(idStart + "end-time").val(sounds.getDuration(key));
@@ -79,7 +79,7 @@ function saveSoundSettings() {
 	keyArray.startTime = $('#sound-settings-start-time').val();
 	keyArray.endTime = $('#sound-settings-end-time').val();
 	keyInfo[settingsKey] = keyArray;
-	util.storeObj("keyInfo", keyInfo);
+	storage.storeObj("keyInfo", keyInfo);
 }
 
 
@@ -89,7 +89,7 @@ function resetStartTime() {
 }
 
 function resetEndTime() {
-	keyInfo[settingsKey].endTime = sounds.getDuration(settingsKey);
+	keyInfo[settingsKey].endTime = sounds.getDuration(keyInfo[settingsKey]);
 	$('#sound-settings-end-time').val(keyInfo[settingsKey].endTime);
 }
 
