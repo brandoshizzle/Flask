@@ -85,13 +85,13 @@ h4 {
   border-radius: 10px solid black;
 }
 
-#transition-songs {
+#playlist-songs {
   margin: 0;
   position: relative;
   height: 81%;
 }
 
-.transitionsBox {
+.playlistBox {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -101,14 +101,14 @@ h4 {
   padding: 10px;
 }
 
-#transition-songs li {
+#playlist-songs li {
   padding: 3px;
   margin: 3px;
   box-shadow: 0px 1px 0px 0px var(--oc-gray-7);
   transition: 0.5s;
 }
 
-#transition-songs li:hover {
+#playlist-songs li:hover {
   cursor: pointer;
 }
 

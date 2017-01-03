@@ -21,15 +21,15 @@ body {
   background-color: var(--bgD);
 }
 
-.transitionsBox {
+.playlistBox {
   background-color: var(--bgM);
 }
 
-#transition-songs li:first-child {
+#playlist-songs li:first-child {
   background-color: var(--aM);
 }
 
-#transition-songs li {
+#playlist-songs li {
   background-color: var(--bgL);
   color: var(--tD);
 }

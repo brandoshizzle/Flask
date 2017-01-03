@@ -26,11 +26,11 @@ function buildKeyboard() {
 }
 
 function createPlaylistItem(soundInfo) {
-	$('#transition-songs').append("<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>");
+	$('#playlist-songs').append("<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>");
 }
 
 function buildPlaylist() {
-	var el = document.getElementById('transition-songs');
+	var el = document.getElementById('playlist-songs');
 	var sortable = Sortable.create(el, {
 		animation: 150
 	});

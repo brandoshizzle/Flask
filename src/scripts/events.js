@@ -45,7 +45,7 @@ function setKeyEvents() {
 	});
 
 	// File is dropped onto playlist box - register and add info
-	$('.transitionsBox').on('drop', function(e) {
+	$('.playlistBox').on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// Create new soundInfo object
@@ -104,7 +104,7 @@ function setKeyEvents() {
 			$("#" + key).text("");
 			storage.storeObj("keyInfo", keyInfo);
 		} else if (key == 'SPACE') {
-			var firstPlaylistSound = $('#transition-songs li:first-child').attr('id');
+			var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
 			sounds.playSound(playlistInfo[firstPlaylistSound]);
 		}
 	});
