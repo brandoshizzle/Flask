@@ -6,7 +6,7 @@ var defaultSoundInfo = {
 	"loop": false,
 	"startTime": 0,
 	"endTime": null,
-	"soundInstance": null
+	"soundInstance": undefined
 };
 
 /**

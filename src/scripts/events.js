@@ -19,6 +19,7 @@ var prevClickedKey = "Q"; // Key clicked previous to the current one - for remov
 function setKeyEvents() {
 	// Handles when a file is dropped on a key
 	keys.on('drop', function(e) {
+		blog('Drop!');
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
@@ -93,7 +94,7 @@ function setKeyEvents() {
 			key = $('.clicked-key')[0].id;
 			delete keyInfo[key];
 			$("#" + key).text("");
-			util.storeObj("keyInfo", keyInfo);
+			storage.storeObj("keyInfo", keyInfo);
 		}
 	});
 

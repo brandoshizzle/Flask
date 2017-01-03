@@ -13,7 +13,7 @@ function loadWavesurfer(soundInfo) {
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
 	try {
-		waveformedInstance = currentInstances[soundInfo.id];
+		waveformedInstance = soundInfo.soundInstance;
 		var playState = waveformedInstance.playState;
 		clearInterval(sI);
 		if (playState == 'playSucceeded') {

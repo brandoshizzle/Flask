@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const electron = require("electron");
 const {
 	app,

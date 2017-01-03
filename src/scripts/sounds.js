@@ -37,17 +37,17 @@ function playSound(soundInfo) {
 	}
 	var ppc = setPPC(soundInfo); // Set play properties
 	// Check currentInstances to see if the key is playing or not
-	if (currentInstances[soundInfo.id] === undefined) { // if it doesn't exist, it's not playing
+	if (soundInfo.soundInstance === undefined) { // if it doesn't exist, it's not playing
 		blog('Creating and playing new instance.');
-		currentInstances[soundInfo.id] = createjs.Sound.play(soundInfo.name, ppc);
+		soundInfo.soundInstance = createjs.Sound.play(soundInfo.name, ppc);
 		waveforms.track(soundInfo);
-	} else if (currentInstances[soundInfo.id].playState == 'playSucceeded') {
+	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
 		// It is playing, so stop it
 		blog('Song stopped');
-		currentInstances[soundInfo.id].stop();
+		soundInfo.soundInstance.stop();
 	} else {
 		// It is not playing and does exist. Play it.
-		currentInstances[soundInfo.id] = createjs.Sound.play(soundInfo.name, ppc);
+		soundInfo.soundInstance = createjs.Sound.play(soundInfo.name, ppc);
 		waveforms.track(soundInfo);
 	}
 }
