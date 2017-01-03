@@ -39,16 +39,21 @@ function playSound(soundInfo) {
 	// Check currentInstances to see if the key is playing or not
 	if (soundInfo.soundInstance === undefined) { // if it doesn't exist, it's not playing
 		blog('Creating and playing new instance.');
-		soundInfo.soundInstance = createjs.Sound.play(soundInfo.name, ppc);
-		waveforms.track(soundInfo);
+		play();
 	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
 		// It is playing, so stop it
 		blog('Song stopped');
 		soundInfo.soundInstance.stop();
+		$('#' + soundInfo.id).removeClass('playing-sound');
 	} else {
 		// It is not playing and does exist. Play it.
+		play();
+	}
+
+	function play() {
 		soundInfo.soundInstance = createjs.Sound.play(soundInfo.name, ppc);
 		waveforms.track(soundInfo);
+		$('#' + soundInfo.id).addClass('playing-sound');
 	}
 }
 
@@ -75,7 +80,6 @@ function setPPC(soundInfo) {
  */
 function getDuration(soundInfo) {
 	// Create temporary sound instance
-	blog(soundInfo);
 	createjs.Sound.registerSound(soundInfo.path, 'tempForDuration');
 	tempInstance = createjs.Sound.createInstance('tempForDuration');
 	return (tempInstance.duration / 1000).toFixed(2);

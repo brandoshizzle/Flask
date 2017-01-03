@@ -8,9 +8,9 @@
 
 // Required js scripts
 const waveforms = require("./waveforms");
-const soundInfo = require("./soundInfoManager");
+const soundInfoManager = require("./soundInfoManager");
 
-var prevClickedKey = "Q"; // Key clicked previous to the current one - for removing active-key class
+var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -19,56 +19,65 @@ var prevClickedKey = "Q"; // Key clicked previous to the current one - for remov
 function setKeyEvents() {
 	// Handles when a file is dropped on a key
 	keys.on('drop', function(e) {
-		blog('Drop!');
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
 			var key = e.target.id;
-			var newSoundInfo = soundInfo.createSoundInfoFromPath(f.path, key);
+			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, key);
+			blog(keyInfo);
 			keyInfo[key] = newSoundInfo;
-			$("#" + key).text(newSoundInfo.name);
-			blog(newSoundInfo);
+			blog(keyInfo);
+			$(e.target).find('.audioName').text(newSoundInfo.name);
 			storage.storeObj("keyInfo", keyInfo);
 			waveforms.load(newSoundInfo);
+
 		}
 		return false;
 	});
 
 	keys.on('dragover', function(e) {
-		//$('#' + e.target.id).css("box-shadow", "0px 0px 26px 9px rgba(255,247,99,1)");
+		//$('#' + e.target.id).css("box-shadow", "0px 0px 4px 4px rgba(255,247,99,1)");
 		return false;
 	});
-	keys.on('dragleave', function() {
+	keys.on('dragleave', function(e) {
 		//$('#' + e.target.id).css("box-shadow", "0px 0px");
 		return false;
 	});
 
-	// File is dropped onto transition song box - register and add info
+	// File is dropped onto playlist box - register and add info
 	$('.transitionsBox').on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
-		var tempObj;
 		for (let f of e.originalEvent.dataTransfer.files) {
-			// write file info to array for later
-			tempObj.name = util.cleanName(f.name);
-			tempObj.path = f.path;
-			tempObj.id = tempObj.name;
-			sounds.register(tempObj.id);
-			util.storeObj("transitionsInfo", transitionsInfo);
-			waveforms.load(key);
+			// Create new soundInfo object
+			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path);
+			playlistInfo[newSoundInfo.id] = newSoundInfo;
+			view.createPlaylistItem(newSoundInfo);
+			//blog(newSoundInfo);
+			storage.storeObj("playlistInfo", playlistInfo);
+			waveforms.load(newSoundInfo);
 		}
 		return false;
 	});
 
-	// Click to show audio waveform and set .clicked-key class
-	keys.on('click', function(e) {
-		var key = e.target.id;
-		$('#' + prevClickedKey).removeClass('clicked-key');
-		$('#' + key).addClass('clicked-key');
-		prevClickedKey = key;
-		if (keyInfo.hasOwnProperty(key)) {
-			waveforms.track(keyInfo[key]);
-		}
+	// Click on keyboard key
+	$('.btn-key').on('click', function(e) {
+		clickSound(e, keyInfo);
 	});
+	// Click on playlist sound
+	$('.playlistSound').on('click', function(e) {
+		clickSound(e, playlistInfo);
+	});
+
+	// apply clicked-key class and show waveform
+	function clickSound(e, infoObj) {
+		var target = e.target;
+		if (infoObj.hasOwnProperty(target.id)) {
+			waveforms.track(infoObj[target.id]);
+			$(prevTarget).removeClass('waveformed-key');
+			$(target).addClass('waveformed-key');
+			prevTarget = target;
+		}
+	}
 
 	// Right click to bring up settings and populate them
 	keys.on('contextmenu', function(e) {
@@ -79,10 +88,9 @@ function setKeyEvents() {
 
 	// Handles pressing a real key anywhere on the page
 	$(document).keydown(function(e) {
-		var key;
+		var key = keyboardMap[e.which];
 		// If keys A-Z have been pressed
 		if (e.which > 64 && e.which < 91) {
-			key = keyboardMap[e.which];
 			// Check if the sound was loaded or not
 			if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
 				sounds.playSound(keyInfo[key]);
@@ -90,11 +98,14 @@ function setKeyEvents() {
 				Materialize.toast(keyInfo[key].name + " is not loaded.", 1500);
 			}
 			// User presses the delete key
-		} else if (e.which == 46) {
+		} else if (key == 'DELETE') {
 			key = $('.clicked-key')[0].id;
 			delete keyInfo[key];
 			$("#" + key).text("");
 			storage.storeObj("keyInfo", keyInfo);
+		} else if (key == 'SPACE') {
+			var firstPlaylistSound = $('#transition-songs li:first-child').attr('id');
+			sounds.playSound(playlistInfo[firstPlaylistSound]);
 		}
 	});
 

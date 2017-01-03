@@ -1,9 +1,12 @@
+/*jshint esversion: 6 */
+const soundInfoManager = require("./soundInfoManager");
+
 /**
  *	@desc: 	Loads the keyInfo array from localStorage and registers each sound
  *					Also prints the name of the song on the key in the view
  *	@param: none
  */
-function getInfoObj(objName) {
+function getInfoObj(objName, obj) {
 	var tempObj = {};
 	// Pull keyInfo string from localStorage
 	var infoString = localStorage.getItem(objName);
@@ -12,10 +15,13 @@ function getInfoObj(objName) {
 		tempObj = JSON.parse(infoString);
 		Object.keys(tempObj).map(function(id, index) {
 			// Ensure all parameters are up to date
-			util.checkKeyInfo(tempObj[id].id);
-			blog(tempObj[id].id);
-			// Print the name of each sound on it's corresponding key
-			$("#" + tempObj[id].id).text(tempObj[id].name);
+			soundInfoManager.checkSoundInfo(tempObj[id].id, obj);
+			if (objName === 'keyInfo') {
+				// Print the name of each sound on it's corresponding key
+				$("#" + tempObj[id].id).find('.audioName').text(tempObj[id].name);
+			} else if (objName === 'playlistInfo') {
+				view.createPlaylistItem(tempObj[id]);
+			}
 			// Register sound with SoundJS
 			sounds.register(tempObj[id]);
 		});

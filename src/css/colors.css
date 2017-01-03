@@ -64,6 +64,22 @@ body {
   box-shadow: 0px 3px 0px 0px var(--pD);
 }
 
+.waveformed-key {
+  box-shadow: 0px 0px 2px 1px white !important;
+}
+
+.waveformed-key:hover {
+  box-shadow: 0px 0px 5px 2px white !important;
+}
+
+.playing-sound {
+  box-shadow: 0px 0px 5px 2px var(--aM) !important;
+}
+
+.playing-sound:hover {
+  box-shadow: 0px 0px 2px 2px var(--aM) !important;
+}
+
 .tabs .tab a {
   color: var(--tL);
 }

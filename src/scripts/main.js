@@ -10,9 +10,8 @@ const util = require(jsPath + 'util');
 
 var wavesurfer;
 var keys;
-var currentInstances = {};
 var keyInfo = {};
-var transitionsInfo = {};
+var playlistInfo = {};
 var sI;
 var debug = 1;
 
@@ -22,9 +21,12 @@ var debug = 1;
 $(document).ready(function() {
 
 	view.buildKeyboard();
-	view.buildTransitionsList();
+	view.buildPlaylist();
 	view.buildWaveform();
-	keyInfo = storage.getInfoObj("keyInfo");
+	keyInfo = storage.getInfoObj("keyInfo", keyInfo);
+	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);
+	blog(keyInfo);
+	blog(playlistInfo);
 	events.setKeyEvents();
 	util.startTime();
 	//colors.setColors();

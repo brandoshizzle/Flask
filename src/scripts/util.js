@@ -8,45 +8,6 @@
 const dialog = require('electron').remote.dialog;
 
 /**
- *	@desc: Ensures that all loaded keys have the properties they need
- *				Called when loading stored keyInfo and when a song is dragged onto a key
- *	@param: key: The letter (or character) of the key to check (string)
- */
-function checkKeyInfo(key) {
-	var chosenKey = keyInfo[key];
-	// Define the default array - any new properties need to be added here!
-	var defaultArray = {
-		"key": key,
-		"name": "",
-		"path": "",
-		"color": "default",
-		"loop": false,
-		"startTime": 0,
-		"endTime": null
-	};
-
-	if (chosenKey === undefined) { // If that key isn't part of the keyInfo array yet...
-		keyInfo[key] = JSON.parse(JSON.stringify(defaultArray));
-	} else { // If key was already defined...
-		// Check that the key has all properties - set default if it doesn't have it.
-		Object.keys(
-			defaultArray).map(function(prop, index) {
-			if (!keyInfo[key].hasOwnProperty(prop)) {
-				keyInfo[key][prop] = defaultArray[prop];
-			}
-		});
-
-		// Check that the key does not have depreciated properties (and delete them)
-		Object.keys(chosenKey).map(function(prop, index) {
-			if (!defaultArray.hasOwnProperty(prop)) {
-				delete keyInfo[key][prop];
-			}
-		});
-
-	}
-}
-
-/**
  *	@desc: Creates the default name for a new song dragged in
  *	@param: name: The uncleaned file name
  *	@return: The initial name without the file type ending
@@ -59,6 +20,11 @@ function cleanName(name) {
 	}
 	pos = name.lastIndexOf(".");
 	return name.substring(0, pos);
+}
+
+function removeSpaces(str) {
+	var replaced = str.replace(/ /g, '_');
+	return replaced;
 }
 
 function openBrowse() {
@@ -108,8 +74,8 @@ function cloneObj(obj) {
 
 
 module.exports = {
-	checkKeyInfo: checkKeyInfo,
 	cleanName: cleanName,
+	removeSpaces: removeSpaces,
 	startTime: startTime,
 	openBrowse: openBrowse,
 	cloneObj: cloneObj

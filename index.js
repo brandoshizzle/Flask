@@ -11,7 +11,7 @@ app.on('ready', function() {
 		width: 800,
 		height: 600
 	});
-	win.loadURL('file://' + __dirname + '/main.html');
+	win.loadURL('file://' + __dirname + '/src/main.html');
 	//win.openDevTools();
 });
 /*app.on('browser-window-created', function(e, window) {

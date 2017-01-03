@@ -9,6 +9,7 @@
 
 .keyLetter {
   font-size: 1.5vw;
+  pointer-events: none;
 }
 
 .audioName {
@@ -17,6 +18,7 @@
   height: 100%;
   width: 100%;
   font-size: 1vw;
+  pointer-events: none;
   /*white-space: pre-wrap;*/
 }
 
@@ -103,6 +105,7 @@ h4 {
   padding: 3px;
   margin: 3px;
   box-shadow: 0px 1px 0px 0px var(--oc-gray-7);
+  transition: 0.5s;
 }
 
 #transition-songs li:hover {

@@ -19,13 +19,17 @@ function buildKeyboard() {
 	for (var i = 0; i < rows.length; i++) {
 		var rowNum = i + 1;
 		for (var j = 0; j < rows[i].length; j++) {
-			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light'><div class='keyLetter'>" + rows[i][j] + "</div><div id='" + rows[i][j] + "' class='audioName'></div></div>");
+			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + rows[i][j] + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
 		}
 	}
-	keys = $('.audioName'); // set keys to be an array of the audioName divs
+	keys = $('.btn-key'); // set keys to be an array of the audioName divs
 }
 
-function buildTransList() {
+function createPlaylistItem(soundInfo) {
+	$('#transition-songs').append("<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>");
+}
+
+function buildPlaylist() {
 	var el = document.getElementById('transition-songs');
 	var sortable = Sortable.create(el, {
 		animation: 150
@@ -73,7 +77,7 @@ function saveSoundSettings() {
 		view.resetStartTime();
 	}
 	keyArray.name = $('#sound-settings-name').text();
-	$('#' + settingsKey).text(keyArray.name);
+	$('#' + settingsKey).find('.audioName').text(keyArray.name);
 	keyArray.color = $('#sound-settings-color').val();
 	keyArray.loop = $('#sound-settings-loop').is(':checked');
 	keyArray.startTime = $('#sound-settings-start-time').val();
@@ -81,7 +85,6 @@ function saveSoundSettings() {
 	keyInfo[settingsKey] = keyArray;
 	storage.storeObj("keyInfo", keyInfo);
 }
-
 
 function resetStartTime() {
 	keyInfo[settingsKey].startTime = 0;
@@ -95,7 +98,8 @@ function resetEndTime() {
 
 module.exports = {
 	buildKeyboard: buildKeyboard,
-	buildTransitionsList: buildTransList,
+	createPlaylistItem: createPlaylistItem,
+	buildPlaylist: buildPlaylist,
 	buildWaveform: buildWaveform,
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
