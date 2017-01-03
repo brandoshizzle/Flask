@@ -11,6 +11,7 @@ const waveforms = require("./waveforms");
 const soundInfoManager = require("./soundInfoManager");
 
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
+var settingsInfoObj;
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -82,8 +83,15 @@ function setKeyEvents() {
 	// Right click to bring up settings and populate them
 	keys.on('contextmenu', function(e) {
 		var key = e.target.id;
-		view.openSoundSettings(key);
-		waveforms.load(key);
+		settingsInfoObj = keyInfo;
+		view.openSoundSettings(keyInfo[key]);
+		waveforms.load(keyInfo[key]);
+	});
+	$('#playlist-songs li').on('contextmenu', function(e) {
+		var id = e.target.id;
+		settingsInfoObj = playlistInfo;
+		view.openSoundSettings(playlistInfo[id]);
+		waveforms.load(playlistInfo[id]);
 	});
 
 	// Handles pressing a real key anywhere on the page
@@ -111,7 +119,17 @@ function setKeyEvents() {
 
 	// Close/save sound settings when save key is pressed.
 	$('#sound-settings-save').click(function(e) {
-		view.saveSoundSettings();
+		var tempSoundInfo = view.saveSoundSettings();
+		var itIsKeyInfo = (settingsInfoObj === keyInfo);
+		settingsInfoObj[tempSoundInfo.id] = tempSoundInfo;
+		if (itIsKeyInfo) {
+			$('#' + tempSoundInfo.id).find('.audioName').text(tempSoundInfo.name);
+			storage.storeObj("keyInfo", settingsInfoObj);
+		} else {
+			$('#' + tempSoundInfo.id).text(tempSoundInfo.name);
+			storage.storeObj("playlistInfo", settingsInfoObj);
+		}
+
 	});
 
 	// Close/save sound settings when save key is pressed.

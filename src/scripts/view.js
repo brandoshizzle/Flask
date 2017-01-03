@@ -6,7 +6,7 @@
 			buildWaveform
 */
 
-var settingsKey;
+var settingsSoundInfo;
 
 // Create keyboard buttons
 function buildKeyboard() {
@@ -46,22 +46,21 @@ function buildWaveform() {
 	wavesurfer.empty();
 }
 
-function openSoundSettings(key) {
+function openSoundSettings(soundInfo) {
 	var idStart = "#sound-settings-";
-	var soundProps = keyInfo[key];
-	if (soundProps.name === "") {
-		soundProps.name = "Enter a name";
+	if (soundInfo.name === "") {
+		soundInfo.name = "Enter a name";
 	}
-	$(idStart + "name").text(soundProps.name);
-	$(idStart + "path").val(soundProps.path);
-	$(idStart + "loop").prop("checked", soundProps.loop);
-	$(idStart + "start-time").val(soundProps.startTime);
-	if (soundProps.endTime !== null) {
-		$(idStart + "end-time").val(soundProps.endTime);
+	$(idStart + "name").text(soundInfo.name);
+	$(idStart + "path").val(soundInfo.path);
+	$(idStart + "loop").prop("checked", soundInfo.loop);
+	$(idStart + "start-time").val(soundInfo.startTime);
+	if (soundInfo.endTime !== null) {
+		$(idStart + "end-time").val(soundInfo.endTime);
 	} else {
 		$(idStart + "end-time").val(sounds.getDuration(key));
 	}
-	settingsKey = key;
+	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 }
 
@@ -70,30 +69,28 @@ function openSoundSettings(key) {
  *	@param: settingsKey (global): the key to apply changes to
  */
 function saveSoundSettings() {
-	var keyArray = keyInfo[settingsKey];
-	if (keyArray.path != $('#sound-settings-path').val()) {
+	var tempSoundInfo = settingsSoundInfo;
+	if (tempSoundInfo.path != $('#sound-settings-path').val()) {
 		sounds.loadFile(settingsKey, $('#sound-settings-path').val());
 		view.resetEndTime();
 		view.resetStartTime();
 	}
-	keyArray.name = $('#sound-settings-name').text();
-	$('#' + settingsKey).find('.audioName').text(keyArray.name);
-	keyArray.color = $('#sound-settings-color').val();
-	keyArray.loop = $('#sound-settings-loop').is(':checked');
-	keyArray.startTime = $('#sound-settings-start-time').val();
-	keyArray.endTime = $('#sound-settings-end-time').val();
-	keyInfo[settingsKey] = keyArray;
-	storage.storeObj("keyInfo", keyInfo);
+	tempSoundInfo.name = $('#sound-settings-name').text();
+	tempSoundInfo.color = $('#sound-settings-color').val();
+	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
+	tempSoundInfo.startTime = $('#sound-settings-start-time').val();
+	tempSoundInfo.endTime = $('#sound-settings-end-time').val();
+	return tempSoundInfo;
 }
 
 function resetStartTime() {
-	keyInfo[settingsKey].startTime = 0;
-	$('#sound-settings-start-time').val(keyInfo[settingsKey].startTime);
+	settingsSoundInfo.startTime = 0;
+	$('#sound-settings-start-time').val(settingsSoundInfo.startTime);
 }
 
 function resetEndTime() {
-	keyInfo[settingsKey].endTime = sounds.getDuration(keyInfo[settingsKey]);
-	$('#sound-settings-end-time').val(keyInfo[settingsKey].endTime);
+	settingsSoundInfo.endTime = sounds.getDuration(settingsSoundInfo);
+	$('#sound-settings-end-time').val(settingsSoundInfo.endTime);
 }
 
 module.exports = {
