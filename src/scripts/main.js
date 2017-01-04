@@ -33,7 +33,9 @@ $(document).ready(function() {
 
 	$('.modal').modal();
 	$('select').material_select();
-	$(".menu-icon").sideNav();
+	$(".menu-icon").sideNav({
+		closeOnClick: true
+	});
 	$('.editable').editable(function(value, settings) {
 		if (value === "") {
 			return "Hit enter after typing!";
