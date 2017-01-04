@@ -1,13 +1,24 @@
 {
-  "name": "soundprov",
+  "name": "SOUNDprov",
   "version": "0.1.0",
   "description": "A program designed for improv theatre sound technicians",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron index.js",
-    "build": "echo \"Error: no build specified\" && exit 1"
+    "build": "npm run build:osx && npm run build:win",
+    "build:osx": "build --mac --x64",
+    "build:win": "build --win --ia32"
   },
+	"build":{
+		"mac": {
+			"icon": "assets/logo.icns",
+			"category": "public.app-category.music"
+		},
+	  "win" : {
+	    "icon" : "assets/logo.ico"
+	  }
+	},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/brandoshizzle/SoundProv.git"
@@ -19,6 +30,7 @@
   },
   "homepage": "https://github.com/brandoshizzle/SoundProv#readme",
   "devDependencies": {
-    "electron": "^1.4.13"
+    "electron": "^1.4.13",
+    "electron-builder": "^10.17.3"
   }
 }
