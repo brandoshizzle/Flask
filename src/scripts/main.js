@@ -6,7 +6,7 @@ const events = require(jsPath + 'events');
 const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
 const util = require(jsPath + 'util');
-//const colors = require(jsPath + 'colors');
+const colors = require(jsPath + 'colors');
 
 var wavesurfer;
 var keys;
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	blog(playlistInfo);
 	events.setKeyEvents();
 	util.startTime();
-	//colors.setColors();
+	colors.initializeKeyColors();
 
 	$('.modal').modal();
 	$('select').material_select();

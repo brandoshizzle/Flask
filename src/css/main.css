@@ -192,6 +192,26 @@ tr td {
   cursor: default;
 }
 
+#color-picker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 195px;
+  height: 110px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  background-color: var(--oc-gray-2);
+}
+
+.color-picker-color {
+  height: 20px;
+  width: 40px;
+  border: 1px solid gray;
+  border-radius: 2px;
+  margin: 4px 0px -4px 4px;
+  display: inline-block;
+}
+
 #programTitle:hover {
   text-shadow: 0px 0px 2px white;
 }

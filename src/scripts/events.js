@@ -157,6 +157,17 @@ function setKeyEvents() {
 		util.openBrowse();
 	});
 
+	$("#sound-settings-color-container").click(function(e) {
+		var position = $("#sound-settings-color-container").position();
+		$("#color-picker").css('top', position.top);
+		$("#color-picker").css('left', position.left);
+		$("#color-picker").fadeIn();
+	});
+
+	$(".color-picker-color").click(function(e) {
+		colors.setPickedColor(e.target.id);
+		$("#color-picker").fadeOut();
+	});
 
 	// Prevent Dragging files onto main window
 	$(document).on('drop', function(e) {

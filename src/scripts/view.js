@@ -53,6 +53,8 @@ function openSoundSettings(soundInfo) {
 	}
 	$(idStart + "name").text(soundInfo.name);
 	$(idStart + "path").val(soundInfo.path);
+	$(idStart + "color").css("background-color", colors.makeColor(soundInfo.color));
+	colors.setColorPickerColors();
 	$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "start-time").val(soundInfo.startTime);
 	$(idStart + "end-time").val(soundInfo.endTime);
@@ -72,7 +74,7 @@ function saveSoundSettings() {
 		view.resetStartTime();
 	}
 	tempSoundInfo.name = $('#sound-settings-name').text();
-	tempSoundInfo.color = $('#sound-settings-color').val();
+	colors.setKeyColor(tempSoundInfo);
 	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 	tempSoundInfo.startTime = $('#sound-settings-start-time').val();
 	tempSoundInfo.endTime = $('#sound-settings-end-time').val();
@@ -89,6 +91,10 @@ function resetEndTime() {
 	$('#sound-settings-end-time').val(sounds.getDuration(settingsSoundInfo));
 }
 
+function openAbout() {
+	$('#about-modal').modal('open');
+}
+
 module.exports = {
 	buildKeyboard: buildKeyboard,
 	createPlaylistItem: createPlaylistItem,
@@ -97,5 +103,6 @@ module.exports = {
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
 	resetStartTime: resetStartTime,
-	resetEndTime: resetEndTime
+	resetEndTime: resetEndTime,
+	openAbout: openAbout
 };

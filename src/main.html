@@ -3,7 +3,7 @@
 <html>
 
 	<head>
-		<title>SoundProv</title>
+		<title>SOUNDprov v0.1.0</title>
 		<meta charset="utf-8">
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,21 +84,28 @@
 						<tr class="settings-row">
 							<td>Color</td>
 							<td>
-								<div class="input-field" style="width:180px;">
+								<div id="sound-settings-color-container" style="width: 100px; height: 30px; border: 2px solid gray; border-radius: 4px;">
+									<div id="sound-settings-color" style="width:80px; height: 20px; margin: auto; margin-top: 3px;background-color: green;">
+									</div>
+								</div>
+								<!--<div class="input-field" style="width:180px;">
 									<select id="sound-settings-color">
 										<option value="default" selected>Default</option>
+										<option value="gray">Gray</option>
 									 	<option value="red">Red</option>
 									 	<option value="pink">Pink</option>
-									 	<option value="purple">Purple</option>
-										<option value="deep-purple">Deep Purple</option>
+									 	<option value="grape">Grape</option>
+										<option value="violet">Violet</option>
 										<option value="indigo">Indigo</option>
 										<option value="blue">Blue</option>
-										<option value="light-blue">Light Blue</option>
 										<option value="cyan">Cyan</option>
 										<option value="teal">Teal</option>
 										<option value="green">Green</option>
+										<option value="lime">Lime</option>
+										<option value="yellow">Yellow</option>
+										<option value="orange">Orange</option>
 								 	</select>
-								</div>
+								</div>-->
 							</td>
 						</tr>
 						<tr class="settings-row">
@@ -130,10 +137,47 @@
 						</tr>
 					</tbody>
 				</table>
+				<div id="color-picker" hidden>
+					<div id="color-default" class="color-picker-color"></div>
+					<div id="color-gray" class="color-picker-color"></div>
+					<div id="color-red" class="color-picker-color"></div>
+					<div id="color-pink" class="color-picker-color"></div>
+					<div id="color-grape" class="color-picker-color"></div>
+					<div id="color-violet" class="color-picker-color"></div>
+					<div id="color-indigo" class="color-picker-color"></div>
+					<div id="color-blue" class="color-picker-color"></div>
+					<div id="color-cyan" class="color-picker-color"></div>
+					<div id="color-teal" class="color-picker-color"></div>
+					<div id="color-green" class="color-picker-color"></div>
+					<div id="color-lime" class="color-picker-color"></div>
+					<div id="color-yellow" class="color-picker-color"></div>
+					<div id="color-orange" class="color-picker-color"></div>
+				</div>
 			</div>
 			<div class="modal-footer ">
 				<a href="#" class="modal-action modal-close waves-effect btn-flat" id="sound-settings-save">Save</a>
 				<a href="#" class="modal-action modal-close waves-effect btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="about-modal" class="modal modal-fixed-footer" style="width:500px">
+			<div class="modal-content" style="text-align: center">
+				<h5 id="sound-settings-name" class="header" style="text-align: center">SOUNDprov</h5>
+				<h6>Software for improv theatre sound technicians.</h6>
+				<p>Version 0.1.0</p>
+				<p>Developed by <a href="mailto:cathcart.brandon@gmail.com">Brandon Cathcart</a></a>
+				</p>
+				<p>
+					<a href="paypal">Like SOUNDprov? Buy me a beer! :)</a>
+				</p>
+				<p style="font-size: 10px">
+					Copyright 2017 Brandon Cathcart <br /> Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+					THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+					DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+				</p>
+			</div>
+			<div class="modal-footer ">
+				<a href="#" class="modal-action modal-close waves-effect btn-flat">Neat</a>
 			</div>
 		</div>
 
@@ -148,13 +192,12 @@
 				</div>
 			</li>
 			<li><a class="waves-effect" href="#"><i class="material-icons">settings</i>Settings</a></li>
+			<li><a class="waves-effect" href="#" onclick="view.openAbout()"><i class=" material-icons ">info</i>About</a></li>
 			<li>
-				<div class="divider"></div>
+				<div class="divider "></div>
 			</li>
-			<li><a class="subheader">Contact</a></li>
-			<li><a class="waves-effect" href="https://github.com/brandoshizzle/soundprov/issues" target="_blank"><i class="material-icons">report_problem</i>Report Issue</a></li>
-			<li><a class="waves-effect" href="mailto:cathcart.brandon@gmail.com"><i class="material-icons">mail</i>Contact Developer</a></li>
-			<li><a class="waves-effect" href="#"><i class="material-icons">monetization_on</i>Donate</a></li>
+			<li><a class="waves-effect " href="https://github.com/brandoshizzle/soundprov/issues " target="_blank "><i class="material-icons ">report_problem</i>Report Issue</a></li>
+			<li><a class="waves-effect " href="# "><i class="material-icons ">monetization_on</i>Donate</a></li>
 		</ul>
 
 
