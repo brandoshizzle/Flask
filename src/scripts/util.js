@@ -22,8 +22,8 @@ function cleanName(name) {
 	return name.substring(0, pos);
 }
 
-function removeSpaces(str) {
-	var replaced = str.replace(/ /g, '_');
+function prepareForId(str) {
+	var replaced = str.replace(/ /g, '_').replace(/[{()}]/g, '');
 	return replaced;
 }
 
@@ -75,7 +75,7 @@ function cloneObj(obj) {
 
 module.exports = {
 	cleanName: cleanName,
-	removeSpaces: removeSpaces,
+	prepareForId: prepareForId,
 	startTime: startTime,
 	openBrowse: openBrowse,
 	cloneObj: cloneObj

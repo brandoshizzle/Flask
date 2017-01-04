@@ -10,7 +10,6 @@
 const waveforms = require("./waveforms");
 const soundInfoManager = require("./soundInfoManager");
 
-var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 var settingsInfoObj;
 
 /**
@@ -57,6 +56,7 @@ function setKeyEvents() {
 			storage.storeObj("playlistInfo", playlistInfo);
 			waveforms.load(newSoundInfo);
 		}
+		updatePlaylistClickFunctions();
 		return false;
 	});
 
@@ -64,19 +64,12 @@ function setKeyEvents() {
 	$('.btn-key').on('click', function(e) {
 		clickSound(e, keyInfo);
 	});
-	// Click on playlist sound
-	$('.playlistSound').on('click', function(e) {
-		clickSound(e, playlistInfo);
-	});
 
 	// apply clicked-key class and show waveform
 	function clickSound(e, infoObj) {
 		var target = e.target;
 		if (infoObj.hasOwnProperty(target.id)) {
 			waveforms.track(infoObj[target.id]);
-			$(prevTarget).removeClass('waveformed-key');
-			$(target).addClass('waveformed-key');
-			prevTarget = target;
 		}
 	}
 
@@ -87,33 +80,45 @@ function setKeyEvents() {
 		view.openSoundSettings(keyInfo[key]);
 		waveforms.load(keyInfo[key]);
 	});
-	$('#playlist-songs li').on('contextmenu', function(e) {
-		var id = e.target.id;
-		settingsInfoObj = playlistInfo;
-		view.openSoundSettings(playlistInfo[id]);
-		waveforms.load(playlistInfo[id]);
-	});
+
+	// Set functions when clicking on playlist sounds
+	function updatePlaylistClickFunctions() {
+		// Click on playlist sound
+		$('.playlistSound').on('click', function(e) {
+			clickSound(e, playlistInfo);
+		});
+		$('#playlist-songs li').on('contextmenu', function(e) {
+			var id = e.target.id;
+			settingsInfoObj = playlistInfo;
+			view.openSoundSettings(playlistInfo[id]);
+			waveforms.load(playlistInfo[id]);
+		});
+	}
+	updatePlaylistClickFunctions();
 
 	// Handles pressing a real key anywhere on the page
 	$(document).keydown(function(e) {
 		var key = keyboardMap[e.which];
-		// If keys A-Z have been pressed
-		if (e.which > 64 && e.which < 91) {
-			// Check if the sound was loaded or not
-			if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
-				sounds.playSound(keyInfo[key]);
-			} else { // User tries to play a not-loaded sound
-				Materialize.toast(keyInfo[key].name + " is not loaded.", 1500);
+		if (e.target == document.body) {
+			// If keys A-Z have been pressed
+			if (e.which > 64 && e.which < 91) {
+				// Check if the sound was loaded or not
+				if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
+					sounds.playSound(keyInfo[key]);
+				} else { // User tries to play a not-loaded sound
+					Materialize.toast(keyInfo[key].name + " is not loaded.", 1500);
+				}
+				// User presses the delete key
+			} else if (key == 'DELETE') {
+				key = $('.clicked-key')[0].id;
+				delete keyInfo[key];
+				$("#" + key).text("");
+				storage.storeObj("keyInfo", keyInfo);
+			} else if (key == 'SPACE') {
+				var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
+				sounds.playSound(playlistInfo[firstPlaylistSound]);
 			}
-			// User presses the delete key
-		} else if (key == 'DELETE') {
-			key = $('.clicked-key')[0].id;
-			delete keyInfo[key];
-			$("#" + key).text("");
-			storage.storeObj("keyInfo", keyInfo);
-		} else if (key == 'SPACE') {
-			var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
-			sounds.playSound(playlistInfo[firstPlaylistSound]);
+			return false;
 		}
 	});
 

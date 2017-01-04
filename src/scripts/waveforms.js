@@ -1,6 +1,7 @@
 var waveformedInstance;
 var waveformTracking = false;
 var lastLoadedPath;
+var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
 function loadWavesurfer(soundInfo) {
 	var path = soundInfo.path;
@@ -8,6 +9,9 @@ function loadWavesurfer(soundInfo) {
 		wavesurfer.load(path);
 		lastLoadedPath = path;
 	}
+	$('#' + prevTarget).removeClass('waveformed-key');
+	$('#' + soundInfo.id).addClass('waveformed-key');
+	prevTarget = soundInfo.id;
 }
 
 function setWaveformTracking(soundInfo) {

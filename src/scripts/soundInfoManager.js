@@ -18,7 +18,7 @@ function createSoundInfoFromPath(path, id) {
 	var tempObj = util.cloneObj(defaultSoundInfo);
 	// Write known info
 	tempObj.name = util.cleanName(path);
-	tempObj.id = id || util.removeSpaces(tempObj.name);
+	tempObj.id = id || util.prepareForId(tempObj.name);
 	tempObj.path = path;
 	sounds.register(tempObj);
 	// INSTANCE IS CREATED AND END TIME IS CALCULATED WHEN SONG PRELOADS - SEE SOUNDS.JS
