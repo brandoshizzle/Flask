@@ -17,7 +17,7 @@ function registerSound(soundInfo) {
 	if (fs.existsSync(soundInfo.path)) {
 		// Register sound with SoundJS
 		createjs.Sound.registerSound({
-			id: soundInfo.name,
+			id: soundInfo.id,
 			src: soundInfo.path
 		});
 	} else {
@@ -51,7 +51,7 @@ function playSound(soundInfo) {
 	}
 
 	function play() {
-		soundInfo.soundInstance = createjs.Sound.play(soundInfo.name, ppc);
+		soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
@@ -76,13 +76,11 @@ function setPPC(soundInfo) {
 
 /**
  *	@desc:	Plays a sound, creating a sound instance for it if necessary
- *	@param:	key: The key of the sound to play
+ *	@param:	soundInfo: The soundInfo object
  */
 function getDuration(soundInfo) {
-	// Create temporary sound instance
-	createjs.Sound.registerSound(soundInfo.path, 'tempForDuration');
-	tempInstance = createjs.Sound.createInstance('tempForDuration');
-	return (tempInstance.duration / 1000).toFixed(2);
+	// Assumes a sound instance exists - should be true (fingers crossed)
+	return (soundInfo.soundInstance.duration / 1000).toFixed(2);
 }
 
 /**
@@ -93,6 +91,16 @@ function getDuration(soundInfo) {
 function fileLoaded(song) {
 	// A sound has been preloaded.
 	//console.log("Preloaded:", song.id);
+	var infoArray;
+	if (playlistInfo.hasOwnProperty(song.id)) {
+		infoArray = playlistInfo;
+	} else if (keyInfo.hasOwnProperty(song.id)) {
+		infoArray = keyInfo;
+	}
+	if (infoArray[song.id].endTime == 0 || infoArray[song.id].endTime === null) {
+		infoArray[song.id].soundInstance = createjs.Sound.createInstance(song.id);
+		infoArray[song.id].endTime = getDuration(infoArray[song.id]);
+	}
 }
 
 module.exports = {

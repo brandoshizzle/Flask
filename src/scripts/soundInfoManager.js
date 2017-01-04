@@ -21,7 +21,7 @@ function createSoundInfoFromPath(path, id) {
 	tempObj.id = id || util.removeSpaces(tempObj.name);
 	tempObj.path = path;
 	sounds.register(tempObj);
-	tempObj.endTime = sounds.getDuration(tempObj);
+	// INSTANCE IS CREATED AND END TIME IS CALCULATED WHEN SONG PRELOADS - SEE SOUNDS.JS
 	return tempObj;
 }
 

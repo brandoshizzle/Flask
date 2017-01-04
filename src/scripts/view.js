@@ -55,11 +55,7 @@ function openSoundSettings(soundInfo) {
 	$(idStart + "path").val(soundInfo.path);
 	$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "start-time").val(soundInfo.startTime);
-	if (soundInfo.endTime !== null) {
-		$(idStart + "end-time").val(soundInfo.endTime);
-	} else {
-		$(idStart + "end-time").val(sounds.getDuration(key));
-	}
+	$(idStart + "end-time").val(soundInfo.endTime);
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 }
@@ -84,13 +80,13 @@ function saveSoundSettings() {
 }
 
 function resetStartTime() {
-	settingsSoundInfo.startTime = 0;
-	$('#sound-settings-start-time').val(settingsSoundInfo.startTime);
+	//settingsSoundInfo.startTime = 0;
+	$('#sound-settings-start-time').val(0);
 }
 
 function resetEndTime() {
-	settingsSoundInfo.endTime = sounds.getDuration(settingsSoundInfo);
-	$('#sound-settings-end-time').val(settingsSoundInfo.endTime);
+	//settingsSoundInfo.endTime = sounds.getDuration(settingsSoundInfo);
+	$('#sound-settings-end-time').val(sounds.getDuration(settingsSoundInfo));
 }
 
 module.exports = {
