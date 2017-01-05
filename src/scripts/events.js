@@ -110,9 +110,11 @@ function setKeyEvents() {
 				}
 				// User presses the delete key
 			} else if (key == 'DELETE') {
-				key = $('.clicked-key')[0].id;
-				delete keyInfo[key];
-				$("#" + key).text("");
+				id = $('.waveformed-key').attr('id');
+				delete keyInfo[id];
+				blog(id);
+				$("#" + id).find('.audioName').text("");
+				$("#" + id).css('background-color', 'var(--pM)');
 				storage.storeObj("keyInfo", keyInfo);
 			} else if (key == 'SPACE') {
 				var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
