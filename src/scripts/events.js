@@ -111,11 +111,16 @@ function setKeyEvents() {
 				// User presses the delete key
 			} else if (key == 'DELETE') {
 				id = $('.waveformed-key').attr('id');
-				delete keyInfo[id];
-				blog(id);
-				$("#" + id).find('.audioName').text("");
-				$("#" + id).css('background-color', 'var(--pM)');
-				storage.storeObj("keyInfo", keyInfo);
+				if (keyInfo.hasOwnProperty(id)) {
+					delete keyInfo[id];
+					$("#" + id).find('.audioName').text("");
+					$("#" + id).css('background-color', 'var(--pM)');
+					storage.storeObj("keyInfo", keyInfo);
+				} else {
+					delete playlistInfo[id];
+					$("#" + id).remove();
+					storage.storeObj("playlistInfo", playlistInfo);
+				}
 			} else if (key == 'SPACE') {
 				var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
 				sounds.playSound(playlistInfo[firstPlaylistSound]);
