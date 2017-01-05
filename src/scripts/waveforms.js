@@ -9,6 +9,7 @@ function loadWavesurfer(soundInfo) {
 		wavesurfer.load(path);
 		lastLoadedPath = path;
 	}
+	$('#waveform-progress').show();
 	$('#' + prevTarget).removeClass('waveformed-key');
 	$('#' + soundInfo.id).addClass('waveformed-key');
 	prevTarget = soundInfo.id;

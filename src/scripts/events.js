@@ -178,6 +178,15 @@ function setKeyEvents() {
 		e.preventDefault();
 		return false;
 	});
+
+	wavesurfer.on('ready', function() {
+		var timeline = Object.create(WaveSurfer.Timeline);
+		$('#waveform-progress').hide();
+		timeline.init({
+			wavesurfer: wavesurfer,
+			container: '#waveform-timeline'
+		});
+	});
 }
 
 module.exports = {

@@ -45,6 +45,9 @@ function playSound(soundInfo) {
 		blog('Song stopped');
 		soundInfo.soundInstance.stop();
 		$('#' + soundInfo.id).removeClass('playing-sound');
+		if (playlistInfo.hasOwnProperty(soundInfo.id)) {
+			$('#playlist-songs li:first-child').appendTo('#playlist-songs');
+		}
 	} else {
 		// It is not playing and does exist. Play it.
 		play();
