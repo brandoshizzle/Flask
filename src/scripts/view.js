@@ -53,7 +53,7 @@ function openSoundSettings(soundInfo) {
 	}
 	$(idStart + "name").text(soundInfo.name);
 	$(idStart + "path").val(soundInfo.path);
-	$(idStart + "color").css("background-color", colors.makeColor(soundInfo.color));
+	colors.setPickedColor(soundInfo.color);
 	colors.setColorPickerColors();
 	$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "start-time").val(soundInfo.startTime);
