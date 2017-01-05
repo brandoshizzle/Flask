@@ -1,6 +1,8 @@
 var waveformedInstance;
 var waveformTracking = false;
 var lastLoadedPath;
+var startTime;
+var duration;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
 function loadWavesurfer(soundInfo) {
@@ -8,8 +10,8 @@ function loadWavesurfer(soundInfo) {
 	if (path != lastLoadedPath) {
 		wavesurfer.load(path);
 		lastLoadedPath = path;
+		$('#waveform-progress').show();
 	}
-	$('#waveform-progress').show();
 	$('#' + prevTarget).removeClass('waveformed-key');
 	$('#' + soundInfo.id).addClass('waveformed-key');
 	prevTarget = soundInfo.id;
@@ -22,6 +24,7 @@ function setWaveformTracking(soundInfo) {
 		var playState = waveformedInstance.playState;
 		clearInterval(sI);
 		if (playState == 'playSucceeded') {
+			startTime = soundInfo.startTime * 1000;
 			sI = setInterval(trackOnWaveform, 50);
 		}
 	} catch (err) {
@@ -31,7 +34,8 @@ function setWaveformTracking(soundInfo) {
 
 function trackOnWaveform() {
 	var sound = waveformedInstance;
-	var percentComplete = sound.position / wavesurfer.getDuration() / 1000;
+	blog(startTime);
+	var percentComplete = (sound.position + startTime) / wavesurfer.getDuration() / 1000;
 	wavesurfer.seekTo(percentComplete);
 }
 
