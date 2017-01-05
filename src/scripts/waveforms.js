@@ -12,6 +12,10 @@ function loadWavesurfer(soundInfo) {
 		lastLoadedPath = path;
 		$('#waveform-progress').show();
 	}
+	wavesurfer.on('ready', function() {
+		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
+		wavesurfer.seekTo(percentComplete);
+	});
 	$('#' + prevTarget).removeClass('waveformed-key');
 	$('#' + soundInfo.id).addClass('waveformed-key');
 	prevTarget = soundInfo.id;
@@ -34,7 +38,6 @@ function setWaveformTracking(soundInfo) {
 
 function trackOnWaveform() {
 	var sound = waveformedInstance;
-	blog(startTime);
 	var percentComplete = (sound.position + startTime) / wavesurfer.getDuration() / 1000;
 	wavesurfer.seekTo(percentComplete);
 }
