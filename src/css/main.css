@@ -39,16 +39,41 @@
   bottom: 0px;
   width: 75%;
   margin: 10px;
-  border-radius: 3px;
+  padding: 0;
+}
+
+#waveform {
+  border-top-right-radius: 3px;
+  margin: 0;
+  padding: 0;
+}
+
+#waveform-info {
+  height: 28px;
+  width: 40%;
+  margin-left: 0px;
+  padding-left: 10px;
+  padding-top: 4px;
+  background-color: var(--aM);
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+#waveform-info p {
+  margin: 0;
+  padding: 0;
 }
 
 #waveform-timeline {
-  background-color: var(--oc-gray-6);
+  background-color: var(--pD);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top: 1px outset darkgray;
 }
 
 #waveform-progress {
   position: absolute;
-  top: 30%;
+  top: 45%;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -308,5 +333,7 @@ alIcons-Regular.eot);
 
 }
 ;
+
+}
 
 }

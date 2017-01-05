@@ -7,6 +7,7 @@ var prevTarget = "Q"; // Key clicked previous to the current one - for removing 
 
 function loadWavesurfer(soundInfo) {
 	var path = soundInfo.path;
+	$('#waveform-song-name').text(soundInfo.name);
 	if (path != lastLoadedPath) {
 		wavesurfer.load(path);
 		lastLoadedPath = path;

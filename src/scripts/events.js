@@ -67,9 +67,9 @@ function setKeyEvents() {
 
 	// apply clicked-key class and show waveform
 	function clickSound(e, infoObj) {
-		var target = e.target;
-		if (infoObj.hasOwnProperty(target.id)) {
-			waveforms.track(infoObj[target.id]);
+		var id = e.target.id;
+		if (infoObj.hasOwnProperty(id)) {
+			waveforms.track(infoObj[id]);
 		}
 	}
 
@@ -182,8 +182,8 @@ function setKeyEvents() {
 	});
 
 	wavesurfer.on('ready', function() {
-		var timeline = Object.create(WaveSurfer.Timeline);
 		$('#waveform-progress').hide();
+		var timeline = Object.create(WaveSurfer.Timeline);
 		timeline.init({
 			wavesurfer: wavesurfer,
 			container: '#waveform-timeline'
