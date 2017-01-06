@@ -58,7 +58,7 @@
   margin: 0;
   border-left: 3px solid var(--tD);
   border-right: 3px solid var(--tD);
-  transition: 0.25s;
+  transition: 0.1s;
 }
 
 #waveform-info {
