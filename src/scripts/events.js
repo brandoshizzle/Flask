@@ -7,7 +7,6 @@
 /*jshint esversion: 6 */
 
 // Required js scripts
-const waveforms = require("./waveforms");
 const soundInfoManager = require("./soundInfoManager");
 
 var settingsInfoObj;
@@ -184,15 +183,6 @@ function setKeyEvents() {
 	$(document).on('dragover', function(e) {
 		e.preventDefault();
 		return false;
-	});
-
-	wavesurfer.on('ready', function() {
-		$('#waveform-progress').hide();
-		var timeline = Object.create(WaveSurfer.Timeline);
-		timeline.init({
-			wavesurfer: wavesurfer,
-			container: '#waveform-timeline'
-		});
 	});
 }
 

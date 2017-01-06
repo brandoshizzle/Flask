@@ -36,16 +36,6 @@ function buildPlaylist() {
 	});
 }
 
-function buildWaveform() {
-	// Create wavesurfer instance
-	wavesurfer = WaveSurfer.create({
-		container: '#waveform',
-		waveColor: '#ffeb3b',
-		progressColor: '#ffd600',
-	});
-	wavesurfer.empty();
-}
-
 function openSoundSettings(soundInfo) {
 	var idStart = "#sound-settings-";
 	if (soundInfo.name === "") {
@@ -99,7 +89,6 @@ module.exports = {
 	buildKeyboard: buildKeyboard,
 	createPlaylistItem: createPlaylistItem,
 	buildPlaylist: buildPlaylist,
-	buildWaveform: buildWaveform,
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
 	resetStartTime: resetStartTime,

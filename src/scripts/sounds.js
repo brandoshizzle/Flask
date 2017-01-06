@@ -5,7 +5,6 @@
  *		registerSound, fildLoaded
  */
 /*jshint esversion: 6 */
-const waveforms = require("./waveforms");
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
@@ -62,16 +61,16 @@ function playSound(soundInfo) {
 
 function setPPC(soundInfo) {
 	var loopIt = 0;
-	if (soundInfo.endTime === null) {
-		soundInfo.endTime = getDuration(soundInfo);
-	}
+	//if (soundInfo.endTime === null) {
+	//soundInfo.endTime = getDuration(soundInfo);
+	//}
 	var durationTime = (soundInfo.endTime - soundInfo.startTime) * 1000;
 	if (soundInfo.loop === true) {
 		loopIt = -1;
 	}
 	return new createjs.PlayPropsConfig().set({
 		loop: loopIt,
-		startTime: soundInfo.startTime * 1000,
+		startTime: (soundInfo.startTime) * 1000,
 		duration: durationTime,
 		volume: 1
 	});

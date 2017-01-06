@@ -7,6 +7,7 @@ const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
 const util = require(jsPath + 'util');
 const colors = require(jsPath + 'colors');
+const waveforms = require(jsPath + "waveforms");
 
 var wavesurfer;
 var keys;
@@ -22,7 +23,7 @@ $(document).ready(function() {
 
 	view.buildKeyboard();
 	view.buildPlaylist();
-	view.buildWaveform();
+	waveforms.buildWaveform();
 	keyInfo = storage.getInfoObj("keyInfo", keyInfo);
 	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);
 	blog(keyInfo);
