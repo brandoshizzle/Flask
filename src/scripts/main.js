@@ -31,7 +31,6 @@ $(document).ready(function() {
 	events.setKeyEvents();
 	util.startTime();
 	colors.initializeKeyColors();
-
 	$('.modal').modal();
 	$('select').material_select();
 	$(".menu-icon").sideNav({
@@ -48,6 +47,32 @@ $(document).ready(function() {
 		type: 'text'
 	});
 
+	interact('#waveform-region')
+		.resizable({
+			preserveAspectRatio: false,
+			edges: {
+				left: true,
+				right: true,
+				bottom: false,
+				top: false
+			},
+			restrict: {
+				restriction: 'parent'
+			}
+		})
+		.on('resizemove', function(event) {
+			var target = event.target,
+				x = (parseFloat(target.getAttribute('data-x')) || 0);
+			// update the element's style
+			target.style.width = event.rect.width + 'px';
+			x += event.deltaRect.left;
+			target.style.webkitTransform = target.style.transform =
+				'translate(' + x + 'px, 0px)';
+			target.setAttribute('data-x', x);
+		})
+		.on('resizeend', function(event) {
+			waveforms.getRegion();
+		});
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 
 });

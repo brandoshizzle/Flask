@@ -42,7 +42,7 @@ function loadWavesurfer(soundInfo) {
 		$('#waveform-progress').show();
 	}
 	wavesurfer.on('ready', function() {
-		// Create the playable region
+		/* Create the playable region
 		wavesurfer.clearRegions();
 		region = wavesurfer.addRegion({
 			start: soundInfo.startTime, // time in seconds
@@ -65,7 +65,7 @@ function loadWavesurfer(soundInfo) {
 			});
 			blog(soundInfo.startTime);
 			trackOnWaveform();
-		});
+		});*/
 		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
 		wavesurfer.seekTo(percentComplete);
 	});
@@ -92,12 +92,24 @@ function setWaveformTracking(soundInfo) {
 function trackOnWaveform() {
 	var sound = waveformedInstance;
 	var percentComplete = (sound.position / 1000 + waveformedInfo.startTime) / wavesurfer.getDuration();
-	blog(percentComplete);
+	blog(waveformedInstance.endTime);
 	wavesurfer.seekTo(percentComplete);
+}
+
+function getRegion() {
+	var start = $('#waveform-region').position().left;
+	var startTime = (start / $('#waveform').width()) * wavesurfer.getDuration();
+	var end = start + $('#waveform-region').width();
+	var endTime = (end / $('#waveform').width()) * wavesurfer.getDuration();
+	blog(startTime);
+	waveformedInfo.startTime = startTime;
+	waveformedInfo.endTime = endTime;
+	trackOnWaveform();
 }
 
 module.exports = {
 	load: loadWavesurfer,
 	track: setWaveformTracking,
-	buildWaveform: buildWaveform
+	buildWaveform: buildWaveform,
+	getRegion: getRegion
 };
