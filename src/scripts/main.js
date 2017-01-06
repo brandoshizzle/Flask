@@ -29,7 +29,7 @@ $(document).ready(function() {
 	blog(keyInfo);
 	blog(playlistInfo);
 	events.setKeyEvents();
-	util.startTime();
+	util.startClock();
 	colors.initializeKeyColors();
 	$('.modal').modal();
 	$('select').material_select();

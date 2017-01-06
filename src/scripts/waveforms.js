@@ -1,11 +1,6 @@
-var waveformedInstance;
 var waveformedInfo;
-var waveformTracking = false;
 var lastLoadedPath;
-var startTime;
-var duration;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
-var region;
 
 // Wavesurfer measures in seconds
 // soundInstance measures in milliseconds
@@ -37,35 +32,14 @@ function loadWavesurfer(soundInfo) {
 	var path = soundInfo.path;
 	$('#waveform-song-name').text(soundInfo.name);
 	if (path != lastLoadedPath) {
+		//wavesurfer.destroy();
+		//buildWaveform();
 		wavesurfer.load(path);
 		lastLoadedPath = path;
 		$('#waveform-progress').show();
 	}
 	wavesurfer.on('ready', function() {
-		/* Create the playable region
-		wavesurfer.clearRegions();
-		region = wavesurfer.addRegion({
-			start: soundInfo.startTime, // time in seconds
-			end: soundInfo.endTime, // time in seconds
-			loop: soundInfo.loop,
-			drag: false,
-			color: 'rgba(255,255,255,0.1)'
-		});
-
-		region.on('update-end', function() {
-			soundInfo.startTime = region.start;
-			soundInfo.endTime = region.end;
-			wavesurfer.clearRegions();
-			region = wavesurfer.addRegion({
-				start: soundInfo.startTime, // time in seconds
-				end: soundInfo.endTime, // time in seconds
-				loop: soundInfo.loop,
-				drag: false,
-				color: 'rgba(255,255,255,0.1)'
-			});
-			blog(soundInfo.startTime);
-			trackOnWaveform();
-		});*/
+		setRegion(soundInfo);
 		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
 		wavesurfer.seekTo(percentComplete);
 	});
@@ -76,23 +50,27 @@ function loadWavesurfer(soundInfo) {
 
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
-	try {
+	wavesurfer.on('ready', function() {
 		waveformedInfo = soundInfo;
-		waveformedInstance = waveformedInfo.soundInstance;
-		var playState = waveformedInstance.playState;
-		clearInterval(sI);
-		if (playState == 'playSucceeded') {
+		var playState = waveformedInfo.soundInstance.playState;
+		blog(waveformedInfo.name + ", " + playState);
+		if (playState === null) {
+			clearInterval(sI);
+			blog("Track is not playing. Waveform will not be tracked.");
+		} else if (playState === 'playSucceeded') {
+			blog('Tracking on waveform');
 			sI = setInterval(trackOnWaveform, 50);
+		} else if (playState === 'playFinished') {
+			waveformedInfo.soundInstance.playState = null;
 		}
-	} catch (err) {
-		blog("Track is not playing. Waveform will not be tracked.");
-	}
+	});
+
 }
 
 function trackOnWaveform() {
-	var sound = waveformedInstance;
-	var percentComplete = (sound.position / 1000 + waveformedInfo.startTime) / wavesurfer.getDuration();
-	blog(waveformedInstance.endTime);
+	var sound = waveformedInfo.soundInstance;
+	var percentComplete = ((Number(sound.position) / 1000) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
+	//blog(percentComplete);
 	wavesurfer.seekTo(percentComplete);
 }
 
@@ -101,10 +79,24 @@ function getRegion() {
 	var startTime = (start / $('#waveform').width()) * wavesurfer.getDuration();
 	var end = start + $('#waveform-region').width();
 	var endTime = (end / $('#waveform').width()) * wavesurfer.getDuration();
-	blog(startTime);
 	waveformedInfo.startTime = startTime;
 	waveformedInfo.endTime = endTime;
+	if (keyInfo.hasOwnProperty(waveformedInfo.id)) {
+		keyInfo[waveformedInfo.id] = waveformedInfo;
+		storage.storeObj('keyInfo', keyInfo);
+	} else if (playlistInfo.hasOwnProperty(waveformedInfo.id)) {
+		playlistInfo[waveformedInfo.id] = waveformedInfo;
+		storage.storeObj('playlistInfo', playlistInfo);
+	}
 	trackOnWaveform();
+}
+
+function setRegion(soundInfo) {
+	var start = (soundInfo.startTime / wavesurfer.getDuration()) * $('#waveform').width();
+	var end = (soundInfo.endTime / wavesurfer.getDuration()) * $('#waveform').width();
+	$('#waveform-region').css('left', start);
+	$('#waveform-region').width(end - start);
+	//soundInfo.soundInstance.position = 0;
 }
 
 module.exports = {

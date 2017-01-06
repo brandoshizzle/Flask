@@ -68,6 +68,7 @@ function setKeyEvents() {
 	function clickSound(e, infoObj) {
 		var id = e.target.id;
 		if (infoObj.hasOwnProperty(id)) {
+			blog('events.clickSound');
 			waveforms.track(infoObj[id]);
 		}
 	}
