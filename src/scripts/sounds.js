@@ -56,7 +56,6 @@ function playSound(soundInfo) {
 	function play() {
 		soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
 		blog('sounds.play');
-		blog(ppc);
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}

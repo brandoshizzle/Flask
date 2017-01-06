@@ -32,11 +32,13 @@ function loadWavesurfer(soundInfo) {
 	var path = soundInfo.path;
 	$('#waveform-song-name').text(soundInfo.name);
 	if (path != lastLoadedPath) {
-		//wavesurfer.destroy();
-		//buildWaveform();
+		wavesurfer.destroy();
+		buildWaveform();
 		wavesurfer.load(path);
 		lastLoadedPath = path;
 		$('#waveform-progress').show();
+		$('#waveform-region').css('left', '0');
+		$('#waveform-region').width($('#waveform').width());
 	}
 	wavesurfer.on('ready', function() {
 		setRegion(soundInfo);
@@ -76,8 +78,14 @@ function trackOnWaveform() {
 
 function getRegion() {
 	var start = $('#waveform-region').position().left;
+	if (start < 0) {
+		start = 0;
+	}
 	var startTime = (start / $('#waveform').width()) * wavesurfer.getDuration();
 	var end = start + $('#waveform-region').width();
+	if (end > $('#waveform').width()) {
+		end = $('#waveform').width();
+	}
 	var endTime = (end / $('#waveform').width()) * wavesurfer.getDuration();
 	waveformedInfo.startTime = startTime;
 	waveformedInfo.endTime = endTime;

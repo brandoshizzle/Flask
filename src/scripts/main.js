@@ -69,9 +69,11 @@ $(document).ready(function() {
 			target.style.webkitTransform = target.style.transform =
 				'translate(' + x + 'px, 0px)';
 			target.setAttribute('data-x', x);
+			$(event.target).css('transition', '0s');
 		})
 		.on('resizeend', function(event) {
 			waveforms.getRegion();
+			$(event.target).css('transition', '0.5s');
 		});
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 
