@@ -23,7 +23,7 @@ function cleanName(name) {
 }
 
 function prepareForId(str) {
-	var replaced = str.replace(/ /g, '_').replace(/[{()}]/g, '');
+	var replaced = str.replace(/ /g, '_').replace(/[{()}]/g, '').replace(/[&]/g, 'and');
 	return replaced;
 }
 
@@ -45,23 +45,25 @@ function openBrowse() {
 	}
 }
 
-function startTime() {
+function startClock() {
 	var today = new Date();
 	var h = today.getHours();
 	var m = today.getMinutes();
 	var s = today.getSeconds();
 	var ampm = 'AM';
-	m = checkTime(m);
-	s = checkTime(s);
-	if (h > 12) {
-		h -= 12;
+	m = checkClock(m);
+	s = checkClock(s);
+	if (h > 11) {
 		ampm = 'PM';
 	}
+	if (h > 12) {
+		h -= 12;
+	}
 	$('#clock').text(h + ":" + m + ":" + s + " " + ampm);
-	var t = setTimeout(startTime, 500);
+	var t = setTimeout(startClock, 500);
 }
 
-function checkTime(i) {
+function checkClock(i) {
 	if (i < 10) {
 		i = "0" + i;
 	} // add zero in front of numbers < 10
@@ -76,7 +78,7 @@ function cloneObj(obj) {
 module.exports = {
 	cleanName: cleanName,
 	prepareForId: prepareForId,
-	startTime: startTime,
+	startClock: startClock,
 	openBrowse: openBrowse,
 	cloneObj: cloneObj
 };

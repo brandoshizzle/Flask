@@ -10,15 +10,15 @@
     "build:osx": "build --mac --x64",
     "build:win": "build --win --ia32"
   },
-	"build":{
-		"mac": {
-			"icon": "assets/logo.icns",
-			"category": "public.app-category.music"
-		},
-	  "win" : {
-	    "icon" : "assets/logo.ico"
-	  }
-	},
+  "build": {
+    "mac": {
+      "icon": "assets/logo.icns",
+      "category": "public.app-category.music"
+    },
+    "win": {
+      "icon": "assets/logo.ico"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/brandoshizzle/SoundProv.git"

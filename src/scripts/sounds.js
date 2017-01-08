@@ -5,7 +5,6 @@
  *		registerSound, fildLoaded
  */
 /*jshint esversion: 6 */
-const waveforms = require("./waveforms");
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
@@ -37,24 +36,26 @@ function playSound(soundInfo) {
 	}
 	var ppc = setPPC(soundInfo); // Set play properties
 	// Check currentInstances to see if the key is playing or not
-	if (soundInfo.soundInstance === undefined) { // if it doesn't exist, it's not playing
+	if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
 		blog('Creating and playing new instance.');
 		play();
+		// Song is currently playing - stop it.
 	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
-		// It is playing, so stop it
 		blog('Song stopped');
 		soundInfo.soundInstance.stop();
 		$('#' + soundInfo.id).removeClass('playing-sound');
 		if (playlistInfo.hasOwnProperty(soundInfo.id)) {
 			$('#playlist-songs li:first-child').appendTo('#playlist-songs');
 		}
+		// Song is not playing, so play it.
 	} else {
-		// It is not playing and does exist. Play it.
+		blog('Song started');
 		play();
 	}
 
 	function play() {
 		soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
+		blog('sounds.play');
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
@@ -62,16 +63,13 @@ function playSound(soundInfo) {
 
 function setPPC(soundInfo) {
 	var loopIt = 0;
-	if (soundInfo.endTime === null) {
-		soundInfo.endTime = getDuration(soundInfo);
-	}
 	var durationTime = (soundInfo.endTime - soundInfo.startTime) * 1000;
 	if (soundInfo.loop === true) {
 		loopIt = -1;
 	}
 	return new createjs.PlayPropsConfig().set({
 		loop: loopIt,
-		startTime: soundInfo.startTime * 1000,
+		startTime: (soundInfo.startTime) * 1000,
 		duration: durationTime,
 		volume: 1
 	});
@@ -100,8 +98,9 @@ function fileLoaded(song) {
 	} else if (keyInfo.hasOwnProperty(song.id)) {
 		infoArray = keyInfo;
 	}
+	infoArray[song.id].soundInstance = createjs.Sound.createInstance(song.id);
+	infoArray[song.id].soundInstance.playState = null;
 	if (infoArray[song.id].endTime == 0 || infoArray[song.id].endTime === null) {
-		infoArray[song.id].soundInstance = createjs.Sound.createInstance(song.id);
 		infoArray[song.id].endTime = getDuration(infoArray[song.id]);
 	}
 }

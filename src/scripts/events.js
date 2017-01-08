@@ -7,7 +7,6 @@
 /*jshint esversion: 6 */
 
 // Required js scripts
-const waveforms = require("./waveforms");
 const soundInfoManager = require("./soundInfoManager");
 
 var settingsInfoObj;
@@ -69,6 +68,7 @@ function setKeyEvents() {
 	function clickSound(e, infoObj) {
 		var id = e.target.id;
 		if (infoObj.hasOwnProperty(id)) {
+			blog('events.clickSound');
 			waveforms.track(infoObj[id]);
 		}
 	}
@@ -114,8 +114,13 @@ function setKeyEvents() {
 				if (keyInfo.hasOwnProperty(id)) {
 					delete keyInfo[id];
 					$("#" + id).find('.audioName').text("");
+					$("#" + id).removeClass('waveformed-key');
 					$("#" + id).css('background-color', 'var(--pM)');
 					storage.storeObj("keyInfo", keyInfo);
+					wavesurfer.empty();
+					$('#waveform-region').remove();
+					$('#waveform').after('<div id="waveform-region"></div>');
+					$('#waveform-info').text("");
 				} else {
 					delete playlistInfo[id];
 					$("#" + id).remove();
@@ -184,15 +189,6 @@ function setKeyEvents() {
 	$(document).on('dragover', function(e) {
 		e.preventDefault();
 		return false;
-	});
-
-	wavesurfer.on('ready', function() {
-		$('#waveform-progress').hide();
-		var timeline = Object.create(WaveSurfer.Timeline);
-		timeline.init({
-			wavesurfer: wavesurfer,
-			container: '#waveform-timeline'
-		});
 	});
 }
 
