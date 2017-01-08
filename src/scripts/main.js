@@ -24,6 +24,7 @@ $(document).ready(function() {
 	view.buildKeyboard();
 	view.buildPlaylist();
 	waveforms.buildWaveform();
+	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
 	keyInfo = storage.getInfoObj("keyInfo", keyInfo);
 	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);
 	blog(keyInfo);

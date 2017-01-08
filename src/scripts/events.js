@@ -10,6 +10,7 @@
 const soundInfoManager = require("./soundInfoManager");
 
 var settingsInfoObj;
+var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLON', 'QUOTE', 'BACK_SLASH', 'BESIDE_Z', 'COMMA', 'PERIOD', 'SLASH'];
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -99,9 +100,10 @@ function setKeyEvents() {
 	// Handles pressing a real key anywhere on the page
 	$(document).keydown(function(e) {
 		var key = keyboardMap[e.which];
+		var code = e.which;
 		if (e.target == document.body) {
-			// If keys A-Z have been pressed
-			if (e.which > 64 && e.which < 91) {
+			// If keys A-Z or 0-9 have been pressed
+			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
 				// Check if the sound was loaded or not
 				if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
 					sounds.playSound(keyInfo[key]);
@@ -117,15 +119,15 @@ function setKeyEvents() {
 					$("#" + id).removeClass('waveformed-key');
 					$("#" + id).css('background-color', 'var(--pM)');
 					storage.storeObj("keyInfo", keyInfo);
-					wavesurfer.empty();
-					$('#waveform-region').remove();
-					$('#waveform').after('<div id="waveform-region"></div>');
-					$('#waveform-info').text("");
 				} else {
 					delete playlistInfo[id];
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);
 				}
+				wavesurfer.empty();
+				$('#waveform-region').remove();
+				$('#waveform').after('<div id="waveform-region"></div>');
+				$('#waveform-info').text("");
 			} else if (key == 'SPACE') {
 				var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
 				sounds.playSound(playlistInfo[firstPlaylistSound]);
