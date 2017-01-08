@@ -114,8 +114,13 @@ function setKeyEvents() {
 				if (keyInfo.hasOwnProperty(id)) {
 					delete keyInfo[id];
 					$("#" + id).find('.audioName').text("");
+					$("#" + id).removeClass('waveformed-key');
 					$("#" + id).css('background-color', 'var(--pM)');
 					storage.storeObj("keyInfo", keyInfo);
+					wavesurfer.empty();
+					$('#waveform-region').remove();
+					$('#waveform').after('<div id="waveform-region"></div>');
+					$('#waveform-info').text("");
 				} else {
 					delete playlistInfo[id];
 					$("#" + id).remove();

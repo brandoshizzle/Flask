@@ -7,19 +7,37 @@
 */
 
 var settingsSoundInfo;
+var specialKeys = {
+	'-': 'MINUS',
+	'+': 'EQUALS',
+	'[': 'OPEN_BRACKET',
+	']': 'CLOSE_BRACKET',
+	';': 'SEMICOLON',
+	"'": 'QUOTE',
+	"\\": 'BACK_SLASH',
+	"BESIDE_Z": "",
+	',': 'COMMA',
+	'.': 'PERIOD',
+	'/': 'SLASH'
+};
 
 // Create keyboard buttons
 function buildKeyboard() {
 	var rows = [
-		['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', "["],
-		['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'"],
-		["\\", 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', ]
+		['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+'],
+		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']'],
+		['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", "\\"],
+		['BESIDE_Z', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', ]
 	];
+	var id;
 	for (var i = 0; i < rows.length; i++) {
 		var rowNum = i + 1;
 		for (var j = 0; j < rows[i].length; j++) {
-			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + rows[i][j] + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
+			id = rows[i][j];
+			if (specialKeys.hasOwnProperty(rows[i][j])) {
+				id = specialKeys[rows[i][j]];
+			}
+			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + id + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
 		}
 	}
 	keys = $('.btn-key'); // set keys to be an array of the audioName divs

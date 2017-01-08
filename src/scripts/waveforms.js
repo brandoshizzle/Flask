@@ -32,13 +32,14 @@ function loadWavesurfer(soundInfo) {
 	var path = soundInfo.path;
 	$('#waveform-song-name').text(soundInfo.name);
 	if (path != lastLoadedPath) {
-		$('#waveform-region').css('left', '0px');
-		$('#waveform-region').width($('#waveform').width());
+		$('#waveform-region').remove();
+		$('#waveform').after('<div id="waveform-region"></div>');
 		wavesurfer.destroy();
 		buildWaveform();
 		wavesurfer.load(path);
 		lastLoadedPath = path;
 		$('#waveform-progress').show();
+
 	}
 	wavesurfer.on('ready', function() {
 		setRegion(soundInfo);

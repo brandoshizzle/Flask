@@ -53,9 +53,11 @@ function startClock() {
 	var ampm = 'AM';
 	m = checkClock(m);
 	s = checkClock(s);
+	if (h > 11) {
+		ampm = 'PM';
+	}
 	if (h > 12) {
 		h -= 12;
-		ampm = 'PM';
 	}
 	$('#clock').text(h + ":" + m + ":" + s + " " + ampm);
 	var t = setTimeout(startClock, 500);
