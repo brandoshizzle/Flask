@@ -1,6 +1,6 @@
-# SOUNDprov
+# REACTion
 
-A free program designed for improv theatre audio technicians.
+A free program designed for improv theatre and usable anywhere you need sounds! 
 
 ## Latest Release
 Current version: UNRELEASED
@@ -25,7 +25,7 @@ TODO: Write changelog
 
 ## 3rd party libraries
 
-SOUNDprov is lovingly built on these amazing projects:
+REACTion is lovingly built on these amazing projects:
 * [Electron](http://electron.atom.io/)
 * [Materialize](http://materializecss.com/)
 * [jQuery](https://jquery.com/)
@@ -36,7 +36,7 @@ SOUNDprov is lovingly built on these amazing projects:
 
 ## License
 
-SOUNDprov is provided under ISC license
+REACTion is provided under ISC license
 
 Copyright 2017 Brandon Cathcart
 
