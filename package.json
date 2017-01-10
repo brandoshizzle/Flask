@@ -6,31 +6,29 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron index.js",
-    "build": "npm run build:osx && npm run build:win",
-    "build:osx": "build --mac --x64",
-    "build:win": "build --win --ia32"
+    "build": "build --win --ia32 --x64",
+    "build:osx": "build --mac --x64"
   },
-  "build": {
-    "mac": {
-      "icon": "assets/logo.icns",
-      "category": "public.app-category.music"
-    },
-    "win": {
-      "icon": "assets/logo.ico"
-    }
-  },
+	"build": {
+		"squirrelWindows": {
+		},
+		"win": {
+			"icon": "build/logo.ico"
+		}
+	},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brandoshizzle/SoundProv.git"
+    "url": "git+https://github.com/brandoshizzle/REACTion.git"
   },
   "author": "Brandon Cathcart <cathcart.brandon@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/brandoshizzle/SoundProv/issues"
+    "url": "https://github.com/brandoshizzle/REACTion/issues"
   },
-  "homepage": "https://github.com/brandoshizzle/SoundProv#readme",
+  "homepage": "https://github.com/brandoshizzle/REATion#readme",
   "devDependencies": {
     "electron": "^1.4.13",
-    "electron-builder": "^10.17.3"
+    "electron-builder": "^10.17.3",
+    "tether-shepherd": "^1.8.1"
   }
 }
