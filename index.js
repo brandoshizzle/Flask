@@ -6,6 +6,8 @@ const {
 	dialog
 } = electron;
 
+if (require('electron-squirrel-startup')) return;
+
 app.on('ready', function() {
 	var win = new BrowserWindow({
 		width: 800,
@@ -14,6 +16,3 @@ app.on('ready', function() {
 	win.loadURL('file://' + __dirname + '/src/main.html');
 	//win.openDevTools();
 });
-/*app.on('browser-window-created', function(e, window) {
-	window.setMenu(null);
-});*/
