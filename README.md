@@ -1,13 +1,15 @@
-# REACTion
+# <img src="src/assets/logo.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" height="30" />REACTion
 
 A free program that turns your keyboard into a soundboard!
+
+![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
 
 ## Latest Release
 Current version: v0.1.0
 
 | Platform      | Download      |
 | ------------- |:-------------:|
-| Windows       | [32/64 bit](REACTion/releases/latest/)   |
+| Windows       | [32/64 bit](https://github.com/brandoshizzle/REACTion/releases/latest)   |
 | OS X          | COMING SOON?   |
 | Linux		      | COMING SOON?   |
 
@@ -16,12 +18,12 @@ Version changes:
 
 ## Basic Instructions
 
-Drag a sound onto a key or the playlist to add it to the program.
-Click on a sound to load its waveform.
-Right click on a sound to bring up its settings.
-Drag the edges of the waveform to adjust sound start/end time.
-Drag playlist items to reorder.
-Press space to play the first item of the playlist (highlighted in yellow).
+* Drag a sound onto a key or the playlist to add it to the program.
+* Click on a sound to load its waveform.
+* Right click on a sound to bring up its settings.
+* Drag the edges of the waveform to adjust sound start/end time.
+* Drag playlist items to reorder.
+* Press space to play the first item of the playlist (highlighted in yellow).
 
 
 ## Changelog
