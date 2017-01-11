@@ -13,9 +13,6 @@ Current version: v0.1.0
 | OS X          | COMING SOON?   |
 | Linux		      | COMING SOON?   |
 
-Version changes:
-* See Changelog (below)
-
 ## Basic Instructions
 
 * Drag a sound onto a key or the playlist to add it to the program.
