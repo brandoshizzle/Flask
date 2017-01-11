@@ -1,31 +1,37 @@
 # REACTion
 
-A free program designed for improv theatre and usable anywhere you need sounds! 
+A free program that turns your keyboard into a soundboard!
 
 ## Latest Release
-Current version: UNRELEASED
+Current version: v0.1.0
 
 | Platform      | Download      |
 | ------------- |:-------------:|
-| Windows       | COMING SOON   |
-| OS X          | COMING SOON   |
-| Linux		      | COMING SOON   |
+| Windows       | [32/64 bit](REACTion/releases/latest/)   |
+| OS X          | COMING SOON?   |
+| Linux		      | COMING SOON?   |
 
 Version changes:
-* Change 1
-* Change 2
+* See Changelog (below)
 
-## Usage
+## Basic Instructions
 
-TODO: Write usage instructions
+Drag a sound onto a key or the playlist to add it to the program.
+Click on a sound to load its waveform.
+Right click on a sound to bring up its settings.
+Drag the edges of the waveform to adjust sound start/end time.
+Drag playlist items to reorder.
+Press space to play the first item of the playlist (highlighted in yellow).
+
 
 ## Changelog
 
-TODO: Write changelog
+###v0.1.0
+* Initial build!
 
 ## 3rd party libraries
 
-REACTion is lovingly built on these amazing projects:
+REACTion is lovingly built with these amazing projects:
 * [Electron](http://electron.atom.io/)
 * [Materialize](http://materializecss.com/)
 * [jQuery](https://jquery.com/)

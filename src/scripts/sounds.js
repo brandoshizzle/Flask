@@ -38,6 +38,7 @@ function playSound(soundInfo) {
 	// Check currentInstances to see if the key is playing or not
 	if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
 		blog('Creating and playing new instance.');
+		$('#' + soundInfo.id).removeClass('played');
 		play();
 		// Song is currently playing - stop it.
 	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
@@ -51,6 +52,7 @@ function playSound(soundInfo) {
 		// Song is not playing, so play it.
 	} else {
 		blog('Song started');
+		$('#' + soundInfo.id).removeClass('played');
 		play();
 	}
 
