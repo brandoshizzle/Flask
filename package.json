@@ -1,6 +1,6 @@
 {
   "name": "REACTion",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "Software for improvising sound",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
 		"squirrelWindows": {
 		},
 		"win": {
-			"icon": "build/logo.ico"
+			"icon": "build/icon.ico"
 		}
 	},
   "repository": {

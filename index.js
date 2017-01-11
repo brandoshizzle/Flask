@@ -6,7 +6,7 @@ const {
 	dialog
 } = electron;
 
-if (require('electron-squirrel-startup')) return;
+//if (require('electron-squirrel-startup')) return;
 
 app.on('ready', function() {
 	var win = new BrowserWindow({

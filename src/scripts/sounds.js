@@ -44,6 +44,7 @@ function playSound(soundInfo) {
 		blog('Song stopped');
 		soundInfo.soundInstance.stop();
 		$('#' + soundInfo.id).removeClass('playing-sound');
+		$('#' + soundInfo.id).addClass('played');
 		if (playlistInfo.hasOwnProperty(soundInfo.id)) {
 			$('#playlist-songs li:first-child').appendTo('#playlist-songs');
 		}
