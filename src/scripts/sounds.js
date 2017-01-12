@@ -1,8 +1,5 @@
-/**
- *	Sound functions
+/*	SOUNDS.JS
  *	These functions deal with anything related to the audio engine
- *	Functions:
- *		registerSound, fildLoaded
  */
 /*jshint esversion: 6 */
 
@@ -64,6 +61,10 @@ function playSound(soundInfo) {
 	}
 }
 
+/**
+ *	@desc:	Sets the play properties (PPC) for a song aboult to play
+ *	@param:	soundInfo: Object containing all sound information
+ */
 function setPPC(soundInfo) {
 	var loopIt = 0;
 	var durationTime = (soundInfo.endTime - soundInfo.startTime) * 1000;
@@ -79,7 +80,7 @@ function setPPC(soundInfo) {
 }
 
 /**
- *	@desc:	Plays a sound, creating a sound instance for it if necessary
+ *	@desc:	Finds the duration of the sound instance in the sound info object
  *	@param:	soundInfo: The soundInfo object
  */
 function getDuration(soundInfo) {
@@ -88,23 +89,24 @@ function getDuration(soundInfo) {
 }
 
 /**
- *	@desc:	Fired when a song has been preloaded by soundJS
- *	@param:	song: The registered soundJS object (!!not keyInfo!!)
- *								aka, song.id = song name, not key letter
+ *	@desc:	Fired when a sound has been preloaded by soundJS.
+ *					Figures out which section the sound belongs to, creates an instance,
+ 						and the duration is found if it has not been already
+ *	@param:	sound: The registered soundJS object (!!not keyInfo!!)
  */
-function fileLoaded(song) {
+function fileLoaded(sound) {
 	// A sound has been preloaded.
-	//console.log("Preloaded:", song.id);
+	//console.log("Preloaded:", sound.id);
 	var infoArray;
-	if (playlistInfo.hasOwnProperty(song.id)) {
+	if (playlistInfo.hasOwnProperty(sound.id)) {
 		infoArray = playlistInfo;
-	} else if (keyInfo.hasOwnProperty(song.id)) {
+	} else if (keyInfo.hasOwnProperty(sound.id)) {
 		infoArray = keyInfo;
 	}
-	infoArray[song.id].soundInstance = createjs.Sound.createInstance(song.id);
-	infoArray[song.id].soundInstance.playState = null;
-	if (infoArray[song.id].endTime == 0 || infoArray[song.id].endTime === null) {
-		infoArray[song.id].endTime = getDuration(infoArray[song.id]);
+	infoArray[sound.id].soundInstance = createjs.Sound.createInstance(sound.id);
+	infoArray[sound.id].soundInstance.playState = null; // Reset to nothing (solved some problems)
+	if (infoArray[sound.id].endTime === 0 || infoArray[sound.id].endTime === null) {
+		infoArray[sound.id].endTime = getDuration(infoArray[sound.id]);
 	}
 }
 

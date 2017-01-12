@@ -1,6 +1,5 @@
-/**
- *	Utility functions
- * These functions deal with minor tasks and data handling mostly
+/* UTIL.JS
+ * These functions deal with minor tasks that help others, mostly
  * Functions:
  *		storeObj, checkKeyInfo, loadKeyInfo, cleanName
  */
@@ -22,19 +21,28 @@ function cleanName(name) {
 	return name.substring(0, pos);
 }
 
+/**
+ *	@desc: Replaces all forbidden characters in id names
+ *	@param: str: The uncleaned name
+ *	@return: The prepared name
+ */
 function prepareForId(str) {
 	var replaced = str.replace(/ /g, '_').replace(/[{()}]/g, '').replace(/[&]/g, 'and');
 	return replaced;
 }
 
+/**
+ *	@desc: Opens a browser window for the sound settings menu
+ *	@param: none
+ */
 function openBrowse() {
 	var currentPath = $('#sound-settings-path').val();
 	var options = {
 		title: 'Replace Sound File',
 		defaultPath: currentPath,
 		filters: [{
-			name: '*.wav, *.mp3, *.m4a, *.wma',
-			extensions: ['wav', 'mp3', 'ogg', 'm4a', 'mp4', 'wma']
+			name: '*.wav, *.mp3, *.m4a, *.wma, *ogg',
+			extensions: ['wav', 'mp3', 'm4a', 'mp4', 'wma', 'ogg']
 		}],
 		properties: ['openFile']
 	};
@@ -45,31 +53,11 @@ function openBrowse() {
 	}
 }
 
-function startClock() {
-	var today = new Date();
-	var h = today.getHours();
-	var m = today.getMinutes();
-	var s = today.getSeconds();
-	var ampm = 'AM';
-	m = checkClock(m);
-	s = checkClock(s);
-	if (h > 11) {
-		ampm = 'PM';
-	}
-	if (h > 12) {
-		h -= 12;
-	}
-	$('#clock').text(h + ":" + m + ":" + s + " " + ampm);
-	var t = setTimeout(startClock, 500);
-}
-
-function checkClock(i) {
-	if (i < 10) {
-		i = "0" + i;
-	} // add zero in front of numbers < 10
-	return i;
-}
-
+/**
+ *	@desc: Creates a copy of an object through sneaky JSON tricks
+ *	@param: obj: The object to clone
+ *	@return: A duplicate of that object
+ */
 function cloneObj(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
@@ -78,7 +66,6 @@ function cloneObj(obj) {
 module.exports = {
 	cleanName: cleanName,
 	prepareForId: prepareForId,
-	startClock: startClock,
 	openBrowse: openBrowse,
 	cloneObj: cloneObj
 };

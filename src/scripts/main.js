@@ -1,13 +1,14 @@
 /*jshint esversion: 6 */
 const fs = require("fs");
 const jsPath = "./scripts/";
-const view = require(jsPath + 'view');
+const clock = require(jsPath + "clock");
+const colors = require(jsPath + 'colors');
 const events = require(jsPath + 'events');
 const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
 const util = require(jsPath + 'util');
-const colors = require(jsPath + 'colors');
 const waveforms = require(jsPath + "waveforms");
+const view = require(jsPath + 'view');
 
 var wavesurfer;
 var keys;
@@ -30,24 +31,25 @@ $(document).ready(function() {
 	blog(keyInfo);
 	blog(playlistInfo);
 	events.setKeyEvents();
-	util.startClock();
+	clock.start();
 	colors.initializeKeyColors();
 	$('.modal').modal();
 	$('select').material_select();
 	$(".menu-icon").sideNav({
 		closeOnClick: true
 	});
+	// Set editable text properties
 	$('.editable').editable(function(value, settings) {
 		if (value === "") {
 			return "Hit enter after typing!";
 		} else {
-			blog(value);
 			return value;
 		}
 	}, {
 		type: 'text'
 	});
 
+	// Set ability to move waveform region handles
 	interact('#waveform-region')
 		.resizable({
 			preserveAspectRatio: false,
@@ -76,6 +78,8 @@ $(document).ready(function() {
 			waveforms.getRegion();
 			$(event.target).css('transition', '0.5s');
 		});
+
+	// Trigger file loaded event after each preloading
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 
 });

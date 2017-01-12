@@ -5,6 +5,10 @@ var prevTarget = "Q"; // Key clicked previous to the current one - for removing 
 // Wavesurfer measures in seconds
 // soundInstance measures in milliseconds
 
+/**
+ *	@desc: Sets initial waveform properties
+ *	@param: N/A
+ */
 function buildWaveform() {
 	// Create wavesurfer instance
 	wavesurfer = WaveSurfer.create({
@@ -16,6 +20,7 @@ function buildWaveform() {
 	});
 	wavesurfer.empty();
 
+	// When ready, hide loader and add the timeline
 	wavesurfer.on('ready', function() {
 		$('#waveform-progress').hide();
 		var timeline = Object.create(WaveSurfer.Timeline);
@@ -24,33 +29,49 @@ function buildWaveform() {
 			container: '#waveform-timeline'
 		});
 	});
-
-
 }
 
+/**
+ *	@desc: Loads a sound instance into the waveform
+ *	@param: soundInfo: The sound info object being waveformed
+ */
 function loadWavesurfer(soundInfo) {
 	var path = soundInfo.path;
-	$('#waveform-song-name').text(soundInfo.name);
 	if (path != lastLoadedPath) {
+		// Remove and re-initialize the waveform region (prevents weird resizing errors)
+		$('#waveform-song-name').text(soundInfo.name);
 		$('#waveform-region').remove();
 		$('#waveform').after('<div id="waveform-region"></div>');
+		// Remove and re-initialize waveform
 		wavesurfer.destroy();
 		buildWaveform();
 		wavesurfer.load(path);
-		lastLoadedPath = path;
+		lastLoadedPath = path; // Set the path so we know what was loaded
 		$('#waveform-progress').show();
-
 	}
+
+	// When the wavesurfer is loaded
 	wavesurfer.on('ready', function() {
 		setRegion(soundInfo);
+		// Create an instance if necessary (for region/duration)
+		if (soundInfo.soundInstance === undefined) {
+			soundInfo.soundInstance.createInstance();
+		}
+		setRegion(soundInfo); // Resize region to reflect proper size
 		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
-		wavesurfer.seekTo(percentComplete);
+		wavesurfer.seekTo(percentComplete); // Move playhead to start time
 	});
+	// Change the target key of the waveform
 	$('#' + prevTarget).removeClass('waveformed-key');
 	$('#' + soundInfo.id).addClass('waveformed-key');
 	prevTarget = soundInfo.id;
 }
 
+/**
+ *	@desc: 	Sets up the tracking of the sound instance on the waveform
+ *					Loads the waveform, determines whether it should be tracking, then does it
+ *	@param: soundInfo: The sound info object being waveformed
+ */
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
 	wavesurfer.on('ready', function() {
@@ -70,6 +91,10 @@ function setWaveformTracking(soundInfo) {
 
 }
 
+/**
+ *	@desc: Moves the playhead to the current time on the waveform
+ *	@param: N/A
+ */
 function trackOnWaveform() {
 	var sound = waveformedInfo.soundInstance;
 	var percentComplete = ((Number(sound.position) / 1000) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
@@ -77,6 +102,11 @@ function trackOnWaveform() {
 	wavesurfer.seekTo(percentComplete);
 }
 
+/**
+ *	@desc: 	Takes the left/width of the waveform region and turns them into
+ *					start and end times, then stores those times in the proper objects
+ *	@param: soundInfo: The sound info object being waveformed
+ */
 function getRegion() {
 	var start = $('#waveform-region').position().left;
 	if (start < 0) {
@@ -100,17 +130,33 @@ function getRegion() {
 	trackOnWaveform();
 }
 
+/**
+ *	@desc: 	Takes start and end times from the sound info object and turns them
+ *					into a physical region
+ *	@param: soundInfo: The sound info object being waveformed
+ */
 function setRegion(soundInfo) {
 	var start = (soundInfo.startTime / wavesurfer.getDuration()) * $('#waveform').width();
 	var end = (soundInfo.endTime / wavesurfer.getDuration()) * $('#waveform').width();
 	$('#waveform-region').css('left', start);
 	$('#waveform-region').width(end - start);
-	//soundInfo.soundInstance.position = 0;
+}
+
+/**
+ *	@desc: 	Resets the waveform region and waveform name
+ *	@param: N/A
+ */
+function reset() {
+	wavesurfer.empty();
+	$('#waveform-region').remove();
+	$('#waveform').after('<div id="waveform-region"></div>');
+	$('#waveform-info').text("");
 }
 
 module.exports = {
 	load: loadWavesurfer,
 	track: setWaveformTracking,
 	buildWaveform: buildWaveform,
-	getRegion: getRegion
+	getRegion: getRegion,
+	reset: reset
 };

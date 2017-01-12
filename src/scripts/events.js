@@ -1,5 +1,4 @@
-/**
- *	Event functions
+/* EVENTS.JS
  * These functions handle all events - mouse clicks, key presses, etc
  * Functions:
  *		setKeyEvents
@@ -9,7 +8,7 @@
 // Required js scripts
 const soundInfoManager = require("./soundInfoManager");
 
-var settingsInfoObj;
+var settingsInfoObj; // Either keyInfo or playlistInfo, whichever has the sound being changed in settings
 var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLON', 'QUOTE', 'BACK_SLASH', 'BESIDE_Z', 'COMMA', 'PERIOD', 'SLASH'];
 
 /**
@@ -17,20 +16,21 @@ var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLO
  *	@param:	keys: An array of all the key objects
  */
 function setKeyEvents() {
+
 	// Handles when a file is dropped on a key
 	keys.on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
 			var key = e.target.id;
+			// Create a new sound info object
 			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, key);
-			blog(keyInfo);
+			// Store the new sound info object in the keyInfo object
 			keyInfo[key] = newSoundInfo;
-			blog(keyInfo);
 			$(e.target).find('.audioName').text(newSoundInfo.name);
 			storage.storeObj("keyInfo", keyInfo);
+			console.log('waveforming the sound');
 			waveforms.load(newSoundInfo);
-
 		}
 		return false;
 	});
@@ -51,12 +51,11 @@ function setKeyEvents() {
 			// Create new soundInfo object
 			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path);
 			playlistInfo[newSoundInfo.id] = newSoundInfo;
-			view.createPlaylistItem(newSoundInfo);
-			//blog(newSoundInfo);
+			view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
 			storage.storeObj("playlistInfo", playlistInfo);
 			waveforms.load(newSoundInfo);
 		}
-		updatePlaylistClickFunctions();
+		updatePlaylistClickFunctions(); // Ensure new songs react properly to clicking
 		return false;
 	});
 
@@ -69,7 +68,6 @@ function setKeyEvents() {
 	function clickSound(e, infoObj) {
 		var id = e.target.id;
 		if (infoObj.hasOwnProperty(id)) {
-			blog('events.clickSound');
 			waveforms.track(infoObj[id]);
 		}
 	}
@@ -84,10 +82,11 @@ function setKeyEvents() {
 
 	// Set functions when clicking on playlist sounds
 	function updatePlaylistClickFunctions() {
-		// Click on playlist sound
+		// Click on playlist sound -> load waveform
 		$('.playlistSound').on('click', function(e) {
 			clickSound(e, playlistInfo);
 		});
+		// Right-click on playlist sound -> open sound settings
 		$('#playlist-songs li').on('contextmenu', function(e) {
 			var id = e.target.id;
 			settingsInfoObj = playlistInfo;
@@ -101,34 +100,36 @@ function setKeyEvents() {
 	$(document).keydown(function(e) {
 		var key = keyboardMap[e.which];
 		var code = e.which;
-		if (e.target == document.body) {
+		if (e.target === document.body) {
+
 			// If keys A-Z or 0-9 have been pressed
 			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
 				// Check if the sound was loaded or not
 				if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
 					sounds.playSound(keyInfo[key]);
 				} else { // User tries to play a not-loaded sound
-					Materialize.toast(keyInfo[key].name + " is not loaded.", 1500);
+					Materialize.toast(keyInfo[key].name + " was not loaded.", 1500);
 				}
+
 				// User presses the delete key
-			} else if (key == 'DELETE') {
+			} else if (key === 'DELETE') {
 				id = $('.waveformed-key').attr('id');
+				// If the deleted sound was in the keys
 				if (keyInfo.hasOwnProperty(id)) {
 					delete keyInfo[id];
+					storage.storeObj("keyInfo", keyInfo);
 					$("#" + id).find('.audioName').text("");
 					$("#" + id).removeClass('waveformed-key');
 					$("#" + id).css('background-color', 'var(--pM)');
-					storage.storeObj("keyInfo", keyInfo);
 				} else {
+					// The deleted sound was in the playlist
 					delete playlistInfo[id];
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);
 				}
-				wavesurfer.empty();
-				$('#waveform-region').remove();
-				$('#waveform').after('<div id="waveform-region"></div>');
-				$('#waveform-info').text("");
-			} else if (key == 'SPACE') {
+				waveforms.reset();
+			} else if (key === 'SPACE') {
+				// Play the first sound of the playlist
 				var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
 				sounds.playSound(playlistInfo[firstPlaylistSound]);
 			}
@@ -172,10 +173,7 @@ function setKeyEvents() {
 	});
 
 	$("#sound-settings-color-container").click(function(e) {
-		var position = $("#sound-settings-color-container").position();
-		$("#color-picker").css('top', position.top);
-		$("#color-picker").css('left', position.left);
-		$("#color-picker").fadeIn();
+		view.openColorPicker();
 	});
 
 	$(".color-picker-color").click(function(e) {

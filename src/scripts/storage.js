@@ -1,10 +1,16 @@
+/*	STORAGE.JS
+ *	Handles all stroring and retreiving of information from localStorage
+ */
+
 /*jshint esversion: 6 */
 const soundInfoManager = require("./soundInfoManager");
 
 /**
- *	@desc: 	Loads the keyInfo array from localStorage and registers each sound
- *					Also prints the name of the song on the key in the view
- *	@param: none
+ *	@desc: 	Loads an info object from localStorage and registers each sound
+ *					Also prints the name of the song on the key in the view or creates
+ *					a playlist item
+ *	@param: objName: Either 'keyInfo' or 'playlistInfo' (string)
+ 						obj: The actual object of objName
  */
 function getInfoObj(objName, obj) {
 	var tempObj = {};

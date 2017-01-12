@@ -1,10 +1,6 @@
 /* VIEW.JS
-*  Handles generation of elements that are dynamically loaded.
-*  Functions:
-			buildKeyboard
-			buildTransList
-			buildWaveform
-*/
+ *  Handles generation of elements that are dynamically loaded.
+ */
 
 var settingsSoundInfo;
 var specialKeys = {
@@ -34,19 +30,29 @@ function buildKeyboard() {
 		var rowNum = i + 1;
 		for (var j = 0; j < rows[i].length; j++) {
 			id = rows[i][j];
+			// Check whether it's a special key, and if so, replace it with the written version
 			if (specialKeys.hasOwnProperty(rows[i][j])) {
 				id = specialKeys[rows[i][j]];
 			}
+			// Create the key
 			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + id + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
 		}
 	}
 	keys = $('.btn-key'); // set keys to be an array of the audioName divs
 }
 
+/**
+ *	@desc:	Creates a new element on the playlist
+ *	@param:	soundInfo: The soundInfo object
+ */
 function createPlaylistItem(soundInfo) {
 	$('#playlist-songs').append("<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>");
 }
 
+/**
+ *	@desc:	Makes the playlist sortable - should probably make this also populate it
+ *	@param:	soundInfo: The soundInfo object
+ */
 function buildPlaylist() {
 	var el = document.getElementById('playlist-songs');
 	var sortable = Sortable.create(el, {
@@ -54,6 +60,10 @@ function buildPlaylist() {
 	});
 }
 
+/**
+ *	@desc: Opens the sound settings and populates it with the proper info
+ *	@param: soundInfo: The sound info object that is being changed
+ */
 function openSoundSettings(soundInfo) {
 	var idStart = "#sound-settings-";
 	if (soundInfo.name === "") {
@@ -81,7 +91,9 @@ function saveSoundSettings() {
 		view.resetEndTime();
 		view.resetStartTime();
 	}
-	tempSoundInfo.name = $('#sound-settings-name').text();
+	if ($('#sound-settings-name').text() !== "") {
+		tempSoundInfo.name = $('#sound-settings-name').text();
+	}
 	colors.setKeyColor(tempSoundInfo);
 	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 	tempSoundInfo.startTime = $('#sound-settings-start-time').val();
@@ -89,18 +101,27 @@ function saveSoundSettings() {
 	return tempSoundInfo;
 }
 
+// Set start time to 0
 function resetStartTime() {
-	//settingsSoundInfo.startTime = 0;
 	$('#sound-settings-start-time').val(0);
 }
 
+// Set end time to total duration
 function resetEndTime() {
-	//settingsSoundInfo.endTime = sounds.getDuration(settingsSoundInfo);
 	$('#sound-settings-end-time').val(sounds.getDuration(settingsSoundInfo));
 }
 
+// Open about modal
 function openAbout() {
 	$('#about-modal').modal('open');
+}
+
+// Open color picker sub menu
+function openColorPicker() {
+	var position = $("#sound-settings-color-container").position();
+	$("#color-picker").css('top', position.top);
+	$("#color-picker").css('left', position.left);
+	$("#color-picker").fadeIn();
 }
 
 module.exports = {
@@ -111,5 +132,6 @@ module.exports = {
 	saveSoundSettings: saveSoundSettings,
 	resetStartTime: resetStartTime,
 	resetEndTime: resetEndTime,
-	openAbout: openAbout
+	openAbout: openAbout,
+	openColorPicker: openColorPicker
 };
