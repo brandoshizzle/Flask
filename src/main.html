@@ -176,6 +176,38 @@
 			</div>
 		</div>
 
+		<div id="settings-modal" class="modal model-fixed-footer" style="width:500px;">
+			<div class="modal-content" style="padding:0;">
+				<div class="header-row">
+					<h5 id="sound-settings-name" class="header" style="text-align: center; margin:0px; padding: 10px;">Global Settings</h5>
+				</div>
+				<ul id="settings-categories" style="float:left; width: 30%; height: 350px; padding: 20px; padding-top: 5px;border-right: 1px solid gray">
+					<li>Samples</li>
+					<li>Playlist</li>
+					<li>UI</li>
+				</ul>
+				<div id="settings-content" style="float: right; width: 70%; height: 350px;">
+					<table class="highlight" style="padding: 20px;">
+						<tbody>
+							<tr class="settings-row">
+								<td>Key Mode</td>
+								<td>
+									<div class="switch" style="text-align: right;">
+										<label>
+											Toggle
+											<input id="sound-settings-loop" type="checkbox" disabled>
+											<span class="lever"></span>
+											Momentary
+										</label>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
 		<!-- Side Nav -->
 		<ul id="slide-out" class="side-nav">
 			<li>
@@ -186,7 +218,7 @@
 					<a href="#!name"><span class="white-text">Menu</span></a>
 				</div>
 			</li>
-			<li><a class="waves-effect" href="#"><i class="material-icons">settings</i>Settings</a></li>
+			<li><a class="waves-effect" href="#" onclick="view.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
 			<li><a class="waves-effect" href="#" onclick="view.openAbout()"><i class=" material-icons ">info</i>About</a></li>
 			<li>
 				<div class="divider "></div>
@@ -222,4 +254,3 @@
 	</body>
 
 </html>
->

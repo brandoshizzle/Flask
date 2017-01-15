@@ -120,7 +120,7 @@
 }
 
 
-/* =Animate the stuff
+/* =Animate the waveform loading
 ------------------------ */
 
 .load .line:nth-last-child(1) {
@@ -338,4 +338,10 @@ tr td {
   font-style: normal;
   font-weight: 400;
   src: url(../fonts/MaterialIcons-Regular.eot);
+}
+
+;
+
+}
+
 }
