@@ -71,8 +71,14 @@ function openSoundSettings(soundInfo) {
 	}
 	$(idStart + "name").text(soundInfo.name);
 	$(idStart + "path").val(soundInfo.path);
-	colors.setPickedColor(soundInfo.color);
-	colors.setColorPickerColors();
+	if(soundInfo.infoObj !== "playlist"){
+		$('#color-row').show();
+		colors.setPickedColor(soundInfo.color);
+		colors.setColorPickerColors();
+	} else {
+		$('#color-row').hide();
+	}
+
 	$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "start-time").val(soundInfo.startTime);
 	$(idStart + "end-time").val(soundInfo.endTime);
@@ -94,7 +100,9 @@ function saveSoundSettings() {
 	if ($('#sound-settings-name').text() !== "") {
 		tempSoundInfo.name = $('#sound-settings-name').text();
 	}
-	colors.setKeyColor(tempSoundInfo);
+	if(settingsSoundInfo.infoObj !== "playlist"){
+		colors.setKeyColor(tempSoundInfo);
+	}
 	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 	tempSoundInfo.startTime = $('#sound-settings-start-time').val();
 	tempSoundInfo.endTime = $('#sound-settings-end-time').val();
