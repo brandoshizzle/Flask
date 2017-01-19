@@ -11,6 +11,8 @@ const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
 
 var pjson = require('../package.json');
+const dialog = require('electron').remote.dialog;
+const app = require('electron').remote.app;
 
 var wavesurfer;
 var keys;
@@ -91,6 +93,20 @@ function restart(){
 	app.relaunch();
 	app.quit();
 }
+
+window.onerror = function(msg, url, line, col, error) {
+	var extra = !col ? '' : '\ncolumn: ' + col;
+	extra += !error ? '' : '\nerror: ' + error;
+
+	// You can view the information in an alert to see things working like this:
+	dialog.showErrorBox('You broke REACTion :(', 'Please send this to the developer:\n' + msg + "\nurl: " + url + "\nline: " + line);
+	//alert("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
+
+	var suppressErrorAlert = true;
+	// If you return true, then error alerts (like in older versions of
+	// Internet Explorer) will be suppressed.
+	return suppressErrorAlert;
+};
 
 function blog(message) {
 	if (debug === 1) {
