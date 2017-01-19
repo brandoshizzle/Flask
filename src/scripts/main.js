@@ -10,7 +10,7 @@ const util = require(jsPath + 'util');
 const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
 
-const app = require('electron').remote.app;
+var pjson = require('../package.json');
 
 var wavesurfer;
 var keys;
@@ -27,6 +27,8 @@ $(document).ready(function() {
 	view.buildKeyboard();
 	view.buildPlaylist();
 	waveforms.buildWaveform();
+	$('.version').text(pjson.version);
+	$('title').text('REACTion v' + pjson.version);
 	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
 	keyInfo = storage.getInfoObj("keyInfo", keyInfo);
 	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);
