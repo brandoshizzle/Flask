@@ -16,3 +16,7 @@ app.on('ready', function() {
 	win.loadURL('file://' + __dirname + '/src/main.html');
 	//win.openDevTools();
 });
+
+app.on('window-all-closed', function() {
+	app.quit();
+});
