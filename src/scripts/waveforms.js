@@ -120,10 +120,10 @@ function getRegion() {
 	var endTime = (end / $('#waveform').width()) * wavesurfer.getDuration();
 	waveformedInfo.startTime = startTime;
 	waveformedInfo.endTime = endTime;
-	if (keyInfo.hasOwnProperty(waveformedInfo.id)) {
+	if (waveformedInfo.infoObj === "key") {
 		keyInfo[waveformedInfo.id] = waveformedInfo;
 		storage.storeObj('keyInfo', keyInfo);
-	} else if (playlistInfo.hasOwnProperty(waveformedInfo.id)) {
+	} else if (waveformedInfo.infoObj === "playlist") {
 		playlistInfo[waveformedInfo.id] = waveformedInfo;
 		storage.storeObj('playlistInfo', playlistInfo);
 	}

@@ -1,5 +1,6 @@
 var defaultSoundInfo = {
 	"id": "",
+	"infoObj": "",
 	"name": "",
 	"path": "",
 	"color": "default",
@@ -20,6 +21,12 @@ function createSoundInfoFromPath(path, id) {
 	tempObj.name = util.cleanName(path);
 	tempObj.id = id || util.prepareForId(tempObj.name);
 	tempObj.path = path;
+	// Define which section it is part of
+	if(id === undefined){
+		tempObj.infoObj = "playlist";
+	}	else {
+		tempObj.infoObj = "key";
+	}
 	sounds.register(tempObj);
 	// INSTANCE IS CREATED AND END TIME IS CALCULATED WHEN SONG PRELOADS - SEE SOUNDS.JS
 	return tempObj;

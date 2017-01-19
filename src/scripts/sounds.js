@@ -43,7 +43,7 @@ function playSound(soundInfo) {
 		soundInfo.soundInstance.stop();
 		$('#' + soundInfo.id).removeClass('playing-sound');
 		$('#' + soundInfo.id).addClass('played');
-		if (playlistInfo.hasOwnProperty(soundInfo.id)) {
+		if (soundInfo.infoObj === "playlist") {
 			$('#playlist-songs li:first-child').appendTo('#playlist-songs');
 		}
 		// Song is not playing, so play it.
