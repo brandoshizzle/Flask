@@ -10,6 +10,8 @@ const util = require(jsPath + 'util');
 const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
 
+const app = require('electron').remote.app;
+
 var wavesurfer;
 var keys;
 var keyInfo = {};
@@ -83,6 +85,11 @@ $(document).ready(function() {
 	createjs.Sound.on("fileload", sounds.fileLoaded);
 
 });
+
+function restart(){
+	app.relaunch();
+	app.quit();
+}
 
 function blog(message) {
 	if (debug === 1) {
