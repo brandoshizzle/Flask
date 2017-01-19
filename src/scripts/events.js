@@ -29,7 +29,6 @@ function setKeyEvents() {
 			keyInfo[key] = newSoundInfo;
 			$(e.target).find('.audioName').text(newSoundInfo.name);
 			storage.storeObj("keyInfo", keyInfo);
-			console.log('waveforming the sound');
 			waveforms.load(newSoundInfo);
 		}
 		return false;

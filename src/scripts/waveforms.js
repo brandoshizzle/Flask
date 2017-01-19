@@ -55,7 +55,8 @@ function loadWavesurfer(soundInfo) {
 		setRegion(soundInfo);
 		// Create an instance if necessary (for region/duration)
 		if (soundInfo.soundInstance === undefined) {
-			soundInfo.soundInstance.createInstance();
+			soundInfo.soundInstance = createjs.Sound.createInstance(soundInfo.id);
+			soundInfo.endTime = sounds.getDuration(soundInfo);
 		}
 		setRegion(soundInfo); // Resize region to reflect proper size
 		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
