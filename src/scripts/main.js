@@ -24,19 +24,18 @@ var debug = 1;
  **/
 $(document).ready(function() {
 
-	view.buildKeyboard();
-	view.buildPlaylist();
-	waveforms.buildWaveform();
-	$('.version').text(pjson.version);
-	$('title').text('REACTion v' + pjson.version);
-	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
-	keyInfo = storage.getInfoObj("keyInfo", keyInfo);
-	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);
-	blog(keyInfo);
-	blog(playlistInfo);
-	events.setKeyEvents();
-	clock.start();
-	colors.initializeKeyColors();
+	view.buildKeyboard();		// Create all the keys
+	view.buildPlaylist();		// Set up the playlist (no sounds)
+	waveforms.buildWaveform();		// Set up the waveform
+	$('.version').text(pjson.version);	// Add the version number to the "version" spans
+	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
+	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
+	keyInfo = storage.getInfoObj("keyInfo", keyInfo);	// Load all of the key sounds
+	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);	// Load all of the playlist sounds
+	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
+	clock.start();	// Start the clock
+	colors.initializeKeyColors();	// Load all the key colors!
+
 	$('.modal').modal();
 	$('select').material_select();
 	$(".menu-icon").sideNav({
