@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.1.1] - 2017-01-21
 ### Added
 - Restart option to menu
 - Global settings (not working yet though)
@@ -22,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Color setting is hidden for playlist items
 - App quits when window is closed
 - Errors no longer thrown for trying to play/open settings on key with no sound
-- Cleaned ' out of sound ids (was breaking playlist)
+- Cleaned ' and , out of sound ids (was breaking playlist)
 
 
 

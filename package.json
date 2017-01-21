@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron index.js",
     "build": "build --win --ia32 --x64",
-    "build:osx": "build --mac --x64"
+    "build:osx": "build --mac --x64",
+		"release": " gh-release"
   },
   "build": {
     "squirrelWindows": {},
@@ -17,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brandoshizzle/REACTion.git"
+    "url": "https://github.com/brandoshizzle/REACTion.git"
   },
   "author": "Brandon Cathcart <cathcart.brandon@gmail.com>",
   "license": "ISC",
