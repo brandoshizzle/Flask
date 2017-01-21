@@ -9,13 +9,12 @@
     "build": "build --win --ia32 --x64",
     "build:osx": "build --mac --x64"
   },
-	"build": {
-		"squirrelWindows": {
-		},
-		"win": {
-			"icon": "build/icon.ico"
-		}
-	},
+  "build": {
+    "squirrelWindows": {},
+    "win": {
+      "icon": "build/icon.ico"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/brandoshizzle/REACTion.git"
@@ -29,6 +28,7 @@
   "devDependencies": {
     "electron": "^1.4.13",
     "electron-builder": "^10.17.3",
+    "gh-release": "^2.2.0",
     "tether-shepherd": "^1.8.1"
   }
 }

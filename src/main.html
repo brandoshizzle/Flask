@@ -11,6 +11,8 @@
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!--Import materialize.css and main.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/jquery-ui.structure.min.css" />
+		<link type="text/css" rel="stylesheet" href="css/jquery-ui.theme.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/main.css" />
 	</head>
 
@@ -152,7 +154,7 @@
 			</div>
 			<div class="modal-footer ">
 				<a href="#" class="modal-action modal-close waves-effect btn-flat" id="sound-settings-save">Save</a>
-				<a href="#" class="modal-action modal-close waves-effect btn-flat">Close</a>
+				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
 			</div>
 		</div>
 
@@ -179,13 +181,14 @@
 				<div class="header-row">
 					<h5 id="sound-settings-name" class="header" style="text-align: center; margin:0px; padding: 10px;">Global Settings</h5>
 				</div>
-				<ul id="settings-categories" style="float:left; width: 30%; height: 350px; padding: 20px; padding-top: 5px;border-right: 1px solid gray">
-					<li>Samples</li>
-					<li>Playlist</li>
-					<li>UI</li>
+				<ul id="settings-categories" class="selectable">
+					<li value='samples'>Samples</li>
+					<li value='playlist'>Playlist</li>
+					<li value='ui'>UI</li>
 				</ul>
 				<div id="settings-content" style="float: right; width: 70%; height: 350px;">
-					<table class="highlight" style="padding: 20px;">
+					<!-- Samples Table -->
+					<table id="samples-table" class="highlight global-settings-table" style="padding: 20px;">
 						<tbody>
 							<tr class="settings-row">
 								<td>Key Mode</td>
@@ -202,7 +205,29 @@
 							</tr>
 						</tbody>
 					</table>
+					<!-- End Samples Settings Table -->
+					<!-- Playlist Settings Table -->
+					<table id="playlist-table" class="highlight global-settings-table" style="padding: 20px;">
+						<tbody>
+							<tr class="settings-row">
+								<td>Send played song to bottom?</td>
+								<td>
+									<div class="switch" style="text-align: right;">
+										<label>
+											<input id="sound-settings-loop" type="checkbox" disabled>
+											<span class="lever"></span>
+										</label>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- End Playlist Settings Table -->
 				</div>
+			</div>
+			<div class="modal-footer ">
+				<a href="#" class="modal-action modal-close waves-effect btn-flat" id="global-settings-save">Save</a>
+				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
 			</div>
 		</div>
 
@@ -238,6 +263,7 @@
 		</script>
 		<!-- JS vendor scripts and jQuery -->
 		<script src="scripts/vendor/jquery-3.1.1-min.js "></script>
+		<script src="scripts/vendor/jquery-ui.min.js"></script>
 		<script src="scripts/vendor/interact.js "></script>
 		<script src="data/keyCodes.js "></script>
 		<script src="scripts/main.js "></script>

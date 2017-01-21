@@ -279,6 +279,26 @@ tr td {
   margin: 2px;
 }
 
+#settings-categories {
+  float: left;
+  width: 30%;
+  height: 350px;
+  padding: 20px;
+  padding-top: 5px;
+  border-right: 1px solid gray;
+  cursor: pointer;
+}
+
+.selectable li:hover {
+  color: white;
+  background-color: var(--pL);
+}
+
+.selectable .ui-selected {
+  background-color: var(--pM) !important;
+  color: white;
+}
+
 #programTitle {
   display: inline-block;
   margin-bottom: 0;
@@ -338,10 +358,4 @@ tr td {
   font-style: normal;
   font-weight: 400;
   src: url(../fonts/MaterialIcons-Regular.eot);
-}
-
-;
-
-}
-
 }

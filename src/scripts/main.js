@@ -54,6 +54,16 @@ $(document).ready(function() {
 		type: 'text'
 	});
 
+	$('.global-settings-table').hide();
+	$('.selectable').selectable({
+		stop: function(){
+				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();
+				console.log(selected);
+				$('.global-settings-table').hide();
+				$('#'+selected+"-table").show();
+		}
+	});
+
 	// Set ability to move waveform region handles
 	interact('#waveform-region')
 		.resizable({
