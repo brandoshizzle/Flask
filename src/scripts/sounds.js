@@ -3,6 +3,9 @@
  */
 /*jshint esversion: 6 */
 
+const playlistScripts = require("./playlist-search");
+var playlistPlayingSoundObject;
+
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
  *					Sounds that fail the path check get the soundNotLoaded class
@@ -39,13 +42,7 @@ function playSound(soundInfo) {
 		play();
 		// Song is currently playing - stop it.
 	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
-		blog('Song stopped');
-		soundInfo.soundInstance.stop();
-		$('#' + soundInfo.id).removeClass('playing-sound');
-		$('#' + soundInfo.id).addClass('played');
-		if (soundInfo.infoObj === "playlist") {
-			$('#playlist-songs li:first-child').appendTo('#playlist-songs');
-		}
+		stop(soundInfo);
 		// Song is not playing, so play it.
 	} else {
 		blog('Song started');
@@ -54,10 +51,29 @@ function playSound(soundInfo) {
 	}
 
 	function play() {
+		if(soundInfo.infoObj === 'playlist'){
+			if(playlistPlayingSoundObject !== undefined){
+				stop(playlistPlayingSoundObject);
+			}
+			playlistPlayingSoundObject = soundInfo;
+		}
 		soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
 		blog('sounds.play');
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).addClass('playing-sound');
+	}
+
+	function stop(soundInfoToStop){
+		blog('Song stopped');
+		soundInfoToStop.soundInstance.stop();
+		$('#' + soundInfoToStop.id).removeClass('playing-sound');
+		$('#' + soundInfoToStop.id).addClass('played');
+		if (soundInfoToStop.infoObj === "playlist") {
+			$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
+			$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
+			var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
+			$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
+		}
 	}
 }
 

@@ -50,14 +50,14 @@
 			</div>
 		</div>
 
-		<div class="playlistBox col s3 z-depth-4">
+		<div class="playlistBox col s3 z-depth-4" id="playlistBox">
 			<p class="section-header">Playlist</p>
 			<!-- Search bar/playlist songs -->
 			<div class="input-field">
-				<input id="icon_prefix" type="text">
+				<input id="icon_prefix" class="search" type="text" />
 				<label for="icon_prefix">Search</label>
 			</div>
-			<ul id="playlist-songs" class="scrollbar">
+			<ul id="playlist-songs" class="scrollbar list">
 			</ul>
 		</div>
 
@@ -267,6 +267,7 @@
 		<script src="scripts/vendor/interact.js "></script>
 		<script src="data/keyCodes.js "></script>
 		<script src="scripts/main.js "></script>
+		<script src="scripts/vendor/defiant.min.js "></script>
 		<script src="scripts/vendor/sortable.js "></script>
 		<script src="scripts/vendor/jeditable.js "></script>
 		<script src="scripts/vendor/wavesurfer.js "></script>

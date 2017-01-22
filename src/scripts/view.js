@@ -56,7 +56,23 @@ function createPlaylistItem(soundInfo) {
 function buildPlaylist() {
 	var el = document.getElementById('playlist-songs');
 	var sortable = Sortable.create(el, {
-		animation: 150
+		animation: 250,
+		onUpdate: function (evt) {
+			console.log(evt.newIndex);
+			var first = true;
+			var sounds = $('.playlistSound');
+			for(i = 0; i < evt.newIndex; i++){
+				var style = window.getComputedStyle(sounds[i]);
+				if(style.display !== 'none'){
+					 first = false;
+				}
+			}
+        if(first === true){
+					$('.playlistSound').css('background-color', 'var(--bgL)');
+					$('#' + evt.item.id).css('background-color', 'var(--aM)');
+					console.log('hello');
+				}
+    }
 	});
 }
 

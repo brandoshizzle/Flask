@@ -7,6 +7,7 @@
 
 // Required js scripts
 const soundInfoManager = require("./soundInfoManager");
+const playlistScripts = require("./playlist-search");
 
 var settingsInfoObj; // Either keyInfo or playlistInfo, whichever has the sound being changed in settings
 var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLON', 'QUOTE', 'BACK_SLASH', 'BESIDE_Z', 'COMMA', 'PERIOD', 'SLASH'];
@@ -45,6 +46,7 @@ function setKeyEvents() {
 
 	// File is dropped onto playlist box - register and add info
 	$('.playlistBox').on('drop', function(e) {
+		console.log('drop');
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// Create new soundInfo object
@@ -131,13 +133,13 @@ function setKeyEvents() {
 				}
 				waveforms.reset();
 			} else if (key === 'SPACE') {
-				// Play the first sound of the playlist
-				var firstPlaylistSound = $('#playlist-songs li:first-child').attr('id');
-				sounds.playSound(playlistInfo[firstPlaylistSound]);
+				// Play the first visible sound of the playlist
+					var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
+					sounds.playSound(playlistInfo[firstPlaylistSound]);
+				}
 			}
 			return false;
-		}
-	});
+		});
 
 	// Close/save sound settings when save key is pressed.
 	$('#sound-settings-save').click(function(e) {
@@ -191,6 +193,20 @@ function setKeyEvents() {
 	$(document).on('dragover', function(e) {
 		e.preventDefault();
 		return false;
+	});
+
+	$('.search').on('keyup',function(){
+		var first = true;
+		$('#playlist-songs li').each(function(){
+			if($(this).is(":visible") === true){
+				if(first === true){
+					$(this).css('background-color', 'var(--aM)');
+					first = false;
+				} else {
+					$(this).css('background-color', 'var(--bgL)');
+				}
+			}
+		});
 	});
 }
 

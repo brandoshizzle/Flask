@@ -10,6 +10,7 @@ const util = require(jsPath + 'util');
 const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
 
+require(jsPath + 'playlist-search');
 var pjson = require('../package.json');
 const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
@@ -39,7 +40,6 @@ $(document).ready(function() {
 	colors.initializeKeyColors();	// Load all the key colors!
 
 	$('.modal').modal();
-	$('select').material_select();
 	$(".menu-icon").sideNav({
 		closeOnClick: true
 	});
@@ -96,7 +96,6 @@ $(document).ready(function() {
 
 	// Trigger file loaded event after each preloading
 	createjs.Sound.on("fileload", sounds.fileLoaded);
-
 });
 
 function restart(){

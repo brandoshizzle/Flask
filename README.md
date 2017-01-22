@@ -22,11 +22,14 @@ Current version: v0.1.0
 * Drag playlist items to reorder.
 * Press space to play the first item of the playlist (highlighted in yellow).
 
-
 ## Changelog
+See full Changelog [here](CHANGELOG.md)
 
-###v0.1.0
-* Initial build!
+## Known Issues (To address in future updates)
+- Waveform doesn't track play progress if song was selected prior (you need to surprise the sound)
+- Sometimes set start times don't work (fixed by selecting another sound, then playing it)
+- Pages do not yet work
+
 
 ## 3rd party libraries
 
