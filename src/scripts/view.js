@@ -140,11 +140,6 @@ function openAbout() {
 	$('#about-modal').modal('open');
 }
 
-// Open settings modal
-function openSettings() {
-	$('#settings-modal').modal('open');
-}
-
 // Open color picker sub menu
 function openColorPicker() {
 	var position = $("#sound-settings-color-container").position();
@@ -162,6 +157,5 @@ module.exports = {
 	resetStartTime: resetStartTime,
 	resetEndTime: resetEndTime,
 	openAbout: openAbout,
-	openColorPicker: openColorPicker,
-	openSettings: openSettings
+	openColorPicker: openColorPicker
 };

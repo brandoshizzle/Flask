@@ -11,6 +11,7 @@ const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
 
 require(jsPath + 'playlist-search');
+const settingsjs = require(jsPath + 'settings');
 var pjson = require('../package.json');
 const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
@@ -19,6 +20,7 @@ var wavesurfer;
 var keys;
 var keyInfo = {};
 var playlistInfo = {};
+var settings = {};
 var sI;
 var debug = 1;
 
@@ -35,6 +37,7 @@ $(document).ready(function() {
 	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
 	keyInfo = storage.getInfoObj("keyInfo", keyInfo);	// Load all of the key sounds
 	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);	// Load all of the playlist sounds
+	settings = storage.getInfoObj('settings', settings);	// Load the program settings
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!

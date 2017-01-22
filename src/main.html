@@ -176,6 +176,7 @@
 			</div>
 		</div>
 
+		<!-- Global settings modal -->
 		<div id="settings-modal" class="modal model-fixed-footer" style="width:500px;">
 			<div class="modal-content" style="padding:0;">
 				<div class="header-row">
@@ -214,7 +215,18 @@
 								<td>
 									<div class="switch" style="text-align: right;">
 										<label>
-											<input id="sound-settings-loop" type="checkbox" disabled>
+											<input id="settings-playlistSoundToBottom" type="checkbox">
+											<span class="lever"></span>
+										</label>
+									</div>
+								</td>
+							</tr>
+							<tr class="settings-row">
+								<td>Delete played songs?</td>
+								<td>
+									<div class="switch" style="text-align: right;">
+										<label>
+											<input id="settings-playlistSoundToDelete" type="checkbox">
 											<span class="lever"></span>
 										</label>
 									</div>
@@ -226,7 +238,7 @@
 				</div>
 			</div>
 			<div class="modal-footer ">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat" id="global-settings-save">Save</a>
+				<a href="#" class="modal-action modal-close waves-effect btn-flat" onclick="settingsjs.saveSettings()" id="global-settings-save">Save</a>
 				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
 			</div>
 		</div>
@@ -242,7 +254,7 @@
 					<a href="#!name"><span class="white-text">Menu</span></a>
 				</div>
 			</li>
-			<li><a class="waves-effect" href="#" onclick="view.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
+			<li><a class="waves-effect" href="#" onclick="settingsjs.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
 			<li><a class="waves-effect" href="#" onclick="view.openAbout()"><i class=" material-icons">info</i>About</a></li>
 			<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart REACTion</a></li>
 			<li>

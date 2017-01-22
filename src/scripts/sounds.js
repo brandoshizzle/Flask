@@ -67,10 +67,16 @@ function playSound(soundInfo) {
 		$('#' + soundInfoToStop.id).addClass('played');
 		// If the song is stopped in the playlist
 		if (soundInfoToStop.infoObj === "playlist") {
-			$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
-			$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
-			var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
-			$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
+			if(settings.playlistSoundDeleteAfterPlay){
+				delete playlistInfo[soundInfoToStop.id];
+				$("#" + soundInfoToStop.id).remove();
+				storage.storeObj("playlistInfo", playlistInfo);
+			}	else if(settings.playlistSoundToBottomAfterPlay){
+				$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
+				$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
+				var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
+				$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
+			}
 		}
 	}
 }

@@ -30,21 +30,28 @@ function getInfoObj(objName, obj) {
 			tempObj = JSON.parse(infoString);
 		}
 	}
-	// Now, with our tempObj,
-	Object.keys(tempObj).map(function(id, index) {
-		// Ensure all parameters are up to date
-		soundInfoManager.checkSoundInfo(tempObj[id].id, obj);
-		if (objName === 'keyInfo') {
-			// Print the name of each sound on it's corresponding key
-			$("#" + tempObj[id].id).find('.audioName').text(tempObj[id].name);
-		} else if (objName === 'playlistInfo') {
-			view.createPlaylistItem(tempObj[id]);
-		}
-		// Register sound with SoundJS
-		sounds.register(tempObj[id]);
-	});
 
-	return tempObj;
+	if(objName === 'settings'){
+		settingsjs.checkSettings(tempObj);
+	}
+
+	// Do the registering and checking and junk
+	if(objName === 'playlistInfo' || objName === 'keyInfo'){
+		Object.keys(tempObj).map(function(id, index) {
+			// Ensure all parameters are up to date
+			soundInfoManager.checkSoundInfo(tempObj[id].id, obj);
+			if (objName === 'keyInfo') {
+				// Print the name of each sound on it's corresponding key
+				$("#" + tempObj[id].id).find('.audioName').text(tempObj[id].name);
+			} else if (objName === 'playlistInfo') {
+				view.createPlaylistItem(tempObj[id]);
+			}
+			// Register sound with SoundJS
+			sounds.register(tempObj[id]);
+		});
+	}
+
+	return tempObj; // Return the sucker
 }
 
 /**

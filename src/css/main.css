@@ -267,12 +267,12 @@ h4 {
 
 .settings-row {
   position: relative;
-  height: 60px;
+  cursor: default;
 }
 
 tr td {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #sound-settings input {
