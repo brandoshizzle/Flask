@@ -2,17 +2,16 @@
 var searchString;
 
 $('.search').on('keyup paste', function(e){
-	if(keyboardMap[e.which] === 'SPACE'){
+	/*if(keyboardMap[e.which] === 'SPACE'){
 		var firstPlaylistSound = getFirstPlaylistItem();
 		sounds.playSound(playlistInfo[firstPlaylistSound]);
 		searchString = $('.search').val();
 		$('.search').val(searchString.substring(0,searchString.length-1)).blur();
 
 		return false;
-	}
+	}*/
 	searchString = '//*[contains(name, \"'+ $('.search').val() + '\")]';
 	var search = JSON.search(playlistInfo, searchString);
-	console.log(search);
 	$('.playlistSound').each(function(){
 		$(this).hide();
 		$(this).css('background-color', 'var(--bgL)');
@@ -35,7 +34,9 @@ function getFirstPlaylistItem(){
 			return playlist[i].id;
 		}
 	}
+	return 'no sounds!'; // Returns this if no results
 }
+
 
 module.exports = {
 	getFirstPlaylistItem: getFirstPlaylistItem

@@ -34,6 +34,10 @@ body {
   color: var(--tD);
 }
 
+#playlist-search {
+  color: var(--bgL);
+}
+
 #waveform {
   background-color: var(--oc-gray-8);
 }

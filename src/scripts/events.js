@@ -135,6 +135,7 @@ function setKeyEvents() {
 			} else if (key === 'SPACE') {
 				// Play the first visible sound of the playlist
 					var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
+					if(firstPlaylistSound !== 'no sounds!')
 					sounds.playSound(playlistInfo[firstPlaylistSound]);
 				}
 			}
