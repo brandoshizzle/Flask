@@ -5,7 +5,7 @@ A free program that turns your keyboard into a soundboard!
 ![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
 
 ## Latest Release
-Current version: v0.1.0
+Latest Stable Release: v0.1.1
 
 | Platform      | Download      |
 | ------------- |:-------------:|

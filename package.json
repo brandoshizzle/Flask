@@ -1,14 +1,15 @@
 {
   "name": "REACTion",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Software for improvising sound",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron index.js",
     "build": "build --win --ia32 --x64",
+    "build:test": "build --dir",
     "build:osx": "build --mac --x64",
-		"release": " gh-release"
+    "release": " gh-release"
   },
   "build": {
     "squirrelWindows": {},
@@ -29,7 +30,11 @@
   "devDependencies": {
     "electron": "^1.4.13",
     "electron-builder": "^10.17.3",
+    "electron-builder-squirrel-windows": "^11.5.0",
     "gh-release": "^2.2.0",
     "tether-shepherd": "^1.8.1"
+  },
+  "dependencies": {
+    "fs-jetpack": "^0.10.5"
   }
 }

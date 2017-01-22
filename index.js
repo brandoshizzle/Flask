@@ -8,7 +8,7 @@ app.on('ready', function() {
 	var win = new BrowserWindow();
 	win.maximize();
 	win.loadURL('file://' + __dirname + '/src/main.html');
-	win.openDevTools();
+	//win.openDevTools();
 });
 
 app.on('window-all-closed', function() {

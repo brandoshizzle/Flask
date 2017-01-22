@@ -38,7 +38,6 @@ function playSound(soundInfo) {
 	// Check currentInstances to see if the key is playing or not
 	if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
 		blog('Creating and playing new instance.');
-		$('#' + soundInfo.id).removeClass('played');
 		play();
 		// Song is currently playing - stop it.
 	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
@@ -46,11 +45,11 @@ function playSound(soundInfo) {
 		// Song is not playing, so play it.
 	} else {
 		blog('Song started');
-		$('#' + soundInfo.id).removeClass('played');
 		play();
 	}
 
 	function play() {
+		$('#' + soundInfo.id).removeClass('played');
 		if(soundInfo.infoObj === 'playlist'){
 			if(playlistPlayingSoundObject !== undefined){
 				stop(playlistPlayingSoundObject);
@@ -58,16 +57,15 @@ function playSound(soundInfo) {
 			playlistPlayingSoundObject = soundInfo;
 		}
 		soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
-		blog('sounds.play');
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
 
 	function stop(soundInfoToStop){
-		blog('Song stopped');
 		soundInfoToStop.soundInstance.stop();
 		$('#' + soundInfoToStop.id).removeClass('playing-sound');
 		$('#' + soundInfoToStop.id).addClass('played');
+		// If the song is stopped in the playlist
 		if (soundInfoToStop.infoObj === "playlist") {
 			$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
 			$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
