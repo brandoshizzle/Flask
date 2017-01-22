@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Search function for playlist
 - Functioning/saving settings menu
     * Playlist: Songs to the bottom after playing
-		* Playlist: Songs delete after playing
+    * Playlist: Songs delete after playing
 
 ### Fixed
 - Error: can't play songs if they're all filtered out
