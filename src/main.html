@@ -13,6 +13,7 @@
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 		<link type="text/css" rel="stylesheet" href="css/jquery-ui.structure.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/jquery-ui.theme.min.css" />
+		<link type="text/css" rel="stylesheet" href="css/jquery.pagepiling.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/main.css" />
 	</head>
 
@@ -25,28 +26,68 @@
 				<p id="clock">Time</p>
 			</div>
 			<div class="tabs-row">
-				<ul class="tabs">
-					<li class="tab" id="page1"><a class="active" href="#">Page 1</a></li>
-					<li class="tab" id="page2"><a href="#">Page 2</a></li>
-					<li class="tab" id="page3"><a href="#">Page 3</a></li>
-					<li class="tab" id="page4"><a href="#">Page 4</a></li>
-					<li class="tab" id="page5"><a href="#">Page 5</a></li>
-					<li class="tab" id="page6"><a href="#">Page 6</a></li>
-					<li class="tab" id="page7"><a href="#">Page 7</a></li>
-					<li class="tab" id="page8"><a href="#">Page 8</a></li>
+				<ul class="tabs" id="tabs">
+					<li class="tab"><a class="active" href="#" id="page1">Page 1</a></li>
+					<li class="tab"><a href="#" id="page2">Page 2</a></li>
+					<li class="tab"><a href="#" id="page3">Page 3</a></li>
+					<li class="tab"><a href="#" id="page4">Page 4</a></li>
+					<li class="tab"><a href="#" id="page5">Page 5</a></li>
+					<li class="tab"><a href="#" id="page6">Page 6</a></li>
+					<li class="tab"><a href="#" id="page7">Page 7</a></li>
+					<li class="tab"><a href="#" id="page8">Page 8</a></li>
 				</ul>
 			</div>
 		</div>
 
-		<div class="row keyboard-playlist">
-			<!-- Keyboard -->
-			<div class="col s9">
-				<div id="keyboard">
-					<div id="row1"></div>
-					<div id="row2"></div>
-					<div id="row3"></div>
-					<div id="row4"></div>
-				</div>
+		<!-- Keyboard -->
+		<div class="keyboard-container">
+			<div class="section" id="keyboard1">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard2">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard3">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard4">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard5">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard6">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard7">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
+			</div>
+			<div class="section" id="keyboard8">
+				<div id="row1"></div>
+				<div id="row2"></div>
+				<div id="row3"></div>
+				<div id="row4"></div>
 			</div>
 		</div>
 
@@ -293,7 +334,7 @@
 		<script src="scripts/vendor/wavesurfer-timeline.js "></script>
 		<script src="scripts/vendor/soundjs-0.6.2.min.js "></script>
 		<script src="scripts/vendor/materialize.min.js "></script>
-
+		<script src="scripts/vendor/jquery.pagepiling.min.js "></script>
 		<!-- Insert this line after script imports -->
 		<script>
 			if (window.module) module = window.module;

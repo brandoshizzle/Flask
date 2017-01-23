@@ -26,16 +26,18 @@ function buildKeyboard() {
 		['|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', ]
 	];
 	var id;
-	for (var i = 0; i < rows.length; i++) {
-		var rowNum = i + 1;
-		for (var j = 0; j < rows[i].length; j++) {
-			id = rows[i][j];
-			// Check whether it's a special key, and if so, replace it with the written version
-			if (specialKeys.hasOwnProperty(rows[i][j])) {
-				id = specialKeys[rows[i][j]];
+	for(var kbNum = 1; kbNum < 9; kbNum++){
+		for (var i = 0; i < rows.length; i++) {
+			var rowNum = i + 1;
+			for (var j = 0; j < rows[i].length; j++) {
+				id = rows[i][j];
+				// Check whether it's a special key, and if so, replace it with the written version
+				if (specialKeys.hasOwnProperty(rows[i][j])) {
+					id = specialKeys[rows[i][j]];
+				}
+				// Create the key
+				$('#keyboard'+ kbNum + ' > #row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + id + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
 			}
-			// Create the key
-			$('#row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + id + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
 		}
 	}
 	keys = $('.btn-key'); // set keys to be an array of the audioName divs

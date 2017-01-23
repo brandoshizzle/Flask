@@ -4,6 +4,7 @@ const jsPath = "./scripts/";
 const clock = require(jsPath + "clock");
 const colors = require(jsPath + 'colors');
 const events = require(jsPath + 'events');
+const pages = require(jsPath + 'pages');
 const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
 const util = require(jsPath + 'util');
@@ -60,6 +61,15 @@ $(document).ready(function() {
 	});
 
 	$('.global-settings-table').hide();
+
+	$('.keyboard-container').pagepiling({
+		direction: 'horizontal',
+		verticalCentered: false,
+		scrollSpeed: 100,
+		navigation: {},
+		normalScrollElements: '.section'
+	});
+
 	$('.selectable').selectable({
 		stop: function(){
 				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();
