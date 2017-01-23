@@ -116,7 +116,7 @@ function getDuration(soundInfo) {
  */
 function fileLoaded(sound) {
 	// A sound has been preloaded.
-	//console.log("Preloaded:", sound.id);
+	console.log("Preloaded:", sound.id);
 	var infoArray;
 	if (playlistInfo.hasOwnProperty(sound.id)) {
 		infoArray = playlistInfo;

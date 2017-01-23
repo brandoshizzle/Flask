@@ -191,6 +191,7 @@
 					<!-- Samples Table -->
 					<table id="samples-table" class="highlight global-settings-table" style="padding: 20px;">
 						<tbody>
+
 							<tr class="settings-row">
 								<td>Key Mode</td>
 								<td>
@@ -210,6 +211,12 @@
 					<!-- Playlist Settings Table -->
 					<table id="playlist-table" class="highlight global-settings-table" style="padding: 20px;">
 						<tbody>
+							<tr class="settings-row">
+								<td>Delete Playlist Data</td>
+								<td>
+									<div class="btn" id="playlist-delete" style="float: right;" onclick="storage.deleteObj('playlistInfo')">Delete</div>
+								</td>
+							</tr>
 							<tr class="settings-row">
 								<td>Send played song to bottom?</td>
 								<td>

@@ -5,6 +5,13 @@
 /*jshint esversion: 6 */
 const soundInfoManager = require("./soundInfoManager");
 const jetpack = require('fs-jetpack');
+const app = require('electron').remote.app;
+
+var appDir = app.getPath('userData');
+$(function(){
+	jetpack.dir(appDir).dir('data');
+});
+var dataDir = appDir + '\\data\\';
 
 /**
  *	@desc: 	Loads an info object from JSON data and registers each sound
@@ -15,9 +22,7 @@ const jetpack = require('fs-jetpack');
  */
 function getInfoObj(objName, obj) {
 	var tempObj = {};
-	var appDir = app.getPath('userData');
-	jetpack.dir(appDir).dir('data');
-	var objPath = appDir + '\\data\\' + objName + '.json';
+	var objPath = dataDir + objName + '.json';
 	// Use JSON storage if it exists, otherwise pull from (legacy) localStorage
 	if(jetpack.exists(objPath)){
 		tempObj = JSON.parse(jetpack.read(objPath));
@@ -60,9 +65,6 @@ function getInfoObj(objName, obj) {
  *					obj : The object being stringified and stored
  */
 function storeObj(objName, obj) {
-	var appDir = app.getPath('userData');
-	jetpack.dir(appDir).dir('data');
-	var dataDir = appDir + '\\data\\';
 	console.log(dataDir + objName);
 	jetpack.writeAsync(dataDir + objName + '.json', obj, {
 		atomic: true
@@ -75,7 +77,12 @@ function storeObj(objName, obj) {
 	} */
 }
 
+function deleteObj(objName){
+	jetpack.remove(dataDir + objName + '.json');
+}
+
 module.exports = {
 	getInfoObj: getInfoObj,
-	storeObj: storeObj
+	storeObj: storeObj,
+	deleteObj: deleteObj
 };
