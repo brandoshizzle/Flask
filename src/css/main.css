@@ -52,15 +52,17 @@
   width: 75vw;
   height: 60%;
   background-color: var(--bgD);
+  border-radius: 10px;
 }
 
 .pp-easing {
-  -webkit-transition: all 400ms cubic-bezier(0.550, 0.085, 0.000, 0.990);
-  transition: all 400ms cubic-bezier(0.550, 0.085, 0.000, 0.990);
-  /* custom */
-  -webkit-transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);
-  transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);
-  /* custom */
+  transition: all 900ms ease;
+  /*-webkit-transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);
+  transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);*/
+}
+
+#pp-nav {
+  display: none;
 }
 
 #waveform-box {
