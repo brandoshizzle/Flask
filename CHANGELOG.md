@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Error: can't play songs if they're all filtered out
+- Waveforms now track all the time (no need to sneak up)
 
 ### Changed
 - Storing data is now JSON in appData/data/

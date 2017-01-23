@@ -75,7 +75,8 @@ function loadWavesurfer(soundInfo) {
  */
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
-	wavesurfer.on('ready', function() {
+	//wavesurfer.on('ready', function() { REMOVED IN V0.2.0
+		console.log('got to set waveform');
 		waveformedInfo = soundInfo;
 		var playState = waveformedInfo.soundInstance.playState;
 		blog(waveformedInfo.name + ", " + playState);
@@ -88,7 +89,7 @@ function setWaveformTracking(soundInfo) {
 		} else if (playState === 'playFinished') {
 			waveformedInfo.soundInstance.playState = null;
 		}
-	});
+	//});
 
 }
 

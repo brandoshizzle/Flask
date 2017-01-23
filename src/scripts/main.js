@@ -11,6 +11,8 @@ const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
 
 require(jsPath + 'playlist-search');
+
+const Shepherd = require('tether-shepherd');
 const settingsjs = require(jsPath + 'settings');
 var pjson = require('../package.json');
 const dialog = require('electron').remote.dialog;
@@ -99,6 +101,7 @@ $(document).ready(function() {
 
 	// Trigger file loaded event after each preloading
 	createjs.Sound.on("fileload", sounds.fileLoaded);
+
 });
 
 function restart(){
