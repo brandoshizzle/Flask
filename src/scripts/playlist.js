@@ -2,7 +2,7 @@
 /* jshint esversion: 6 */
 var searchString;
 
-const soundInfoManager = require("./soundInfoManager");
+//const soundInfoManager = require("./soundInfoManager");
 
 $('.search').on('keyup paste', function(e){
 	/*if(keyboardMap[e.which] === 'SPACE'){

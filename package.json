@@ -31,10 +31,10 @@
     "electron": "^1.4.13",
     "electron-builder": "^10.17.3",
     "electron-builder-squirrel-windows": "^11.5.0",
-    "gh-release": "^2.2.0",
-    "tether-shepherd": "^1.8.1"
+    "gh-release": "^2.2.0"
   },
   "dependencies": {
-    "fs-jetpack": "^0.10.5"
+    "fs-jetpack": "^0.10.5",
+		"tether-shepherd": "^1.8.1"
   }
 }

@@ -1,5 +1,5 @@
 /* jshint esversion: 6 */
-const soundInfoManager = require("./soundInfoManager");
+//const soundInfoManager = require("./soundInfoManager");
 
 $(document).ready(function(){
 	$('ul.tabs').on('click', 'a', function(e) {
@@ -54,7 +54,7 @@ function registerKeyInfos(){
 		var tempKeyInfo = pagesInfo[id].keyInfo;
 		Object.keys(tempKeyInfo).map(function(id, index) {
 			// Ensure all parameters are up to date
-			soundInfoManager.checkSoundInfo(tempKeyInfo[id].id, tempKeyInfo);
+			storage.checkAgainstDefault(tempKeyInfo[id], 'soundInfo');
 			$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
 			sounds.register(tempKeyInfo[id]);
 		});

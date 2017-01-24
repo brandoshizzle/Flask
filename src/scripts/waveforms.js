@@ -52,7 +52,7 @@ function loadWavesurfer(soundInfo) {
 
 	// When the wavesurfer is loaded
 	wavesurfer.on('ready', function() {
-		setRegion(soundInfo);
+		//setRegion(soundInfo);
 		// Create an instance if necessary (for region/duration)
 		if (soundInfo.soundInstance === undefined) {
 			soundInfo.soundInstance = createjs.Sound.createInstance(soundInfo.id);
@@ -124,7 +124,8 @@ function getRegion() {
 	waveformedInfo.endTime = endTime;
 	if (waveformedInfo.infoObj === "key") {
 		keyInfo[waveformedInfo.id] = waveformedInfo;
-		storage.storeObj('keyInfo', keyInfo);
+		pagesInfo['page' + currentPage].keyInfo = keyInfo;
+		storage.storeObj('pagesInfo', pagesInfo);
 	} else if (waveformedInfo.infoObj === "playlist") {
 		playlistInfo[waveformedInfo.id] = waveformedInfo;
 		storage.storeObj('playlistInfo', playlistInfo);
