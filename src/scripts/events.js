@@ -153,7 +153,8 @@ function setKeyEvents() {
 		settingsInfoObj[tempSoundInfo.id] = tempSoundInfo;
 		if (itIsKeyInfo) {
 			$('#' + tempSoundInfo.id).find('.audioName').text(tempSoundInfo.name);
-			storage.storeObj("keyInfo", settingsInfoObj);
+			pagesInfo['page' + currentPage].keyInfo = keyInfo;
+			storage.storeObj("pagesInfo", pagesInfo);
 		} else {
 			$('#' + tempSoundInfo.id).text(tempSoundInfo.name);
 			storage.storeObj("playlistInfo", settingsInfoObj);
