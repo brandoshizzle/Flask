@@ -108,10 +108,10 @@ function setKeyEvents() {
 		var key = keyboardMap[e.which];
 		var code = e.which;
 		if (e.target === document.body) {
-
 			// If keys A-Z or 0-9 have been pressed, or a special key
 			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
 				// Check if the sound was loaded or not, and if it even exists
+				key = 'page' + currentPage + '_' + key;
 				if(keyInfo.hasOwnProperty(key)){
 					if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
 						sounds.playSound(keyInfo[key]);
