@@ -43,7 +43,7 @@ function getFirstPlaylistItem(){
 function registerPlaylistItems(){
 	Object.keys(playlistInfo).map(function(id, index) {
 		// Ensure all parameters are up to date
-		soundInfoManager.checkSoundInfo(playlistInfo[id].id, playlistInfo);
+		storage.checkAgainstDefault(playlistInfo[id], 'soundInfo');
 		view.createPlaylistItem(playlistInfo[id]);
 		$("#" + playlistInfo[id].id).find('.audioName').text(playlistInfo[id].name);
 		sounds.register(playlistInfo[id]);

@@ -55,7 +55,6 @@ function registerKeyInfos(){
 		Object.keys(tempKeyInfo).map(function(id, index) {
 			// Ensure all parameters are up to date
 			soundInfoManager.checkSoundInfo(tempKeyInfo[id].id, tempKeyInfo);
-			view.createPlaylistItem(tempKeyInfo[id]);
 			$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
 			sounds.register(tempKeyInfo[id]);
 		});
@@ -64,10 +63,8 @@ function registerKeyInfos(){
 
 function ensurePageExists(pageNum){
 	if(!pagesInfo.hasOwnProperty('page' + pageNum)){
-		pagesInfo['page' + pageNum] = {
-			'name': 'page' + pageNum,
-			'keyInfo': {}
-		};
+		pagesInfo['page' + pageNum] = {};
+		storage.checkAgainstDefault(pagesInfo['page' + pageNum], 'pageInfo');
 	}
 }
 

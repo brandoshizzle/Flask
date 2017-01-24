@@ -13,6 +13,28 @@ $(function(){
 });
 var dataDir = appDir + '\\data\\';
 
+var defaults = {
+	'soundInfo': {
+		"id": "",
+		"infoObj": "",
+		"name": "",
+		"path": "",
+		"color": "default",
+		"loop": false,
+		"startTime": 0,
+		"endTime": null,
+		"soundInstance": undefined
+	},
+	'settings' : {
+		"playlistSoundToBottomAfterPlay": true,
+		"playlistSoundDeleteAfterPlay": false
+	},
+	'pageInfo' : {
+		'name': '',
+		'keyInfo': {}
+	}
+};
+
 /**
  *	@desc: 	Loads an info object from JSON data and registers each sound
  *					Also prints the name of the song on the key in the view or creates
@@ -21,7 +43,7 @@ var dataDir = appDir + '\\data\\';
  *	@param: objName: Either 'keyInfo' or 'playlistInfo' (string)
  						obj: The actual object of objName
  */
-function getInfoObj(objName, obj) {
+function getInfoObj(objName) {
 	var tempObj = {};
 	var objPath = dataDir + objName + '.json';
 	// Use JSON storage if it exists, otherwise pull from (legacy) localStorage
@@ -36,6 +58,7 @@ function getInfoObj(objName, obj) {
 			tempObj = JSON.parse(infoString);
 		}
 	}
+	//checkInfoObj(tempObj, objName);
 	return tempObj; // Return the sucker
 }
 
@@ -61,8 +84,26 @@ function deleteObj(objName){
 	jetpack.remove(dataDir + objName + '.json');
 }
 
+function checkAgainstDefault(obj, defaultName) {
+	var changed = false;
+	// Update the object with any new properties
+	Object.keys(defaults[defaultName]).map(function(prop, index) {
+		if (!obj.hasOwnProperty(prop)) {
+			obj[prop] = defaults[defaultName][prop];
+		}
+	});
+
+	// Check that the object does not have depreciated properties (and delete them)
+	Object.keys(obj).map(function(prop, index) {
+		if (!defaults[defaultName].hasOwnProperty(prop)) {
+			delete obj[prop];
+		}
+	});
+}
+
 module.exports = {
 	getInfoObj: getInfoObj,
 	storeObj: storeObj,
-	deleteObj: deleteObj
+	deleteObj: deleteObj,
+	checkAgainstDefault: checkAgainstDefault
 };

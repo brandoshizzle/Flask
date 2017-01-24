@@ -39,13 +39,24 @@ $(document).ready(function() {
 	$('.version').text(pjson.version);	// Add the version number to the "version" spans
 	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
 	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
-	pagesInfo = storage.getInfoObj("pagesInfo", pagesInfo);	// Load all of the key sounds from storage
+
+	pagesInfo = storage.getInfoObj("pagesInfo");	// Load all of the key sounds from storage
+	// If there is no pagesInfo object, try loading legacy keyInfo into first page
+	if(pagesInfo === {}){
+		pages.ensurePageExists(1);
+		pagesInfo.page1.keyInfo = storage.getInfoObj('keyInfo');
+		storage.storeObj('pagesInfo', pagesInfo);
+	}
+	// Update all pages with any new properties
+	Object.keys(pagesInfo).map(function(page, index) {
+		storage.checkAgainstDefault(pagesInfo[page], 'pageInfo');
+	});
 	pages.registerKeyInfos(); // register all sounds and put them on keys
 	pages.ensurePageExists(1);
 	keyInfo = pagesInfo.page1.keyInfo;
-	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);	// Load all of the playlist sounds from storage
+	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage
 	playlist.registerPlaylistItems();
-	settingsInfo = storage.getInfoObj('settings', settings);	// Load the program settings
+	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
 	settings.checkSettings(settingsInfo);
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
