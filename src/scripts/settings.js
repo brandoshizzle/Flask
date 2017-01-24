@@ -5,14 +5,14 @@ var defaultSettings = {
 
 // Open settings modal
 function openSettings() {
-	$('#settings-playlistSoundToBottom').prop('checked', settings.playlistSoundToBottomAfterPlay);
-	$('#settings-playlistSoundToDelete').prop('checked', settings.playlistSoundDeleteAfterPlay);
+	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlistSoundToBottomAfterPlay);
+	$('#settings-playlistSoundToDelete').prop('checked', settingsInfo.playlistSoundDeleteAfterPlay);
 	$('#settings-modal').modal('open');
 }
 
 function saveSettings(){
-	settings.playlistSoundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
-	settings.playlistSoundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
+	settingsInfo.playlistSoundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
+	settingsInfo.playlistSoundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	storage.storeObj('settings', settings);
 }
 

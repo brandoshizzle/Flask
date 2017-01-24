@@ -66,11 +66,11 @@ function playSound(soundInfo) {
 		$('#' + soundInfoToStop.id).addClass('played');
 		// If the song is stopped in the playlist
 		if (soundInfoToStop.infoObj === "playlist") {
-			if(settings.playlistSoundDeleteAfterPlay){
+			if(settingsInfo.playlistSoundDeleteAfterPlay){
 				delete playlistInfo[soundInfoToStop.id];
 				$("#" + soundInfoToStop.id).remove();
 				storage.storeObj("playlistInfo", playlistInfo);
-			}	else if(settings.playlistSoundToBottomAfterPlay){
+			}	else if(settingsInfo.playlistSoundToBottomAfterPlay){
 				$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
 				$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
 				var firstPlaylistSound = playlist.getFirstPlaylistItem();

@@ -57,7 +57,8 @@ $(document).ready(function() {
 	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage
 	playlist.registerPlaylistItems();
 	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
-	settings.checkSettings(settingsInfo);
+	storage.checkAgainstDefault(settingsInfo, 'settings');
+	console.log(settingsInfo);
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!
