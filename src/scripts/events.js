@@ -7,7 +7,6 @@
 
 // Required js scripts
 const soundInfoManager = require("./soundInfoManager");
-const playlistScripts = require("./playlist-search");
 
 var settingsInfoObj; // Either keyInfo or playlistInfo, whichever has the sound being changed in settings
 var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLON', 'QUOTE', 'BACK_SLASH', 'BESIDE_Z', 'COMMA', 'PERIOD', 'SLASH'];
@@ -23,13 +22,18 @@ function setKeyEvents() {
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// grab the id of the target key
-			var key = e.target.id;
+			var id = e.target.id;
 			// Create a new sound info object
-			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, key);
+			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
 			// Store the new sound info object in the keyInfo object
-			keyInfo[key] = newSoundInfo;
+			console.log(keyInfo);
+			keyInfo[id] = newSoundInfo;
 			$(e.target).find('.audioName').text(newSoundInfo.name);
-			storage.storeObj("keyInfo", keyInfo);
+			pages.ensurePageExists(currentPage);
+			console.log(pagesInfo);
+			console.log('keys drop event!');
+			pagesInfo['page' + currentPage].keyInfo = keyInfo;
+			storage.storeObj("pagesInfo", pagesInfo);
 			waveforms.load(newSoundInfo);
 		}
 		return false;
@@ -134,7 +138,7 @@ function setKeyEvents() {
 				waveforms.reset();
 			} else if (key === 'SPACE') {
 				// Play the first visible sound of the playlist
-					var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
+					var firstPlaylistSound = playlist.getFirstPlaylistItem();
 					if(firstPlaylistSound !== 'no sounds!')
 					sounds.playSound(playlistInfo[firstPlaylistSound]);
 				}

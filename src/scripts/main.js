@@ -5,26 +5,27 @@ const clock = require(jsPath + "clock");
 const colors = require(jsPath + 'colors');
 const events = require(jsPath + 'events');
 const pages = require(jsPath + 'pages');
+const playlist = require(jsPath + 'playlist');
+const settings = require(jsPath + 'settings');
 const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
 const util = require(jsPath + 'util');
 const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
-
-require(jsPath + 'playlist-search');
-
-const Shepherd = require('tether-shepherd');
-const settingsjs = require(jsPath + 'settings');
 var pjson = require('../package.json');
+
 const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
+const Shepherd = require('tether-shepherd');
 
 var wavesurfer;
 var keys;
 var keyInfo = {};
+var pagesInfo = {};
 var playlistInfo = {};
-var settings = {};
+var settingsInfo = {};
 var sI;
+var currentPage = 1;
 var debug = 1;
 
 /**
@@ -38,9 +39,14 @@ $(document).ready(function() {
 	$('.version').text(pjson.version);	// Add the version number to the "version" spans
 	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
 	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
-	keyInfo = storage.getInfoObj("keyInfo", keyInfo);	// Load all of the key sounds
-	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);	// Load all of the playlist sounds
-	settings = storage.getInfoObj('settings', settings);	// Load the program settings
+	pagesInfo = storage.getInfoObj("pagesInfo", pagesInfo);	// Load all of the key sounds from storage
+	pages.registerKeyInfos(); // register all sounds and put them on keys
+	pages.ensurePageExists(1);
+	keyInfo = pagesInfo.page1.keyInfo;
+	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);	// Load all of the playlist sounds from storage
+	playlist.registerPlaylistItems();
+	settingsInfo = storage.getInfoObj('settings', settings);	// Load the program settings
+	settings.checkSettings(settingsInfo);
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!

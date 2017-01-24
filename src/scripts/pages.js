@@ -1,11 +1,21 @@
+/* jshint esversion: 6 */
+const soundInfoManager = require("./soundInfoManager");
+
 $(document).ready(function(){
 	$('ul.tabs').on('click', 'a', function(e) {
+		ensurePageExists(currentPage);
+		pagesInfo['page' + currentPage].keyInfo = keyInfo;
 		var pageId = e.target.id;
-		var pageNum = pageId.substring(pageId.length - 1);
-		$.fn.pagepiling.moveTo(pageNum);
+		currentPage = pageId.substring(pageId.length - 1);
+		ensurePageExists(currentPage);
+		keyInfo = pagesInfo['page' + currentPage].keyInfo;
+		console.log(keyInfo);
+		$.fn.pagepiling.moveTo(currentPage);
 	});
+
 	$('body').keydown(function(e){
 		if(e.which > 111 && e.which < 120){
+			e.preventDefault();
 			var pageNum;
 			switch(e.which){
 				case 112:
@@ -33,8 +43,35 @@ $(document).ready(function(){
 					pageNum = 8;
 					break;
 			}
-			$.fn.pagepiling.moveTo(pageNum);
 			$('#page' + pageNum).click();
 		}
 	});
 });
+
+function registerKeyInfos(){
+	console.log(pagesInfo);
+	Object.keys(pagesInfo).map(function(id, index){
+		var tempKeyInfo = pagesInfo[id].keyInfo;
+		Object.keys(tempKeyInfo).map(function(id, index) {
+			// Ensure all parameters are up to date
+			soundInfoManager.checkSoundInfo(tempKeyInfo[id].id, tempKeyInfo);
+			view.createPlaylistItem(tempKeyInfo[id]);
+			$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
+			sounds.register(tempKeyInfo[id]);
+		});
+	});
+}
+
+function ensurePageExists(pageNum){
+	if(!pagesInfo.hasOwnProperty('page' + pageNum)){
+		pagesInfo['page' + pageNum] = {
+			'name': 'page' + pageNum,
+			'keyInfo': {}
+		};
+	}
+}
+
+module.exports = {
+	registerKeyInfos: registerKeyInfos,
+	ensurePageExists: ensurePageExists
+};

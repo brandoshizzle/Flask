@@ -16,7 +16,8 @@ var dataDir = appDir + '\\data\\';
 /**
  *	@desc: 	Loads an info object from JSON data and registers each sound
  *					Also prints the name of the song on the key in the view or creates
- *					a playlist item. Uses localStorage if it can't find JSON
+ *					a playlist item. Uses localStorage if it can't find JSON, returns an
+ *					empty array if nothing is found
  *	@param: objName: Either 'keyInfo' or 'playlistInfo' (string)
  						obj: The actual object of objName
  */
@@ -35,27 +36,6 @@ function getInfoObj(objName, obj) {
 			tempObj = JSON.parse(infoString);
 		}
 	}
-
-	if(objName === 'settings'){
-		settingsjs.checkSettings(tempObj);
-	}
-
-	// Do the registering and checking and junk
-	if(objName === 'playlistInfo' || objName === 'keyInfo'){
-		Object.keys(tempObj).map(function(id, index) {
-			// Ensure all parameters are up to date
-			soundInfoManager.checkSoundInfo(tempObj[id].id, obj);
-			if (objName === 'keyInfo') {
-				// Print the name of each sound on it's corresponding key
-				$("#" + tempObj[id].id).find('.audioName').text(tempObj[id].name);
-			} else if (objName === 'playlistInfo') {
-				view.createPlaylistItem(tempObj[id]);
-			}
-			// Register sound with SoundJS
-			sounds.register(tempObj[id]);
-		});
-	}
-
 	return tempObj; // Return the sucker
 }
 
