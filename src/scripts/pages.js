@@ -5,12 +5,14 @@ $(document).ready(function(){
 	$('ul.tabs').on('click', 'a', function(e) {
 		ensurePageExists(currentPage);
 		pagesInfo['page' + currentPage].keyInfo = keyInfo;
+		$('#keyboard' + currentPage).hide();
 		var pageId = e.target.id;
 		currentPage = pageId.substring(pageId.length - 1);
 		ensurePageExists(currentPage);
 		keyInfo = pagesInfo['page' + currentPage].keyInfo;
+		$('#keyboard' + currentPage).show();
 		console.log(keyInfo);
-		$.fn.pagepiling.moveTo(currentPage);
+		//$.fn.pagepiling.moveTo(currentPage);
 	});
 
 	$('body').keydown(function(e){

@@ -74,7 +74,8 @@ $(document).ready(function() {
 	});
 
 	$('.global-settings-table').hide();
-
+	$('#keyboard' + currentPage).show();
+/*
 	$('.keyboard-container').pagepiling({
 		direction: 'horizontal',
 		verticalCentered: false,
@@ -89,7 +90,7 @@ $(document).ready(function() {
     	$('.section').hide();
 			$('#keyboard' + currentPage).show();
     }
-	});
+	});*/
 
 	$('.selectable').selectable({
 		stop: function(){

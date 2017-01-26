@@ -46,6 +46,7 @@
 
 .section {
   position: absolute;
+  display: none;
   margin: 0;
   padding: 0;
   padding-top: 20px;
