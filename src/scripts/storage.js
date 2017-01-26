@@ -26,8 +26,15 @@ var defaults = {
 		"soundInstance": undefined
 	},
 	'settings' : {
-		"playlistSoundToBottomAfterPlay": true,
-		"playlistSoundDeleteAfterPlay": false
+		'general':{
+			'prereleaseUpdates': false
+		},
+		'playlist':{
+			"soundToBottomAfterPlay": true,
+			"soundDeleteAfterPlay": false
+		},
+		'keyboard':{
+		}
 	},
 	'pageInfo' : {
 		'name': '',

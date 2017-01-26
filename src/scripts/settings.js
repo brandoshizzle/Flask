@@ -1,18 +1,26 @@
 var defaultSettings = {
-	"playlistSoundToBottomAfterPlay": true,
-	"playlistSoundDeleteAfterPlay": false
+	'general':{
+		'prereleaseUpdates': false
+	},
+	'playlist':{
+		"soundToBottomAfterPlay": true,
+		"soundDeleteAfterPlay": false
+	},
+	'keyboard':{
+
+	}
 };
 
 // Open settings modal
 function openSettings() {
-	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlistSoundToBottomAfterPlay);
-	$('#settings-playlistSoundToDelete').prop('checked', settingsInfo.playlistSoundDeleteAfterPlay);
+	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlist.soundToBottomAfterPlay);
+	$('#settings-playlistSoundToDelete').prop('checked', settingsInfo.playlist.soundDeleteAfterPlay);
 	$('#settings-modal').modal('open');
 }
 
 function saveSettings(){
-	settingsInfo.playlistSoundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
-	settingsInfo.playlistSoundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
+	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
+	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	storage.storeObj('settings', settings);
 }
 

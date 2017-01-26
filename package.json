@@ -35,6 +35,8 @@
   },
   "dependencies": {
     "fs-jetpack": "^0.10.5",
-		"tether-shepherd": "^1.8.1"
+    "gh-latest-release": "^1.0.0",
+    "marked": "^0.3.6",
+    "tether-shepherd": "^1.8.1"
   }
 }

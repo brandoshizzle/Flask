@@ -9,14 +9,16 @@ const playlist = require(jsPath + 'playlist');
 const settings = require(jsPath + 'settings');
 const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
+const update = require(jsPath + 'update');
 const util = require(jsPath + 'util');
-const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
+const waveforms = require(jsPath + "waveforms");
 var pjson = require('../package.json');
 
 const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
 const Shepherd = require('tether-shepherd');
+var shell = require('electron').shell;
 
 var wavesurfer;
 var keys;
@@ -32,6 +34,7 @@ var debug = 1;
  * Set up program
  **/
 $(document).ready(function() {
+	update.checkForUpdate();
 	view.buildKeyboard();		// Create all the keys
 	view.buildPlaylist();		// Set up the playlist (no sounds)
 	waveforms.buildWaveform();		// Set up the waveform
@@ -175,6 +178,12 @@ $(document).ready(function() {
 					view.updateKey(keyInfo[draggedId]);
 				}
       }
+    });
+
+		//open links externally by default
+    $(document).on('click', 'a[href^="http"]', function(event) {
+        event.preventDefault();
+        shell.openExternal(this.href);
     });
 
 	// Trigger file loaded event after each preloading

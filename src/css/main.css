@@ -387,3 +387,40 @@ tr td {
   font-weight: 400;
   src: url(../fonts/MaterialIcons-Regular.eot);
 }
+
+#update-modal {
+  max-height: 90% !important;
+}
+
+#update-modal p {
+  margin: 0px !important;
+}
+
+#update-changelog {
+  border: 1px solid gray;
+  margin: 20px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: scroll;
+  text-align: left;
+  font-size: 12px;
+}
+
+#update-changelog li {
+  list-style: disc;
+  list-style-type: circle;
+}
+
+#update-changelog h3 {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+#update-changelog ul {
+  margin-top: 0;
+}
+
+#download-button {
+  width: 400px;
+  height: 100px;
+}
