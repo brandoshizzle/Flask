@@ -32,7 +32,6 @@ var debug = 1;
  * Set up program
  **/
 $(document).ready(function() {
-
 	view.buildKeyboard();		// Create all the keys
 	view.buildPlaylist();		// Set up the playlist (no sounds)
 	waveforms.buildWaveform();		// Set up the waveform
@@ -42,18 +41,14 @@ $(document).ready(function() {
 
 	pagesInfo = storage.getInfoObj("pagesInfo");	// Load all of the key sounds from storage
 	// If there is no pagesInfo object, try loading legacy keyInfo into first page
-	if(pagesInfo === {}){
-		pages.ensurePageExists(1);
-		pagesInfo.page1.keyInfo = storage.getInfoObj('keyInfo');
-		storage.storeObj('pagesInfo', pagesInfo);
-	}
+	pages.ensurePageExists(1);
 	// Update all pages with any new properties
 	Object.keys(pagesInfo).map(function(page, index) {
 		storage.checkAgainstDefault(pagesInfo[page], 'pageInfo');
 	});
 	pages.registerKeyInfos(); // register all sounds and put them on keys
-	pages.ensurePageExists(1);
-	keyInfo = pagesInfo.page1.keyInfo;
+	keyInfo = pagesInfo.page1.keyInfo;	// load page 1 into active keyboard, aka keyInfo
+
 	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage
 	playlist.registerPlaylistItems();
 	settingsInfo = storage.getInfoObj('settings');	// Load the program settings

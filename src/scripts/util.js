@@ -62,10 +62,18 @@ function cloneObj(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 module.exports = {
 	cleanName: cleanName,
 	prepareForId: prepareForId,
 	openBrowse: openBrowse,
-	cloneObj: cloneObj
+	cloneObj: cloneObj,
+	isEmpty: isEmpty
 };
