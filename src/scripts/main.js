@@ -80,7 +80,15 @@ $(document).ready(function() {
 		verticalCentered: false,
 		scrollSpeed: 100,
 		navigation: {},
-		normalScrollElements: '.section'
+		normalScrollElements: '.section',
+		onLeave: function(index, nextIndex, direction){
+      $('#keyboard' + nextIndex).show();
+			$('#keyboard' + index).hide();
+    },
+		afterRender: function(){
+    	$('.section').hide();
+			$('#keyboard' + currentPage).show();
+    }
 	});
 
 	$('.selectable').selectable({
@@ -121,6 +129,21 @@ $(document).ready(function() {
 			waveforms.getRegion();
 			$(event.target).css('transition', '0.5s');
 		});
+
+    $( ".draggable" ).draggable({
+			helper: 'clone',
+			zIndex: 100,
+			cursor: 'move',
+			distance: 10,
+			opacity: 1
+		});
+
+		$( ".droppable" ).droppable({
+      drop: function( event, ui ) {
+        console.log(event.target.id);
+				console.log(ui.draggable[0].id);
+      }
+    });
 
 	// Trigger file loaded event after each preloading
 	createjs.Sound.on("fileload", sounds.fileLoaded);

@@ -20,22 +20,26 @@ function setKeyEvents() {
 	// Handles when a file is dropped on a key
 	keys.on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
-		for (let f of e.originalEvent.dataTransfer.files) {
-			// grab the id of the target key
-			var id = e.target.id;
-			// Create a new sound info object
-			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
-			// Store the new sound info object in the keyInfo object
-			console.log(keyInfo);
-			keyInfo[id] = newSoundInfo;
-			$(e.target).find('.audioName').text(newSoundInfo.name);
-			pages.ensurePageExists(currentPage);
-			console.log(pagesInfo);
-			console.log('keys drop event!');
-			pagesInfo['page' + currentPage].keyInfo = keyInfo;
-			storage.storeObj("pagesInfo", pagesInfo);
-			waveforms.load(newSoundInfo);
+		try{
+			for (let f of e.originalEvent.dataTransfer.files) {
+				// grab the id of the target key
+				var id = e.target.id;
+				// Create a new sound info object
+				var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
+				// Store the new sound info object in the keyInfo object
+				console.log(keyInfo);
+				keyInfo[id] = newSoundInfo;
+				$(e.target).find('.audioName').text(newSoundInfo.name);
+				pages.ensurePageExists(currentPage);
+				console.log(pagesInfo);
+				console.log('keys drop event!');
+				pagesInfo['page' + currentPage].keyInfo = keyInfo;
+				storage.storeObj("pagesInfo", pagesInfo);
+				waveforms.load(newSoundInfo);
+			}
 		}
+		catch(err){}
+
 		return false;
 	});
 
@@ -125,7 +129,8 @@ function setKeyEvents() {
 				// If the deleted sound was in the keys
 				if (keyInfo.hasOwnProperty(id)) {
 					delete keyInfo[id];
-					storage.storeObj("keyInfo", keyInfo);
+					pagesInfo['page' + currentPage].keyInfo = keyInfo;
+					storage.storeObj("pagesInfo", pagesInfo);
 					$("#" + id).find('.audioName').text("");
 					$("#" + id).removeClass('waveformed-key');
 					$("#" + id).css('background-color', 'var(--pM)');

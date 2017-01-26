@@ -36,7 +36,7 @@ function buildKeyboard() {
 					id = "page" + kbNum + "_" + specialKeys[rows[i][j]];
 				}
 				// Create the key
-				$('#keyboard'+ kbNum + ' > #row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light' id='" + id + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
+				$('#keyboard'+ kbNum + ' > #row' + rowNum).append("<div class='btn btn-key z-depth-4 waves-effect waves-light draggable droppable' id='" + id + "'><div class='keyLetter'>" + rows[i][j] + "</div><div class='audioName'></div></div>");
 			}
 		}
 	}
