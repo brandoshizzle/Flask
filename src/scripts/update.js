@@ -10,7 +10,7 @@ function checkForUpdate(){
 			if(!(release.prerelease === true && settingsInfo.general.prereleaseUpdates === false)){
 				var rVersion = release.tag_name.substring(1);
 				var cVersion = pjson.version;
-				if(rVersion < cVersion){
+				if(rVersion > cVersion){
 					$('#update-cVersion').text(cVersion);
 					$('#update-rVersion').text(rVersion);
 					$('#update-date').text(release.published_at.substring(0, 10));
