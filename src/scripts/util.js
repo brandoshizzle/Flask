@@ -47,7 +47,7 @@ function openBrowse() {
 		properties: ['openFile']
 	};
 	var newPath = dialog.showOpenDialog(options);
-	if (newPath !== null) {
+	if (newPath !== undefined) {
 		$('#sound-settings-path').val(newPath);
 		$('#sound-settings-name').text(cleanName(newPath));
 	}
