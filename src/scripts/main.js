@@ -131,18 +131,49 @@ $(document).ready(function() {
 			$(event.target).css('transition', '0.5s');
 		});
 
+		var dragStartPage;
     $( ".draggable" ).draggable({
 			helper: 'clone',
 			zIndex: 100,
 			cursor: 'move',
 			distance: 10,
-			opacity: 1
+			opacity: 1,
+			containment: '#keyboard' + currentPage,
+			start: function(event, ui){
+				dragStartPage = currentPage;
+			}
 		});
 
 		$( ".droppable" ).droppable({
       drop: function( event, ui ) {
-        console.log(event.target.id);
-				console.log(ui.draggable[0].id);
+        var targetId = event.target.id;	// Dropzone
+				var draggedId = ui.draggable[0].id;	// Dragged
+				console.log(draggedId + ", " + targetId);
+				// Assign soundInfo objects
+				var draggedInfo = pagesInfo['page' + dragStartPage].keyInfo[draggedId];
+				var targetInfo = keyInfo[targetId];
+				// switch the info objects
+				keyInfo[targetId] = draggedInfo;
+				pagesInfo['page' + dragStartPage].keyInfo[draggedId] = targetInfo;
+				// switch the id's back
+				keyInfo[targetId].id = targetId;
+				try {
+					pagesInfo['page' + dragStartPage].keyInfo[draggedId].id = draggedId;
+					sounds.register(pagesInfo['page' + dragStartPage].keyInfo[draggedId]);
+				} catch(err){
+					draggedInfo = {};
+					storage.checkAgainstDefault(draggedInfo, 'soundInfo');
+					draggedInfo.id = draggedId;
+					view.updateKey(draggedInfo);
+					delete pagesInfo['page' + dragStartPage].keyInfo[draggedId];
+				}
+				// re-register the sounds
+				sounds.register(keyInfo[targetId]);
+				view.updateKey(keyInfo[targetId]);
+				if(currentPage === dragStartPage && keyInfo[draggedId] !== undefined){
+					keyInfo = pagesInfo['page'+currentPage].keyInfo;	// updates properly
+					view.updateKey(keyInfo[draggedId]);
+				}
       }
     });
 

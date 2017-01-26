@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Functioning/saving settings menu
     * Playlist: Songs to the bottom after playing
     * Playlist: Songs delete after playing
+- Moving keys around on the same page (between pages to come!)
 
 ### Fixed
-- Error: can't play songs if they're all filtered out
+- Won't try to play songs if they're all filtered out
+- No more error on cancelling browse in sound settings
 - Waveforms now track all the time (no need to sneak up)
 
 ### Changed

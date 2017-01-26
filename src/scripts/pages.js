@@ -2,17 +2,8 @@
 //const soundInfoManager = require("./soundInfoManager");
 
 $(document).ready(function(){
-	$('ul.tabs').on('click', 'a', function(e) {
-		ensurePageExists(currentPage);
-		pagesInfo['page' + currentPage].keyInfo = keyInfo;
-		$('#keyboard' + currentPage).hide();
-		var pageId = e.target.id;
-		currentPage = pageId.substring(pageId.length - 1);
-		ensurePageExists(currentPage);
-		keyInfo = pagesInfo['page' + currentPage].keyInfo;
-		$('#keyboard' + currentPage).show();
-		console.log(keyInfo);
-		//$.fn.pagepiling.moveTo(currentPage);
+	$('ul.tabs').on('click', 'a', function(e){
+		switchPage(e);
 	});
 
 	$('body').keydown(function(e){
@@ -70,7 +61,20 @@ function ensurePageExists(pageNum){
 	}
 }
 
+function switchPage(e) {
+	ensurePageExists(currentPage);
+	pagesInfo['page' + currentPage].keyInfo = keyInfo;
+	$('#keyboard' + currentPage).hide();
+	var pageId = e.target.id;
+	currentPage = pageId.substring(pageId.length - 1);
+	ensurePageExists(currentPage);
+	keyInfo = pagesInfo['page' + currentPage].keyInfo;
+	$('#keyboard' + currentPage).show();
+	//$.fn.pagepiling.moveTo(currentPage);
+}
+
 module.exports = {
 	registerKeyInfos: registerKeyInfos,
-	ensurePageExists: ensurePageExists
+	ensurePageExists: ensurePageExists,
+	switchPage: switchPage
 };

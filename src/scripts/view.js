@@ -150,6 +150,14 @@ function openColorPicker() {
 	$("#color-picker").fadeIn();
 }
 
+function updateKey(soundInfo){
+	if(soundInfo.hasOwnProperty('name')){
+		$('#' + soundInfo.id).find('.audioName').text(soundInfo.name);
+	}
+	var openColor = colors.makeColor(soundInfo.color);
+	$('#' + soundInfo.id).css("background-color", openColor);
+}
+
 module.exports = {
 	buildKeyboard: buildKeyboard,
 	createPlaylistItem: createPlaylistItem,
@@ -159,5 +167,6 @@ module.exports = {
 	resetStartTime: resetStartTime,
 	resetEndTime: resetEndTime,
 	openAbout: openAbout,
-	openColorPicker: openColorPicker
+	openColorPicker: openColorPicker,
+	updateKey: updateKey
 };
