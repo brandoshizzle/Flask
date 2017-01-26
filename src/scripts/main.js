@@ -4,42 +4,56 @@ const jsPath = "./scripts/";
 const clock = require(jsPath + "clock");
 const colors = require(jsPath + 'colors');
 const events = require(jsPath + 'events');
+const pages = require(jsPath + 'pages');
+const playlist = require(jsPath + 'playlist');
+const settings = require(jsPath + 'settings');
 const sounds = require(jsPath + 'sounds');
 const storage = require(jsPath + 'storage');
 const util = require(jsPath + 'util');
 const waveforms = require(jsPath + "waveforms");
 const view = require(jsPath + 'view');
-
-require(jsPath + 'playlist-search');
-
-const Shepherd = require('tether-shepherd');
-const settingsjs = require(jsPath + 'settings');
 var pjson = require('../package.json');
+
 const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
+const Shepherd = require('tether-shepherd');
 
 var wavesurfer;
 var keys;
 var keyInfo = {};
+var pagesInfo = {};
 var playlistInfo = {};
-var settings = {};
+var settingsInfo = {};
 var sI;
+var currentPage = 1;
 var debug = 1;
 
 /**
  * Set up program
  **/
 $(document).ready(function() {
-
 	view.buildKeyboard();		// Create all the keys
 	view.buildPlaylist();		// Set up the playlist (no sounds)
 	waveforms.buildWaveform();		// Set up the waveform
 	$('.version').text(pjson.version);	// Add the version number to the "version" spans
 	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
 	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
-	keyInfo = storage.getInfoObj("keyInfo", keyInfo);	// Load all of the key sounds
-	playlistInfo = storage.getInfoObj("playlistInfo", playlistInfo);	// Load all of the playlist sounds
-	settings = storage.getInfoObj('settings', settings);	// Load the program settings
+
+	pagesInfo = storage.getInfoObj("pagesInfo");	// Load all of the key sounds from storage
+	// If there is no pagesInfo object, try loading legacy keyInfo into first page
+	pages.ensurePageExists(1);
+	// Update all pages with any new properties
+	Object.keys(pagesInfo).map(function(page, index) {
+		storage.checkAgainstDefault(pagesInfo[page], 'pageInfo');
+	});
+	pages.registerKeyInfos(); // register all sounds and put them on keys
+	keyInfo = pagesInfo.page1.keyInfo;	// load page 1 into active keyboard, aka keyInfo
+
+	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage
+	playlist.registerPlaylistItems();
+	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
+	storage.checkAgainstDefault(settingsInfo, 'settings');
+	console.log(settingsInfo);
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!
@@ -60,6 +74,15 @@ $(document).ready(function() {
 	});
 
 	$('.global-settings-table').hide();
+
+	$('.keyboard-container').pagepiling({
+		direction: 'horizontal',
+		verticalCentered: false,
+		scrollSpeed: 100,
+		navigation: {},
+		normalScrollElements: '.section'
+	});
+
 	$('.selectable').selectable({
 		stop: function(){
 				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();

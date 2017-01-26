@@ -13,14 +13,37 @@ $(function(){
 });
 var dataDir = appDir + '\\data\\';
 
+var defaults = {
+	'soundInfo': {
+		"id": "",
+		"infoObj": "",
+		"name": "",
+		"path": "",
+		"color": "default",
+		"loop": false,
+		"startTime": 0,
+		"endTime": null,
+		"soundInstance": undefined
+	},
+	'settings' : {
+		"playlistSoundToBottomAfterPlay": true,
+		"playlistSoundDeleteAfterPlay": false
+	},
+	'pageInfo' : {
+		'name': '',
+		'keyInfo': {}
+	}
+};
+
 /**
  *	@desc: 	Loads an info object from JSON data and registers each sound
  *					Also prints the name of the song on the key in the view or creates
- *					a playlist item. Uses localStorage if it can't find JSON
+ *					a playlist item. Uses localStorage if it can't find JSON, returns an
+ *					empty array if nothing is found
  *	@param: objName: Either 'keyInfo' or 'playlistInfo' (string)
  						obj: The actual object of objName
  */
-function getInfoObj(objName, obj) {
+function getInfoObj(objName) {
 	var tempObj = {};
 	var objPath = dataDir + objName + '.json';
 	// Use JSON storage if it exists, otherwise pull from (legacy) localStorage
@@ -35,27 +58,7 @@ function getInfoObj(objName, obj) {
 			tempObj = JSON.parse(infoString);
 		}
 	}
-
-	if(objName === 'settings'){
-		settingsjs.checkSettings(tempObj);
-	}
-
-	// Do the registering and checking and junk
-	if(objName === 'playlistInfo' || objName === 'keyInfo'){
-		Object.keys(tempObj).map(function(id, index) {
-			// Ensure all parameters are up to date
-			soundInfoManager.checkSoundInfo(tempObj[id].id, obj);
-			if (objName === 'keyInfo') {
-				// Print the name of each sound on it's corresponding key
-				$("#" + tempObj[id].id).find('.audioName').text(tempObj[id].name);
-			} else if (objName === 'playlistInfo') {
-				view.createPlaylistItem(tempObj[id]);
-			}
-			// Register sound with SoundJS
-			sounds.register(tempObj[id]);
-		});
-	}
-
+	//checkInfoObj(tempObj, objName);
 	return tempObj; // Return the sucker
 }
 
@@ -81,8 +84,26 @@ function deleteObj(objName){
 	jetpack.remove(dataDir + objName + '.json');
 }
 
+function checkAgainstDefault(obj, defaultName) {
+	var changed = false;
+	// Update the object with any new properties
+	Object.keys(defaults[defaultName]).map(function(prop, index) {
+		if (!obj.hasOwnProperty(prop)) {
+			obj[prop] = defaults[defaultName][prop];
+		}
+	});
+
+	// Check that the object does not have depreciated properties (and delete them)
+	Object.keys(obj).map(function(prop, index) {
+		if (!defaults[defaultName].hasOwnProperty(prop)) {
+			delete obj[prop];
+		}
+	});
+}
+
 module.exports = {
 	getInfoObj: getInfoObj,
 	storeObj: storeObj,
-	deleteObj: deleteObj
+	deleteObj: deleteObj,
+	checkAgainstDefault: checkAgainstDefault
 };

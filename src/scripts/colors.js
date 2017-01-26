@@ -19,10 +19,13 @@ function setKeyColor(soundInfo) {
  *	@param:	N/A
  */
 function initializeKeyColors() {
-	Object.keys(keyInfo).map(function(id, index) {
-		var soundInfo = keyInfo[id];
-		var openColor = makeColor(soundInfo.color);
-		$('#' + soundInfo.id).css("background-color", openColor);
+	Object.keys(pagesInfo).map(function(id, index){
+		var tempKeyInfo = pagesInfo[id].keyInfo;
+		Object.keys(tempKeyInfo).map(function(id, index) {
+			var soundInfo = tempKeyInfo[id];
+			var openColor = makeColor(soundInfo.color);
+			$('#' + soundInfo.id).css("background-color", openColor);
+		});
 	});
 }
 

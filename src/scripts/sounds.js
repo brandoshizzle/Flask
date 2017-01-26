@@ -3,7 +3,6 @@
  */
 /*jshint esversion: 6 */
 
-const playlistScripts = require("./playlist-search");
 var playlistPlayingSoundObject;
 
 /**
@@ -67,14 +66,14 @@ function playSound(soundInfo) {
 		$('#' + soundInfoToStop.id).addClass('played');
 		// If the song is stopped in the playlist
 		if (soundInfoToStop.infoObj === "playlist") {
-			if(settings.playlistSoundDeleteAfterPlay){
+			if(settingsInfo.playlistSoundDeleteAfterPlay){
 				delete playlistInfo[soundInfoToStop.id];
 				$("#" + soundInfoToStop.id).remove();
 				storage.storeObj("playlistInfo", playlistInfo);
-			}	else if(settings.playlistSoundToBottomAfterPlay){
+			}	else if(settingsInfo.playlistSoundToBottomAfterPlay){
 				$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
 				$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
-				var firstPlaylistSound = playlistScripts.getFirstPlaylistItem();
+				var firstPlaylistSound = playlist.getFirstPlaylistItem();
 				$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
 			}
 		}
@@ -116,12 +115,16 @@ function getDuration(soundInfo) {
  */
 function fileLoaded(sound) {
 	// A sound has been preloaded.
-	console.log("Preloaded:", sound.id);
+	//console.log("Preloaded:", sound.id);
 	var infoArray;
 	if (playlistInfo.hasOwnProperty(sound.id)) {
 		infoArray = playlistInfo;
-	} else if (keyInfo.hasOwnProperty(sound.id)) {
-		infoArray = keyInfo;
+	} else{
+		for (var page in pagesInfo){
+			if(pagesInfo[page].keyInfo.hasOwnProperty(sound.id)) {
+	 			infoArray = pagesInfo[page].keyInfo;
+			}
+		}
 	}
 	infoArray[sound.id].soundInstance = createjs.Sound.createInstance(sound.id);
 	infoArray[sound.id].soundInstance.playState = null; // Reset to nothing (solved some problems)

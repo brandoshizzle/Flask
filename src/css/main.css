@@ -34,8 +34,35 @@
   padding-left: 3.2vw;
 }
 
-#keyboard {
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.keyboard-container {
+  width: 100%;
+  height: 60vh;
+}
+
+.section {
+  position: absolute;
+  margin: 0;
+  padding: 0;
   padding-top: 20px;
+  width: 75vw;
+  height: 60%;
+  background-color: var(--bgD);
+  border-radius: 10px;
+}
+
+.pp-easing {
+  transition: all 900ms ease;
+  /*-webkit-transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);
+  transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);*/
+}
+
+#pp-nav {
+  display: none;
 }
 
 #waveform-box {
