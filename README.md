@@ -5,7 +5,7 @@ A free program that turns your keyboard into a soundboard!
 ![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
 
 ## Latest Release
-Latest Stable Release: v0.1.1
+Latest Stable Release: v0.2.0
 
 | Platform      | Download      |
 | ------------- |:-------------:|
@@ -15,12 +15,13 @@ Latest Stable Release: v0.1.1
 
 ## Basic Instructions
 
-* Drag a sound onto a key or the playlist to add it to the program.
-* Click on a sound to load its waveform.
-* Right click on a sound to bring up its settings.
-* Drag the edges of the waveform to adjust sound start/end time.
-* Drag playlist items to reorder.
-* Press space to play the first item of the playlist (highlighted in yellow).
+* Drag a sound onto a key or the playlist to add it to the program
+* Press DELETE when a song is selected to delete it
+* Click on a sound to load its waveform
+* Right click on a sound to bring up its settings
+* Drag the edges of the waveform to adjust sound start/end time (usually works, sometimes sound decides to play from beginning)
+* Drag playlist items to reorder, drag sounds to different keys (on same page)
+* Press space to play the first item of the playlist (highlighted in yellow)
 
 ## Changelog
 See full Changelog [here](CHANGELOG.md)
