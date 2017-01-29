@@ -5,17 +5,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.2.0] - 2017-01-28
 ### Added
 - Search function for playlist
 - Functioning/saving settings menu
     * Playlist: Songs to the bottom after playing
     * Playlist: Songs delete after playing
-- Moving keys around on the same page (between pages to come!)
+- Dragging keys around on the same page (between pages to come!)
+- Automatically checks for new version on startup
 
 ### Fixed
 - Won't try to play songs if they're all filtered out
 - No more error on cancelling browse in sound settings
 - Waveforms now track all the time (no need to sneak up)
+- Inputs won't trigger sounds AT ALL
 
 ### Changed
 - Storing data is now JSON in appData/data/
