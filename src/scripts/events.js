@@ -27,12 +27,9 @@ function setKeyEvents() {
 				// Create a new sound info object
 				var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
 				// Store the new sound info object in the keyInfo object
-				console.log(keyInfo);
 				keyInfo[id] = newSoundInfo;
 				$(e.target).find('.audioName').text(newSoundInfo.name);
 				pages.ensurePageExists(currentPage);
-				console.log(pagesInfo);
-				console.log('keys drop event!');
 				pagesInfo['page' + currentPage].keyInfo = keyInfo;
 				storage.storeObj("pagesInfo", pagesInfo);
 				waveforms.load(newSoundInfo);

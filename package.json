@@ -6,23 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron index.js",
-    "build": "build --win --ia32 --x64",
-    "build:test": "build --dir",
-    "build:osx": "build --mac --x64",
-    "release": " gh-release"
+    "build:win": "build --win --ia32 --x64",
+    "pack": "build --dir",
+    "build:mac": "build --mac --x64",
+    "release": "gh-release"
   },
   "build": {
-    "squirrelWindows": {},
-    "win": {
-      "icon": "build/icon.ico"
-    }
+    "win": {},
+		"mac": {
+			"category": "public.app-category.music"
+		}
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/brandoshizzle/REACTion.git"
   },
   "author": "Brandon Cathcart <cathcart.brandon@gmail.com>",
-  "license": "ISC",
+  "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/brandoshizzle/REACTion/issues"
   },
