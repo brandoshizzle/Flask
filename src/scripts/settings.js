@@ -30,7 +30,7 @@ function saveSettings(){
 	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
-	storage.storeObj('settings', settings);
+	storage.storeObj('settings', settingsInfo);
 }
 
 // Check and update settings on import
