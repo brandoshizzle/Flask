@@ -13,6 +13,11 @@ $('.search').on('keyup paste', function(e){
 
 		return false;
 	}*/
+	if(keyboardMap[e.which] === 'ENTER'){
+			$('.search').blur();
+			return false;
+	}
+
 	searchString = '//*[contains(name, \"'+ $('.search').val() + '\")]';
 	var search = JSON.search(playlistInfo, searchString);
 	$('.playlistSound').each(function(){
