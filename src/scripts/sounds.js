@@ -58,7 +58,7 @@ function playSound(soundInfo) {
 			}
 			playlistPlayingSoundObject = soundInfo;
 		}
-		if(soundInfo.soundInstance.paused === false){
+		if(soundInfo.soundInstance.paused === false || soundInfo.soundInstance.paused === undefined){
 			soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
 		} else {
 			soundInfo.soundInstance.paused = false;

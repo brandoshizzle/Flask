@@ -141,9 +141,15 @@ function setKeyEvents() {
 			} else if (key === 'SPACE') {
 				// Play the first visible sound of the playlist
 					var firstPlaylistSound = playlist.getFirstPlaylistItem();
-					if(firstPlaylistSound !== 'no sounds!')
+					//if(firstPlaylistSound !== 'no sounds!')
 					sounds.playSound(playlistInfo[firstPlaylistSound]);
-				}
+			}
+
+			}
+			if(key === 'ESCAPE'){
+				createjs.Sound.stop();
+				// TO DO: Remove all played formatting.
+				$('.btn-key, .playlistSound').removeClass('playing-sound');
 			}
 			return false;
 		});

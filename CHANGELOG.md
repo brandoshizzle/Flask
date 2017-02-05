@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - License in "About" to Apache 2.0
 - Order of menu items
 - Sounds now "pause" by default (not stop)
+- Minor color fixes
 
 ## [0.2.0] - 2017-01-28
 ### Added

@@ -1,71 +1,5 @@
 @import 'colors.css';
-.btn-key {
-  line-height: 1.2;
-  padding: 0px;
-  height: 5.15vw;
-  width: 5.15vw;
-  margin: 0.3vw;
-}
-
-.keyLetter {
-  font-size: 1.5vw;
-  pointer-events: none;
-}
-
-.audioName {
-  padding-top: 0px;
-  text-transform: none;
-  height: 100%;
-  width: 100%;
-  font-size: 0.9vw;
-  pointer-events: none;
-  /*white-space: pre-wrap;*/
-}
-
-.played {
-  opacity: 0.2;
-}
-
-#row2 {
-  padding-left: 1.6vw;
-}
-
-#row3 {
-  padding-left: 3.2vw;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-}
-
-.keyboard-container {
-  width: 100%;
-  height: 60vh;
-}
-
-.section {
-  position: absolute;
-  display: none;
-  margin: 0;
-  padding: 0;
-  padding-top: 20px;
-  width: 75vw;
-  height: 60%;
-  background-color: var(--bgD);
-  border-radius: 10px;
-}
-
-.pp-easing {
-  transition: all 900ms ease;
-  /*-webkit-transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);
-  transition-timing-function: cubic-bezier(0.550, 0.085, 0.000, 0.990);*/
-}
-
-#pp-nav {
-  display: none;
-}
-
+@import 'keyboardAndPlaylist.css';
 #waveform-box {
   position: absolute;
   bottom: 0px;
@@ -194,87 +128,6 @@ h4 {
   background-color: inherit;
 }
 
-.soundNotLoaded {
-  background-color: #f44336;
-  opacity: 0.3;
-  cursor: default;
-}
-
-.soundNotLoaded:hover {
-  background-color: #c62828;
-}
-
-.section-header {
-  margin-top: 0;
-  border-radius: 10px solid black;
-}
-
-#playlist-songs {
-  margin: 0;
-  position: relative;
-  height: 81%;
-}
-
-.playlistBox {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  height: 92%;
-  width: 22%;
-  border-radius: 3px;
-  padding: 10px;
-}
-
-#playlist-songs li {
-  padding: 3px;
-  margin: 3px;
-  box-shadow: 0px 1px 0px 0px var(--oc-gray-7);
-  transition: 0.5s;
-}
-
-#playlist-songs li:hover {
-  cursor: pointer;
-}
-
-
-/*
-*	Scroll bar styling
-*/
-
-.scrollbar {
-  overflow-y: scroll;
-}
-
-.scrollbar::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-}
-
-.scrollbar::-webkit-scrollbar {
-  width: 12px;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-  background-color: var(--pM);
-}
-
-.sortable-ghost {
-  color: rgba(0, 0, 0, 0);
-  border: 1px dashed white;
-}
-
-.sortable-drag {
-  opacity: 0.8;
-}
-
-.keyboard-transitions {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 #sound-settings-path {
   display: inline-block;
   width: 180px;
@@ -314,12 +167,12 @@ tr td {
   padding: 20px;
   padding-top: 5px;
   border-right: 1px solid gray;
-  cursor: pointer;
 }
 
 .selectable li:hover {
-  color: white;
-  background-color: var(--oc-gray-1);
+  color: var(--tD);
+  background-color: var(--oc-gray-2);
+  cursor: pointer;
 }
 
 .selectable .ui-selected {
