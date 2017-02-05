@@ -27,7 +27,8 @@ var defaults = {
 	},
 	'settings' : {
 		'general':{
-			'prereleaseUpdates': false
+			'prereleaseUpdates': false,
+			'stopSounds': false
 		},
 		'playlist':{
 			"soundToBottomAfterPlay": true,

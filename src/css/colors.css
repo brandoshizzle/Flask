@@ -3,7 +3,7 @@
 * Recommended color scheme at http://materializecss.com/color.html
 */
 
-@import 'open-color.css';
+@import 'vendor/open-color.css';
 :root {
   --pM: var(--oc-blue-5);
   --pD: var(--oc-blue-9);

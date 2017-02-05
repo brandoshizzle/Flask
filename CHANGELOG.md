@@ -8,10 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Mac build scripts
 - Icons/background for Mac builds
+- Pause/stop option in General Settings
 
 ### Changed
 - License in "About" to Apache 2.0
 - Order of menu items
+- Sounds now "pause" by default (not stop)
 
 ## [0.2.0] - 2017-01-28
 ### Added

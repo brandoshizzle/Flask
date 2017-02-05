@@ -33,13 +33,16 @@ function playSound(soundInfo) {
 	if (soundInfo.endTime == "0.00") {
 		soundInfo.endTime = sounds.getDuration(soundInfo);
 	}
+	if(settingsInfo.general.stopSounds === true){
+		soundInfo.soundInstance.paused = false;
+	}
 	var ppc = setPPC(soundInfo); // Set play properties
 	// Check currentInstances to see if the key is playing or not
 	if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
 		blog('Creating and playing new instance.');
 		play();
 		// Song is currently playing - stop it.
-	} else if (soundInfo.soundInstance.playState == 'playSucceeded') {
+	} else if (soundInfo.soundInstance.playState == 'playSucceeded' && soundInfo.soundInstance.paused === false) {
 		stop(soundInfo);
 		// Song is not playing, so play it.
 	} else {
@@ -55,13 +58,21 @@ function playSound(soundInfo) {
 			}
 			playlistPlayingSoundObject = soundInfo;
 		}
-		soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
+		if(soundInfo.soundInstance.paused === false){
+			soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
+		} else {
+			soundInfo.soundInstance.paused = false;
+		}
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
 
 	function stop(soundInfoToStop){
-		soundInfoToStop.soundInstance.stop();
+		if(settingsInfo.general.stopSounds === false){
+			soundInfo.soundInstance.paused = true;
+		} else {
+			soundInfoToStop.soundInstance.stop();
+		}
 		$('#' + soundInfoToStop.id).removeClass('playing-sound');
 		$('#' + soundInfoToStop.id).addClass('played');
 		// If the song is stopped in the playlist

@@ -319,7 +319,7 @@ tr td {
 
 .selectable li:hover {
   color: white;
-  background-color: var(--pL);
+  background-color: var(--oc-gray-1);
 }
 
 .selectable .ui-selected {
