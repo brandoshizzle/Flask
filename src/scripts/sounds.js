@@ -4,6 +4,7 @@
 /*jshint esversion: 6 */
 
 var playlistPlayingSoundObject;
+var firstPlaylistSound;
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
@@ -60,6 +61,10 @@ function playSound(soundInfo) {
 		}
 		if(soundInfo.soundInstance.paused === false || soundInfo.soundInstance.paused === undefined){
 			soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
+			console.log(soundInfo.soundInstance);
+			soundInfo.soundInstance.addEventListener('complete', function(){
+				stop(soundInfo);
+			});
 		} else {
 			soundInfo.soundInstance.paused = false;
 		}
@@ -84,9 +89,10 @@ function playSound(soundInfo) {
 			}	else if(settingsInfo.playlist.soundToBottomAfterPlay){
 				$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
 				$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
-				var firstPlaylistSound = playlist.getFirstPlaylistItem();
+				firstPlaylistSound = playlist.getFirstPlaylistItem();
 				$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
 			}
+			$('#' + firstPlaylistSound).click();
 		}
 	}
 }
