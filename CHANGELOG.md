@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Icons/background for Mac builds
 - Pause/stop option in General Settings
 - Pressing 'ENTER' in playlist search un-focuses it
+- Sound loading progress bar added (for initial opening of program)
 
 ### Changed
 - License in "About" to Apache 2.0
@@ -18,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Minor color fixes
 
 ### Fixed
-- Settings not saving properly
+- Settings now saving properly
 - Sounds are marked as played when they end
 - Playlist selects first sound after last one stops
 

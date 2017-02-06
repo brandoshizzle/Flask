@@ -1,16 +1,3 @@
-var defaultSettings = {
-	'general':{
-		'prereleaseUpdates': false,
-		'stopSounds': true
-	},
-	'playlist':{
-		"soundToBottomAfterPlay": true,
-		"soundDeleteAfterPlay": false
-	},
-	'keyboard':{
-
-	}
-};
 
 // Open settings modal
 function openSettings() {
@@ -33,24 +20,7 @@ function saveSettings(){
 	storage.storeObj('settings', settingsInfo);
 }
 
-// Check and update settings on import
-function checkSettings(settingsObj) {
-	Object.keys(defaultSettings).map(function(prop, index) {
-		if (!settingsObj.hasOwnProperty(prop)) {
-			settingsObj[prop] = defaultSettings[prop];
-		}
-	});
-	// Check that the key does not have depreciated properties (and delete them)
-	Object.keys(settingsObj).map(function(prop, index) {
-		if (!defaultSettings.hasOwnProperty(prop)) {
-			delete settingsObj[prop];
-		}
-	});
-	console.log(settingsObj);
-}
-
 module.exports = {
 	openSettings: openSettings,
-	saveSettings: saveSettings,
-	checkSettings: checkSettings
+	saveSettings: saveSettings
 };

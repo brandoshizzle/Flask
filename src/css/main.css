@@ -277,3 +277,16 @@ tr td {
   width: 400px;
   height: 100px;
 }
+
+#loadedContainer {
+  display: inline-block;
+  width: 10%;
+  height: 20px;
+  border: 1px solid var(--oc-gray-1);
+}
+
+#loadedCount {
+  width: 0%;
+  height: 100%;
+  background-color: var(--oc-green-7);
+}

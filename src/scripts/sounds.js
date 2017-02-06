@@ -5,6 +5,7 @@
 
 var playlistPlayingSoundObject;
 var firstPlaylistSound;
+var loadedCount = 0;
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
@@ -147,6 +148,13 @@ function fileLoaded(sound) {
 	infoArray[sound.id].soundInstance.playState = null; // Reset to nothing (solved some problems)
 	if (infoArray[sound.id].endTime === 0 || infoArray[sound.id].endTime === null) {
 		infoArray[sound.id].endTime = getDuration(infoArray[sound.id]);
+	}
+	loadedCount++;
+	var loadedPercent = (loadedCount/totalNumSounds)*100 + "%";
+	console.log(loadedPercent);
+	$('#loadedCount').width(loadedPercent);
+	if(loadedCount === totalNumSounds){
+		$('#loadedContainer').css('display', 'none');
 	}
 }
 

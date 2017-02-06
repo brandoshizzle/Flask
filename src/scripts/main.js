@@ -29,6 +29,8 @@ var settingsInfo = {};
 var sI;
 var currentPage = 1;
 var debug = 1;
+var totalNumSounds;
+var pagesNumSounds = 0;
 
 /**
  * Set up program
@@ -57,6 +59,11 @@ $(document).ready(function() {
 	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
 	storage.checkAgainstDefault(settingsInfo, 'settings');
 	console.log(settingsInfo);
+	Object.keys(pagesInfo).map(function(page, index){
+		pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
+		console.log(pagesNumSounds);
+	});
+	totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!
