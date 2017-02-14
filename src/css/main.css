@@ -26,6 +26,7 @@
   border-left: 3px solid var(--tD);
   border-right: 3px solid var(--tD);
   transition: 0.5s;
+  pointer-events: none;
 }
 
 #waveform-info {

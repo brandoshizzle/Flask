@@ -15,10 +15,9 @@ function buildWaveform() {
 		container: '#waveform',
 		waveColor: '#ffeb3b',
 		progressColor: '#ffd600',
-		hideScrollbar: true,
-		interact: false
+		hideScrollbar: true
 	});
-	wavesurfer.empty();
+	//wavesurfer.empty();
 
 	// When ready, hide loader and add the timeline
 	wavesurfer.on('ready', function() {
@@ -99,7 +98,7 @@ function setWaveformTracking(soundInfo) {
 function trackOnWaveform() {
 	var sound = waveformedInfo.soundInstance;
 	var percentComplete = ((Number(sound.position) / 1000) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
-	//blog(percentComplete);
+	blog(percentComplete);
 	wavesurfer.seekTo(percentComplete);
 }
 

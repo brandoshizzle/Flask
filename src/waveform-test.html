@@ -1,0 +1,29 @@
+<html>
+<head>
+
+</head>
+<body>
+  <div id="waveform"></div>
+
+  <div style="text-align: center">
+    <button class="btn btn-primary" onclick="wavesurfer.playPause()">
+      <i class="glyphicon glyphicon-play"></i>
+      Play
+    </button>
+    </p>
+  </div>
+  <!-- main wavesurfer.js lib -->
+  <script src="scripts/vendor/wavesurfer.min.js "></script>
+  <script type="text/javascript">
+    var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'red',
+    progressColor: 'purple',
+    hideScrollbar: true
+    });
+
+    wavesurfer.load("C:\\Users\\Brandon\\Music\\Theatre Sports\\Adventure\\Sadlersong - Delta Squad.mp3");
+  </script>
+
+</body>
+</html>
