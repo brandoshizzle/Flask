@@ -18,7 +18,6 @@ function buildWaveform() {
 		hideScrollbar: true
 	});
 	//wavesurfer.empty();
-
 	// When ready, hide loader and add the timeline
 	wavesurfer.on('ready', function() {
 		$('#waveform-progress').hide();
@@ -27,7 +26,11 @@ function buildWaveform() {
 			wavesurfer: wavesurfer,
 			container: '#waveform-timeline'
 		});
+		wavesurfer.on('seek', function(progress){
+			console.log(progress);
+		});
 	});
+
 }
 
 /**
@@ -51,7 +54,7 @@ function loadWavesurfer(soundInfo) {
 
 	// When the wavesurfer is loaded
 	wavesurfer.on('ready', function() {
-		//setRegion(soundInfo);
+		setRegion(soundInfo);
 		// Create an instance if necessary (for region/duration)
 		if (soundInfo.soundInstance === undefined) {
 			soundInfo.soundInstance = createjs.Sound.createInstance(soundInfo.id);
@@ -98,7 +101,7 @@ function setWaveformTracking(soundInfo) {
 function trackOnWaveform() {
 	var sound = waveformedInfo.soundInstance;
 	var percentComplete = ((Number(sound.position) / 1000) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
-	blog(percentComplete);
+	//blog(percentComplete);
 	wavesurfer.seekTo(percentComplete);
 }
 

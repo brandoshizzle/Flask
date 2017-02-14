@@ -108,6 +108,12 @@ function setKeyEvents() {
 	$(document).keydown(function(e) {
 		var key = keyboardMap[e.which];
 		var code = e.which;
+
+		if(key === 'CONTROL'){
+			ctrl = true;
+			$('#waveform').css('pointer-events', 'none');
+		}
+
 		if (!$(e.target).is('input')) {
 			// If keys A-Z or 0-9 have been pressed, or a special key
 			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
@@ -152,6 +158,16 @@ function setKeyEvents() {
 				$('.btn-key, .playlistSound').removeClass('playing-sound');
 			}
 			return false;
+		});
+
+		$(document).keyup(function(e) {
+			var key = keyboardMap[e.which];
+			var code = e.which;
+
+			if(key === 'CONTROL'){
+				ctrl = false;
+				$('#waveform').css('pointer-events', 'inherit');
+			}
 		});
 
 	// Close/save sound settings when save key is pressed.

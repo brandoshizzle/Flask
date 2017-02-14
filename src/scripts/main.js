@@ -31,6 +31,7 @@ var currentPage = 1;
 var debug = 1;
 var totalNumSounds;
 var pagesNumSounds = 0;
+var ctrl = false;
 
 /**
  * Set up program
