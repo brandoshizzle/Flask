@@ -144,13 +144,17 @@ $(document).ready(function() {
 		var dragStartPage;
     $( ".draggable" ).draggable({
 			helper: 'clone',
-			zIndex: 100,
+			zIndex: 10000,
 			cursor: 'move',
 			distance: 10,
 			opacity: 1,
 			containment: '#keyboard' + currentPage,
 			start: function(event, ui){
 				dragStartPage = currentPage;
+				console.log($(ui.target));
+			},
+			stop: function(event, ui){
+				console.log(event.target.id);
 			}
 		});
 

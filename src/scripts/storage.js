@@ -92,6 +92,11 @@ function deleteObj(objName){
 	jetpack.remove(dataDir + objName + '.json');
 }
 
+function emptyObj(objName, obj){
+	obj = {};
+	storeObj(objName, obj);
+}
+
 function checkAgainstDefault(obj, defaultName) {
 	var changed = false;
 	// Update the object with any new properties
@@ -113,5 +118,6 @@ module.exports = {
 	getInfoObj: getInfoObj,
 	storeObj: storeObj,
 	deleteObj: deleteObj,
-	checkAgainstDefault: checkAgainstDefault
+	checkAgainstDefault: checkAgainstDefault,
+	emptyObj: emptyObj
 };

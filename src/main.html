@@ -160,7 +160,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr class="settings-row">
+						<!--<tr class="settings-row">
 							<td>Start</td>
 							<td>
 								<input id="sound-settings-start-time" type="text" style="width: 50px;"></input>
@@ -175,7 +175,7 @@
 								<label>seconds</label>
 								<div class="btn" id="end-time-reset" style="float: right;">Reset</div>
 							</td>
-						</tr>
+						</tr>-->
 					</tbody>
 				</table>
 				<div id="color-picker" hidden>
@@ -296,9 +296,9 @@
 								</td>
 							</tr>
 							<tr class="settings-row">
-								<td>Delete Playlist Data</td>
+								<td>Empty Playlist</td>
 								<td>
-									<div class="btn" id="playlist-delete" style="float: right;" onclick="storage.deleteObj('playlistInfo')">Delete</div>
+									<div class="btn btn-settings" id="playlist-delete" style="float: right;" onclick="playlist.empty()">Empty</div>
 								</td>
 							</tr>
 						</tbody>

@@ -42,6 +42,14 @@ body {
   background-color: var(--oc-gray-8);
 }
 
+#waveform-region{
+  background-color: var(--pD);
+}
+
+#waveform-info {
+  background-color: var(--aM);
+}
+
 .header-row {
   background-color: var(--pM);
   color: var(--tL);

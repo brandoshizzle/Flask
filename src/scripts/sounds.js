@@ -151,7 +151,7 @@ function fileLoaded(sound) {
 	}
 	loadedCount++;
 	var loadedPercent = (loadedCount/totalNumSounds)*100 + "%";
-	console.log(loadedPercent);
+	//console.log(loadedPercent);
 	$('#loadedCount').width(loadedPercent);
 	if(loadedCount === totalNumSounds){
 		$('#loadedContainer').css('display', 'none');

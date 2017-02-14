@@ -55,8 +55,14 @@ function registerPlaylistItems(){
 	});
 }
 
+function empty(){
+	storage.emptyObj('playlistInfo', playlistInfo);
+	$('#playlist-songs').empty();
+}
+
 
 module.exports = {
 	getFirstPlaylistItem: getFirstPlaylistItem,
-	registerPlaylistItems: registerPlaylistItems
+	registerPlaylistItems: registerPlaylistItems,
+	empty: empty
 };

@@ -16,12 +16,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - License in "About" to Apache 2.0
 - Order of menu items
 - Sounds now "pause" by default (not stop)
-- Minor color fixes
+- Minor color/visual fixes
+- Updated Electron to 1.6.0
+- Removed start/end from sound settings
 
 ### Fixed
 - Settings now saving properly
 - Sounds are marked as played when they end
 - Playlist selects first sound after last one stops
+- Empty playlist creates empty object and saves it to the json
 
 ## [0.2.0] - 2017-01-28
 ### Added

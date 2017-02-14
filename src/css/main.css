@@ -22,7 +22,6 @@
   width: 100%;
   left: 0;
   height: 84%;
-  background-color: var(--pD);
   margin: 0;
   border-left: 3px solid var(--tD);
   border-right: 3px solid var(--tD);
@@ -35,7 +34,6 @@
   margin-left: 0px;
   padding-left: 10px;
   padding-top: 4px;
-  background-color: var(--aM);
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
@@ -289,4 +287,9 @@ tr td {
   width: 0%;
   height: 100%;
   background-color: var(--oc-green-7);
+}
+
+.btn-settings{
+  line-height: 30px;
+  height: 30px;
 }

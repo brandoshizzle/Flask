@@ -8,7 +8,8 @@ function openSettings() {
 	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlist.soundToBottomAfterPlay);
 	$('#settings-playlistSoundToDelete').prop('checked', settingsInfo.playlist.soundDeleteAfterPlay);
 
-
+	$('.global-settings-table').hide();
+	$('#general-table').show();
 	$('#settings-modal').modal('open');
 }
 
