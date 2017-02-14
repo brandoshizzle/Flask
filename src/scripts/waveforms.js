@@ -85,10 +85,15 @@ function setWaveformTracking(soundInfo) {
 			clearInterval(sI);
 			blog("Track is not playing. Waveform will not be tracked.");
 		} else if (playState === 'playSucceeded') {
-			blog('Tracking on waveform');
-			sI = setInterval(trackOnWaveform, 50);
+			if (waveformedInfo.soundInstance.paused === true){
+				clearInterval(sI);
+			} else{
+				blog('Tracking on waveform');
+				sI = setInterval(trackOnWaveform, 50);
+			}
 		} else if (playState === 'playFinished') {
 			waveformedInfo.soundInstance.playState = null;
+			clearInterval(sI);
 		}
 	//});
 
