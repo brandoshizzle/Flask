@@ -83,7 +83,7 @@ function setKeyEvents() {
 		var key = e.target.id;
 		settingsInfoObj = keyInfo;
 		if(keyInfo.hasOwnProperty(key)){
-			view.openSoundSettings(keyInfo[key]);
+			settings.openSoundSettings(keyInfo[key]);
 			waveforms.load(keyInfo[key]);
 		}
 	});
@@ -98,7 +98,7 @@ function setKeyEvents() {
 		$('#playlist-songs li').on('contextmenu', function(e) {
 			var id = e.target.id;
 			settingsInfoObj = playlistInfo;
-			view.openSoundSettings(playlistInfo[id]);
+			settings.openSoundSettings(playlistInfo[id]);
 			waveforms.load(playlistInfo[id]);
 		});
 	}
@@ -172,7 +172,7 @@ function setKeyEvents() {
 
 	// Close/save sound settings when save key is pressed.
 	$('#sound-settings-save').click(function(e) {
-		var tempSoundInfo = view.saveSoundSettings();
+		var tempSoundInfo = settings.saveSoundSettings();
 		var itIsKeyInfo = (settingsInfoObj === keyInfo);
 		settingsInfoObj[tempSoundInfo.id] = tempSoundInfo;
 		if (itIsKeyInfo) {
@@ -220,6 +220,7 @@ function setKeyEvents() {
 		e.preventDefault();
 		return false;
 	});
+
 	$(document).on('dragover', function(e) {
 		e.preventDefault();
 		return false;

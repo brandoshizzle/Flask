@@ -23,7 +23,10 @@ var defaults = {
 		"loop": false,
 		"startTime": 0,
 		"endTime": null,
-		"soundInstance": undefined
+		"soundInstance": undefined,
+		"playlistPosition": undefined,
+		"fadeInTime": undefined,
+		"fadeOutTime": undefined
 	},
 	'settings' : {
 		'general':{
