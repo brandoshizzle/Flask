@@ -73,9 +73,11 @@ function setKeyEvents() {
 	// apply clicked-key class and show waveform
 	function clickSound(e, infoObj) {
 		var id = e.target.id;
-		if (infoObj.hasOwnProperty(id)) {
-			waveforms.track(infoObj[id]);
+		if (!infoObj.hasOwnProperty(id)) {
+			infoObj[id] = {}; infoObj[id].id = id;
+			storage.checkAgainstDefault(infoObj[id], 'soundInfo');
 		}
+		waveforms.track(infoObj[id]);
 	}
 
 	// Right click to bring up settings and populate them

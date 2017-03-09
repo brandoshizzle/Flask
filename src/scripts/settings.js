@@ -14,6 +14,14 @@ function openSettings() {
 	$('#settings-modal').modal('open');
 }
 
+function saveSettings(){
+	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
+	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
+	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
+	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
+	storage.storeObj('settings', settingsInfo);
+}
+
 /**
  *	@desc: Opens the sound settings and populates it with the proper info
  *	@param: soundInfo: The sound info object that is being changed
@@ -73,12 +81,14 @@ function resetEndTime() {
 	$('#sound-settings-end-time').val(sounds.getDuration(settingsSoundInfo));
 }
 
-function saveSettings(){
-	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
-	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
-	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
-	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
-	storage.storeObj('settings', settingsInfo);
+function openPageSettings(pageNum){
+	var pageInfo = pagesInfo['page' + pageNum];
+	if(pageInfo.name){
+		$('#page-settings-name').text(pageInfo.name);
+	} else {
+		$('#page-settings-name').text('Page ' + pageNum);
+	}
+	$('#page-modal').modal('open');
 }
 
 module.exports = {
@@ -87,5 +97,6 @@ module.exports = {
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
 	resetStartTime: resetStartTime,
-	resetEndTime: resetEndTime
+	resetEndTime: resetEndTime,
+	openPageSettings: openPageSettings
 };

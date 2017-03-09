@@ -35,6 +35,16 @@ function buildWaveform() {
  *	@param: soundInfo: The sound info object being waveformed
  */
 function loadWavesurfer(soundInfo) {
+	// Change the target key of the waveform
+	$('#' + prevTarget).removeClass('waveformed-key');
+	$('#' + soundInfo.id).addClass('waveformed-key');
+	prevTarget = soundInfo.id;
+
+	if(soundInfo.path === ""){
+		wavesurfer.empty();
+		lastLoadedPath = "";
+		return;
+	}
 	var path = soundInfo.path;
 	if (path != lastLoadedPath) {
 		// Remove and re-initialize the waveform region (prevents weird resizing errors)
@@ -69,10 +79,6 @@ function loadWavesurfer(soundInfo) {
 			instance.position = currentTime - instance.startTime;
 			console.log(instance.position/1000);
 		});
-		// Change the target key of the waveform
-		$('#' + prevTarget).removeClass('waveformed-key');
-		$('#' + soundInfo.id).addClass('waveformed-key');
-		prevTarget = soundInfo.id;
 	});
 }
 
@@ -83,6 +89,9 @@ function loadWavesurfer(soundInfo) {
  */
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
+	if(soundInfo.soundInstance === undefined){
+		return;
+	}
 	//wavesurfer.on('ready', function() { REMOVED IN V0.2.0
 		waveformedInfo = soundInfo;
 		var playState = waveformedInfo.soundInstance.playState;

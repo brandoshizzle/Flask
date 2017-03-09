@@ -5,6 +5,15 @@ $(document).ready(function(){
 	$('ul.tabs').on('click', 'a', function(e){
 		switchPage(e);
 	});
+	$('ul.tabs').on('contextmenu', 'a', function(e){
+		var pageId = e.target.id;
+		if(!pageId){
+			pageId = $(e.target).closest('a').prop('id');
+		}
+		pageNum = pageId.substring(pageId.length - 1);
+		ensurePageExists(pageNum);
+		settings.openPageSettings(pageNum);
+	});
 
 	$('body').keydown(function(e){
 		if(e.which > 111 && e.which < 120){
@@ -66,6 +75,9 @@ function switchPage(e) {
 	pagesInfo['page' + currentPage].keyInfo = keyInfo;
 	$('#keyboard' + currentPage).hide();
 	var pageId = e.target.id;
+	if(!pageId){
+		pageId = $(e.target).closest('a').prop('id');
+	}
 	currentPage = pageId.substring(pageId.length - 1);
 	ensurePageExists(currentPage);
 	keyInfo = pagesInfo['page' + currentPage].keyInfo;
