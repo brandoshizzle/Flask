@@ -22,6 +22,7 @@ var shell = require('electron').shell;
 
 var wavesurfer;
 var keys;
+var waveformedInfo;
 var keyInfo = {};
 var pagesInfo = {};
 var playlistInfo = {};
@@ -86,22 +87,6 @@ $(document).ready(function() {
 
 	$('.global-settings-table').hide();
 	$('#keyboard' + currentPage).show();
-/*
-	$('.keyboard-container').pagepiling({
-		direction: 'horizontal',
-		verticalCentered: false,
-		scrollSpeed: 100,
-		navigation: {},
-		normalScrollElements: '.section',
-		onLeave: function(index, nextIndex, direction){
-      $('#keyboard' + nextIndex).show();
-			$('#keyboard' + index).hide();
-    },
-		afterRender: function(){
-    	$('.section').hide();
-			$('#keyboard' + currentPage).show();
-    }
-	});*/
 
 	$('.selectable').selectable({
 		stop: function(){

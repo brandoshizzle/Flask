@@ -116,7 +116,8 @@ function setKeyEvents() {
 			$('#waveform').css('pointer-events', 'none');
 		}
 
-		if (!$(e.target).is('input')) {
+		// only handle keys if they are not being used in an input box, and control is not pressed;
+		if (!$(e.target).is('input') && !ctrl) {
 			// If keys A-Z or 0-9 have been pressed, or a special key
 			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
 				// Check if the sound was loaded or not, and if it even exists
@@ -153,24 +154,37 @@ function setKeyEvents() {
 					sounds.playSound(playlistInfo[firstPlaylistSound]);
 			}
 
-			}
-			if(key === 'ESCAPE'){
-				createjs.Sound.stop();
-				// TO DO: Remove all played formatting.
-				$('.btn-key, .playlistSound').removeClass('playing-sound');
-			}
-			return false;
-		});
+		}
 
-		$(document).keyup(function(e) {
-			var key = keyboardMap[e.which];
-			var code = e.which;
-
-			if(key === 'CONTROL'){
-				ctrl = false;
-				$('#waveform').css('pointer-events', 'inherit');
+		// CONTROL FUNCTIONS NOT IN INPUTS
+		if (!$(e.target).is('input') && ctrl) {
+			if(key === 'C'){
+				util.copyKey(waveformedInfo);
+			} else if (key === 'X') {
+				util.cutKey(waveformedInfo);
+			} else if (key === 'V') {
+				util.pasteKey(waveformedInfo);
 			}
-		});
+		}
+
+		//
+		if(key === 'ESCAPE'){
+			createjs.Sound.stop();
+			// TODO: Remove all played formatting.
+			$('.btn-key, .playlistSound').removeClass('playing-sound');
+		}
+		return false;
+	});
+
+	$(document).keyup(function(e) {
+		var key = keyboardMap[e.which];
+		var code = e.which;
+
+		if(key === 'CONTROL'){
+			ctrl = false;
+			$('#waveform').css('pointer-events', 'inherit');
+		}
+	});
 
 	// Close/save sound settings when save key is pressed.
 	$('#sound-settings-save').click(function(e) {

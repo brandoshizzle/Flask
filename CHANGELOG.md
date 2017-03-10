@@ -6,11 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Mac build scripts
-- Icons/background for Mac builds
 - Pause/stop option in General Settings
 - Pressing 'ENTER' in playlist search un-focuses it
+- Double click on waveform to play sound from that spot
+- COPY/CUT/PASTE keys to move them around keyboards/pages
 - Sound loading progress bar added (for initial opening of program)
+- Mac build scripts
+- Icons/background for Mac builds
+- Page names have associated hotkey in name
 
 ### Changed
 - License in "About" to Apache 2.0
@@ -19,12 +22,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Minor color/visual fixes
 - Updated Electron to 1.6.0
 - Removed start/end from sound settings
+- Can select unloaded keys
+- Cannot launch sounds when holding CONTROL
 
 ### Fixed
 - Settings now saving properly
 - Sounds are marked as played when they end
 - Playlist selects first sound after last one stops
 - Empty playlist creates empty object and saves it to the json
+- Can have period in sound names
 
 ## [0.2.0] - 2017-01-28
 ### Added

@@ -1,4 +1,3 @@
-var waveformedInfo;
 var lastLoadedPath;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
@@ -42,6 +41,8 @@ function loadWavesurfer(soundInfo) {
 
 	if(soundInfo.path === ""){
 		wavesurfer.empty();
+		$('#waveform-region').css('left', 0);
+		$('#waveform-region').width($('#waveform').width());
 		lastLoadedPath = "";
 		return;
 	}
@@ -89,11 +90,11 @@ function loadWavesurfer(soundInfo) {
  */
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
+	waveformedInfo = soundInfo;
 	if(soundInfo.soundInstance === undefined){
 		return;
 	}
 	//wavesurfer.on('ready', function() { REMOVED IN V0.2.0
-		waveformedInfo = soundInfo;
 		var playState = waveformedInfo.soundInstance.playState;
 		blog(waveformedInfo.name + ", " + playState);
 		if (playState === null) {
