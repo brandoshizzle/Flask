@@ -23,7 +23,7 @@ function registerSound(soundInfo) {
 	} else {
 		// Let the user know with a toast
 		Materialize.toast(soundInfo.name + " was NOT loaded.", 4000);
-		$("#" + soundInfo.id).parent().addClass("soundNotLoaded");
+		$("#" + soundInfo.id).addClass("soundNotLoaded");
 	}
 }
 

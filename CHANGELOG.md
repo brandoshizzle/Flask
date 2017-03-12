@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Playlist selects first sound after last one stops
 - Empty playlist creates empty object and saves it to the json
 - Can have periods and square brackets in sound names
+- Sounds that don't load are correctly styled
 
 ## [0.2.0] - 2017-01-28
 ### Added

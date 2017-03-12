@@ -41,6 +41,7 @@ function loadWavesurfer(soundInfo) {
 
 	if(soundInfo.path === ""){
 		wavesurfer.empty();
+		$('#waveform-song-name').text("");
 		$('#waveform-region').css('left', 0);
 		$('#waveform-region').width($('#waveform').width());
 		lastLoadedPath = "";
