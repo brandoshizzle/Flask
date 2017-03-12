@@ -54,23 +54,25 @@ function playSound(soundInfo) {
 	}
 
 	function play(ppc) {
-		$('#' + soundInfo.id).removeClass('played');
 		if(soundInfo.infoObj === 'playlist'){
 			if(playlistPlayingSoundObject !== undefined){
 				stop(playlistPlayingSoundObject);
 			}
 			playlistPlayingSoundObject = soundInfo;
 		}
-		if(soundInfo.soundInstance.paused === false || soundInfo.soundInstance.paused === undefined){
+		// Sound is not paused, play it
+		if(soundInfo.soundInstance.paused === false || soundInfo.soundInstance.paused === undefined || reloadSound){
 			soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
-			console.log(soundInfo.soundInstance);
 			soundInfo.soundInstance.addEventListener('complete', function(){
 				stop(soundInfo);
 			});
-		} else {
+			reloadSound = false;
+		} else {	// Sound is paused, play it
 			soundInfo.soundInstance.paused = false;
 		}
 		waveforms.track(soundInfo);
+		console.log(soundInfo.soundInstance);
+		$('#' + soundInfo.id).removeClass('played');
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
 

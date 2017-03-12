@@ -33,6 +33,7 @@ var debug = 1;
 var totalNumSounds;
 var pagesNumSounds = 0;
 var ctrl = false;
+var reloadSound = false;
 
 /**
  * Set up program

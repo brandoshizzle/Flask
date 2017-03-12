@@ -124,7 +124,7 @@ function setWaveformTracking(soundInfo) {
 function trackOnWaveform() {
 	var sound = waveformedInfo.soundInstance;
 	var percentComplete = ((Number(sound.position) / 1000) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
-	blog(percentComplete);
+	//blog(percentComplete);
 	wavesurfer.seekTo(percentComplete);
 }
 
@@ -155,8 +155,8 @@ function getRegion() {
 		storage.storeObj('playlistInfo', playlistInfo);
 	}
 	if(!(waveformedInfo.soundInstance.playState === 'playSucceeded' && waveformedInfo.soundInstance.paused === false)){
+		reloadSound = true;
 		waveformedInfo.soundInstance.position = 0;
-		//waveformedInfo.soundInstance. ;
 	}
 	trackOnWaveform();
 }
