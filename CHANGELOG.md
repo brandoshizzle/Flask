@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Mac build scripts
 - Icons/background for Mac builds
 - Page names have associated hotkey in name
+- Sound resets after changing waveform region
 
 ### Changed
 - License in "About" to Apache 2.0
@@ -25,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Can select unloaded keys
 - Cannot launch sounds when holding CONTROL
 - soundInstances are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
+
 
 ### Fixed
 - Settings now saving properly

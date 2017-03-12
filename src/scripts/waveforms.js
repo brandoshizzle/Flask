@@ -56,8 +56,8 @@ function loadWavesurfer(soundInfo) {
 		// Remove and re-initialize waveform
 		// TODO: figure out DOM error caused by destroying waveform
 		// REMOVED IN V0.3.0
-		wavesurfer.destroy();
-		buildWaveform();
+		//wavesurfer.destroy();
+		//buildWaveform();
 		wavesurfer.load(path);
 		lastLoadedPath = path; // Set the path so we know what was loaded
 		$('#waveform-progress').show();
