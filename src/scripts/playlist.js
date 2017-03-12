@@ -17,7 +17,10 @@ $('.search').on('keyup paste', function(e){
 			$('.search').blur();
 			return false;
 	}
-
+	if($('.search').val().length < 1){
+		$('.playlistSound').show();
+		return;
+	}
 	searchString = '//*[contains(name, \"'+ $('.search').val() + '\")]';
 	var search = JSON.search(playlistInfo, searchString);
 	$('.playlistSound').each(function(){
