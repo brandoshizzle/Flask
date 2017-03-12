@@ -24,13 +24,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed start/end from sound settings
 - Can select unloaded keys
 - Cannot launch sounds when holding CONTROL
+- soundInstances are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
 
 ### Fixed
 - Settings now saving properly
 - Sounds are marked as played when they end
 - Playlist selects first sound after last one stops
 - Empty playlist creates empty object and saves it to the json
-- Can have period in sound names
+- Can have periods and square brackets in sound names
 
 ## [0.2.0] - 2017-01-28
 ### Added

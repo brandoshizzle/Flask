@@ -28,7 +28,7 @@ function cleanName(name) {
  *	@return: The prepared name
  */
 function prepareForId(str) {
-	var replaced = str.replace(/ /g, '_').replace(/[{()}',.]/g, '').replace(/[&]/g, 'and');
+	var replaced = str.replace(/ /g, '_').replace(/[{()}',.]/g, '').replace(/[&]/g, 'and').replace(/[[\]]/g,'');
 	return replaced;
 }
 
