@@ -2,7 +2,6 @@
  *  Handles generation of elements that are dynamically loaded.
  */
 
-var settingsSoundInfo;
 var specialKeys = {
 	'-': 'MINUS',
 	'+': 'EQUALS',
@@ -78,65 +77,6 @@ function buildPlaylist() {
 	});
 }
 
-/**
- *	@desc: Opens the sound settings and populates it with the proper info
- *	@param: soundInfo: The sound info object that is being changed
- */
-function openSoundSettings(soundInfo) {
-	var idStart = "#sound-settings-";
-	if (soundInfo.name === "") {
-		soundInfo.name = "Enter a name";
-	}
-	$(idStart + "name").text(soundInfo.name);
-	$(idStart + "path").val(soundInfo.path);
-	if(soundInfo.infoObj !== "playlist"){
-		$('#color-row').show();
-		colors.setPickedColor(soundInfo.color);
-		colors.setColorPickerColors();
-	} else {
-		$('#color-row').hide();
-	}
-
-	$(idStart + "loop").prop("checked", soundInfo.loop);
-	$(idStart + "start-time").val(soundInfo.startTime);
-	$(idStart + "end-time").val(soundInfo.endTime);
-	settingsSoundInfo = soundInfo;
-	$('#sound-settings').modal('open');
-}
-
-/**
- *	@desc: Gets the settings from the sound settings box and save them
- *	@param: settingsKey (global): the key to apply changes to
- */
-function saveSoundSettings() {
-	var tempSoundInfo = settingsSoundInfo;
-	if (tempSoundInfo.path != $('#sound-settings-path').val()) {
-		sounds.loadFile(settingsKey, $('#sound-settings-path').val());
-		view.resetEndTime();
-		view.resetStartTime();
-	}
-	if ($('#sound-settings-name').text() !== "") {
-		tempSoundInfo.name = $('#sound-settings-name').text();
-	}
-	if(settingsSoundInfo.infoObj !== "playlist"){
-		colors.setKeyColor(tempSoundInfo);
-	}
-	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
-	tempSoundInfo.startTime = $('#sound-settings-start-time').val();
-	tempSoundInfo.endTime = $('#sound-settings-end-time').val();
-	return tempSoundInfo;
-}
-
-// Set start time to 0
-function resetStartTime() {
-	$('#sound-settings-start-time').val(0);
-}
-
-// Set end time to total duration
-function resetEndTime() {
-	$('#sound-settings-end-time').val(sounds.getDuration(settingsSoundInfo));
-}
-
 // Open about modal
 function openAbout() {
 	$('#about-modal').modal('open');
@@ -162,10 +102,6 @@ module.exports = {
 	buildKeyboard: buildKeyboard,
 	createPlaylistItem: createPlaylistItem,
 	buildPlaylist: buildPlaylist,
-	openSoundSettings: openSoundSettings,
-	saveSoundSettings: saveSoundSettings,
-	resetStartTime: resetStartTime,
-	resetEndTime: resetEndTime,
 	openAbout: openAbout,
 	openColorPicker: openColorPicker,
 	updateKey: updateKey

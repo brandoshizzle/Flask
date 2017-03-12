@@ -73,9 +73,11 @@ function setKeyEvents() {
 	// apply clicked-key class and show waveform
 	function clickSound(e, infoObj) {
 		var id = e.target.id;
-		if (infoObj.hasOwnProperty(id)) {
-			waveforms.track(infoObj[id]);
+		if (!infoObj.hasOwnProperty(id)) {
+			infoObj[id] = {}; infoObj[id].id = id;
+			storage.checkAgainstDefault(infoObj[id], 'soundInfo');
 		}
+		waveforms.track(infoObj[id]);
 	}
 
 	// Right click to bring up settings and populate them
@@ -83,7 +85,7 @@ function setKeyEvents() {
 		var key = e.target.id;
 		settingsInfoObj = keyInfo;
 		if(keyInfo.hasOwnProperty(key)){
-			view.openSoundSettings(keyInfo[key]);
+			settings.openSoundSettings(keyInfo[key]);
 			waveforms.load(keyInfo[key]);
 		}
 	});
@@ -98,7 +100,7 @@ function setKeyEvents() {
 		$('#playlist-songs li').on('contextmenu', function(e) {
 			var id = e.target.id;
 			settingsInfoObj = playlistInfo;
-			view.openSoundSettings(playlistInfo[id]);
+			settings.openSoundSettings(playlistInfo[id]);
 			waveforms.load(playlistInfo[id]);
 		});
 	}
@@ -108,7 +110,14 @@ function setKeyEvents() {
 	$(document).keydown(function(e) {
 		var key = keyboardMap[e.which];
 		var code = e.which;
-		if (!$(e.target).is('input')) {
+
+		if(key === 'CONTROL'){
+			ctrl = true;
+			$('#waveform').css('pointer-events', 'none');
+		}
+
+		// only handle keys if they are not being used in an input box, and control is not pressed;
+		if (!$(e.target).is('input') && !ctrl) {
 			// If keys A-Z or 0-9 have been pressed, or a special key
 			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
 				// Check if the sound was loaded or not, and if it even exists
@@ -145,18 +154,41 @@ function setKeyEvents() {
 					sounds.playSound(playlistInfo[firstPlaylistSound]);
 			}
 
+		}
+
+		// CONTROL FUNCTIONS NOT IN INPUTS
+		if (!$(e.target).is('input') && ctrl) {
+			if(key === 'C'){
+				util.copyKey(waveformedInfo);
+			} else if (key === 'X') {
+				util.cutKey(waveformedInfo);
+			} else if (key === 'V') {
+				util.pasteKey(waveformedInfo);
 			}
-			if(key === 'ESCAPE'){
-				createjs.Sound.stop();
-				// TO DO: Remove all played formatting.
-				$('.btn-key, .playlistSound').removeClass('playing-sound');
-			}
-			return false;
-		});
+		}
+
+		//
+		if(key === 'ESCAPE'){
+			createjs.Sound.stop();
+			// TODO: Remove all played formatting.
+			$('.btn-key, .playlistSound').removeClass('playing-sound');
+		}
+		return false;
+	});
+
+	$(document).keyup(function(e) {
+		var key = keyboardMap[e.which];
+		var code = e.which;
+
+		if(key === 'CONTROL'){
+			ctrl = false;
+			$('#waveform').css('pointer-events', 'inherit');
+		}
+	});
 
 	// Close/save sound settings when save key is pressed.
 	$('#sound-settings-save').click(function(e) {
-		var tempSoundInfo = view.saveSoundSettings();
+		var tempSoundInfo = settings.saveSoundSettings();
 		var itIsKeyInfo = (settingsInfoObj === keyInfo);
 		settingsInfoObj[tempSoundInfo.id] = tempSoundInfo;
 		if (itIsKeyInfo) {
@@ -204,6 +236,7 @@ function setKeyEvents() {
 		e.preventDefault();
 		return false;
 	});
+
 	$(document).on('dragover', function(e) {
 		e.preventDefault();
 		return false;

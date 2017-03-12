@@ -79,6 +79,7 @@ function playSound(soundInfo) {
 		} else {
 			soundInfoToStop.soundInstance.stop();
 		}
+		waveforms.track(soundInfo);
 		$('#' + soundInfoToStop.id).removeClass('playing-sound');
 		$('#' + soundInfoToStop.id).addClass('played');
 		// If the song is stopped in the playlist

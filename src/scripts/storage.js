@@ -23,7 +23,10 @@ var defaults = {
 		"loop": false,
 		"startTime": 0,
 		"endTime": null,
-		"soundInstance": undefined
+		"soundInstance": undefined,
+		"playlistPosition": undefined,
+		"fadeInTime": undefined,
+		"fadeOutTime": undefined
 	},
 	'settings' : {
 		'general':{
@@ -76,16 +79,21 @@ function getInfoObj(objName) {
  *					obj : The object being stringified and stored
  */
 function storeObj(objName, obj) {
+	// Clean soundInstances from storage
+	var clonedObj = util.cloneObj(obj);
+	if(objName === 'playlistInfo'){
+		stripPlayState(clonedObj);
+	} else if(objName === 'pagesInfo'){
+		Object.keys(clonedObj).map(function(prop, index) {
+			console.log(clonedObj[prop]);
+			stripPlayState(clonedObj[prop].keyInfo);
+		});
+	}
 	console.log(dataDir + objName);
-	jetpack.writeAsync(dataDir + objName + '.json', obj, {
+	jetpack.writeAsync(dataDir + objName + '.json', clonedObj, {
 		atomic: true
 	});
 	console.log('Storing new ' + objName + ' to json.');
-	/* Old localStorage
-		var objString = JSON.stringify(obj);
-		localStorage.setItem(keyName, objString);
-		blog("Stored new " + keyName + " settings!");
-	} */
 }
 
 function deleteObj(objName){
@@ -111,6 +119,12 @@ function checkAgainstDefault(obj, defaultName) {
 		if (!defaults[defaultName].hasOwnProperty(prop)) {
 			delete obj[prop];
 		}
+	});
+}
+
+function stripPlayState(infoObj){
+	Object.keys(infoObj).map(function(prop, index) {
+		infoObj[prop].soundInstance = undefined;
 	});
 }
 

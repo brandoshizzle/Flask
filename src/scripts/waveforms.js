@@ -1,4 +1,3 @@
-var waveformedInfo;
 var lastLoadedPath;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
@@ -18,7 +17,6 @@ function buildWaveform() {
 		hideScrollbar: true
 	});
 	//wavesurfer.empty();
-
 	// When ready, hide loader and add the timeline
 	wavesurfer.on('ready', function() {
 		$('#waveform-progress').hide();
@@ -28,6 +26,7 @@ function buildWaveform() {
 			container: '#waveform-timeline'
 		});
 	});
+
 }
 
 /**
@@ -35,6 +34,18 @@ function buildWaveform() {
  *	@param: soundInfo: The sound info object being waveformed
  */
 function loadWavesurfer(soundInfo) {
+	// Change the target key of the waveform
+	$('#' + prevTarget).removeClass('waveformed-key');
+	$('#' + soundInfo.id).addClass('waveformed-key');
+	prevTarget = soundInfo.id;
+
+	if(soundInfo.path === ""){
+		wavesurfer.empty();
+		$('#waveform-region').css('left', 0);
+		$('#waveform-region').width($('#waveform').width());
+		lastLoadedPath = "";
+		return;
+	}
 	var path = soundInfo.path;
 	if (path != lastLoadedPath) {
 		// Remove and re-initialize the waveform region (prevents weird resizing errors)
@@ -42,6 +53,7 @@ function loadWavesurfer(soundInfo) {
 		$('#waveform-region').remove();
 		$('#waveform').after('<div id="waveform-region"></div>');
 		// Remove and re-initialize waveform
+		// TODO: figure out DOM error caused by destroying waveform
 		wavesurfer.destroy();
 		buildWaveform();
 		wavesurfer.load(path);
@@ -51,7 +63,7 @@ function loadWavesurfer(soundInfo) {
 
 	// When the wavesurfer is loaded
 	wavesurfer.on('ready', function() {
-		//setRegion(soundInfo);
+		setRegion(soundInfo);
 		// Create an instance if necessary (for region/duration)
 		if (soundInfo.soundInstance === undefined) {
 			soundInfo.soundInstance = createjs.Sound.createInstance(soundInfo.id);
@@ -60,11 +72,15 @@ function loadWavesurfer(soundInfo) {
 		setRegion(soundInfo); // Resize region to reflect proper size
 		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
 		wavesurfer.seekTo(percentComplete); // Move playhead to start time
+
+		// If waveform is clicked, set time to wherever the click occured
+		wavesurfer.drawer.on('click', function (e) {
+			var instance = waveformedInfo.soundInstance;
+			var currentTime = wavesurfer.getCurrentTime()*1000;
+			instance.position = currentTime - instance.startTime;
+			console.log(instance.position/1000);
+		});
 	});
-	// Change the target key of the waveform
-	$('#' + prevTarget).removeClass('waveformed-key');
-	$('#' + soundInfo.id).addClass('waveformed-key');
-	prevTarget = soundInfo.id;
 }
 
 /**
@@ -74,18 +90,27 @@ function loadWavesurfer(soundInfo) {
  */
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
+	waveformedInfo = soundInfo;
+	if(soundInfo.soundInstance === undefined){
+		return;
+	}
 	//wavesurfer.on('ready', function() { REMOVED IN V0.2.0
-		waveformedInfo = soundInfo;
 		var playState = waveformedInfo.soundInstance.playState;
 		blog(waveformedInfo.name + ", " + playState);
 		if (playState === null) {
 			clearInterval(sI);
 			blog("Track is not playing. Waveform will not be tracked.");
 		} else if (playState === 'playSucceeded') {
-			blog('Tracking on waveform');
-			sI = setInterval(trackOnWaveform, 50);
+			console.log(waveformedInfo.soundInstance.paused);
+			if (waveformedInfo.soundInstance.paused === true){
+				clearInterval(sI);
+			} else{
+				blog('Tracking on waveform');
+				sI = setInterval(trackOnWaveform, 50);
+			}
 		} else if (playState === 'playFinished') {
 			waveformedInfo.soundInstance.playState = null;
+			clearInterval(sI);
 		}
 	//});
 

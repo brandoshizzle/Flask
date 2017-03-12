@@ -22,6 +22,7 @@ var shell = require('electron').shell;
 
 var wavesurfer;
 var keys;
+var waveformedInfo;
 var keyInfo = {};
 var pagesInfo = {};
 var playlistInfo = {};
@@ -31,6 +32,7 @@ var currentPage = 1;
 var debug = 1;
 var totalNumSounds;
 var pagesNumSounds = 0;
+var ctrl = false;
 
 /**
  * Set up program
@@ -85,22 +87,6 @@ $(document).ready(function() {
 
 	$('.global-settings-table').hide();
 	$('#keyboard' + currentPage).show();
-/*
-	$('.keyboard-container').pagepiling({
-		direction: 'horizontal',
-		verticalCentered: false,
-		scrollSpeed: 100,
-		navigation: {},
-		normalScrollElements: '.section',
-		onLeave: function(index, nextIndex, direction){
-      $('#keyboard' + nextIndex).show();
-			$('#keyboard' + index).hide();
-    },
-		afterRender: function(){
-    	$('.section').hide();
-			$('#keyboard' + currentPage).show();
-    }
-	});*/
 
 	$('.selectable').selectable({
 		stop: function(){

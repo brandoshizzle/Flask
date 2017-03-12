@@ -5,6 +5,7 @@
  */
 /*jshint esversion: 6 */
 const dialog = require('electron').remote.dialog;
+var clipboard;
 
 /**
  *	@desc: Creates the default name for a new song dragged in
@@ -27,7 +28,7 @@ function cleanName(name) {
  *	@return: The prepared name
  */
 function prepareForId(str) {
-	var replaced = str.replace(/ /g, '_').replace(/[{()}',]/g, '').replace(/[&]/g, 'and');
+	var replaced = str.replace(/ /g, '_').replace(/[{()}',.]/g, '').replace(/[&]/g, 'and').replace(/[[\]]/g,'');
 	return replaced;
 }
 
@@ -70,10 +71,39 @@ function isEmpty(obj) {
     return true;
 }
 
+function copyKey(copiedSoundInfo){
+	clipboard = cloneObj(copiedSoundInfo);
+	console.log('copied ' + copiedSoundInfo);
+}
+
+function cutKey(cutSoundInfo){
+	clipboard = cloneObj(cutSoundInfo);
+	var id = cutSoundInfo.id;
+	$('#' + id).removeClass('played');
+	var openColor = colors.makeColor('default');
+	$('#' + id).css("background-color", openColor);
+	$('#' + id).find('.audioName').text('');
+	delete keyInfo[cutSoundInfo.id];
+	//pagesInfo[currentPage].keyInfo = keyInfo;
+}
+
+function pasteKey(destinationSoundInfo){
+	var id = destinationSoundInfo.id;
+	destinationSoundInfo = clipboard;
+	destinationSoundInfo.id = id;
+	keyInfo[destinationSoundInfo.id] = destinationSoundInfo;
+	view.updateKey(keyInfo[destinationSoundInfo.id]);
+	sounds.register(keyInfo[destinationSoundInfo.id]);
+	console.log(keyInfo);
+}
+
 module.exports = {
 	cleanName: cleanName,
 	prepareForId: prepareForId,
 	openBrowse: openBrowse,
 	cloneObj: cloneObj,
-	isEmpty: isEmpty
+	isEmpty: isEmpty,
+	copyKey: copyKey,
+	cutKey: cutKey,
+	pasteKey: pasteKey
 };

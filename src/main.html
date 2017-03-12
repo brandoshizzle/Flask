@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
 
@@ -22,21 +22,21 @@
 				<a data-activates="slide-out" class="button-collapse menu-icon"><i class="material-icons">menu</i></a>
 				<img src="assets/logo.png" style="display: inline-block; height: 25px;" />
 				<h4 id="programTitle"><strong>REACT</strong>ion</h4>
-				<div id="loadedContainer">
+				<div id="loadedContainer" style='display:none;'>
 					<div id="loadedCount">Loading</div>
 				</div>
 				<p id="clock">Time</p>
 			</div>
 			<div class="tabs-row">
 				<ul class="tabs" id="tabs">
-					<li class="tab"><a class="active" href="#" id="page1">Page 1</a></li>
-					<li class="tab"><a href="#" id="page2">Page 2</a></li>
-					<li class="tab"><a href="#" id="page3">Page 3</a></li>
-					<li class="tab"><a href="#" id="page4">Page 4</a></li>
-					<li class="tab"><a href="#" id="page5">Page 5</a></li>
-					<li class="tab"><a href="#" id="page6">Page 6</a></li>
-					<li class="tab"><a href="#" id="page7">Page 7</a></li>
-					<li class="tab"><a href="#" id="page8">Page 8</a></li>
+					<li class="tab"><a class="active" href="#" id="page1">[F1] <span class='pageName'>Page 1</span></a></li>
+					<li class="tab"><a href="#" id="page2">[F2] <span class='pageName'>Page 2</span></a></li>
+					<li class="tab"><a href="#" id="page3">[F3] <span class='pageName'>Page 3</span></a></li>
+					<li class="tab"><a href="#" id="page4">[F4] <span class='pageName'>Page 4</span></a></li>
+					<li class="tab"><a href="#" id="page5">[F5] <span class='pageName'>Page 5</span></a></li>
+					<li class="tab"><a href="#" id="page6">[F6] <span class='pageName'>Page 6</span></a></li>
+					<li class="tab"><a href="#" id="page7">[F7] <span class='pageName'>Page 7</span></a></li>
+					<li class="tab"><a href="#" id="page8">[F8] <span class='pageName'>Page 8</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -110,9 +110,9 @@
 				<p id="waveform-song-name"></p>
 			</div>
 			<div id="waveform" class="z-depth-4"></div>
-			<div id="waveform-region" style="pointer-events: none;"></div>
+			<div id="waveform-region"></div>
 			<div id="waveform-progress" hidden class="z-depth-4" style="pointer-events: none;">
-				<div class="load">
+					<div class="load">
 					<div class="line"></div>
 					<div class="line"></div>
 					<div class="line"></div>
@@ -331,6 +331,47 @@
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="modal-action modal-close waves-effect btn-flat">Later</a>
+			</div>
+		</div>
+
+		<!-- Page Settings -->
+		<div id="page-modal" class="modal model-fixed-footer" style="width:500px;">
+			<div class="modal-content" style="padding:0;">
+				<h5 id="page-settings-name" class="header editable" style="text-align: center">Page Name</h5>
+				<table class="highlight" style="padding: 20px;">
+					<tbody>
+						<tr class="settings-row">
+							<td>Loop</td>
+							<td>
+								<div class="switch">
+									<label>
+										<input id="sound-settings-loop" type="checkbox">
+										<span class="lever"></span>
+									</label>
+								</div>
+							</td>
+						</tr>
+						<tr class="settings-row">
+							<td>Fade In</td>
+							<td>
+								<input id="page-settings-fade-in" type="text" style="width: 50px;"></input>
+								<label>seconds</label>
+								<div class="btn" id="fade-in-reset" style="float: right;">Reset</div>
+							</td>
+						</tr>
+						<tr class="settings-row">
+							<td>Fade Out</td>
+							<td>
+								<input id="page-settings-fade-out" type="text" style="width: 50px;"></input>
+								<label>seconds</label>
+								<div class="btn" id="fade-out-reset" style="float: right;">Reset</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="modal-action modal-close waves-effect btn-flat">Save</a>
 			</div>
 		</div>
 
