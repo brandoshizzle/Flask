@@ -51,7 +51,6 @@ function setKeyEvents() {
 
 	// File is dropped onto playlist box - register and add info
 	$('.playlistBox').on('drop', function(e) {
-		console.log('drop');
 		e.originalEvent.preventDefault(); // Prevent default action
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// Create new soundInfo object

@@ -85,7 +85,6 @@ function storeObj(objName, obj) {
 		stripPlayState(clonedObj);
 	} else if(objName === 'pagesInfo'){
 		Object.keys(clonedObj).map(function(prop, index) {
-			console.log(clonedObj[prop]);
 			stripPlayState(clonedObj[prop].keyInfo);
 		});
 	}

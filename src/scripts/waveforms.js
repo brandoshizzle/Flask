@@ -55,6 +55,7 @@ function loadWavesurfer(soundInfo) {
 		$('#waveform').after('<div id="waveform-region"></div>');
 		// Remove and re-initialize waveform
 		// TODO: figure out DOM error caused by destroying waveform
+		// REMOVED IN V0.3.0
 		wavesurfer.destroy();
 		buildWaveform();
 		wavesurfer.load(path);
@@ -102,7 +103,6 @@ function setWaveformTracking(soundInfo) {
 			clearInterval(sI);
 			blog("Track is not playing. Waveform will not be tracked.");
 		} else if (playState === 'playSucceeded') {
-			console.log(waveformedInfo.soundInstance.paused);
 			if (waveformedInfo.soundInstance.paused === true){
 				clearInterval(sI);
 			} else{
@@ -153,6 +153,10 @@ function getRegion() {
 	} else if (waveformedInfo.infoObj === "playlist") {
 		playlistInfo[waveformedInfo.id] = waveformedInfo;
 		storage.storeObj('playlistInfo', playlistInfo);
+	}
+	if(!(waveformedInfo.soundInstance.playState === 'playSucceeded' && waveformedInfo.soundInstance.paused === false)){
+		waveformedInfo.soundInstance.position = 0;
+		//waveformedInfo.soundInstance. ;
 	}
 	trackOnWaveform();
 }

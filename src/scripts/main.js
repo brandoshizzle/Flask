@@ -63,7 +63,7 @@ $(document).ready(function() {
 	console.log(settingsInfo);
 	Object.keys(pagesInfo).map(function(page, index){
 		pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
-		console.log(pagesNumSounds);
+		//console.log(pagesNumSounds);
 	});
 	totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
@@ -91,7 +91,6 @@ $(document).ready(function() {
 	$('.selectable').selectable({
 		stop: function(){
 				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();
-				console.log(selected);
 				$('.global-settings-table').hide();
 				$('#'+selected+"-table").show();
 		}

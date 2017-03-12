@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Empty playlist creates empty object and saves it to the json
 - Can have periods and square brackets in sound names
 - Sounds that don't load are correctly styled
+- Deleting a song no longer breaks waveform sound name
 
 ## [0.2.0] - 2017-01-28
 ### Added

@@ -38,21 +38,22 @@ function playSound(soundInfo) {
 	if(settingsInfo.general.stopSounds === true){
 		soundInfo.soundInstance.paused = false;
 	}
-	var ppc = setPPC(soundInfo); // Set play properties
 	// Check currentInstances to see if the key is playing or not
-	if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
+	// REMOVED IN V0.3.0
+	/*if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
 		blog('Creating and playing new instance.');
 		play();
 		// Song is currently playing - stop it.
-	} else if (soundInfo.soundInstance.playState == 'playSucceeded' && soundInfo.soundInstance.paused === false) {
+	} else */ if (soundInfo.soundInstance.playState == 'playSucceeded' && soundInfo.soundInstance.paused === false) {
 		stop(soundInfo);
 		// Song is not playing, so play it.
 	} else {
 		blog('Song started');
-		play();
+		var ppc = setPPC(soundInfo); // Set play properties
+		play(ppc);
 	}
 
-	function play() {
+	function play(ppc) {
 		$('#' + soundInfo.id).removeClass('played');
 		if(soundInfo.infoObj === 'playlist'){
 			if(playlistPlayingSoundObject !== undefined){
