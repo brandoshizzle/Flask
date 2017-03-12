@@ -177,7 +177,7 @@ function reset() {
 	wavesurfer.empty();
 	$('#waveform-region').remove();
 	$('#waveform').after('<div id="waveform-region"></div>');
-	$('#waveform-info').text("");
+	$('#waveform-song-name').text("");
 }
 
 module.exports = {
