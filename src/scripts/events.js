@@ -10,6 +10,10 @@ const soundInfoManager = require("./soundInfoManager");
 
 var settingsInfoObj; // Either keyInfo or playlistInfo, whichever has the sound being changed in settings
 var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLON', 'QUOTE', 'BACK_SLASH', 'BESIDE_Z', 'COMMA', 'PERIOD', 'SLASH'];
+var playlistPlayingSound = {
+	id: "",
+	playing: false
+};
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -147,10 +151,18 @@ function setKeyEvents() {
 				}
 				waveforms.reset();
 			} else if (key === 'SPACE') {
-				// Play the first visible sound of the playlist
-					var firstPlaylistSound = playlist.getFirstPlaylistItem();
-					//if(firstPlaylistSound !== 'no sounds!')
-					sounds.playSound(playlistInfo[firstPlaylistSound]);
+				// Play from the playlist
+					var soundId;
+					// If a sound is playing, make sure to stop it, not play the first one
+					if(playlistPlayingSound.playing === true){
+						soundId = playlistPlayingSound.id;
+						playlistPlayingSound.playing = false;
+					} else {	// Get first playlist sound
+						soundId = playlist.getFirstPlaylistItem();
+						playlistPlayingSound.id = soundId;
+						playlistPlayingSound.playing = true;
+					}
+					sounds.playSound(playlistInfo[soundId]);
 			}
 
 		}

@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Can have periods and square brackets in sound names
 - Sounds that don't load are correctly styled
 - Deleting a song no longer breaks waveform sound name
+- Empty playlist search error fixed
+- Playlist songs playing that aren't on top are now stopped instead of top one playing
 
 ## [0.2.0] - 2017-01-28
 ### Added
