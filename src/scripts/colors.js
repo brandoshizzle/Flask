@@ -10,7 +10,8 @@ var pickedColor; // The colour chosen in the sound settings menu
  */
 function setKeyColor(soundInfo) {
 	var openColor = makeColor(pickedColor);
-	$('#' + soundInfo.id).css("background-color", openColor);
+	var darkOpenColor = makeColor(pickedColor, true);
+	$('#' + soundInfo.id).css("background-color", openColor).css("box-shadow", "0px 4px 0px 0px " + darkOpenColor);
 	soundInfo.color = pickedColor;
 }
 
@@ -24,7 +25,8 @@ function initializeKeyColors() {
 		Object.keys(tempKeyInfo).map(function(id, index) {
 			var soundInfo = tempKeyInfo[id];
 			var openColor = makeColor(soundInfo.color);
-			$('#' + soundInfo.id).css("background-color", openColor);
+			var darkOpenColor = makeColor(soundInfo.color, true);
+			$('#' + soundInfo.id).css("background-color", openColor).css("box-shadow", "0px 4px 0px 0px " + darkOpenColor);
 		});
 	});
 }
@@ -55,9 +57,16 @@ function setPickedColor(color) {
  *	@desc:	Takes a color name and turns it into an Open Color format
  *	@param:	colorStr: The color string (ex. 'blue', 'pink')
  */
-function makeColor(colorStr) {
+function makeColor(colorStr, darkBool) {
+	var dark = darkBool || false;
 	if (colorStr === "default") {
+		if(dark){
+			return "var(--pD)";
+		}
 		return "var(--pM)";
+	}
+	if(dark){
+		return "var(--oc-" + colorStr + "-9)";
 	}
 	return "var(--oc-" + colorStr + "-7)";
 }

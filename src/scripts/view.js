@@ -95,7 +95,8 @@ function updateKey(soundInfo){
 		$('#' + soundInfo.id).find('.audioName').text(soundInfo.name);
 	}
 	var openColor = colors.makeColor(soundInfo.color);
-	$('#' + soundInfo.id).css("background-color", openColor);
+	var darkOpenColor = colors.makeColor(soundInfo.color, true);
+	$('#' + soundInfo.id).css("background-color", openColor).css("box-shadow", "0px 4px 0px 0px " + darkOpenColor);
 }
 
 module.exports = {

@@ -143,6 +143,7 @@ function setKeyEvents() {
 					$("#" + id).find('.audioName').text("");
 					$("#" + id).removeClass('waveformed-key');
 					$("#" + id).css('background-color', 'var(--pM)');
+					$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 				} else {
 					// The deleted sound was in the playlist
 					delete playlistInfo[id];

@@ -80,8 +80,8 @@ function cutKey(cutSoundInfo){
 	clipboard = cloneObj(cutSoundInfo);
 	var id = cutSoundInfo.id;
 	$('#' + id).removeClass('played');
-	var openColor = colors.makeColor('default');
-	$('#' + id).css("background-color", openColor);
+	$('#' + id).css("background-color", 'var(--pM)');
+	$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 	$('#' + id).find('.audioName').text('');
 	delete keyInfo[cutSoundInfo.id];
 	//pagesInfo[currentPage].keyInfo = keyInfo;
