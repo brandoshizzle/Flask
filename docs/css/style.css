@@ -312,13 +312,15 @@ ul.nav{
 	margin-bottom: 70px;
 }
 .single-table{
-	border: 1px solid #e0e0e0;
+	border: 1px solid #fff;
+	border-radius: 10px;
 	margin-bottom: 60px;
+	transition: 1s;
 }
 .single-table h3{
 	font-size: 24px;
 	color: #1a1a1a;
-	border-bottom: 1px solid #e0e0e0;
+	/*border-bottom: 1px solid #e0e0e0;*/
 	padding: 18px;
 	line-height: 1;
 	margin-top: 0;
@@ -332,7 +334,7 @@ ul.nav{
 }
 .table-price{
 	position: relative;
-	border-bottom: 1px solid #e0e0e0;
+	/*border-bottom: 1px solid #e0e0e0;*/
 	display: block;
 	transition:all .5s ease 0s;
 	-webkit-transition:all .5s ease 0s;
@@ -375,7 +377,7 @@ ul.nav{
 .table-description p{
 	font-size: 18px;
 	color: #999999;
-	padding: 40px 20px;
+	padding: 0px 20px;
 	margin-bottom: 0;
 	transition:all .5s ease 0s;
 	-webkit-transition:all .5s ease 0s;
@@ -426,6 +428,10 @@ ul.nav{
 .business h5{
 	color: #fff;
 }
+.single-table:hover{
+	border: 1px solid #aaa;
+}
+/*
 .single-table:hover.single-table h3{
 	color: #008ed6;
 }
@@ -443,6 +449,7 @@ ul.nav{
 .single-table:hover .table-price{
 	background: #008ed6;
 }
+*/
 /*contact area*/
 .contact{
 	background: #ededed;
