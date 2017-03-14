@@ -29,7 +29,6 @@ See full Changelog [here](CHANGELOG.md)
 ## Known Issues (To address in future updates)
 - Waveform doesn't track play progress if song was selected prior (you need to surprise the sound)
 - Sometimes set start times don't work (fixed by selecting another sound, then playing it)
-- Pages do not yet work
 
 
 ## 3rd party libraries
