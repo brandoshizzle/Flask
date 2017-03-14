@@ -1,3 +1,4 @@
+@@ -1,534 +0,0 @@
 /*******
 *
 *
@@ -159,6 +160,10 @@ ul.nav{
 	margin-top: 60px;
 	margin-bottom: 105px;
 	font-weight: 600;
+}
+.download-btn:hover, .features-btn:hover{
+	font-size: 15px;
+	border-radius: 6px;
 }
 .banner-img{
 	position: relative;

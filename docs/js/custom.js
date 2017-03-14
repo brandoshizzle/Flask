@@ -1,30 +1,22 @@
 jQuery(document).ready(function() {
-  
+
   //WOW js code
     new WOW().init();
-
-    //this code is for the gmap
-	 var map = new GMaps({
-        el: '#map',
-        lat: -12.043333,
-        lng: -77.028333
-      });
-
 
       //this code is for smooth scroll and nav selector
             $(document).ready(function () {
               $(document).on("scroll", onScroll);
-              
+
               //smoothscroll
               $('a[href^="#"]').on('click', function (e) {
                   e.preventDefault();
                   $(document).off("scroll");
-                  
+
                   $('a').each(function () {
                       $(this).removeClass('active');
                   })
                   $(this).addClass('active');
-                
+
                   var target = this.hash,
                       menu = target;
                   $target = $(target);
@@ -51,8 +43,8 @@ jQuery(document).ready(function() {
                   }
               });
           }
-     
-     
+
+
      //this code is for animation nav
      jQuery(window).scroll(function() {
         var windowScrollPosTop = jQuery(window).scrollTop();
@@ -66,9 +58,9 @@ jQuery(document).ready(function() {
           jQuery(".top-header").css({"background": "transparent",});
            jQuery(".top-header img.logo").css({"margin-top": "-30px", "margin-bottom": "25px"});
            jQuery(".nav-bar").css({"margin-top": "28px"});
-          
+
         }
      });
-	
+
 
 });
