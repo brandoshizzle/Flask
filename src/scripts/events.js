@@ -141,7 +141,7 @@ function setKeyEvents() {
 					pagesInfo['page' + currentPage].keyInfo = keyInfo;
 					storage.storeObj("pagesInfo", pagesInfo);
 					$("#" + id).find('.audioName').text("");
-					$("#" + id).removeClass('waveformed-key');
+					$("#" + id).removeClass('waveformed-key').removeClass('played');
 					$("#" + id).css('background-color', 'var(--pM)');
 					$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 				} else {

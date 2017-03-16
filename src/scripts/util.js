@@ -84,7 +84,8 @@ function cutKey(cutSoundInfo){
 	$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 	$('#' + id).find('.audioName').text('');
 	delete keyInfo[cutSoundInfo.id];
-	//pagesInfo[currentPage].keyInfo = keyInfo;
+	pagesInfo['page' + currentPage].keyInfo = keyInfo;
+	storage.storeObj('pagesInfo', pagesInfo);
 }
 
 function pasteKey(destinationSoundInfo){
@@ -94,7 +95,8 @@ function pasteKey(destinationSoundInfo){
 	keyInfo[destinationSoundInfo.id] = destinationSoundInfo;
 	view.updateKey(keyInfo[destinationSoundInfo.id]);
 	sounds.register(keyInfo[destinationSoundInfo.id]);
-	console.log(keyInfo);
+	pagesInfo['page' + currentPage].keyInfo = keyInfo;
+	storage.storeObj('pagesInfo', pagesInfo);
 }
 
 module.exports = {

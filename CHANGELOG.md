@@ -27,7 +27,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Cannot launch sounds when holding CONTROL
 - soundInstances are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
 
-
 ### Fixed
 - Settings now saving properly
 - Sounds are marked as played when they end
@@ -36,8 +35,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Can have periods and square brackets in sound names
 - Sounds that don't load are correctly styled
 - Deleting a song no longer breaks waveform sound name
+- Deleting a song removed played class on key
 - Empty playlist search error fixed
 - Playlist songs playing that aren't on top are now stopped instead of top one playing
+- 3D key box-shadow changes color properly
 
 ## [0.2.0] - 2017-01-28
 ### Added

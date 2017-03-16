@@ -66,7 +66,8 @@ function makeColor(colorStr, darkBool) {
 		return "var(--pM)";
 	}
 	if(dark){
-		return "var(--oc-" + colorStr + "-9)";
+		var num = (colorStr === 'gray') ? 8 : 9;
+		return "var(--oc-" + colorStr + "-" + num + ")";
 	}
 	return "var(--oc-" + colorStr + "-7)";
 }
