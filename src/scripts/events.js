@@ -169,6 +169,7 @@ function setKeyEvents() {
 		}
 
 		// CONTROL FUNCTIONS NOT IN INPUTS
+		/*
 		if (!$(e.target).is('input') && ctrl) {
 			if(key === 'C'){
 				util.copyKey(waveformedInfo);
@@ -177,7 +178,26 @@ function setKeyEvents() {
 			} else if (key === 'V') {
 				util.pasteKey(waveformedInfo);
 			}
-		}
+		} */
+
+		Mousetrap.bind(['command+x', 'ctrl+x'], function() {
+			if(!$(e.target).is('input')){
+				util.cutKey(waveformedInfo);
+				return false;
+			}
+		});
+		Mousetrap.bind(['command+c', 'ctrl+c'], function() {
+			if(!$(e.target).is('input')){
+				util.copyKey(waveformedInfo);
+				return false;
+			}
+		});
+		Mousetrap.bind(['command+v', 'ctrl+v'], function() {
+			if(!$(e.target).is('input')){
+				util.pasteKey(waveformedInfo);
+				return false;
+			}
+		});
 
 		//
 		if(key === 'ESCAPE'){
@@ -185,6 +205,7 @@ function setKeyEvents() {
 			// TODO: Remove all played formatting.
 			$('.btn-key, .playlistSound').removeClass('playing-sound');
 		}
+
 		return false;
 	});
 

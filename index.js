@@ -2,8 +2,6 @@
 const electron = require("electron");
 const {app, BrowserWindow, dialog} = electron;
 
-//if (require('electron-squirrel-startup')) return;
-
 app.on('ready', function() {
 	var win = new BrowserWindow();
 	win.maximize();
