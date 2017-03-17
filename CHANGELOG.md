@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Pause/stop option in General Settings
 - Pressing 'ENTER' in playlist search un-focuses it
 - Double click on waveform to play sound from that spot
-- COPY/CUT/PASTE keys to move them around keyboards/pages
-- Sound loading progress bar added (for initial opening of program)
+- COPY/CUT/PASTE shortcuts to move keys around keyboards/pages
+- Import multiple sounds at a time
 - Mac build scripts
 - Icons/background for Mac builds
 - Page names have associated hotkey in name

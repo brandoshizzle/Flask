@@ -25,19 +25,27 @@ function setKeyEvents() {
 	keys.on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
 		try{
+			// grab the id of the target key
+			var siblingCount = -1;
+			var newSoundInfo;
 			for (let f of e.originalEvent.dataTransfer.files) {
-				// grab the id of the target key
-				var id = e.target.id;
+				var targetKey = $(e.target);
+				if(siblingCount > -1){
+					if(siblingCount < targetKey.nextAll().length)
+					targetKey = $(e.target).nextAll().eq(siblingCount);
+				}
+				var id = targetKey.attr('id');
 				// Create a new sound info object
-				var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
+				newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
 				// Store the new sound info object in the keyInfo object
 				keyInfo[id] = newSoundInfo;
-				$(e.target).find('.audioName').text(newSoundInfo.name);
-				pages.ensurePageExists(currentPage);
-				pagesInfo['page' + currentPage].keyInfo = keyInfo;
-				storage.storeObj("pagesInfo", pagesInfo);
-				waveforms.load(newSoundInfo);
+				targetKey.find('.audioName').text(newSoundInfo.name);
+				siblingCount++;
 			}
+			/*pages.ensurePageExists(currentPage);
+			pagesInfo['page' + currentPage].keyInfo = keyInfo;
+			storage.storeObj("pagesInfo", pagesInfo);*/
+			waveforms.load(newSoundInfo);
 		}
 		catch(err){}
 
