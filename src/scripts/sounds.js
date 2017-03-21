@@ -3,7 +3,7 @@
  */
 /*jshint esversion: 6 */
 
-var playlistPlayingSoundObject;
+var playlistPlayingSoundInfo;
 var firstPlaylistSound;
 var loadedCount = 0;
 
@@ -15,14 +15,33 @@ var loadedCount = 0;
 function registerSound(soundInfo) {
 	// Check if path to sound file exists
 	if (fs.existsSync(soundInfo.path)) {
-		// Register sound with SoundJS
-		createjs.Sound.registerSound({
-			id: soundInfo.id,
-			src: soundInfo.path
+		// Register sound with Howler
+		soundInfo.howl = new Howl({
+		  src: [soundInfo.path],
+		  loop: soundInfo.loop,
+			html5: true,
+		  onend: function() {
+		    console.log('Finished!');
+				stop(soundInfo);
+		  },
+			onload: function(){
+				console.log('Loaded ' + soundInfo.name);
+				soundInfo.endTime = soundInfo.howl.duration();
+			},
+			onplay: function(){
+				soundInfo.howl.fade(0, 1, 2000);
+				soundInfo.paused = false;
+			},
+			onpause: function(){
+				soundInfo.paused = true;
+			},
+			onstop: function(){
+				soundInfo.paused = false;
+			}
 		});
 	} else {
 		// Let the user know with a toast
-		Materialize.toast(soundInfo.name + " was NOT loaded.", 4000);
+		Materialize.toast(soundInfo.name + " was not found.", 3000);
 		$("#" + soundInfo.id).addClass("soundNotLoaded");
 	}
 }
@@ -36,7 +55,7 @@ function playSound(soundInfo) {
 		soundInfo.endTime = sounds.getDuration(soundInfo);
 	}
 	if(settingsInfo.general.stopSounds === true){
-		soundInfo.soundInstance.paused = false;
+		//soundInfo.soundInstance.paused = false;
 	}
 	// Check currentInstances to see if the key is playing or not
 	// REMOVED IN V0.3.0
@@ -44,49 +63,44 @@ function playSound(soundInfo) {
 		blog('Creating and playing new instance.');
 		play();
 		// Song is currently playing - stop it.
-	} else */ if (soundInfo.soundInstance.playState == 'playSucceeded' && soundInfo.soundInstance.paused === false) {
+	} else */ if (soundInfo.howl.playing() /*&& !soundInfo.paused === false*/) {
 		stop(soundInfo);
 		// Song is not playing, so play it.
 	} else {
 		blog('Song started');
-		var ppc = setPPC(soundInfo); // Set play properties
-		play(ppc);
+		//var ppc = setPPC(soundInfo); // Set play properties
+		play();
 	}
 
-	function play(ppc) {
+	function play() {
 		if(soundInfo.infoObj === 'playlist'){
-			if(playlistPlayingSoundObject !== undefined){
-				stop(playlistPlayingSoundObject);
+			if(playlistPlayingSoundInfo !== undefined){
+				stop(playlistPlayingSoundInfo);
+				return;
 			}
-			playlistPlayingSoundObject = soundInfo;
+			playlistPlayingSoundInfo = soundInfo;
 		}
 		// Sound is not paused, play it
-		if(soundInfo.soundInstance.paused === false || soundInfo.soundInstance.paused === undefined || reloadSound){
-			soundInfo.soundInstance = createjs.Sound.play(soundInfo.id, ppc);
-			soundInfo.soundInstance.addEventListener('complete', function(){
-				stop(soundInfo);
-			});
-			reloadSound = false;
-		} else {	// Sound is paused, play it
-			soundInfo.soundInstance.paused = false;
-		}
+		soundInfo.howl.play();
+		//reloadSound = false;
 		waveforms.track(soundInfo);
-		console.log(soundInfo.soundInstance);
+		//console.log(soundInfo.howl);
 		$('#' + soundInfo.id).removeClass('played');
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
 
 	function stop(soundInfoToStop){
 		if(settingsInfo.general.stopSounds === false){
-			soundInfo.soundInstance.paused = true;
+			soundInfoToStop.howl.pause();
 		} else {
-			soundInfoToStop.soundInstance.stop();
+			soundInfoToStop.howl.stop();
 		}
 		waveforms.track(soundInfo);
 		$('#' + soundInfoToStop.id).removeClass('playing-sound');
 		$('#' + soundInfoToStop.id).addClass('played');
 		// If the song is stopped in the playlist
 		if (soundInfoToStop.infoObj === "playlist") {
+			playlistPlayingSoundInfo = undefined;
 			if(settingsInfo.playlist.soundDeleteAfterPlay){
 				delete playlistInfo[soundInfoToStop.id];
 				$("#" + soundInfoToStop.id).remove();
@@ -109,7 +123,7 @@ function playSound(soundInfo) {
 function setPPC(soundInfo) {
 	var loopIt = 0;
 	var durationTime = (soundInfo.endTime - soundInfo.startTime) * 1000;
-	if (soundInfo.loop === true) {
+	if (soundInfo.loop) {
 		loopIt = -1;
 	}
 	return new createjs.PlayPropsConfig().set({
@@ -126,7 +140,7 @@ function setPPC(soundInfo) {
  */
 function getDuration(soundInfo) {
 	// Assumes a sound instance exists - should be true (fingers crossed)
-	return (soundInfo.soundInstance.duration / 1000).toFixed(2);
+	return (soundInfo.howl.duration() / 1000).toFixed(2);
 }
 
 /**
@@ -148,8 +162,8 @@ function fileLoaded(sound) {
 			}
 		}
 	}
-	infoArray[sound.id].soundInstance = createjs.Sound.createInstance(sound.id);
-	infoArray[sound.id].soundInstance.playState = null; // Reset to nothing (solved some problems)
+	//infoArray[sound.id].soundInstance = createjs.Sound.createInstance(sound.id);
+	//infoArray[sound.id].soundInstance.playState = null; // Reset to nothing (solved some problems)
 	if (infoArray[sound.id].endTime === 0 || infoArray[sound.id].endTime === null) {
 		infoArray[sound.id].endTime = getDuration(infoArray[sound.id]);
 	}

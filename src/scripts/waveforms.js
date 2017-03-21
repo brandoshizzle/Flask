@@ -67,10 +67,10 @@ function loadWavesurfer(soundInfo) {
 	wavesurfer.on('ready', function() {
 		setRegion(soundInfo);
 		// Create an instance if necessary (for region/duration)
-		if (soundInfo.soundInstance === undefined) {
+		/*if (soundInfo.soundInstance === undefined) {
 			soundInfo.soundInstance = createjs.Sound.createInstance(soundInfo.id);
 			soundInfo.endTime = sounds.getDuration(soundInfo);
-		}
+		}*/
 		setRegion(soundInfo); // Resize region to reflect proper size
 		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
 		wavesurfer.seekTo(percentComplete); // Move playhead to start time
@@ -79,10 +79,10 @@ function loadWavesurfer(soundInfo) {
 		wavesurfer.drawer.on('click', function (e) {
 			wavesurfer.on('seek', function (position) {
 	    	var currentTime = position * wavesurfer.getDuration() * 1000;
-				var instance = waveformedInfo.soundInstance;
+				var howl = waveformedInfo.howl;
 				//var currentTime = wavesurfer.getCurrentTime()*1000;
-				instance.position = currentTime - instance.startTime;
-				console.log(instance.position/1000);
+				howl.seek((currentTime - waveformedInfo.startTime)/100);
+				console.log(howl.seek());
 				wavesurfer.un('seek');
 			});
 
@@ -98,25 +98,17 @@ function loadWavesurfer(soundInfo) {
 function setWaveformTracking(soundInfo) {
 	loadWavesurfer(soundInfo);
 	waveformedInfo = soundInfo;
-	if(soundInfo.soundInstance === undefined){
+	if(soundInfo.howl === undefined){
 		return;
 	}
 	//wavesurfer.on('ready', function() { REMOVED IN V0.2.0
-		var playState = waveformedInfo.soundInstance.playState;
-		blog(waveformedInfo.name + ", " + playState);
-		if (playState === null) {
-			clearInterval(sI);
-			blog("Track is not playing. Waveform will not be tracked.");
-		} else if (playState === 'playSucceeded') {
-			if (waveformedInfo.soundInstance.paused === true){
-				clearInterval(sI);
-			} else{
+		var playing = waveformedInfo.howl.playing();
+		//blog(waveformedInfo.name + ", " + playState);
+		if (playing) {
 				blog('Tracking on waveform');
 				sI = setInterval(trackOnWaveform, 50);
-			}
-		} else if (playState === 'playFinished') {
-			waveformedInfo.soundInstance.playState = null;
-			clearInterval(sI);
+		} else {
+				clearInterval(sI);
 		}
 	//});
 
@@ -127,8 +119,8 @@ function setWaveformTracking(soundInfo) {
  *	@param: N/A
  */
 function trackOnWaveform() {
-	var sound = waveformedInfo.soundInstance;
-	var percentComplete = ((Number(sound.position) / 1000) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
+	var howl = waveformedInfo.howl;
+	var percentComplete = (Number(howl.seek()) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
 	//blog(percentComplete);
 	wavesurfer.seekTo(percentComplete);
 }

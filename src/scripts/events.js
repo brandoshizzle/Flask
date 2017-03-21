@@ -158,7 +158,7 @@ function setKeyEvents() {
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);
 				}
-				//createjs.Sound.removeSound(id);
+				//Howler.removeSound(id);
 				waveforms.reset();
 			} else if (key === 'SPACE') {
 				// Play from the playlist
@@ -174,31 +174,37 @@ function setKeyEvents() {
 					}
 					sounds.playSound(playlistInfo[soundId]);
 			} else if(key === 'DOWN'){
-				if(createjs.Sound.volume > 0){
-					createjs.Sound.volume -= 0.05;
-					$('#volume').text(createjs.Sound.volume);
+				var curVol = Howler.volume();
+				if(curVol > 0){
+					Howler.volume(curVol - 0.05);
+					$('#volume').text(Howler.volume());
 				}
 			} else if(key === 'UP'){
-				if(createjs.Sound.volume < 1){
-					createjs.Sound.volume += 0.05;
-					$('#volume').text(createjs.Sound.volume);
+				var curVol = Howler.volume();
+				if(curVol < 1){
+					Howler.volume(curVol - 0.05);
+					$('#volume').text(Howler.volume());
 				}
 			} else if(key === 'LEFT'){
-					if(createjs.Sound.volume > 0){
+				var curVol = Howler.volume();
+					if(curVol > 0){
 						var sI = setInterval(function(){
-							createjs.Sound.volume -= 0.01;
-							$('#volume').text(createjs.Sound.volume);
-							if(createjs.Sound.volume === 0){
+							curVol = Howler.volume();
+							Howler.volume(curVol -= 0.01);
+							$('#volume').text(Howler.volume());
+							if(Howler.volume() === 0){
 								clearInterval(sI);
 							}
 						}, 25);
 				}
 			} else if(key === 'RIGHT'){
-					if(createjs.Sound.volume < 1){
+					var curVol = Howler.volume();
+					if(Howler.volume() < 1){
 						var sI = setInterval(function(){
-							createjs.Sound.volume += 0.01;
-							$('#volume').text(createjs.Sound.volume);
-							if(createjs.Sound.volume === 1){
+							curVol = Howler.volume();
+							Howler.volume(curVol + 0.01);
+							$('#volume').text(Howler.volume());
+							if(Howler.volume() === 1){
 								clearInterval(sI);
 							}
 						}, 25);
@@ -240,7 +246,7 @@ function setKeyEvents() {
 
 		//
 		if(key === 'ESCAPE'){
-			createjs.Sound.stop();
+			Howler.stop();
 			// TODO: Remove all played formatting.
 			$('.btn-key, .playlistSound').removeClass('playing-sound');
 		}
