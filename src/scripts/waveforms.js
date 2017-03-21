@@ -77,10 +77,15 @@ function loadWavesurfer(soundInfo) {
 
 		// If waveform is clicked, set time to wherever the click occured
 		wavesurfer.drawer.on('click', function (e) {
-			var instance = waveformedInfo.soundInstance;
-			var currentTime = wavesurfer.getCurrentTime()*1000;
-			instance.position = currentTime - instance.startTime;
-			console.log(instance.position/1000);
+			wavesurfer.on('seek', function (position) {
+	    	var currentTime = position * wavesurfer.getDuration() * 1000;
+				var instance = waveformedInfo.soundInstance;
+				//var currentTime = wavesurfer.getCurrentTime()*1000;
+				instance.position = currentTime - instance.startTime;
+				console.log(instance.position/1000);
+				wavesurfer.un('seek');
+			});
+
 		});
 	});
 }

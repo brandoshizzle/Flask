@@ -42,9 +42,9 @@ function setKeyEvents() {
 				targetKey.find('.audioName').text(newSoundInfo.name);
 				siblingCount++;
 			}
-			/*pages.ensurePageExists(currentPage);
+			pages.ensurePageExists(currentPage);
 			pagesInfo['page' + currentPage].keyInfo = keyInfo;
-			storage.storeObj("pagesInfo", pagesInfo);*/
+			storage.storeObj("pagesInfo", pagesInfo);
 			waveforms.load(newSoundInfo);
 		}
 		catch(err){}
@@ -69,9 +69,9 @@ function setKeyEvents() {
 			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path);
 			playlistInfo[newSoundInfo.id] = newSoundInfo;
 			view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
-			storage.storeObj("playlistInfo", playlistInfo);
 			waveforms.load(newSoundInfo);
 		}
+		storage.storeObj("playlistInfo", playlistInfo);
 		updatePlaylistClickFunctions(); // Ensure new songs react properly to clicking
 		return false;
 	});
@@ -158,6 +158,7 @@ function setKeyEvents() {
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);
 				}
+				//createjs.Sound.removeSound(id);
 				waveforms.reset();
 			} else if (key === 'SPACE') {
 				// Play from the playlist
@@ -172,6 +173,36 @@ function setKeyEvents() {
 						playlistPlayingSound.playing = true;
 					}
 					sounds.playSound(playlistInfo[soundId]);
+			} else if(key === 'DOWN'){
+				if(createjs.Sound.volume > 0){
+					createjs.Sound.volume -= 0.05;
+					$('#volume').text(createjs.Sound.volume);
+				}
+			} else if(key === 'UP'){
+				if(createjs.Sound.volume < 1){
+					createjs.Sound.volume += 0.05;
+					$('#volume').text(createjs.Sound.volume);
+				}
+			} else if(key === 'LEFT'){
+					if(createjs.Sound.volume > 0){
+						var sI = setInterval(function(){
+							createjs.Sound.volume -= 0.01;
+							$('#volume').text(createjs.Sound.volume);
+							if(createjs.Sound.volume === 0){
+								clearInterval(sI);
+							}
+						}, 25);
+				}
+			} else if(key === 'RIGHT'){
+					if(createjs.Sound.volume < 1){
+						var sI = setInterval(function(){
+							createjs.Sound.volume += 0.01;
+							$('#volume').text(createjs.Sound.volume);
+							if(createjs.Sound.volume === 1){
+								clearInterval(sI);
+							}
+						}, 25);
+				}
 			}
 
 		}

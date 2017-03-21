@@ -84,6 +84,7 @@ function cutKey(cutSoundInfo){
 	$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 	$('#' + id).find('.audioName').text('');
 	delete keyInfo[cutSoundInfo.id];
+	//createjs.Sound.removeSound(id);
 	pagesInfo['page' + currentPage].keyInfo = keyInfo;
 	storage.storeObj('pagesInfo', pagesInfo);
 }
