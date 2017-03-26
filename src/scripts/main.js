@@ -45,7 +45,7 @@ $(document).ready(function() {
 	waveforms.buildWaveform();		// Set up the waveform
 	$('.version').text(pjson.version);	// Add the version number to the "version" spans
 	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
-	createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
+	//createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
 
 	pagesInfo = storage.getInfoObj("pagesInfo");	// Load all of the key sounds from storage
 	// If there is no pagesInfo object, try loading legacy keyInfo into first page
@@ -184,7 +184,7 @@ $(document).ready(function() {
     });
 
 	// Trigger file loaded event after each preloading
-	createjs.Sound.on("fileload", sounds.fileLoaded);
+	//createjs.Sound.on("fileload", sounds.fileLoaded);
 
 });
 

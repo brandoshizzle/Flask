@@ -1,7 +1,7 @@
 // Playlist functions
 /* jshint esversion: 6 */
 var searchString;
-
+var searchablePlaylistInfo;
 //const soundInfoManager = require("./soundInfoManager");
 
 $('.search').on('keyup paste', function(e){
@@ -21,8 +21,14 @@ $('.search').on('keyup paste', function(e){
 		$('.playlistSound').show();
 		return;
 	}
+	if($('.search').val().length === 1){
+		searchablePlaylistInfo = util.cloneObj(playlistInfo);
+		Object.keys(searchablePlaylistInfo).map(function(prop, index) {
+			delete searchablePlaylistInfo[prop].howl;
+		});
+	}
 	searchString = '//*[contains(name, \"'+ $('.search').val() + '\")]';
-	var search = JSON.search(playlistInfo, searchString);
+	var search = JSON.search(searchablePlaylistInfo, searchString);
 	$('.playlistSound').each(function(){
 		$(this).hide();
 		$(this).css('background-color', 'var(--bgL)');

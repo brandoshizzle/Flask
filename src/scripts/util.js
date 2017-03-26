@@ -4,6 +4,7 @@
  *		storeObj, checkKeyInfo, loadKeyInfo, cleanName
  */
 /*jshint esversion: 6 */
+const circularJSON = require('circular-json');
 const dialog = require('electron').remote.dialog;
 var clipboard;
 
@@ -60,7 +61,7 @@ function openBrowse() {
  *	@return: A duplicate of that object
  */
 function cloneObj(obj) {
-	return JSON.parse(JSON.stringify(obj));
+	return circularJSON.parse(circularJSON.stringify(obj));
 }
 
 function isEmpty(obj) {

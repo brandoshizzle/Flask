@@ -4,6 +4,8 @@ var settingsSoundInfo;
 function openSettings() {
 	// Set general settings
 	$('#settings-stopSounds').prop('checked', settingsInfo.general.stopSounds);
+	$('#settings-fadeInTime').val(settingsInfo.general.fadeInTime/1000);
+	$('#settings-fadeOutTime').val(settingsInfo.general.fadeOutTime/1000);
 	$('#settings-prereleaseUpdates').prop('checked', settingsInfo.general.prereleaseUpdates);
 	// Set playlist settings
 	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlist.soundToBottomAfterPlay);
@@ -18,6 +20,8 @@ function saveSettings(){
 	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
 	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
+	settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val()*1000;
+	settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val()*1000;
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
 	storage.storeObj('settings', settingsInfo);
 }
@@ -42,8 +46,8 @@ function openSoundSettings(soundInfo) {
 	}
 
 	$(idStart + "loop").prop("checked", soundInfo.loop);
-	$(idStart + "start-time").val(soundInfo.startTime);
-	$(idStart + "end-time").val(soundInfo.endTime);
+	$(idStart + "fadeInTime").val((soundInfo.fadeInTime || settingsInfo.general.fadeInTime)/1000);
+	$(idStart + "fadeOutTime").val((soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime)/1000);
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 }
@@ -66,19 +70,22 @@ function saveSoundSettings() {
 		colors.setKeyColor(tempSoundInfo);
 	}
 	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
-	tempSoundInfo.startTime = $('#sound-settings-start-time').val();
-	tempSoundInfo.endTime = $('#sound-settings-end-time').val();
+	var fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
+	var fadeOutDiff = ($('#sound-settings-fadeOutTime').val() != settingsInfo.general.fadeOutTime);
+	console.log(fadeInDiff);
+	tempSoundInfo.fadeInTime = fadeInDiff ? $('#sound-settings-fadeInTime').val()*1000 : undefined;
+	tempSoundInfo.fadeOutTime = fadeOutDiff ? $('#sound-settings-fadeOutTime').val()*1000 : undefined;
+
 	return tempSoundInfo;
 }
 
-// Set start time to 0
-function resetStartTime() {
-	$('#sound-settings-start-time').val(0);
-}
-
-// Set end time to total duration
-function resetEndTime() {
-	$('#sound-settings-end-time').val(sounds.getDuration(settingsSoundInfo));
+// Set fade in/out to global
+function resetFade(inOrOut) {
+	if(inOrOut === 'in'){
+		$('#sound-settings-fadeInTime').val(settingsInfo.general.fadeInTime/1000);
+	} else if(inOrOut === 'out'){
+		$('#sound-settings-fadeOutTime').val(settingsInfo.general.fadeOutTime/1000);
+	}
 }
 
 function openPageSettings(pageNum){
@@ -96,7 +103,6 @@ module.exports = {
 	saveSettings: saveSettings,
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
-	resetStartTime: resetStartTime,
-	resetEndTime: resetEndTime,
+	resetFade: resetFade,
 	openPageSettings: openPageSettings
 };

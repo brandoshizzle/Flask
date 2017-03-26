@@ -14,6 +14,7 @@ var playlistPlayingSound = {
 	id: "",
 	playing: false
 };
+var curVol;
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -40,6 +41,7 @@ function setKeyEvents() {
 				// Store the new sound info object in the keyInfo object
 				keyInfo[id] = newSoundInfo;
 				targetKey.find('.audioName').text(newSoundInfo.name);
+				$('#' + id).removeClass('played');
 				siblingCount++;
 			}
 			pages.ensurePageExists(currentPage);
@@ -158,7 +160,7 @@ function setKeyEvents() {
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);
 				}
-				//createjs.Sound.removeSound(id);
+				//Howler.removeSound(id);
 				waveforms.reset();
 			} else if (key === 'SPACE') {
 				// Play from the playlist
@@ -173,51 +175,52 @@ function setKeyEvents() {
 						playlistPlayingSound.playing = true;
 					}
 					sounds.playSound(playlistInfo[soundId]);
-			} else if(key === 'DOWN'){
-				if(createjs.Sound.volume > 0){
-					createjs.Sound.volume -= 0.05;
-					$('#volume').text(createjs.Sound.volume);
+			} /*else if(key === 'DOWN'){
+				curVol = Howler.volume();
+				if(curVol > 0){
+					Howler.volume(curVol - 0.05);
+					$('#volume').text(Howler.volume());
 				}
 			} else if(key === 'UP'){
-				if(createjs.Sound.volume < 1){
-					createjs.Sound.volume += 0.05;
-					$('#volume').text(createjs.Sound.volume);
+				curVol = Howler.volume();
+				if(curVol < 1){
+					Howler.volume(curVol - 0.05);
+					$('#volume').text(Howler.volume());
 				}
 			} else if(key === 'LEFT'){
-					if(createjs.Sound.volume > 0){
+				curVol = Howler.volume();
+					if(curVol > 0){
 						var sI = setInterval(function(){
-							createjs.Sound.volume -= 0.01;
-							$('#volume').text(createjs.Sound.volume);
-							if(createjs.Sound.volume === 0){
+							curVol = Howler.volume();
+							Howler.volume(curVol -= 0.01);
+							$('#volume').text(Howler.volume());
+							if(Howler.volume() === 0){
 								clearInterval(sI);
 							}
 						}, 25);
 				}
 			} else if(key === 'RIGHT'){
-					if(createjs.Sound.volume < 1){
+					curVol = Howler.volume();
+					if(Howler.volume() < 1){
 						var sI = setInterval(function(){
-							createjs.Sound.volume += 0.01;
-							$('#volume').text(createjs.Sound.volume);
-							if(createjs.Sound.volume === 1){
+							curVol = Howler.volume();
+							Howler.volume(curVol + 0.01);
+							$('#volume').text(Howler.volume());
+							if(Howler.volume() === 1){
 								clearInterval(sI);
 							}
 						}, 25);
 				}
+			}*/
+
+			if(key === 'ESCAPE'){
+				// TODO: Write stop all function.
+				//Howler.stop();
+				// TODO: Remove all played formatting.
+				$('.btn-key, .playlistSound').removeClass('playing-sound');
 			}
 
 		}
-
-		// CONTROL FUNCTIONS NOT IN INPUTS
-		/*
-		if (!$(e.target).is('input') && ctrl) {
-			if(key === 'C'){
-				util.copyKey(waveformedInfo);
-			} else if (key === 'X') {
-				util.cutKey(waveformedInfo);
-			} else if (key === 'V') {
-				util.pasteKey(waveformedInfo);
-			}
-		} */
 
 		Mousetrap.bind(['command+x', 'ctrl+x'], function() {
 			if(!$(e.target).is('input')){
@@ -237,13 +240,6 @@ function setKeyEvents() {
 				return false;
 			}
 		});
-
-		//
-		if(key === 'ESCAPE'){
-			createjs.Sound.stop();
-			// TODO: Remove all played formatting.
-			$('.btn-key, .playlistSound').removeClass('playing-sound');
-		}
 
 		return false;
 	});
@@ -271,17 +267,15 @@ function setKeyEvents() {
 			$('#' + tempSoundInfo.id).text(tempSoundInfo.name);
 			storage.storeObj("playlistInfo", settingsInfoObj);
 		}
-
+		$("#color-picker").fadeOut();
 	});
 
-	// Close/save sound settings when save key is pressed.
-	$('#start-time-reset').click(function(e) {
-		view.resetStartTime();
+	$('#fadeInTime-global').click(function(e) {
+		settings.resetFade('in');
 	});
 
-	// Close/save sound settings when save key is pressed.
-	$('#end-time-reset').click(function(e) {
-		view.resetEndTime();
+	$('#fadeOutTime-global').click(function(e) {
+		settings.resetFade('out');
 	});
 
 	// Prevent firing sounds when editing input fields

@@ -14,24 +14,13 @@ $(function(){
 var dataDir = appDir + '\\data\\';
 
 var defaults = {
-	'soundInfo': {
-		"id": "",
-		"infoObj": "",
-		"name": "",
-		"path": "",
-		"color": "default",
-		"loop": false,
-		"startTime": 0,
-		"endTime": null,
-		"soundInstance": undefined,
-		"playlistPosition": undefined,
-		"fadeInTime": undefined,
-		"fadeOutTime": undefined
-	},
+	'soundInfo': sounds.defaultSoundInfo(),
 	'settings' : {
 		'general':{
 			'prereleaseUpdates': false,
-			'stopSounds': false
+			'stopSounds': false,
+			'fadeInTime': 1500,
+			'fadeOutTime': 1500
 		},
 		'playlist':{
 			"soundToBottomAfterPlay": true,
@@ -81,6 +70,7 @@ function getInfoObj(objName) {
 function storeObj(objName, obj) {
 	// Clean soundInstances from storage
 	var clonedObj = util.cloneObj(obj);
+	console.log(clonedObj);
 	if(objName === 'playlistInfo'){
 		stripPlayState(clonedObj);
 	} else if(objName === 'pagesInfo'){
@@ -111,6 +101,13 @@ function checkAgainstDefault(obj, defaultName) {
 		if (!obj.hasOwnProperty(prop)) {
 			obj[prop] = defaults[defaultName][prop];
 		}
+		if(typeof defaults[defaultName][prop] == "object" && defaults[defaultName][prop] !== null && defaultName === 'settings'){
+			Object.keys(defaults[defaultName][prop]).map(function(prop2, index) {
+				if (!obj[prop].hasOwnProperty(prop2)) {
+					obj[prop][prop2] = defaults[defaultName][prop][prop2];
+				}
+			});
+		}
 	});
 
 	// Check that the object does not have depreciated properties (and delete them)
@@ -118,12 +115,19 @@ function checkAgainstDefault(obj, defaultName) {
 		if (!defaults[defaultName].hasOwnProperty(prop)) {
 			delete obj[prop];
 		}
+		if(typeof obj[prop] == "object" && obj[prop] !== null && defaultName === 'settings'){
+			Object.keys(obj[prop]).map(function(prop2, index) {
+				if (!defaults[defaultName][prop].hasOwnProperty(prop2)) {
+					delete obj[prop][prop2];
+				}
+			});
+		}
 	});
 }
 
 function stripPlayState(infoObj){
 	Object.keys(infoObj).map(function(prop, index) {
-		infoObj[prop].soundInstance = undefined;
+		delete infoObj[prop].howl;
 	});
 }
 

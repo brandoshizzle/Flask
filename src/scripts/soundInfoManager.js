@@ -1,14 +1,5 @@
-var defaultSoundInfo = {
-	"id": "",
-	"infoObj": "",
-	"name": "",
-	"path": "",
-	"color": "default",
-	"loop": false,
-	"startTime": 0,
-	"endTime": null,
-	"soundInstance": undefined
-};
+const sounds = require("./sounds");
+var defaultSoundInfo = sounds.defaultSoundInfo();
 
 /**
  *	@desc:	Takes a path and (optional) id and returns a default soundInfo object
@@ -17,6 +8,7 @@ var defaultSoundInfo = {
  */
 function createSoundInfoFromPath(path, id) {
 	var tempObj = util.cloneObj(defaultSoundInfo);
+	storage.checkAgainstDefault(tempObj, 'soundInfo');
 	// Write known info
 	tempObj.name = util.cleanName(path);
 	tempObj.id = id || util.prepareForId(tempObj.name);
