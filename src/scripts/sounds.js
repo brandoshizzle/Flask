@@ -7,8 +7,6 @@ var playlistPlayingSoundInfo;
 var firstPlaylistSound;
 var loadedCount = 0;
 var stopping = 0;
-var gfadeOutTime = 2000;
-var gfadeInTime = 2000;
 var fading = false;
 
 /**
@@ -50,7 +48,9 @@ function registerSound(soundInfo) {
 				}
 			},
 			onplay: function(){
-				if(gfadeInTime > 0){
+				var fadeTime = soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+				console.log(fadeTime);
+				if(fadeTime > 0){
 					soundInfo.fadeIn();
 				}
 				soundInfo.paused = false;
@@ -130,7 +130,8 @@ function playSound(soundInfo) {
 		if(!soundInfo.paused){
 			soundInfo.howl.seek(soundInfo.startTime);
 		}
-		soundInfo.howl.volume((gfadeInTime > 0) ? 0 : 1);
+		var fadeTime = soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+		soundInfo.howl.volume((fadeTime > 0) ? 0 : 1);
 		soundInfo.howl.play();
 		//reloadSound = false;
 		waveforms.track(soundInfo);
@@ -241,7 +242,7 @@ function defaultSoundInfo(){
 				if(this.atEnding()){
 					sounds.stop(this);
 				}
-				var duration = this.fadeInTime || gfadeInTime;
+				var duration = this.fadeInTime || settingsInfo.general.fadeInTime*1000;
 				this.fadeInterval = setInterval(() => {
 					var newVol = this.howl.volume() + this.volume * 50/duration;
 					if(newVol >= this.volume){
@@ -254,7 +255,7 @@ function defaultSoundInfo(){
 				}, 50);
 		},
 		"fadeOut": function(){
-				var duration = this.fadeOutTime || gfadeOutTime;
+				var duration = this.fadeOutTime || settingsInfo.general.fadeOutTime*1000;
 				clearInterval(this.fadeInterval);
 				if(this.atEnding()){
 					duration = (this.endTime - this.howl.seek()) * 1000;
@@ -276,7 +277,7 @@ function defaultSoundInfo(){
 		"fadeInTime": undefined,
 		"fadeOutTime": undefined,
 		"atEnding": function(){
-			var fadeT = this.fadeOutTime || gfadeOutTime;
+			var fadeT = this.fadeOutTime || settingsInfo.general.fadeInTime;
 			return (this.howl.seek() + this.fadeOutTime/1000) > this.endTime;
 		}
 	};

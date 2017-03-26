@@ -18,7 +18,9 @@ var defaults = {
 	'settings' : {
 		'general':{
 			'prereleaseUpdates': false,
-			'stopSounds': false
+			'stopSounds': false,
+			'fadeInTime': 1.5,
+			'fadeOutTime': 1.5
 		},
 		'playlist':{
 			"soundToBottomAfterPlay": true,
@@ -99,12 +101,26 @@ function checkAgainstDefault(obj, defaultName) {
 		if (!obj.hasOwnProperty(prop)) {
 			obj[prop] = defaults[defaultName][prop];
 		}
+		if(typeof defaults[defaultName][prop] == "object" && defaults[defaultName][prop] !== null && defaultName === 'settings'){
+			Object.keys(defaults[defaultName][prop]).map(function(prop2, index) {
+				if (!obj[prop].hasOwnProperty(prop2)) {
+					obj[prop][prop2] = defaults[defaultName][prop][prop2];
+				}
+			});
+		}
 	});
 
 	// Check that the object does not have depreciated properties (and delete them)
 	Object.keys(obj).map(function(prop, index) {
 		if (!defaults[defaultName].hasOwnProperty(prop)) {
 			delete obj[prop];
+		}
+		if(typeof obj[prop] == "object" && obj[prop] !== null && defaultName === 'settings'){
+			Object.keys(obj[prop]).map(function(prop2, index) {
+				if (!defaults[defaultName][prop].hasOwnProperty(prop2)) {
+					delete obj[prop][prop2];
+				}
+			});
 		}
 	});
 }

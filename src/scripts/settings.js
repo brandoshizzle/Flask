@@ -4,6 +4,8 @@ var settingsSoundInfo;
 function openSettings() {
 	// Set general settings
 	$('#settings-stopSounds').prop('checked', settingsInfo.general.stopSounds);
+	$('#settings-fadeInTime').val(settingsInfo.general.fadeInTime);
+	$('#settings-fadeOutTime').val(settingsInfo.general.fadeOutTime);
 	$('#settings-prereleaseUpdates').prop('checked', settingsInfo.general.prereleaseUpdates);
 	// Set playlist settings
 	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlist.soundToBottomAfterPlay);
@@ -18,6 +20,8 @@ function saveSettings(){
 	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
 	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
+	settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val();
+	settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val();
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
 	storage.storeObj('settings', settingsInfo);
 }

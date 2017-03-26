@@ -213,19 +213,14 @@ function setKeyEvents() {
 				}
 			}*/
 
-		}
-
-		// CONTROL FUNCTIONS NOT IN INPUTS
-		/*
-		if (!$(e.target).is('input') && ctrl) {
-			if(key === 'C'){
-				util.copyKey(waveformedInfo);
-			} else if (key === 'X') {
-				util.cutKey(waveformedInfo);
-			} else if (key === 'V') {
-				util.pasteKey(waveformedInfo);
+			if(key === 'ESCAPE'){
+				// TODO: Write stop all function.
+				//Howler.stop();
+				// TODO: Remove all played formatting.
+				$('.btn-key, .playlistSound').removeClass('playing-sound');
 			}
-		} */
+
+		}
 
 		Mousetrap.bind(['command+x', 'ctrl+x'], function() {
 			if(!$(e.target).is('input')){
@@ -245,13 +240,6 @@ function setKeyEvents() {
 				return false;
 			}
 		});
-
-		//
-		if(key === 'ESCAPE'){
-			Howler.stop();
-			// TODO: Remove all played formatting.
-			$('.btn-key, .playlistSound').removeClass('playing-sound');
-		}
 
 		return false;
 	});
@@ -279,7 +267,7 @@ function setKeyEvents() {
 			$('#' + tempSoundInfo.id).text(tempSoundInfo.name);
 			storage.storeObj("playlistInfo", settingsInfoObj);
 		}
-
+		$("#color-picker").fadeOut();
 	});
 
 	// Close/save sound settings when save key is pressed.

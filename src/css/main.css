@@ -149,11 +149,15 @@ h4 {
 }
 
 tr td {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 #sound-settings input {
+  margin: 2px;
+}
+
+#settings-content input {
   margin: 2px;
 }
 
