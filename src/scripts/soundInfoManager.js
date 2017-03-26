@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const sounds = require("./sounds");
 var defaultSoundInfo = sounds.defaultSoundInfo();
 
@@ -16,6 +17,21 @@ function createSoundInfoFromPath(path, id) {
 	// Define which section it is part of
 	if(id === undefined){
 		tempObj.infoObj = "playlist";
+		// Create a unique id for the playlist item (to allow multiple of same!)
+		var count = 0;
+		var duplicate, tempId;
+		do {
+			duplicate = false;
+			tempId = (count > 0) ? tempObj.id + count : tempObj.id;
+			for (var item in playlistInfo) {
+				if(playlistInfo[item].id == tempId){
+					duplicate = true;
+					count++;
+					break;
+				}
+			}
+		} while (duplicate);
+		tempObj.id = (count > 0) ? tempId : tempObj.id;
 	}	else {
 		tempObj.infoObj = "key";
 	}
