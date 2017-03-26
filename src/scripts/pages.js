@@ -57,7 +57,7 @@ function registerKeyInfos(){
 		Object.keys(tempKeyInfo).map(function(id, index) {
 			// Ensure all parameters are up to date
 			storage.checkAgainstDefault(tempKeyInfo[id], 'soundInfo');
-			if(tempKeyInfo[id].path === ''){
+			if((tempKeyInfo[id].path === '') || (id.charAt(4) != page.charAt(4))){
 				delete tempKeyInfo[id];
 			} else {
 				$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
