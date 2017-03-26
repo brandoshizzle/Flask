@@ -26,8 +26,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed start/end from sound settings
 - Can select unloaded keys
 - Cannot launch sounds when holding CONTROL
-- soundInstances are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
+- howls are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
 - Switched to Howler.js for sound engine
+- Removed looping, for now
 
 ### Fixed
 - Settings now saving properly

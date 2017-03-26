@@ -1,6 +1,6 @@
 var nodeUtil = require('util');
 
-var lastLoadedPath;
+var lastLoadedId;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
 // Wavesurfer measures in seconds
@@ -46,11 +46,11 @@ function loadWavesurfer(soundInfo) {
 		$('#waveform-song-name').text("");
 		$('#waveform-region').css('left', 0);
 		$('#waveform-region').width($('#waveform').width());
-		lastLoadedPath = "";
+		lastLoadedId = "";
 		return;
 	}
-	var path = soundInfo.path;
-	if (path != lastLoadedPath) {
+	var id = soundInfo.id;
+	if (id != lastLoadedId) {
 		// Remove and re-initialize the waveform region (prevents weird resizing errors)
 		$('#waveform-song-name').text(soundInfo.name);
 		$('#waveform-region').remove();
@@ -60,8 +60,8 @@ function loadWavesurfer(soundInfo) {
 		// REMOVED IN V0.3.0
 		//wavesurfer.destroy();
 		//buildWaveform();
-		wavesurfer.load(path);
-		lastLoadedPath = path; // Set the path so we know what was loaded
+		wavesurfer.load(soundInfo.path);
+		lastLoadedId = soundInfo.id; // Set the id so we know what was loaded
 		$('#waveform-progress').show();
 	}
 
@@ -149,7 +149,6 @@ function getRegion() {
 		pagesInfo['page' + currentPage].keyInfo = keyInfo;
 		console.log('saving pagesInfo');
 		try{
-			//console.log(nodeUtil.inspect(pagesInfo, false, 10, true));
 			storage.storeObj('pagesInfo', pagesInfo);
 		} catch(err){
 			console.log(err);
