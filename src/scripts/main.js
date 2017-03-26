@@ -17,7 +17,6 @@ var pjson = require('../package.json');
 
 const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
-const Shepherd = require('tether-shepherd');
 var shell = require('electron').shell;
 
 var wavesurfer;

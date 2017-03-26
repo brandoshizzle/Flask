@@ -55,7 +55,6 @@ function registerSound(soundInfo) {
 				}
 				soundInfo.paused = false;
 				soundInfo.endCheck = setInterval(function(){
-					//console.log(soundInfo.howl.seek() + ', ' + wavesurfer.getCurrentTime());
 					if(soundInfo.atEnding()){
 						clearInterval(soundInfo.endCheck);
 						soundInfo.fadeOut();
@@ -277,8 +276,8 @@ function defaultSoundInfo(){
 		"fadeInTime": undefined,
 		"fadeOutTime": undefined,
 		"atEnding": function(){
-			var fadeT = this.fadeOutTime || settingsInfo.general.fadeInTime;
-			return (this.howl.seek() + this.fadeOutTime/1000) > this.endTime;
+			var fadeT = this.fadeOutTime || settingsInfo.general.fadeOutTime;
+			return (this.howl.seek() + fadeT/1000) > this.endTime;
 		}
 	};
 }

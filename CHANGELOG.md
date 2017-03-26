@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.3.0]
 ### Added
 - Pause/stop option in General Settings
 - Global Fade in and Fade out times
@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Playlist songs playing that aren't on top are now stopped instead of top one playing
 - 3D key box-shadow changes color properly
 - Settings now updates with new properties properly
+- Can have multiple of same sound in playlist
 
 ## [0.2.0] - 2017-01-28
 ### Added
