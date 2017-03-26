@@ -19,8 +19,8 @@ var defaults = {
 		'general':{
 			'prereleaseUpdates': false,
 			'stopSounds': false,
-			'fadeInTime': 1.5,
-			'fadeOutTime': 1.5
+			'fadeInTime': 1500,
+			'fadeOutTime': 1500
 		},
 		'playlist':{
 			"soundToBottomAfterPlay": true,

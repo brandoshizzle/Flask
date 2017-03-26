@@ -270,14 +270,12 @@ function setKeyEvents() {
 		$("#color-picker").fadeOut();
 	});
 
-	// Close/save sound settings when save key is pressed.
-	$('#start-time-reset').click(function(e) {
-		view.resetStartTime();
+	$('#fadeInTime-global').click(function(e) {
+		settings.resetFade('in');
 	});
 
-	// Close/save sound settings when save key is pressed.
-	$('#end-time-reset').click(function(e) {
-		view.resetEndTime();
+	$('#fadeOutTime-global').click(function(e) {
+		settings.resetFade('out');
 	});
 
 	// Prevent firing sounds when editing input fields

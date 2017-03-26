@@ -242,7 +242,7 @@ function defaultSoundInfo(){
 				if(this.atEnding()){
 					sounds.stop(this);
 				}
-				var duration = this.fadeInTime || settingsInfo.general.fadeInTime*1000;
+				var duration = this.fadeInTime || settingsInfo.general.fadeInTime;
 				this.fadeInterval = setInterval(() => {
 					var newVol = this.howl.volume() + this.volume * 50/duration;
 					if(newVol >= this.volume){
@@ -255,7 +255,7 @@ function defaultSoundInfo(){
 				}, 50);
 		},
 		"fadeOut": function(){
-				var duration = this.fadeOutTime || settingsInfo.general.fadeOutTime*1000;
+				var duration = this.fadeOutTime || settingsInfo.general.fadeOutTime;
 				clearInterval(this.fadeInterval);
 				if(this.atEnding()){
 					duration = (this.endTime - this.howl.seek()) * 1000;
