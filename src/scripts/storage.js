@@ -14,20 +14,7 @@ $(function(){
 var dataDir = appDir + '\\data\\';
 
 var defaults = {
-	'soundInfo': {
-		"id": "",
-		"infoObj": "",
-		"name": "",
-		"path": "",
-		"color": "default",
-		"loop": false,
-		"startTime": 0,
-		"endTime": null,
-		"soundInstance": undefined,
-		"playlistPosition": undefined,
-		"fadeInTime": undefined,
-		"fadeOutTime": undefined
-	},
+	'soundInfo': sounds.defaultSoundInfo(),
 	'settings' : {
 		'general':{
 			'prereleaseUpdates': false,
@@ -81,6 +68,7 @@ function getInfoObj(objName) {
 function storeObj(objName, obj) {
 	// Clean soundInstances from storage
 	var clonedObj = util.cloneObj(obj);
+	console.log(clonedObj);
 	if(objName === 'playlistInfo'){
 		stripPlayState(clonedObj);
 	} else if(objName === 'pagesInfo'){
@@ -123,7 +111,7 @@ function checkAgainstDefault(obj, defaultName) {
 
 function stripPlayState(infoObj){
 	Object.keys(infoObj).map(function(prop, index) {
-		infoObj[prop].soundInstance = undefined;
+		delete infoObj[prop].howl;
 	});
 }
 

@@ -280,11 +280,13 @@ tr td {
   width: 10%;
   height: 20px;
   border: 1px solid var(--oc-gray-1);
+  border-radius: 5px;
 }
 
 #loadedCount {
   width: 0%;
   height: 100%;
+  border-radius: 5px;
   background-color: var(--oc-green-7);
 }
 

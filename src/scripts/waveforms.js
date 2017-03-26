@@ -1,3 +1,5 @@
+var nodeUtil = require('util');
+
 var lastLoadedPath;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
 
@@ -72,16 +74,14 @@ function loadWavesurfer(soundInfo) {
 			soundInfo.endTime = sounds.getDuration(soundInfo);
 		}*/
 		setRegion(soundInfo); // Resize region to reflect proper size
-		var percentComplete = (soundInfo.startTime / wavesurfer.getDuration());
+		var percentComplete = (soundInfo.startTime / rWSDur());
 		wavesurfer.seekTo(percentComplete); // Move playhead to start time
-
 		// If waveform is clicked, set time to wherever the click occured
 		wavesurfer.drawer.on('click', function (e) {
 			wavesurfer.on('seek', function (position) {
-	    	var currentTime = position * wavesurfer.getDuration() * 1000;
+	    	var currentTime = position * rWSDur();
 				var howl = waveformedInfo.howl;
-				//var currentTime = wavesurfer.getCurrentTime()*1000;
-				howl.seek((currentTime - waveformedInfo.startTime)/100);
+				howl.seek(currentTime);
 				console.log(howl.seek());
 				wavesurfer.un('seek');
 			});
@@ -119,8 +119,7 @@ function setWaveformTracking(soundInfo) {
  *	@param: N/A
  */
 function trackOnWaveform() {
-	var howl = waveformedInfo.howl;
-	var percentComplete = (Number(howl.seek()) + Number(waveformedInfo.startTime)) / Number(wavesurfer.getDuration());
+	var percentComplete = Number(waveformedInfo.howl.seek()) / Number(rWSDur());
 	//blog(percentComplete);
 	wavesurfer.seekTo(percentComplete);
 }
@@ -131,29 +130,40 @@ function trackOnWaveform() {
  *	@param: soundInfo: The sound info object being waveformed
  */
 function getRegion() {
+	console.log('getting region');
 	var start = $('#waveform-region').position().left;
 	if (start < 0) {
 		start = 0;
 	}
-	var startTime = (start / $('#waveform').width()) * wavesurfer.getDuration();
-	var end = start + $('#waveform-region').width();
+	var startTime = (start / $('#waveform').width()) * rWSDur();
+	var end = start + $('#waveform-region').width() + 4;	// 4 is magical empirical offset number
 	if (end > $('#waveform').width()) {
 		end = $('#waveform').width();
 	}
-	var endTime = (end / $('#waveform').width()) * wavesurfer.getDuration();
+	var endTime = (end / $('#waveform').width()) * rWSDur();
+	console.log(endTime);
 	waveformedInfo.startTime = startTime;
 	waveformedInfo.endTime = endTime;
 	if (waveformedInfo.infoObj === "key") {
 		keyInfo[waveformedInfo.id] = waveformedInfo;
 		pagesInfo['page' + currentPage].keyInfo = keyInfo;
-		storage.storeObj('pagesInfo', pagesInfo);
+		console.log('saving pagesInfo');
+		try{
+			//console.log(nodeUtil.inspect(pagesInfo, false, 10, true));
+			storage.storeObj('pagesInfo', pagesInfo);
+		} catch(err){
+			console.log(err);
+		}
+
 	} else if (waveformedInfo.infoObj === "playlist") {
 		playlistInfo[waveformedInfo.id] = waveformedInfo;
+		console.log('saving playlistInfo');
 		storage.storeObj('playlistInfo', playlistInfo);
 	}
-	if(!(waveformedInfo.soundInstance.playState === 'playSucceeded' && waveformedInfo.soundInstance.paused === false)){
-		reloadSound = true;
-		waveformedInfo.soundInstance.position = 0;
+	if(!waveformedInfo.howl.playing()){
+		//reloadSound = true;
+		waveformedInfo.paused = false;
+		waveformedInfo.howl.seek(waveformedInfo.startTime);
 	}
 	trackOnWaveform();
 }
@@ -164,8 +174,9 @@ function getRegion() {
  *	@param: soundInfo: The sound info object being waveformed
  */
 function setRegion(soundInfo) {
-	var start = (soundInfo.startTime / wavesurfer.getDuration()) * $('#waveform').width();
-	var end = (soundInfo.endTime / wavesurfer.getDuration()) * $('#waveform').width();
+	console.log('setting region');
+	var start = (soundInfo.startTime / rWSDur()) * $('#waveform').width();
+	var end = (soundInfo.endTime / rWSDur()) * $('#waveform').width() - 4;	// 4 is an empirical offset
 	$('#waveform-region').css('left', start);
 	$('#waveform-region').width(end - start);
 }
@@ -179,6 +190,10 @@ function reset() {
 	$('#waveform-region').remove();
 	$('#waveform').after('<div id="waveform-region"></div>');
 	$('#waveform-song-name').text("");
+}
+
+function rWSDur(){
+	return Math.round(wavesurfer.getDuration() * 10) / 10;
 }
 
 module.exports = {

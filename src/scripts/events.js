@@ -14,6 +14,7 @@ var playlistPlayingSound = {
 	id: "",
 	playing: false
 };
+var curVol;
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -40,6 +41,7 @@ function setKeyEvents() {
 				// Store the new sound info object in the keyInfo object
 				keyInfo[id] = newSoundInfo;
 				targetKey.find('.audioName').text(newSoundInfo.name);
+				$('#' + id).removeClass('played');
 				siblingCount++;
 			}
 			pages.ensurePageExists(currentPage);
@@ -173,20 +175,20 @@ function setKeyEvents() {
 						playlistPlayingSound.playing = true;
 					}
 					sounds.playSound(playlistInfo[soundId]);
-			} else if(key === 'DOWN'){
-				var curVol = Howler.volume();
+			} /*else if(key === 'DOWN'){
+				curVol = Howler.volume();
 				if(curVol > 0){
 					Howler.volume(curVol - 0.05);
 					$('#volume').text(Howler.volume());
 				}
 			} else if(key === 'UP'){
-				var curVol = Howler.volume();
+				curVol = Howler.volume();
 				if(curVol < 1){
 					Howler.volume(curVol - 0.05);
 					$('#volume').text(Howler.volume());
 				}
 			} else if(key === 'LEFT'){
-				var curVol = Howler.volume();
+				curVol = Howler.volume();
 					if(curVol > 0){
 						var sI = setInterval(function(){
 							curVol = Howler.volume();
@@ -198,7 +200,7 @@ function setKeyEvents() {
 						}, 25);
 				}
 			} else if(key === 'RIGHT'){
-					var curVol = Howler.volume();
+					curVol = Howler.volume();
 					if(Howler.volume() < 1){
 						var sI = setInterval(function(){
 							curVol = Howler.volume();
@@ -209,7 +211,7 @@ function setKeyEvents() {
 							}
 						}, 25);
 				}
-			}
+			}*/
 
 		}
 

@@ -52,13 +52,17 @@ $(document).ready(function(){
 
 function registerKeyInfos(){
 	console.log(pagesInfo);
-	Object.keys(pagesInfo).map(function(id, index){
-		var tempKeyInfo = pagesInfo[id].keyInfo;
+	Object.keys(pagesInfo).map(function(page, index){
+		var tempKeyInfo = pagesInfo[page].keyInfo;
 		Object.keys(tempKeyInfo).map(function(id, index) {
 			// Ensure all parameters are up to date
 			storage.checkAgainstDefault(tempKeyInfo[id], 'soundInfo');
-			$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
-			sounds.register(tempKeyInfo[id]);
+			if(tempKeyInfo[id].path === ''){
+				delete tempKeyInfo[id];
+			} else {
+				$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
+				sounds.register(tempKeyInfo[id]);
+			}
 		});
 	});
 }

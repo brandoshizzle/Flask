@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Pause/stop option in General Settings
+- Global Fade in and Fade out
 - Pressing 'ENTER' in playlist search un-focuses it
 - Double click on waveform to play sound from that spot
 - COPY/CUT/PASTE shortcuts to move keys around keyboards/pages
@@ -21,12 +22,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Order of menu items
 - Sounds now "pause" by default (not stop)
 - Minor color/visual fixes
-- Updated Electron to 1.6.0
+- Updated Electron to 1.6.3
 - Removed start/end from sound settings
 - Can select unloaded keys
 - Cannot launch sounds when holding CONTROL
 - soundInstances are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
-- Updated to Electron 1.6.3
 
 ### Fixed
 - Settings now saving properly

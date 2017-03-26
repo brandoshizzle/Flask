@@ -6,6 +6,10 @@
 var playlistPlayingSoundInfo;
 var firstPlaylistSound;
 var loadedCount = 0;
+var stopping = 0;
+var gfadeOutTime = 2000;
+var gfadeInTime = 2000;
+var fading = false;
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with soundJS
@@ -20,25 +24,66 @@ function registerSound(soundInfo) {
 		  src: [soundInfo.path],
 		  loop: soundInfo.loop,
 			html5: true,
+			/*sprite:{
+				sound:[soundInfo.startTime, 5000]
+			},*/
 		  onend: function() {
 		    console.log('Finished!');
 				stop(soundInfo);
 		  },
 			onload: function(){
-				console.log('Loaded ' + soundInfo.name);
-				soundInfo.endTime = soundInfo.howl.duration();
+				//console.log('Loaded ' + soundInfo.name);
+				console.log('oh boy here we go');
+				if(soundInfo.endTime === null){
+					soundInfo.endTime = soundInfo.howl.duration();
+				}
+				var spriteDuration = soundInfo.endTime - soundInfo.startTime;
+				/*soundInfo.howl.sprite = {
+					sound: [soundInfo.startTime, spriteDuration, soundInfo.loop]
+				};*/
+
+				loadedCount++;
+				var loadedPercent = (loadedCount/totalNumSounds)*100 + "%";
+				$('#loadedCount').width(loadedPercent);
+				if(loadedCount === totalNumSounds){
+					$('#loadedContainer').css('display', 'none');
+				}
 			},
 			onplay: function(){
-				soundInfo.howl.fade(0, 1, 2000);
+				if(gfadeInTime > 0){
+					soundInfo.fadeIn();
+				}
 				soundInfo.paused = false;
+				soundInfo.endCheck = setInterval(function(){
+					//console.log(soundInfo.howl.seek() + ', ' + wavesurfer.getCurrentTime());
+					if(soundInfo.atEnding()){
+						clearInterval(soundInfo.endCheck);
+						soundInfo.fadeOut();
+					}
+				}, 50);
 			},
 			onpause: function(){
 				soundInfo.paused = true;
+				clearInterval(soundInfo.endCheck);
 			},
 			onstop: function(){
+				console.log('stopped');
 				soundInfo.paused = false;
+				clearInterval(soundInfo.fadeInterval);
+				clearInterval(soundInfo.endCheck);
+				soundInfo.howl.seek(soundInfo.startTime);
+				wavesurfer.seekTo(soundInfo.startTime/soundInfo.howl.duration());
+			},
+			onfade: function(){
+				if(stopping){
+					stop(soundInfo);
+					stopping = false;
+				}
 			}
 		});
+
+
+
 	} else {
 		// Let the user know with a toast
 		Materialize.toast(soundInfo.name + " was not found.", 3000);
@@ -64,10 +109,10 @@ function playSound(soundInfo) {
 		play();
 		// Song is currently playing - stop it.
 	} else */ if (soundInfo.howl.playing() /*&& !soundInfo.paused === false*/) {
-		stop(soundInfo);
+		soundInfo.fadeOut();
+		//stop(soundInfo);
 		// Song is not playing, so play it.
 	} else {
-		blog('Song started');
 		//var ppc = setPPC(soundInfo); // Set play properties
 		play();
 	}
@@ -81,38 +126,43 @@ function playSound(soundInfo) {
 			playlistPlayingSoundInfo = soundInfo;
 		}
 		// Sound is not paused, play it
+		console.log(soundInfo.endTime);
+		if(!soundInfo.paused){
+			soundInfo.howl.seek(soundInfo.startTime);
+		}
+		soundInfo.howl.volume((gfadeInTime > 0) ? 0 : 1);
 		soundInfo.howl.play();
 		//reloadSound = false;
 		waveforms.track(soundInfo);
-		//console.log(soundInfo.howl);
 		$('#' + soundInfo.id).removeClass('played');
 		$('#' + soundInfo.id).addClass('playing-sound');
 	}
+}
 
-	function stop(soundInfoToStop){
-		if(settingsInfo.general.stopSounds === false){
-			soundInfoToStop.howl.pause();
-		} else {
-			soundInfoToStop.howl.stop();
+function stop(soundInfoToStop){
+	if(!settingsInfo.general.stopSounds && !soundInfoToStop.atEnding()){
+		soundInfoToStop.howl.pause();
+	} else {
+		soundInfoToStop.howl.stop();
+		soundInfoToStop.howl.seek(soundInfoToStop.startTime);
+	}
+	waveforms.track(soundInfoToStop);
+	$('#' + soundInfoToStop.id).removeClass('playing-sound');
+	$('#' + soundInfoToStop.id).addClass('played');
+	// If the song is stopped in the playlist
+	if (soundInfoToStop.infoObj === "playlist") {
+		playlistPlayingSoundInfo = undefined;
+		if(settingsInfo.playlist.soundDeleteAfterPlay){
+			delete playlistInfo[soundInfoToStop.id];
+			$("#" + soundInfoToStop.id).remove();
+			storage.storeObj("playlistInfo", playlistInfo);
+		}	else if(settingsInfo.playlist.soundToBottomAfterPlay){
+			$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
+			$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
+			firstPlaylistSound = playlist.getFirstPlaylistItem();
+			$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
 		}
-		waveforms.track(soundInfo);
-		$('#' + soundInfoToStop.id).removeClass('playing-sound');
-		$('#' + soundInfoToStop.id).addClass('played');
-		// If the song is stopped in the playlist
-		if (soundInfoToStop.infoObj === "playlist") {
-			playlistPlayingSoundInfo = undefined;
-			if(settingsInfo.playlist.soundDeleteAfterPlay){
-				delete playlistInfo[soundInfoToStop.id];
-				$("#" + soundInfoToStop.id).remove();
-				storage.storeObj("playlistInfo", playlistInfo);
-			}	else if(settingsInfo.playlist.soundToBottomAfterPlay){
-				$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
-				$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
-				firstPlaylistSound = playlist.getFirstPlaylistItem();
-				$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
-			}
-			$('#' + firstPlaylistSound).click();
-		}
+		$('#' + firstPlaylistSound).click();
 	}
 }
 
@@ -169,16 +219,74 @@ function fileLoaded(sound) {
 	}
 	loadedCount++;
 	var loadedPercent = (loadedCount/totalNumSounds)*100 + "%";
-	//console.log(loadedPercent);
 	$('#loadedCount').width(loadedPercent);
 	if(loadedCount === totalNumSounds){
 		$('#loadedContainer').css('display', 'none');
 	}
 }
 
+function defaultSoundInfo(){
+	return {
+		"id": "",
+		"infoObj": "",
+		"name": "",
+		"path": "",
+		"color": "default",
+		"loop": false,
+		"startTime": 0,
+		"endTime": null,
+		'volume': 1,
+		"playlistPosition": undefined,
+		"fadeIn": function(){
+				if(this.atEnding()){
+					sounds.stop(this);
+				}
+				var duration = this.fadeInTime || gfadeInTime;
+				this.fadeInterval = setInterval(() => {
+					var newVol = this.howl.volume() + this.volume * 50/duration;
+					if(newVol >= this.volume){
+						newVol = this.volume;
+						this.howl.volume(newVol);
+						clearInterval(this.fadeInterval);
+						return;
+					}
+					this.howl.volume(newVol);
+				}, 50);
+		},
+		"fadeOut": function(){
+				var duration = this.fadeOutTime || gfadeOutTime;
+				clearInterval(this.fadeInterval);
+				if(this.atEnding()){
+					duration = (this.endTime - this.howl.seek()) * 1000;
+				}
+				this.fadeInterval = setInterval(() => {
+					//fading = true;
+					var newVol = this.howl.volume() - this.volume * 50/duration;
+					if(newVol <= 0){
+						newVol = 0;
+						this.howl.volume(newVol);
+						clearInterval(this.fadeInterval);
+						sounds.stop(this);
+						return;
+					}
+					this.howl.volume(newVol);
+				}, 50);
+		},
+		"fadeInterval": undefined,
+		"fadeInTime": undefined,
+		"fadeOutTime": undefined,
+		"atEnding": function(){
+			var fadeT = this.fadeOutTime || gfadeOutTime;
+			return (this.howl.seek() + this.fadeOutTime/1000) > this.endTime;
+		}
+	};
+}
+
 module.exports = {
 	register: registerSound,
 	fileLoaded: fileLoaded,
 	playSound: playSound,
-	getDuration: getDuration
+	getDuration: getDuration,
+	stop: stop,
+	defaultSoundInfo: defaultSoundInfo
 };
