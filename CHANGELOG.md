@@ -22,13 +22,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Order of menu items
 - Sounds now "pause" by default (not stop)
 - Minor color/visual fixes
-- Updated Electron to 1.6.3
 - Removed start/end from sound settings
 - Can select unloaded keys
 - Cannot launch sounds when holding CONTROL
 - howls are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
 - Switched to Howler.js for sound engine
 - Removed looping, for now
+- Updated Materialize to v0.98.1
+- Updated jQuery to v3.2.1
+- Updated Wavesurfer to v1.3.7
+- Updated Electron to 1.6.4
 
 ### Fixed
 - Settings now saving properly
