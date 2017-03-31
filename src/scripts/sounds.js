@@ -7,10 +7,9 @@ var playlistPlayingSoundInfo;
 var firstPlaylistSound;
 var loadedCount = 0;
 var stopping = 0;
-var fading = false;
 
 /**
- *	@desc:	Checks whether the sound path is valid and registers it with soundJS
+ *	@desc:	Checks whether the sound path is valid and registers it with Hower
  *					Sounds that fail the path check get the soundNotLoaded class
  *	@param:	soundInfo: Object containing info related to the sound object
  */
@@ -73,12 +72,13 @@ function registerSound(soundInfo) {
 				soundInfo.howl.seek(soundInfo.startTime);
 				wavesurfer.seekTo(soundInfo.startTime/soundInfo.howl.duration());
 			},
+			/*
 			onfade: function(){
 				if(stopping){
 					stop(soundInfo);
 					stopping = false;
 				}
-			}
+			}*/
 		});
 
 
@@ -260,7 +260,6 @@ function defaultSoundInfo(){
 					duration = (this.endTime - this.howl.seek()) * 1000;
 				}
 				this.fadeInterval = setInterval(() => {
-					//fading = true;
 					var newVol = this.howl.volume() - this.volume * 50/duration;
 					if(newVol <= 0){
 						newVol = 0;

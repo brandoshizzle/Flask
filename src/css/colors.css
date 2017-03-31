@@ -79,13 +79,47 @@ body {
 .waveformed-key {
   box-shadow: 0px 0px 2px 1px white !important;
 }
+/*
+.waveformed-key::after {
+  content: '';
+  position: absolute;
+  display: block;
+  z-index: -1;
+  width: 50%;
+  height: 50%;
+  margin-top: -50%;
+  opacity: 0.5;
+  border-radius: 5px;
+  background-color: purple;
+  box-shadow: 0 0px 15px 15px var(--aM);
+  transition: opacity 0.3s ease-in-out;
+  -webkit-animation: glowingOpacity ease-in-out 3s infinite;
+}
 
+@-webkit-keyframes glowingOpacity {
+  from{opacity: 0;}
+  50%{opacity: 1;}
+  to{opacity: 0;}
+}
+
+.waveformed-key:hover::after{
+  transform: scale(1.5, 1.5);
+  opacity: 1;
+}
+*/
 .waveformed-key:hover {
-  box-shadow: 0px 0px 5px 2px white !important;
+  /*box-shadow: 0px 0px 5px 2px white !important;*/
 }
 
 .playing-sound {
-  box-shadow: 0px 0px 5px 2px var(--aM) !important;
+  box-shadow: 0px 0px 5px 5px var(--aM) !important;
+  -webkit-animation: glowingPlay ease-in-out 3s infinite;
+}
+
+@-webkit-keyframes glowingPlay {
+  from{box-shadow: 0px 0px 5px var(--aM) !important;}
+  50%{box-shadow: 0px 0px 3px var(--aM);}
+  to{box-shadow: 0px 0px 5px var(--aM) !important;}
 }
 
 .playing-sound:hover {

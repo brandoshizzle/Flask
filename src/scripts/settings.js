@@ -60,10 +60,13 @@ function saveSoundSettings() {
 	var tempSoundInfo = settingsSoundInfo;
 	if (tempSoundInfo.path != $('#sound-settings-path').val()) {
 		sounds.loadFile(settingsKey, $('#sound-settings-path').val());
-		view.resetEndTime();
-		view.resetStartTime();
+		//view.resetEndTime();
+		//view.resetStartTime();
 	}
 	if ($('#sound-settings-name').text() !== "") {
+		if(waveformedInfo.name === tempSoundInfo.name){
+			$('#waveform-song-name').text($('#sound-settings-name').text());
+		}
 		tempSoundInfo.name = $('#sound-settings-name').text();
 	}
 	if(settingsSoundInfo.infoObj !== "playlist"){
