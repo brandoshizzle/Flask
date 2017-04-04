@@ -145,8 +145,12 @@ function setKeyEvents() {
 				// User presses the delete key
 			} else if (key === 'DELETE') {
 				id = $('.waveformed-key').attr('id');
+				if(id === undefined){
+					return;
+				}
 				// If the deleted sound was in the keys
 				if (keyInfo.hasOwnProperty(id)) {
+					keyInfo[id].howl.unload();
 					delete keyInfo[id];
 					pagesInfo['page' + currentPage].keyInfo = keyInfo;
 					storage.storeObj("pagesInfo", pagesInfo);
@@ -156,6 +160,7 @@ function setKeyEvents() {
 					$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 				} else {
 					// The deleted sound was in the playlist
+					playlistInfo[id].howl.unload();
 					delete playlistInfo[id];
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);

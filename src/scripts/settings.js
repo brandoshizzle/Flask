@@ -44,10 +44,11 @@ function openSoundSettings(soundInfo) {
 	} else {
 		$('#color-row').hide();
 	}
-
+	var fadeInTime = (soundInfo.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : soundInfo.fadeInTime;
+	var fadeOutTime = (soundInfo.fadeOutTime === undefined) ? settingsInfo.general.fadeOutTime : soundInfo.fadeOutTime;
 	$(idStart + "loop").prop("checked", soundInfo.loop);
-	$(idStart + "fadeInTime").val((soundInfo.fadeInTime || settingsInfo.general.fadeInTime)/1000);
-	$(idStart + "fadeOutTime").val((soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime)/1000);
+	$(idStart + "fadeInTime").val(fadeInTime/1000);
+	$(idStart + "fadeOutTime").val(fadeOutTime/1000);
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 }

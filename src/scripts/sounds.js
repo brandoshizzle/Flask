@@ -47,9 +47,9 @@ function registerSound(soundInfo) {
 				}
 			},
 			onplay: function(){
-				var fadeTime = soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+				var fadeTime = (soundInfo.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : soundInfo.fadeInTime;
 				console.log(fadeTime);
-				if(fadeTime > 0){
+				if(fadeTime >= 0){
 					soundInfo.fadeIn();
 				}
 				soundInfo.paused = false;
@@ -129,7 +129,7 @@ function playSound(soundInfo) {
 		if(!soundInfo.paused){
 			soundInfo.howl.seek(soundInfo.startTime);
 		}
-		var fadeTime = soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+		var fadeTime = (soundInfo.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : soundInfo.fadeInTime;
 		soundInfo.howl.volume((fadeTime > 0) ? 0 : 1);
 		soundInfo.howl.play();
 		//reloadSound = false;
@@ -241,7 +241,7 @@ function defaultSoundInfo(){
 				if(this.atEnding()){
 					sounds.stop(this);
 				}
-				var duration = this.fadeInTime || settingsInfo.general.fadeInTime;
+				var duration = (this.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : this.fadeInTime;
 				this.fadeInterval = setInterval(() => {
 					var newVol = this.howl.volume() + this.volume * 50/duration;
 					if(newVol >= this.volume){
@@ -254,8 +254,12 @@ function defaultSoundInfo(){
 				}, 50);
 		},
 		"fadeOut": function(){
-				var duration = this.fadeOutTime || settingsInfo.general.fadeOutTime;
+				var duration = (this.fadeOutTime === undefined) ? settingsInfo.general.fadeOutTime : this.fadeOutTime;
 				clearInterval(this.fadeInterval);
+				if(duration === 0){
+					sounds.stop(this);
+					return;
+				}
 				if(this.atEnding()){
 					duration = (this.endTime - this.howl.seek()) * 1000;
 				}
@@ -275,8 +279,9 @@ function defaultSoundInfo(){
 		"fadeInTime": undefined,
 		"fadeOutTime": undefined,
 		"atEnding": function(){
-			var fadeT = this.fadeOutTime || settingsInfo.general.fadeOutTime;
+			var fadeT = (this.fadeOutTime === undefined) ? settingsInfo.general.fadeOutTime : this.fadeOutTime;
 			return (this.howl.seek() + fadeT/1000) > this.endTime;
+			console.log(true);
 		}
 	};
 }

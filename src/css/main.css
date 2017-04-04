@@ -154,6 +154,7 @@ h4 {
   height: 40px;
   width: 75%;
   background-color: inherit;
+  text-shadow: 0px 1px 1px black;
 }
 
 #sound-settings-path {
