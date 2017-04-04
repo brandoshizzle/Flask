@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - howls are not saved in json - fixed click-key-before-anything-else tracking weirdness (was because playState wasn't always null on launch)
 - Switched to Howler.js for sound engine
 - Removed looping, for now
+- Added text-shadow to emphasize key text
 - Updated Materialize to v0.98.1
 - Updated jQuery to v3.2.1
 - Updated Wavesurfer to v1.3.7
