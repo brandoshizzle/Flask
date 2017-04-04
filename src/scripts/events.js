@@ -219,8 +219,13 @@ function setKeyEvents() {
 			}*/
 
 			if(key === 'ESCAPE'){
-				// TODO: Write stop all function.
-				//Howler.stop();
+				// Stop all playing sounds immediately
+				for(key in keyInfo){
+					keyInfo[key].howl.stop();
+				}
+				for(key in playlistInfo){
+					playlistInfo[key].howl.stop();
+				}
 				// TODO: Remove all played formatting.
 				$('.btn-key, .playlistSound').removeClass('playing-sound');
 			}
