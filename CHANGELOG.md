@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 3D key box-shadow changes color properly
 - Settings now updates with new properties properly
 - Can have multiple of same sound in playlist
+- Waveforms are not loaded when stopping or pausing a sound
 
 ## [0.2.0] - 2017-01-28
 ### Added

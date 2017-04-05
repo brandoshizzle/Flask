@@ -95,7 +95,7 @@ function registerSound(soundInfo) {
  *	@param:	soundInfo: Object containing all sound information
  */
 function playSound(soundInfo) {
-	if (soundInfo.endTime == "0.00") {
+	if (soundInfo.endTime == "0.00" || soundInfo.endTime == null) {
 		soundInfo.endTime = sounds.getDuration(soundInfo);
 	}
 	if(settingsInfo.general.stopSounds === true){
@@ -139,26 +139,26 @@ function playSound(soundInfo) {
 	}
 }
 
-function stop(soundInfoToStop){
-	if(!settingsInfo.general.stopSounds && !soundInfoToStop.atEnding()){
-		soundInfoToStop.howl.pause();
+function stop(soundInfo){
+	if(!settingsInfo.general.stopSounds && !soundInfo.atEnding()){
+		soundInfo.howl.pause();
 	} else {
-		soundInfoToStop.howl.stop();
-		soundInfoToStop.howl.seek(soundInfoToStop.startTime);
+		soundInfo.howl.stop();
+		soundInfo.howl.seek(soundInfo.startTime);
 	}
-	waveforms.track(soundInfoToStop);
-	$('#' + soundInfoToStop.id).removeClass('playing-sound');
-	$('#' + soundInfoToStop.id).addClass('played');
+	waveforms.track(soundInfo, true);
+	$('#' + soundInfo.id).removeClass('playing-sound');
+	$('#' + soundInfo.id).addClass('played');
 	// If the song is stopped in the playlist
-	if (soundInfoToStop.infoObj === "playlist") {
+	if (soundInfo.infoObj === "playlist") {
 		playlistPlayingSoundInfo = undefined;
 		if(settingsInfo.playlist.soundDeleteAfterPlay){
-			delete playlistInfo[soundInfoToStop.id];
-			$("#" + soundInfoToStop.id).remove();
+			delete playlistInfo[soundInfo.id];
+			$("#" + soundInfo.id).remove();
 			storage.storeObj("playlistInfo", playlistInfo);
 		}	else if(settingsInfo.playlist.soundToBottomAfterPlay){
-			$('#' + soundInfoToStop.id).appendTo('#playlist-songs');
-			$('#' + soundInfoToStop.id).css('background-color', 'var(--bgL)');
+			$('#' + soundInfo.id).appendTo('#playlist-songs');
+			$('#' + soundInfo.id).css('background-color', 'var(--bgL)');
 			firstPlaylistSound = playlist.getFirstPlaylistItem();
 			$('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
 		}

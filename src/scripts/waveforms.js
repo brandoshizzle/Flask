@@ -95,23 +95,24 @@ function loadWavesurfer(soundInfo) {
  *					Loads the waveform, determines whether it should be tracking, then does it
  *	@param: soundInfo: The sound info object being waveformed
  */
-function setWaveformTracking(soundInfo) {
+function setWaveformTracking(soundInfo, doNotLoad) {
+	var doNotLoad = doNotLoad || false;
+	var playing = soundInfo.howl.playing();
+	//blog(waveformedInfo.name + ", " + playState);
+	if (playing) {
+			blog('Tracking on waveform');
+			sI = setInterval(trackOnWaveform, 50);
+	} else {
+			clearInterval(sI);
+	}
+	if(doNotLoad){
+		return;
+	}
 	loadWavesurfer(soundInfo);
 	waveformedInfo = soundInfo;
 	if(soundInfo.howl === undefined){
 		return;
 	}
-	//wavesurfer.on('ready', function() { REMOVED IN V0.2.0
-		var playing = waveformedInfo.howl.playing();
-		//blog(waveformedInfo.name + ", " + playState);
-		if (playing) {
-				blog('Tracking on waveform');
-				sI = setInterval(trackOnWaveform, 50);
-		} else {
-				clearInterval(sI);
-		}
-	//});
-
 }
 
 /**
