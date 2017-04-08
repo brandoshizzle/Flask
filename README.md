@@ -5,13 +5,10 @@ Making improvising sound easy.
 ![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
 
 ## Latest Release
-Latest Stable Release: v0.3.0
+Latest Stable Release: [v0.3.1](https://github.com/brandoshizzle/REACTion/releases/latest)
 
-| Platform      | Download      |
-| ------------- |:-------------:|
-| Windows       | [32/64 bit](https://github.com/brandoshizzle/REACTion/releases/latest)   |
-| OS X          | COMING SOON   |
-| Linux		      | COMING SOON   |
+[Download for Windows and OSX](https://brandoshizzle.github.io/REACTion/#download)
+
 
 ## Basic Instructions
 
@@ -25,12 +22,6 @@ Latest Stable Release: v0.3.0
 
 ## Changelog
 See full Changelog [here](CHANGELOG.md)
-
-## Known Issues (To address in future updates)
-- Waveform doesn't track play progress if song was selected prior (you need to surprise the sound)
-- Sometimes set start times don't work (fixed by selecting another sound, then playing it)
-- Pages do not yet work
-
 
 ## 3rd party libraries
 
