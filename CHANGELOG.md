@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+## Added
+- OS X build
+
+### Changed
+- Updated interact.js to v1.2.8 (solved darwin issues)
+- Backspace also deletes keys (solved darwin issues)
+
+### Fixed
+- Removed error when clicking on key with no sound
+- Loading bar is removed if 0 sounds
+- Copy/paste on darwin
+- Temp fix for random waveformedInfo seek error after ctrl/cmd+X
+- Pasting a song removes 'played' status
+
 ## [0.3.0] - 2017-04-07
 ### Added
 - Pause/stop option in General Settings

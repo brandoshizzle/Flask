@@ -60,7 +60,9 @@ function openSoundSettings(soundInfo) {
 function saveSoundSettings() {
 	var tempSoundInfo = settingsSoundInfo;
 	if (tempSoundInfo.path != $('#sound-settings-path').val()) {
-		sounds.loadFile(settingsKey, $('#sound-settings-path').val());
+		tempSoundInfo.path = $('#sound-settings-path').val();
+		sounds.register(tempSoundInfo);
+		waveforms.load(tempSoundInfo);
 		//view.resetEndTime();
 		//view.resetStartTime();
 	}

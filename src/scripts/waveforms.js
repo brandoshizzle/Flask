@@ -97,7 +97,12 @@ function loadWavesurfer(soundInfo) {
  */
 function setWaveformTracking(soundInfo, doNotLoad) {
 	var doNotLoad = doNotLoad || false;
-	var playing = soundInfo.howl.playing();
+	try {
+		var playing = soundInfo.howl.playing();
+	} catch (e) {
+		var playing = false;
+	}
+
 	//blog(waveformedInfo.name + ", " + playState);
 	if (playing) {
 			blog('Tracking on waveform');
@@ -120,9 +125,10 @@ function setWaveformTracking(soundInfo, doNotLoad) {
  *	@param: N/A
  */
 function trackOnWaveform() {
-	var percentComplete = Number(waveformedInfo.howl.seek()) / Number(rWSDur());
-	//blog(percentComplete);
-	wavesurfer.seekTo(percentComplete);
+	if(waveformedInfo.howl !== undefined){
+		var percentComplete = Number(waveformedInfo.howl.seek()) / Number(rWSDur());
+		wavesurfer.seekTo(percentComplete);
+	}
 }
 
 /**

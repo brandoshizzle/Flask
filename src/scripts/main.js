@@ -66,6 +66,9 @@ $(document).ready(function() {
 		//console.log(pagesNumSounds);
 	});
 	totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
+	if(totalNumSounds === 0){
+		$('#loadedContainer').hide();
+	}
 	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!

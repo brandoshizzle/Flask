@@ -143,7 +143,7 @@ function setKeyEvents() {
 					}
 				}
 				// User presses the delete key
-			} else if (key === 'DELETE') {
+			} else if (key === 'DELETE' || key === 'BACK_SPACE') {
 				id = $('.waveformed-key').attr('id');
 				if(id === undefined){
 					return;
