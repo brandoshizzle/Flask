@@ -16,9 +16,11 @@ var clipboard;
 function cleanName(name) {
 	name = name.toString();
 	var pos = name.lastIndexOf("\\");
-	if (pos > -1) {
-		name = name.substring(pos + 1);
+	// If \ is not found, user is on OSX - check for /
+	if (pos === -1) {
+		pos = name.lastIndexOf("\/");
 	}
+	name = name.substring(pos + 1);
 	pos = name.lastIndexOf(".");
 	return name.substring(0, pos);
 }
@@ -74,7 +76,6 @@ function isEmpty(obj) {
 
 function copyKey(copiedSoundInfo){
 	clipboard = cloneObj(copiedSoundInfo);
-	console.log('copied ' + copiedSoundInfo);
 }
 
 function cutKey(cutSoundInfo){
@@ -94,9 +95,11 @@ function pasteKey(destinationSoundInfo){
 	var id = destinationSoundInfo.id;
 	destinationSoundInfo = clipboard;
 	destinationSoundInfo.id = id;
-	keyInfo[destinationSoundInfo.id] = destinationSoundInfo;
-	view.updateKey(keyInfo[destinationSoundInfo.id]);
-	sounds.register(keyInfo[destinationSoundInfo.id]);
+	keyInfo[id] = destinationSoundInfo;
+	view.updateKey(keyInfo[id]);
+	storage.checkAgainstDefault(keyInfo[id], 'soundInfo')
+	sounds.register(keyInfo[id]);
+	$('#' + id).removeClass('played');
 	pagesInfo['page' + currentPage].keyInfo = keyInfo;
 	storage.storeObj('pagesInfo', pagesInfo);
 }

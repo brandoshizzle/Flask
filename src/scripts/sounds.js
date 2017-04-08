@@ -16,6 +16,7 @@ var stopping = 0;
 function registerSound(soundInfo) {
 	// Check if path to sound file exists
 	if (fs.existsSync(soundInfo.path)) {
+		console.log('I am getting through');
 		// Register sound with Howler
 		soundInfo.howl = new Howl({
 		  src: [soundInfo.path],
@@ -220,7 +221,7 @@ function fileLoaded(sound) {
 	loadedCount++;
 	var loadedPercent = (loadedCount/totalNumSounds)*100 + "%";
 	$('#loadedCount').width(loadedPercent);
-	if(loadedCount === totalNumSounds){
+	if(loadedCount === totalNumSounds || totalNumSounds === 0){
 		$('#loadedContainer').css('display', 'none');
 	}
 }
