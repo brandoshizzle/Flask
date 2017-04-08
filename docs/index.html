@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-	<title>REACTion: Sound Improvisation Software</title>
+	<title>REACTion: Sound for Theatre</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/animate.min.css">
@@ -159,7 +159,7 @@
 		</div>
 	</section><!-- end of features-detail section -->
 
-	<!-- pricing-slide section starts here -->
+	<!-- pricing-slide section starts here
 	<section class="pricing-slide" id="testimonials">
 		<div class="container">
 			<div class="row">
@@ -170,13 +170,13 @@
 				</div>
 				<div class="the-pricing-slider">
 					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-					  <!-- Indicators -->
+					  <!-- Indicators
 					  <ol class="carousel-indicators">
 					    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
 					    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
 					    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
 					  </ol>
-					  <!-- Wrapper for slides -->
+					  <!-- Wrapper for slides
 					  <div class="carousel-inner" role="listbox">
 					    <div class="item active">
 						    <div class="col-md-6 col-xs-12 col-sm-6 wow zoomIn animated">
@@ -238,7 +238,7 @@
 				</div>
 			</div>
 		</div>
-	</section><!-- end of pricing-slide section -->
+	</section>--><!-- end of pricing-slide section -->
 
 	<!-- price-plan section -->
 	<section class="price-plan text-center" id="download">
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 					<div class="col-md-4 col-sm-12 wow zoomIn animated">
-						<a href="https://github.com/brandoshizzle/REACTion/releases/download/v0.2.0/REACTion.Setup.0.2.0.exe">
+						<a href="https://github.com/brandoshizzle/REACTion/releases/latest">
 						<div class="single-table">
 							<div class="table-heading">
 								<img src="./img/windows-logo.png" height='80px' style='margin:15px;' alt="Windows logo">
@@ -274,7 +274,7 @@
 								<h3>Windows</h3>
 							</div>
 							<div class="table-description">
-								<p>Latest: <span>v0.2.0</span></p>
+								<p>Latest: <span>v0.3.0</span></p>
 							</div>
 						</div>
 						</a>
@@ -291,8 +291,8 @@
 								<p>Latest: <span>COMING SOON</span></p>
 							</div>
 						</div>
-					</div>
-					<!--
+						<p class='releaseinfo'></p>
+					</div>					<!--
 					<div class="col-md-4 col-sm-12 wow zoomIn animated">
 						<div class="single-table ultimate">
 							<div class="table-heading">
@@ -328,13 +328,13 @@
 				</div>
 				<div class="col-md-8 col-md-offset-0 col-xs-6 col-sm-6">
 					<p><strong>Hi!</strong> My name is <a href="www.github.com/brandoshizzle">Brandon</a>, I develop and maintain REACTion.<br><br>
-					I'm not a company - I do this in my spare time, to help out people like you <i class="fa fa-heart"></i>.
+					I'm not a company - I do this in my spare time, to help out people like you. <i class="fa fa-heart"></i>
 					<br><br>
-					If you use REACTion and enjoy it, please consider donating a few bucks - anything helps keep
-					the project alive! :)</p>
+					If you use REACTion and enjoy it, please consider reporting bugs, suggesting features, or
+					donating a few bucks - anything helps keep the project alive! :)</p>
 					<div class="text-center">
-						<a href="#download"><button class="download-btn"><i class="fa fa-envelope" style='color: white; padding-right: 20px;'></i>email</button></a>
-						<a href="#download"><button class="download-btn"><i class="fa fa-paypal" style='color: white; padding-right: 20px;'></i>donate</button></a>
+						<a href="http://paypal.me/BrandonCathcart" target="_blank"><button class="download-btn"><i class="fa fa-paypal" style='color: white; padding-right: 20px;'></i>donate</button></a>
+						<a href="mailto:cathcart.brandon@gmail.com" target="_blank"><button class="download-btn"><i class="fa fa-envelope" style='color: white; padding-right: 20px;'></i>email</button></a>
 					</div>
 
 				</div>
@@ -379,5 +379,38 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/wow.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+				GetLatestReleaseInfo();
+		});
+
+		function GetLatestReleaseInfo() {
+				$.getJSON("https://api.github.com/repos/brandoshizzle/REACTion/releases/latest").done(function (release) {
+						var asset = release.assets[0];
+						var downloadCount = 0;
+						console.log(release);
+						for (var i = 0; i < release.assets.length; i++) {
+								downloadCount += release.assets[i].download_count;
+						}
+						var oneHour = 60 * 60 * 1000;
+						var oneDay = 24 * oneHour;
+						var dateDiff = new Date() - new Date(asset.updated_at);
+						var timeAgo;
+						if (dateDiff < oneDay)
+						{
+								timeAgo = (dateDiff / oneHour).toFixed(1) + " hours ago";
+						}
+						else
+						{
+								timeAgo = (dateDiff / oneDay).toFixed(1) + " days ago";
+						}
+						var releaseInfo = release.name + " was updated " + timeAgo + " and downloaded " + downloadCount.toLocaleString() + " times.";
+						$(".sharex-download").attr("href", asset.browser_download_url);
+						console.log(releaseInfo);
+						$(".release-info").text(releaseInfo);
+						$(".release-info").fadeIn("slow");
+				});
+		}
+	</script>
 </body>
 </html>

@@ -57,6 +57,7 @@ h2{
 }
 .top-header img.logo{
 	margin-top: 0;
+	height: 30px;
 	transition: all .7s ease 0s;
 	-webkit-transition: all .7s ease 0s;
 	-moz-transition: all .7s ease 0s;

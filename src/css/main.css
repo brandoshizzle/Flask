@@ -326,6 +326,16 @@ tr td {
   background-color: var(--oc-green-7);
 }
 
+#update-link{
+  display: inline-block;
+  text-shadow: 0px 2px 2px black;
+}
+
+#update-link:hover{
+  text-shadow: 0px 0px 5px lightblue;
+  cursor: pointer;
+}
+
 .btn-settings{
   line-height: 30px;
   height: 30px;

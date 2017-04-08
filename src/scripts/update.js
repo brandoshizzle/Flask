@@ -3,6 +3,10 @@
 const ghLatestRelease = require('gh-latest-release');
 var marked = require('marked');
 
+$('#update-link').click(function(){
+	$('#update-modal').modal('open');
+});
+
 function checkForUpdate(){
 
 	ghLatestRelease('brandoshizzle/REACTion').then(
@@ -22,7 +26,7 @@ function checkForUpdate(){
 						$('#update-prerelease').text('STABLE');
 					}
 					$('#download-btn').attr('href', release.html_url);
-					$('#update-modal').modal('open');
+					$('#update-link').text('Update to v' + rVersion + "!");
 				}
 			}
 		}
