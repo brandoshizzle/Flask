@@ -1,17 +1,17 @@
 # <img src="src/assets/logo.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" height="30" />REACTion
 
-A free program that turns your keyboard into a soundboard!
+Making improvising sound easy.
 
 ![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
 
 ## Latest Release
-Latest Stable Release: v0.2.0
+Latest Stable Release: v0.3.0
 
 | Platform      | Download      |
 | ------------- |:-------------:|
 | Windows       | [32/64 bit](https://github.com/brandoshizzle/REACTion/releases/latest)   |
-| OS X          | COMING SOON?   |
-| Linux		      | COMING SOON?   |
+| OS X          | COMING SOON   |
+| Linux		      | COMING SOON   |
 
 ## Basic Instructions
 
@@ -38,7 +38,7 @@ REACTion is lovingly built with these amazing projects:
 * [Electron](http://electron.atom.io/)
 * [Materialize](http://materializecss.com/)
 * [jQuery](https://jquery.com/)
-* [SoundJS](https://github.com/CreateJS/SoundJS)
+* [Howler](https://github.com/goldfire/howler.js)
 * [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
 * [Jeditable](https://github.com/tuupola/jquery_jeditable)
 * [Sortable](https://github.com/RubaXa/Sortable)

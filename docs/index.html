@@ -41,7 +41,7 @@
 						      <ul class="nav navbar-nav navbar-right">
 						        <li><a href="#home">Home</a></li>
 						        <li><a href="#features">Features</a></li>
-						        <li><a href="#testimonials">Testimonials</a></li>
+						        <!--<li><a href="#testimonials">Testimonials</a></li>-->
 						        <li><a href="#download">Download</a></li>
 						        <li><a href="#contact">Contact</a></li>
 						      </ul>
@@ -66,14 +66,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-4 wow fadeInLeft animated">
-					<h3 style='margin-bottom: 5px;'>Introducing</h3>
+					<h3 style='margin-bottom: 15px;'>Introducing</h3>
 					<div>
 						<img src="https://github.com/brandoshizzle/REACTion/raw/master/src/assets/logo.png" style='position:relative; display:inline-block; height:40px;margin-top:0;vertical-align: top;'>
 						<h1 style='display: inline-block; margin: 0;'><strong>REACT</strong>ion</h1>
 					</div>
-					<p style='margin-top: 0;'>Making it easy to improvise sound.</p>
+					<p style='margin-top: 5px;'>Making it easy to improvise sound.</p>
 					<a href="#download"><button class="download-btn">download now</button></a>
-					<button class="features-btn"><i class="fa fa-github"></i> View on Github</button>
+					<a href="https://github.com/brandoshizzle/REACTion/"><button class="features-btn"><i class="fa fa-github"></i> View on Github</button>
 				</div>
 				<div class="col-xs-8 banner-img wow fadeInRight animated">
 					<img class="img-responsive banner-software" src="https://github.com/brandoshizzle/REACTion/raw/master/src/assets/screenshot.png" style='border-radius: 5px' alt="">
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 					<div class="col-md-4 col-sm-12 wow zoomIn animated">
-						<a href="https://github.com/brandoshizzle/REACTion/releases/latest">
+						<a id='latest-windows-link' href="https://github.com/brandoshizzle/REACTion/releases/latest">
 						<div class="single-table">
 							<div class="table-heading">
 								<img src="./img/windows-logo.png" height='80px' style='margin:15px;' alt="Windows logo">
@@ -274,7 +274,7 @@
 								<h3>Windows</h3>
 							</div>
 							<div class="table-description">
-								<p>Latest: <span>v0.3.0</span></p>
+								<p>Latest: <span id='latest-windows-version'></span></p>
 							</div>
 						</div>
 						</a>
@@ -291,7 +291,6 @@
 								<p>Latest: <span>COMING SOON</span></p>
 							</div>
 						</div>
-						<p class='releaseinfo'></p>
 					</div>					<!--
 					<div class="col-md-4 col-sm-12 wow zoomIn animated">
 						<div class="single-table ultimate">
@@ -311,6 +310,7 @@
 				-->
 				</div>
 			</div>
+			<p class='releaseinfo'></p>
 		</div>
 	</section><!-- end of price-plan section -->
 
@@ -404,11 +404,10 @@
 						{
 								timeAgo = (dateDiff / oneDay).toFixed(1) + " days ago";
 						}
-						var releaseInfo = release.name + " was updated " + timeAgo + " and downloaded " + downloadCount.toLocaleString() + " times.";
-						$(".sharex-download").attr("href", asset.browser_download_url);
-						console.log(releaseInfo);
-						$(".release-info").text(releaseInfo);
-						$(".release-info").fadeIn("slow");
+						var releaseInfo = release.tag_name + " was updated " + timeAgo + " and downloaded " + downloadCount.toLocaleString() + " times.";
+						$("#latest-windows-link").attr("href", asset.browser_download_url);
+						$('#latest-windows-version').text(release.tag_name);
+						//$(".releaseinfo").text(releaseInfo);
 				});
 		}
 	</script>
