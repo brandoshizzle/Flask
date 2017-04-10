@@ -170,6 +170,9 @@ function setKeyEvents() {
 			} else if (key === 'SPACE') {
 				// Play from the playlist
 					var soundId;
+					if(playlist.getFirstPlaylistItem() === 'no sounds!'){
+						return;
+					}
 					// If a sound is playing, make sure to stop it, not play the first one
 					if(playlistPlayingSound.playing === true){
 						soundId = playlistPlayingSound.id;

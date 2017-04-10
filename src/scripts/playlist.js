@@ -4,6 +4,26 @@ var searchString;
 var searchablePlaylistInfo;
 //const soundInfoManager = require("./soundInfoManager");
 
+$(document).ready(function() {
+
+	// Disable search function until it stops giving errors, then allow it
+	$('#playlist-search').prop('disabled', true);
+	$('#playlist-search').attr('placeholder', 'Loading...');
+	searchablePlaylistInfo = util.cloneObj(playlistInfo);
+	searchString = '//*[contains(name, \"'+ 'poop' + '\")]';
+	var testSearchInterval = setInterval(function(){
+		try {
+			var search = JSON.search(searchablePlaylistInfo, searchString);
+		} catch (e) {
+			return;
+		}
+		$('#playlist-search').prop('disabled', false);
+		$('#playlist-search').attr('placeholder', '');
+		clearInterval(testSearchInterval);
+	}, 200);
+
+});
+
 $('.search').on('keyup paste', function(e){
 	/*if(keyboardMap[e.which] === 'SPACE'){
 		var firstPlaylistSound = getFirstPlaylistItem();
@@ -21,7 +41,7 @@ $('.search').on('keyup paste', function(e){
 		$('.playlistSound').show();
 		return;
 	}
-	if($('.search').val().length === 1){
+	if($('.search').val().length > 1){
 		searchablePlaylistInfo = util.cloneObj(playlistInfo);
 		Object.keys(searchablePlaylistInfo).map(function(prop, index) {
 			delete searchablePlaylistInfo[prop].howl;

@@ -70,7 +70,7 @@ function getInfoObj(objName) {
 function storeObj(objName, obj) {
 	// Clean soundInstances from storage
 	var clonedObj = util.cloneObj(obj);
-	console.log(clonedObj);
+	//console.log(clonedObj);
 	if(objName === 'playlistInfo'){
 		stripPlayState(clonedObj);
 	} else if(objName === 'pagesInfo'){
@@ -78,7 +78,7 @@ function storeObj(objName, obj) {
 			stripPlayState(clonedObj[prop].keyInfo);
 		});
 	}
-	console.log(dataDir + objName);
+	//console.log(dataDir + objName);
 	jetpack.writeAsync(dataDir + objName + '.json', clonedObj, {
 		atomic: true
 	});
