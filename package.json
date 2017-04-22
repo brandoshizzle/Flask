@@ -1,6 +1,6 @@
 {
   "name": "REACTion",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Software for improvising sound",
   "main": "index.js",
   "scripts": {

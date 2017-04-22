@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.3.2] - 2017-04-22
+### Fixed
+- Playlist: Space key doesn't create error when no sounds in playlist
+- Playlist: Sounds dragged out of top spot no longer stay yellow
+- Playlist: Search doc error fixed
+
+### Changed
+- Opening sound options no longer loads the waveform
+- Playlist: new sounds are added above already played sounds
+- Playlist: When loading multiple sounds, waveform of first sound shows
+- Keyboard: When loading multiple sounds, waveform of first sound shows
+
 ## [0.3.1] - 2017-04-08
 ## Added
 - OS X build

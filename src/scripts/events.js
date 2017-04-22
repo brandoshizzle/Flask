@@ -29,8 +29,12 @@ function setKeyEvents() {
 			// grab the id of the target key
 			var siblingCount = -1;
 			var newSoundInfo;
+			var first = true;
 			for (let f of e.originalEvent.dataTransfer.files) {
 				var targetKey = $(e.target);
+				if(first){
+					first = targetKey.attr('id');
+				}
 				if(siblingCount > -1){
 					if(siblingCount < targetKey.nextAll().length)
 					targetKey = $(e.target).nextAll().eq(siblingCount);
@@ -44,13 +48,13 @@ function setKeyEvents() {
 				$('#' + id).removeClass('played');
 				siblingCount++;
 			}
+			console.log(first);
 			pages.ensurePageExists(currentPage);
 			pagesInfo['page' + currentPage].keyInfo = keyInfo;
 			storage.storeObj("pagesInfo", pagesInfo);
-			waveforms.load(newSoundInfo);
+			waveforms.load(keyInfo[first]);
 		}
 		catch(err){}
-
 		return false;
 	});
 
@@ -66,12 +70,17 @@ function setKeyEvents() {
 	// File is dropped onto playlist box - register and add info
 	$('.playlistBox').on('drop', function(e) {
 		e.originalEvent.preventDefault(); // Prevent default action
+		var first = true;
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// Create new soundInfo object
 			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path);
 			playlistInfo[newSoundInfo.id] = newSoundInfo;
 			view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
-			waveforms.load(newSoundInfo);
+			if(first){
+				waveforms.load(newSoundInfo);
+				first = false;
+			}
+
 		}
 		storage.storeObj("playlistInfo", playlistInfo);
 		updatePlaylistClickFunctions(); // Ensure new songs react properly to clicking
@@ -99,7 +108,7 @@ function setKeyEvents() {
 		settingsInfoObj = keyInfo;
 		if(keyInfo.hasOwnProperty(key)){
 			settings.openSoundSettings(keyInfo[key]);
-			waveforms.load(keyInfo[key]);
+			//waveforms.load(keyInfo[key]);
 		}
 	});
 
@@ -114,7 +123,7 @@ function setKeyEvents() {
 			var id = e.target.id;
 			settingsInfoObj = playlistInfo;
 			settings.openSoundSettings(playlistInfo[id]);
-			waveforms.load(playlistInfo[id]);
+			//waveforms.load(playlistInfo[id]);
 		});
 	}
 	updatePlaylistClickFunctions();
@@ -170,6 +179,9 @@ function setKeyEvents() {
 			} else if (key === 'SPACE') {
 				// Play from the playlist
 					var soundId;
+					if(playlist.getFirstPlaylistItem() === 'no sounds!'){
+						return;
+					}
 					// If a sound is playing, make sure to stop it, not play the first one
 					if(playlistPlayingSound.playing === true){
 						soundId = playlistPlayingSound.id;
@@ -180,43 +192,7 @@ function setKeyEvents() {
 						playlistPlayingSound.playing = true;
 					}
 					sounds.playSound(playlistInfo[soundId]);
-			} /*else if(key === 'DOWN'){
-				curVol = Howler.volume();
-				if(curVol > 0){
-					Howler.volume(curVol - 0.05);
-					$('#volume').text(Howler.volume());
-				}
-			} else if(key === 'UP'){
-				curVol = Howler.volume();
-				if(curVol < 1){
-					Howler.volume(curVol - 0.05);
-					$('#volume').text(Howler.volume());
-				}
-			} else if(key === 'LEFT'){
-				curVol = Howler.volume();
-					if(curVol > 0){
-						var sI = setInterval(function(){
-							curVol = Howler.volume();
-							Howler.volume(curVol -= 0.01);
-							$('#volume').text(Howler.volume());
-							if(Howler.volume() === 0){
-								clearInterval(sI);
-							}
-						}, 25);
-				}
-			} else if(key === 'RIGHT'){
-					curVol = Howler.volume();
-					if(Howler.volume() < 1){
-						var sI = setInterval(function(){
-							curVol = Howler.volume();
-							Howler.volume(curVol + 0.01);
-							$('#volume').text(Howler.volume());
-							if(Howler.volume() === 1){
-								clearInterval(sI);
-							}
-						}, 25);
-				}
-			}*/
+			}
 
 			if(key === 'ESCAPE'){
 				// Stop all playing sounds immediately

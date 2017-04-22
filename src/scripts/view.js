@@ -47,7 +47,20 @@ function buildKeyboard() {
  *	@param:	soundInfo: The soundInfo object
  */
 function createPlaylistItem(soundInfo) {
-	$('#playlist-songs').append("<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>");
+	var afterThisSound = false;
+	$('#playlist-songs li').each(function(){
+		if($(this).hasClass('played')){
+			afterThisSound = this;
+			return false;
+		}
+	});
+	console.log(afterThisSound);
+	var liString = "<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>";
+	if(!afterThisSound){
+		$('#playlist-songs').append(liString);
+		return;
+	}
+	$(afterThisSound).before(liString);
 }
 
 /**
@@ -58,21 +71,24 @@ function buildPlaylist() {
 	var el = document.getElementById('playlist-songs');
 	var sortable = Sortable.create(el, {
 		animation: 250,
-		onUpdate: function (evt) {
-			console.log(evt.newIndex);
+		onSort: function (evt) {
+			//console.log(evt.newIndex);
 			var first = true;
 			var sounds = $('.playlistSound');
-			for(i = 0; i < evt.newIndex; i++){
+			// Go through each sound from first to where the dragged item was moved to
+			for(i = 0; i < evt.newIndex + 2; i++){
+				//console.log(sounds[i]);
+				if(sounds[i] === undefined){return;}
 				var style = window.getComputedStyle(sounds[i]);
 				if(style.display !== 'none'){
-					 first = false;
+					if(first){
+						$(sounds[i]).css('background-color', 'var(--aM)');
+						first = false;
+					} else {
+						$(sounds[i]).css('background-color', 'var(--bgL)');
+					}
 				}
 			}
-        if(first === true){
-					$('.playlistSound').css('background-color', 'var(--bgL)');
-					$('#' + evt.item.id).css('background-color', 'var(--aM)');
-					console.log('hello');
-				}
     }
 	});
 }
