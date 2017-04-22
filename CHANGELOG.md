@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-##[0.3.2] - 2017-04-22
+## [0.3.2] - 2017-04-22
 ### Fixed
 - Playlist: Space key doesn't create error when no sounds in playlist
 - Playlist: Sounds dragged out of top spot no longer stay yellow
