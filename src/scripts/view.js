@@ -47,7 +47,20 @@ function buildKeyboard() {
  *	@param:	soundInfo: The soundInfo object
  */
 function createPlaylistItem(soundInfo) {
-	$('#playlist-songs').append("<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>");
+	var afterThisSound = false;
+	$('#playlist-songs li').each(function(){
+		if($(this).hasClass('played')){
+			afterThisSound = this;
+			return false;
+		}
+	});
+	console.log(afterThisSound);
+	var liString = "<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>";
+	if(!afterThisSound){
+		$('#playlist-songs').append(liString);
+		return;
+	}
+	$(afterThisSound).before(liString);
 }
 
 /**

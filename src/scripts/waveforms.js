@@ -55,11 +55,7 @@ function loadWavesurfer(soundInfo) {
 		$('#waveform-song-name').text(soundInfo.name);
 		$('#waveform-region').remove();
 		$('#waveform').after('<div id="waveform-region"></div>');
-		// Remove and re-initialize waveform
-		// TODO: figure out DOM error caused by destroying waveform
-		// REMOVED IN V0.3.0
-		//wavesurfer.destroy();
-		//buildWaveform();
+		// Remove and re-initialize waveform (used to)
 		wavesurfer.load(soundInfo.path);
 		lastLoadedId = soundInfo.id; // Set the id so we know what was loaded
 		$('#waveform-progress').show();
@@ -67,12 +63,7 @@ function loadWavesurfer(soundInfo) {
 
 	// When the wavesurfer is loaded
 	wavesurfer.on('ready', function() {
-		setRegion(soundInfo);
-		// Create an instance if necessary (for region/duration)
-		/*if (soundInfo.soundInstance === undefined) {
-			soundInfo.soundInstance = createjs.Sound.createInstance(soundInfo.id);
-			soundInfo.endTime = sounds.getDuration(soundInfo);
-		}*/
+		//setRegion(soundInfo);
 		setRegion(soundInfo); // Resize region to reflect proper size
 		var percentComplete = (soundInfo.startTime / rWSDur());
 		wavesurfer.seekTo(percentComplete); // Move playhead to start time
