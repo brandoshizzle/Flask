@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.3.3]
+### Added
+- Sound Settings: Set/remove 'Played' status
+- General Settings: Mark sounds as played (or not)
+
 ### Fixed
 - Sound settings "cannot read proprty 'name' of undefined" error
 - Deleting sound "cannot read property '0' of undefined" error
@@ -23,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Keyboard: When loading multiple sounds, waveform of first sound shows
 
 ## [0.3.1] - 2017-04-08
-## Added
+### Added
 - OS X build
 
 ### Changed

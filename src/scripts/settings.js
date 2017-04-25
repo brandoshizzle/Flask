@@ -4,6 +4,7 @@ var settingsSoundInfo;
 function openSettings() {
 	// Set general settings
 	$('#settings-stopSounds').prop('checked', settingsInfo.general.stopSounds);
+	$('#settings-markPlayed').prop('checked', settingsInfo.general.markPlayed);
 	$('#settings-fadeInTime').val(settingsInfo.general.fadeInTime/1000);
 	$('#settings-fadeOutTime').val(settingsInfo.general.fadeOutTime/1000);
 	$('#settings-prereleaseUpdates').prop('checked', settingsInfo.general.prereleaseUpdates);
@@ -20,6 +21,7 @@ function saveSettings(){
 	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
 	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
+	settingsInfo.general.markPlayed = $('#settings-markPlayed').prop('checked');
 	settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val()*1000;
 	settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val()*1000;
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
@@ -32,6 +34,7 @@ function saveSettings(){
  */
 function openSoundSettings(soundInfo) {
 	var idStart = "#sound-settings-";
+	var infoObj;
 	if (soundInfo.name === "") {
 		soundInfo.name = "Enter a name";
 	}
@@ -41,14 +44,17 @@ function openSoundSettings(soundInfo) {
 		$('#color-row').show();
 		colors.setPickedColor(soundInfo.color);
 		colors.setColorPickerColors();
+		infoObj = keyInfo;
 	} else {
 		$('#color-row').hide();
+		infoObj = playlistInfo;
 	}
 	var fadeInTime = (soundInfo.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : soundInfo.fadeInTime;
 	var fadeOutTime = (soundInfo.fadeOutTime === undefined) ? settingsInfo.general.fadeOutTime : soundInfo.fadeOutTime;
-	$(idStart + "loop").prop("checked", soundInfo.loop);
+	//$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "fadeInTime").val(fadeInTime/1000);
 	$(idStart + "fadeOutTime").val(fadeOutTime/1000);
+	$(idStart + "played").prop('checked', $('#' + soundInfo.id).hasClass('played'));
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 }
@@ -77,7 +83,12 @@ function saveSoundSettings() {
 	if(settingsSoundInfo.infoObj !== "playlist"){
 		colors.setKeyColor(tempSoundInfo);
 	}
-	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
+	if($("#sound-settings-played").is(':checked')){
+		$('#' + settingsSoundInfo.id).addClass('played');
+	} else {
+		$('#' + settingsSoundInfo.id).removeClass('played');
+	}
+	//tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 	var fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
 	var fadeOutDiff = ($('#sound-settings-fadeOutTime').val() != settingsInfo.general.fadeOutTime);
 	console.log(fadeInDiff);

@@ -148,7 +148,9 @@ function stop(soundInfo){
 	}
 	waveforms.track(soundInfo, true);
 	$('#' + soundInfo.id).removeClass('playing-sound');
-	$('#' + soundInfo.id).addClass('played');
+	if(settingsInfo.general.markPlayed){
+		$('#' + soundInfo.id).addClass('played');
+	}
 	// If the song is stopped in the playlist
 	if (soundInfo.infoObj === "playlist") {
 		playlistPlayingSoundInfo = undefined;

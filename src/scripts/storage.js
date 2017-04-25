@@ -19,6 +19,7 @@ var defaults = {
 		'general':{
 			'prereleaseUpdates': false,
 			'stopSounds': false,
+			'markPlayed': true,
 			'fadeInTime': 1500,
 			'fadeOutTime': 1500
 		},
