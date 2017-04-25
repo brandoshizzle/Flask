@@ -67,8 +67,10 @@ function saveSoundSettings() {
 		//view.resetStartTime();
 	}
 	if ($('#sound-settings-name').text() !== "") {
-		if(waveformedInfo.name === tempSoundInfo.name){
-			$('#waveform-song-name').text($('#sound-settings-name').text());
+		if(waveformedInfo === settingsSoundInfo && waveformedInfo != undefined){
+			if(waveformedInfo.name === tempSoundInfo.name){
+				$('#waveform-song-name').text($('#sound-settings-name').text());
+			}
 		}
 		tempSoundInfo.name = $('#sound-settings-name').text();
 	}

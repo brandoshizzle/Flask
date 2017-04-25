@@ -159,22 +159,25 @@ function setKeyEvents() {
 				}
 				// If the deleted sound was in the keys
 				if (keyInfo.hasOwnProperty(id)) {
-					keyInfo[id].howl.unload();
+					//keyInfo[id].howl.unload();
 					delete keyInfo[id];
 					pagesInfo['page' + currentPage].keyInfo = keyInfo;
 					storage.storeObj("pagesInfo", pagesInfo);
 					$("#" + id).find('.audioName').text("");
 					$("#" + id).removeClass('waveformed-key').removeClass('played');
+					$("#" + id).removeClass('waveformed-key').removeClass('playing-sound');
+					$("#" + id).removeClass('waveformed-key').removeClass('soundNotLoaded');
 					$("#" + id).css('background-color', 'var(--pM)');
 					$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
 				} else {
 					// The deleted sound was in the playlist
-					playlistInfo[id].howl.unload();
+					//playlistInfo[id].howl.unload();
 					delete playlistInfo[id];
 					$("#" + id).remove();
 					storage.storeObj("playlistInfo", playlistInfo);
 				}
 				//Howler.removeSound(id);
+				//waveformedInfo = undefined;
 				waveforms.reset();
 			} else if (key === 'SPACE') {
 				// Play from the playlist
