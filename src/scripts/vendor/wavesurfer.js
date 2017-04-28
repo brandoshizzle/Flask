@@ -158,6 +158,7 @@ var WaveSurfer = {
     },
 
     getDuration: function () {
+        console.log('Get duration 2');
         return this.backend.getDuration();
     },
 
@@ -213,8 +214,9 @@ var WaveSurfer = {
         // avoid small scrolls while paused seeking
         var oldScrollParent = this.params.scrollParent;
         this.params.scrollParent = false;
+        console.log('Wavesurfer duration: ' + this.getDuration());
         this.backend.seekTo(progress * this.getDuration());
-        this.drawer.progress(this.backend.getPlayedPercents());
+        this.drawer.progress(/*this.backend.getPlayedPercents()*/ progress);
 
         if (!paused) {
             this.backend.play();
@@ -1129,9 +1131,14 @@ WaveSurfer.WebAudio = {
     },
 
     getDuration: function () {
+        console.log('Get duration 3');
         if (!this.buffer) {
+            if(waveformedInfo){
+                return waveformedInfo.howl.duration();
+            }
             return 0;
         }
+
         return this.buffer.duration;
     },
 
@@ -1409,6 +1416,7 @@ WaveSurfer.util.extend(WaveSurfer.MediaElement, {
     },
 
     getDuration: function () {
+        console.log('Get duration 1');
         var duration = (this.buffer || this.media).duration;
         if (duration >= Infinity) { // streaming audio
             duration = this.media.seekable.end(0);
@@ -1695,9 +1703,10 @@ WaveSurfer.Drawer = {
     },
 
     progress: function (progress) {
+        console.log('hello progress!');
         var minPxDelta = 1 / this.params.pixelRatio;
         var pos = Math.round(progress * this.width) * minPxDelta;
-
+        console.log(progress);
         if (pos < this.lastPos || pos - this.lastPos >= minPxDelta) {
             this.lastPos = pos;
 

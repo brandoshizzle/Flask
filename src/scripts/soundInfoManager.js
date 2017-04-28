@@ -12,6 +12,7 @@ function createSoundInfoFromPath(path, id) {
 	storage.checkAgainstDefault(tempObj, 'soundInfo');
 	// Write known info
 	tempObj.name = util.cleanName(path);
+	tempObj.fileName = util.cleanName(path);
 	tempObj.id = id || util.prepareForId(tempObj.name);
 	tempObj.path = path;
 	// Define which section it is part of

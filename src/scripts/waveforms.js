@@ -1,7 +1,15 @@
 var nodeUtil = require('util');
+const jetpack = require('fs-jetpack');
+const app = require('electron').remote.app;
+var appDir = app.getPath('userData');
+$(function(){
+	jetpack.dir(appDir).dir('data');
+});
+var dataDir = appDir + '\\data\\';
 
 var lastLoadedId;
 var prevTarget = "Q"; // Key clicked previous to the current one - for removing active-key class
+var peaks = {};
 
 // Wavesurfer measures in seconds
 // soundInstance measures in milliseconds
@@ -18,6 +26,7 @@ function buildWaveform() {
 		progressColor: '#ffd600',
 		hideScrollbar: true
 	});
+	peaks = JSON.parse(jetpack.read(dataDir + 'peaks.json'));
 	//wavesurfer.empty();
 	// When ready, hide loader and add the timeline
 	wavesurfer.on('ready', function() {
@@ -56,13 +65,31 @@ function loadWavesurfer(soundInfo) {
 		$('#waveform-region').remove();
 		$('#waveform').after('<div id="waveform-region"></div>');
 		// Remove and re-initialize waveform (used to)
-		wavesurfer.load(soundInfo.path);
+		soundInfo.fileName = soundInfo.fileName || util.cleanName(soundInfo.path);
+		if(peaks.hasOwnProperty(soundInfo.fileName)){
+			wavesurfer.empty();
+			//Set peaks
+			wavesurfer.backend.peaks = peaks[soundInfo.fileName];
+			//Draw peaks
+			wavesurfer.drawBuffer();
+			wavesurfer.fireEvent('ready');
+			//wavesurfer.load(soundInfo.path, peaks[soundInfo.fileName]);
+		} else {
+			wavesurfer.destroy();
+			buildWaveform();
+			wavesurfer.load(soundInfo.path);
+		}
+
 		lastLoadedId = soundInfo.id; // Set the id so we know what was loaded
 		$('#waveform-progress').show();
 	}
 
 	// When the wavesurfer is loaded
 	wavesurfer.on('ready', function() {
+		if(!peaks.hasOwnProperty(soundInfo.fileName)){
+			console.log('getting the waveform data');
+			saveWaveformData(soundInfo);
+		}
 		//setRegion(soundInfo);
 		setRegion(soundInfo); // Resize region to reflect proper size
 		var percentComplete = (soundInfo.startTime / rWSDur());
@@ -117,7 +144,8 @@ function setWaveformTracking(soundInfo, doNotLoad) {
  */
 function trackOnWaveform() {
 	if(waveformedInfo.howl !== undefined){
-		var percentComplete = Number(waveformedInfo.howl.seek()) / Number(rWSDur());
+		var percentComplete = Number(waveformedInfo.howl.seek()) / Number(waveformedInfo.howl.duration());
+		console.log(percentComplete);
 		wavesurfer.seekTo(percentComplete);
 	}
 }
@@ -191,6 +219,19 @@ function reset() {
 
 function rWSDur(){
 	return Math.round(wavesurfer.getDuration() * 10) / 10;
+}
+
+function saveWaveformData(soundInfo){
+	// If file name hasn't been assigned, assign it
+	if(soundInfo.fileName === ""){
+		soundInfo.fileName = util.cleanName(soundInfo.path);
+	}
+
+	peaks[soundInfo.fileName] = wavesurfer.backend.getPeaks(200, 0, 199);
+	jetpack.writeAsync(dataDir + 'peaks.json', peaks, {
+		atomic: true
+	});
+
 }
 
 module.exports = {

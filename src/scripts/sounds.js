@@ -21,9 +21,6 @@ function registerSound(soundInfo) {
 		  src: [soundInfo.path],
 		  loop: soundInfo.loop,
 			html5: true,
-			/*sprite:{
-				sound:[soundInfo.startTime, 5000]
-			},*/
 		  onend: function() {
 		    console.log('Finished!');
 				stop(soundInfo);
@@ -230,6 +227,7 @@ function defaultSoundInfo(){
 		"id": "",
 		"infoObj": "",
 		"name": "",
+		"fileName":"",
 		"path": "",
 		"color": "default",
 		"loop": false,
