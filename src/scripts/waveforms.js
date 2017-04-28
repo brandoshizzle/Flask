@@ -92,7 +92,7 @@ function loadWavesurfer(soundInfo) {
 		}
 		//setRegion(soundInfo);
 		setRegion(soundInfo); // Resize region to reflect proper size
-		var percentComplete = (soundInfo.startTime / rWSDur());
+		var percentComplete = (soundInfo.startTime / waveformedInfo.howl.duration());
 		wavesurfer.seekTo(percentComplete); // Move playhead to start time
 		// If waveform is clicked, set time to wherever the click occured
 		wavesurfer.drawer.on('click', function (e) {
@@ -200,8 +200,8 @@ function getRegion() {
  */
 function setRegion(soundInfo) {
 	console.log('setting region');
-	var start = (soundInfo.startTime / rWSDur()) * $('#waveform').width();
-	var end = (soundInfo.endTime / rWSDur()) * $('#waveform').width() - 4;	// 4 is an empirical offset
+	var start = (soundInfo.startTime / waveformedInfo.howl.duration()) * $('#waveform').width();
+	var end = (soundInfo.endTime / waveformedInfo.howl.duration()) * $('#waveform').width() - 4;	// 4 is an empirical offset
 	$('#waveform-region').css('left', start);
 	$('#waveform-region').width(end - start);
 }
@@ -215,10 +215,6 @@ function reset() {
 	$('#waveform-region').remove();
 	$('#waveform').after('<div id="waveform-region"></div>');
 	$('#waveform-song-name').text("");
-}
-
-function rWSDur(){
-	return Math.round(wavesurfer.getDuration() * 10) / 10;
 }
 
 function saveWaveformData(soundInfo){
