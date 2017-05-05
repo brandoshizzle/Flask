@@ -54,6 +54,7 @@ $(document).ready(function() {
 		storage.checkAgainstDefault(pagesInfo[page], 'pageInfo');
 	});
 	pages.registerKeyInfos(); // register all sounds and put them on keys
+	pages.loadNames();
 	keyInfo = pagesInfo.page1.keyInfo;	// load page 1 into active keyboard, aka keyInfo
 
 	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage

@@ -1,5 +1,6 @@
 /* jshint esversion: 6 */
 //const soundInfoManager = require("./soundInfoManager");
+var settingsPageNum;
 
 $(document).ready(function(){
 	$('ul.tabs').on('click', 'a', function(e){
@@ -10,9 +11,13 @@ $(document).ready(function(){
 		if(!pageId){
 			pageId = $(e.target).closest('a').prop('id');
 		}
-		pageNum = pageId.substring(pageId.length - 1);
-		ensurePageExists(pageNum);
-		settings.openPageSettings(pageNum);
+		settingsPageNum = pageId.substring(pageId.length - 1);
+		ensurePageExists(settingsPageNum);
+		settings.openPageSettings(settingsPageNum);
+	});
+
+	$('#page-save-button').on('click', function(e){
+		settings.savePageSettings(settingsPageNum);
 	});
 
 	$('body').keydown(function(e){
@@ -89,8 +94,19 @@ function switchPage(e) {
 	//$.fn.pagepiling.moveTo(currentPage);
 }
 
+function loadNames(){
+	for(var i = 1; i < 9; i++){
+		var name = pagesInfo['page' + i].name;
+		if(name){
+			$('#page' + i + ' span').text(name);
+		}
+
+	}
+}
+
 module.exports = {
 	registerKeyInfos: registerKeyInfos,
 	ensurePageExists: ensurePageExists,
-	switchPage: switchPage
+	switchPage: switchPage,
+	loadNames: loadNames
 };

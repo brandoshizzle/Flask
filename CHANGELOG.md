@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Sound Settings: Set/remove 'Played' status
 - General Settings: Mark sounds as played (or not)
+- Can set page names and page fade in/out times by right/ctrl-clicking on tab
+- Tutorial option to menu that links to YouTube video
 
 ### Fixed
 - Sound settings "cannot read proprty 'name' of undefined" error

@@ -90,7 +90,7 @@ function saveSoundSettings() {
 	}
 	//tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 	var fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
-	var fadeOutDiff = ($('#sound-settings-fadeOutTime').val() != settingsInfo.general.fadeOutTime);
+	var fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
 	console.log(fadeInDiff);
 	tempSoundInfo.fadeInTime = fadeInDiff ? $('#sound-settings-fadeInTime').val()*1000 : undefined;
 	tempSoundInfo.fadeOutTime = fadeOutDiff ? $('#sound-settings-fadeOutTime').val()*1000 : undefined;
@@ -114,7 +114,27 @@ function openPageSettings(pageNum){
 	} else {
 		$('#page-settings-name').text('Page ' + pageNum);
 	}
+	$('#page-settings-fadeInTime').val((pageInfo.fadeInTime ? pageInfo.fadeInTime : settingsInfo.general.fadeInTime)/1000)
+	$('#page-settings-fadeOutTime').val((pageInfo.fadeOutTime ? pageInfo.fadeOutTime : settingsInfo.general.fadeOutTime)/1000)
+
 	$('#page-modal').modal('open');
+}
+
+function savePageSettings(pageNum) {
+	var pageInfo = pagesInfo['page' + pageNum];
+
+	if ($('#page-settings-name').text() !== "") {
+		pageInfo.name = $('#page-settings-name').text();
+		$('#page' + pageNum + ' span').text(pageInfo.name);
+	}
+
+	var fadeInDiff = ($('#page-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
+	var fadeOutDiff = ($('#page-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
+	console.log(fadeInDiff);
+	pageInfo.fadeInTime = fadeInDiff ? $('#page-settings-fadeInTime').val()*1000 : undefined;
+	pageInfo.fadeOutTime = fadeOutDiff ? $('#page-settings-fadeOutTime').val()*1000 : undefined;
+
+	storage.storeObj('pagesInfo', pagesInfo);
 }
 
 module.exports = {
@@ -123,5 +143,6 @@ module.exports = {
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
 	resetFade: resetFade,
-	openPageSettings: openPageSettings
+	openPageSettings: openPageSettings,
+	savePageSettings: savePageSettings
 };

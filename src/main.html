@@ -102,7 +102,7 @@
 				<input id="playlist-search" class="search" type="text" />
 				<label for="playlist-search">Search</label>
 			</div>
-			<ul id="playlist-songs" class="scrollbar list">
+			<ul id="playlist-songs" class="scrollbar-y list">
 			</ul>
 		</div>
 
@@ -375,7 +375,7 @@
 				<h5 id="page-settings-name" class="header editable input-field" style="text-align: center">Page Name</h5>
 				<table class="highlight" style="padding: 20px;">
 					<tbody>
-						<tr class="settings-row">
+						<!--<tr class="settings-row">
 							<td>Loop</td>
 							<td>
 								<div class="switch">
@@ -385,28 +385,29 @@
 									</label>
 								</div>
 							</td>
-						</tr>
+						</tr>-->
 						<tr class="settings-row">
 							<td>Fade In</td>
 							<td>
-								<input id="page-settings-fade-in" type="text" style="width: 50px;"></input>
+								<input disabled class='input-field' id="page-settings-fadeInTime" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
-								<div class="btn" id="fade-in-reset" style="float: right;">Reset</div>
+								<div disabled class="btn" id="fade-in-reset" style="float: right;">Global</div>
 							</td>
 						</tr>
 						<tr class="settings-row">
 							<td>Fade Out</td>
 							<td>
-								<input id="page-settings-fade-out" type="text" style="width: 50px;"></input>
+								<input disabled class='input-field' id="page-settings-fadeOutTime" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
-								<div class="btn" id="fade-out-reset" style="float: right;">Reset</div>
+								<div disabled class="btn" id="fade-out-reset" style="float: right;">Global</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat">Save</a>
+				<a href="#" class="modal-action modal-close waves-effect btn-flat" id='page-save-button'>Save</a>
+				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
 			</div>
 		</div>
 
@@ -423,12 +424,13 @@
 				</div>
 			</li>
 			<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
+			<li><a class="waves-effect" href="https://www.youtube.com/watch?v=NiGRmcRhiKg"><i class="material-icons">local_library</i>Beginner's Tutorial</a></li>
 			<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart REACTion</a></li>
 			<li>
 				<div class="divider "></div>
 			</li>
-			<li><a class="waves-effect " href="https://github.com/brandoshizzle/soundprov/issues " target="_blank "><i class="material-icons ">report_problem</i>Report Issue</a></li>
-			<li><a class="waves-effect " href="# "><i class="material-icons ">monetization_on</i>Donate</a></li>
+			<li><a class="waves-effect " href="mailto:cathcart.brandon@gmail.com" target="_blank "><i class="material-icons ">report_problem</i>Report Issue</a></li>
+			<li><a class="waves-effect " href="http://paypal.me/BrandonCathcart"><i class="material-icons ">monetization_on</i>Donate</a></li>
 			<li><a class="waves-effect" href="#" onclick="view.openAbout()"><i class=" material-icons">info</i>About</a></li>
 		</ul>
 

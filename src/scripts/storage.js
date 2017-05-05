@@ -32,6 +32,8 @@ var defaults = {
 	},
 	'pageInfo' : {
 		'name': '',
+		fadeInTime: undefined,
+		fadeOutTime: undefined,
 		'keyInfo': {}
 	}
 };
