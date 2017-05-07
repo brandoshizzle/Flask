@@ -614,6 +614,9 @@ var WaveSurfer = {
         this.unAll();
         this.backend.destroy();
         this.drawer.destroy();
+        // REACTION EDIT MAIN WAVESURFER FUNCTIONS
+        console.log('array buffer nullified fools.')
+        this.arraybuffer = null;
         this.isDestroyed = true;
     }
 };
@@ -1438,6 +1441,7 @@ WaveSurfer.util.extend(WaveSurfer.MediaElement, {
 
     seekTo: function (start) {
         if (start != null) {
+            start = start || 0; // REACTION EDIT
             this.media.currentTime = start;
         }
         this.clearPlayEnd();

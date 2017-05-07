@@ -4,6 +4,7 @@ var settingsSoundInfo;
 function openSettings() {
 	// Set general settings
 	$('#settings-stopSounds').prop('checked', settingsInfo.general.stopSounds);
+	$('#settings-markPlayed').prop('checked', settingsInfo.general.markPlayed);
 	$('#settings-fadeInTime').val(settingsInfo.general.fadeInTime/1000);
 	$('#settings-fadeOutTime').val(settingsInfo.general.fadeOutTime/1000);
 	$('#settings-prereleaseUpdates').prop('checked', settingsInfo.general.prereleaseUpdates);
@@ -20,6 +21,7 @@ function saveSettings(){
 	settingsInfo.playlist.soundToBottomAfterPlay = $('#settings-playlistSoundToBottom').prop('checked');
 	settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
 	settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
+	settingsInfo.general.markPlayed = $('#settings-markPlayed').prop('checked');
 	settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val()*1000;
 	settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val()*1000;
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
@@ -32,6 +34,7 @@ function saveSettings(){
  */
 function openSoundSettings(soundInfo) {
 	var idStart = "#sound-settings-";
+	var infoObj;
 	if (soundInfo.name === "") {
 		soundInfo.name = "Enter a name";
 	}
@@ -41,14 +44,17 @@ function openSoundSettings(soundInfo) {
 		$('#color-row').show();
 		colors.setPickedColor(soundInfo.color);
 		colors.setColorPickerColors();
+		infoObj = keyInfo;
 	} else {
 		$('#color-row').hide();
+		infoObj = playlistInfo;
 	}
-	var fadeInTime = (soundInfo.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : soundInfo.fadeInTime;
-	var fadeOutTime = (soundInfo.fadeOutTime === undefined) ? settingsInfo.general.fadeOutTime : soundInfo.fadeOutTime;
-	$(idStart + "loop").prop("checked", soundInfo.loop);
+	var fadeInTime = sounds.getFadeTime(soundInfo, 'in');
+	var fadeOutTime = sounds.getFadeTime(soundInfo, 'out');
+	//$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "fadeInTime").val(fadeInTime/1000);
 	$(idStart + "fadeOutTime").val(fadeOutTime/1000);
+	$(idStart + "played").prop('checked', $('#' + soundInfo.id).hasClass('played'));
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 }
@@ -67,18 +73,33 @@ function saveSoundSettings() {
 		//view.resetStartTime();
 	}
 	if ($('#sound-settings-name').text() !== "") {
-		if(waveformedInfo.name === tempSoundInfo.name){
-			$('#waveform-song-name').text($('#sound-settings-name').text());
+		if(waveformedInfo === settingsSoundInfo && waveformedInfo != undefined){
+			if(waveformedInfo.name === tempSoundInfo.name){
+				$('#waveform-song-name').text($('#sound-settings-name').text());
+			}
 		}
 		tempSoundInfo.name = $('#sound-settings-name').text();
 	}
 	if(settingsSoundInfo.infoObj !== "playlist"){
 		colors.setKeyColor(tempSoundInfo);
 	}
-	tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
-	var fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
-	var fadeOutDiff = ($('#sound-settings-fadeOutTime').val() != settingsInfo.general.fadeOutTime);
-	console.log(fadeInDiff);
+	if($("#sound-settings-played").is(':checked')){
+		$('#' + settingsSoundInfo.id).addClass('played');
+	} else {
+		$('#' + settingsSoundInfo.id).removeClass('played');
+	}
+	//tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
+	var fadeInDiff, fadeOutDiff;
+	if(pagesInfo['page' + currentPage].fadeInTime){
+		fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != pagesInfo['page' + currentPage].fadeInTime);
+	} else {
+		fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
+	}
+	if(pagesInfo['page' + currentPage].fadeOutTime){
+		fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != pagesInfo['page' + currentPage].fadeOutTime);
+	} else {
+		fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
+	}
 	tempSoundInfo.fadeInTime = fadeInDiff ? $('#sound-settings-fadeInTime').val()*1000 : undefined;
 	tempSoundInfo.fadeOutTime = fadeOutDiff ? $('#sound-settings-fadeOutTime').val()*1000 : undefined;
 
@@ -86,11 +107,35 @@ function saveSoundSettings() {
 }
 
 // Set fade in/out to global
-function resetFade(inOrOut) {
+function resetFade(soundOrPage, inOrOut) {
+	var fadeTime;
+	if(soundOrPage === 'sound'){
+		if(inOrOut === 'in'){
+			if(pagesInfo['page' + currentPage].fadeInTime){
+				fadeTime = pagesInfo['page' + currentPage].fadeInTime;
+			} else {
+				fadeTime = settingsInfo.general.fadeInTime;
+			}
+		} else {
+			if(pagesInfo['page' + currentPage].fadeOutTime){
+				fadeTime = pagesInfo['page' + currentPage].fadeOutTime;
+			} else {
+				fadeTime = settingsInfo.general.fadeOutTime;
+			}
+		}
+	}
+	if(soundOrPage === 'page'){
+		if(inOrOut === 'in'){
+			fadeTime = settingsInfo.general.fadeInTime;
+		} else {
+			fadeTime = settingsInfo.general.fadeOutTime;
+		}
+	}
+
 	if(inOrOut === 'in'){
-		$('#sound-settings-fadeInTime').val(settingsInfo.general.fadeInTime/1000);
+		$('#' + soundOrPage + '-settings-fadeInTime').val(fadeTime/1000);
 	} else if(inOrOut === 'out'){
-		$('#sound-settings-fadeOutTime').val(settingsInfo.general.fadeOutTime/1000);
+		$('#' + soundOrPage + '-settings-fadeOutTime').val(fadeTime/1000);
 	}
 }
 
@@ -101,7 +146,27 @@ function openPageSettings(pageNum){
 	} else {
 		$('#page-settings-name').text('Page ' + pageNum);
 	}
+	$('#page-settings-fadeInTime').val((pageInfo.fadeInTime ? pageInfo.fadeInTime : settingsInfo.general.fadeInTime)/1000)
+	$('#page-settings-fadeOutTime').val((pageInfo.fadeOutTime ? pageInfo.fadeOutTime : settingsInfo.general.fadeOutTime)/1000)
+
 	$('#page-modal').modal('open');
+}
+
+function savePageSettings(pageNum) {
+	var pageInfo = pagesInfo['page' + pageNum];
+
+	if ($('#page-settings-name').text() !== "") {
+		pageInfo.name = $('#page-settings-name').text();
+		$('#page' + pageNum + ' span').text(pageInfo.name);
+	}
+
+	var fadeInDiff = ($('#page-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
+	var fadeOutDiff = ($('#page-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
+	console.log(fadeInDiff);
+	pageInfo.fadeInTime = fadeInDiff ? $('#page-settings-fadeInTime').val()*1000 : undefined;
+	pageInfo.fadeOutTime = fadeOutDiff ? $('#page-settings-fadeOutTime').val()*1000 : undefined;
+
+	storage.storeObj('pagesInfo', pagesInfo);
 }
 
 module.exports = {
@@ -110,5 +175,6 @@ module.exports = {
 	openSoundSettings: openSoundSettings,
 	saveSoundSettings: saveSoundSettings,
 	resetFade: resetFade,
-	openPageSettings: openPageSettings
+	openPageSettings: openPageSettings,
+	savePageSettings: savePageSettings
 };

@@ -54,7 +54,6 @@ function createPlaylistItem(soundInfo) {
 			return false;
 		}
 	});
-	console.log(afterThisSound);
 	var liString = "<li class='z-depth-4 playlistSound' id='" + soundInfo.id + "'>" + soundInfo.name + "</li>";
 	if(!afterThisSound){
 		$('#playlist-songs').append(liString);

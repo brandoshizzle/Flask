@@ -19,6 +19,7 @@ var defaults = {
 		'general':{
 			'prereleaseUpdates': false,
 			'stopSounds': false,
+			'markPlayed': true,
 			'fadeInTime': 1500,
 			'fadeOutTime': 1500
 		},
@@ -31,6 +32,8 @@ var defaults = {
 	},
 	'pageInfo' : {
 		'name': '',
+		fadeInTime: undefined,
+		fadeOutTime: undefined,
 		'keyInfo': {}
 	}
 };
