@@ -180,6 +180,11 @@ $(document).ready(function() {
       }
     });
 
+	$('.tabs').mousewheel(function(e, delta) {
+		this.scrollLeft -= (delta * 40);
+		e.preventDefault();
+	});
+
 		//open links externally by default
     $(document).on('click', 'a[href^="http"]', function(event) {
         event.preventDefault();

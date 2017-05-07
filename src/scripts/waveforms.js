@@ -61,11 +61,22 @@ function loadWavesurfer(soundInfo) {
         $('#waveform-progress').show();
     }
 
+    waveformedInfo = soundInfo;
+
     // When the wavesurfer is loaded
     wavesurfer.on('ready', function() {
         //setRegion(soundInfo);
         setRegion(soundInfo); // Resize region to reflect proper size
-        var percentComplete = (soundInfo.startTime / rWSDur());
+
+        var percentComplete;
+
+        if(waveformedInfo.paused){
+            if (waveformedInfo.howl !== undefined) {
+                percentComplete = Number(waveformedInfo.howl.seek()) / Number(waveformedInfo.howl.duration()) || 0;
+            }
+        } else {
+            percentComplete = waveformedInfo.startTime / wavesurfer.getDuration();
+        }
         wavesurfer.seekTo(parseFloat(percentComplete)); // Move playhead to start time
         // If waveform is clicked, set time to wherever the click occured
         wavesurfer.drawer.on('click', function(e) {
@@ -104,8 +115,10 @@ function setWaveformTracking(soundInfo, doNotLoad) {
     if (doNotLoad) {
         return;
     }
+
     loadWavesurfer(soundInfo);
     waveformedInfo = soundInfo;
+
     if (soundInfo.howl === undefined) {
         return;
     }

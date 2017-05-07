@@ -29,8 +29,8 @@
 				<div id='update-link'></div>
 				<p id="clock">Time</p>
 			</div>
-			<div class="tabs-row">
-				<ul class="tabs" id="tabs">
+			<div class="tabs-row" style='overflow:hidden;'>
+				<ul class="tabs" id="tabs" style='overflow-x: hidden;'>
 					<li class="tab"><a class="active" href="#" id="page1">[F1] <span class='pageName'>Page 1</span></a></li>
 					<li class="tab"><a href="#" id="page2">[F2] <span class='pageName'>Page 2</span></a></li>
 					<li class="tab"><a href="#" id="page3">[F3] <span class='pageName'>Page 3</span></a></li>
@@ -178,7 +178,7 @@
 							<td>
 								<input id="sound-settings-fadeInTime" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
-								<div class="btn" id="fadeInTime-global" style="float: right;">Global</div>
+								<div class="btn" id="sound-settings-fadeInReset" style="float: right;">Reset</div>
 							</td>
 						</tr>
 						<tr class="settings-row">
@@ -186,7 +186,7 @@
 							<td>
 								<input id="sound-settings-fadeOutTime" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
-								<div class="btn" id="fadeOutTime-global" style="float: right;">Global</div>
+								<div class="btn" id="sound-settings-fadeOutReset" style="float: right;">Reset</div>
 							</td>
 						</tr>
 					</tbody>
@@ -389,17 +389,17 @@
 						<tr class="settings-row">
 							<td>Fade In</td>
 							<td>
-								<input disabled class='input-field' id="page-settings-fadeInTime" type="text" style="width: 50px;"></input>
+								<input class='input-field' id="page-settings-fadeInTime" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
-								<div disabled class="btn" id="fade-in-reset" style="float: right;">Global</div>
+								<div class="btn" id="page-settings-fadeInReset" style="float: right;">Reset</div>
 							</td>
 						</tr>
 						<tr class="settings-row">
 							<td>Fade Out</td>
 							<td>
-								<input disabled class='input-field' id="page-settings-fadeOutTime" type="text" style="width: 50px;"></input>
+								<input class='input-field' id="page-settings-fadeOutTime" type="text" style="width: 50px;"></input>
 								<label>seconds</label>
-								<div disabled class="btn" id="fade-out-reset" style="float: right;">Global</div>
+								<div class="btn" id="page-settings-fadeOutReset" style="float: right;">Reset</div>
 							</td>
 						</tr>
 					</tbody>
@@ -453,6 +453,7 @@
 		<script src="scripts/vendor/sortable.js "></script>
 		<script src="scripts/vendor/jeditable.js "></script>
 		<script src="scripts/vendor/mousetrap.min.js "></script>
+		<script src='scripts/vendor/jquery.mousewheel.min.js'></script>
 		<script src="scripts/vendor/wavesurfer.js "></script>
 		<script src="scripts/vendor/wavesurfer.timeline.min.js "></script>
 		<script src="scripts/vendor/howler.js "></script>

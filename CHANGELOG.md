@@ -4,17 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.3.3]
+## [0.3.3] - 2017-05-07
 ### Added
 - Sound Settings: Set/remove 'Played' status
 - General Settings: Mark sounds as played (or not)
 - Can set page names and page fade in/out times by right/ctrl-clicking on tab
+- Scroll on page names to get overflow pages
 - Tutorial option to menu that links to YouTube video
 
 ### Fixed
 - Sound settings "cannot read proprty 'name' of undefined" error
 - Deleting sound "cannot read property '0' of undefined" error
 - Deleting sound removes playing and soundNotLoaded classes
+- Waveform shows playhead at proper location after loading waveform
 
 ## [0.3.2] - 2017-04-22
 ### Fixed

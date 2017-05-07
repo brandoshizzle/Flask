@@ -49,8 +49,8 @@ function openSoundSettings(soundInfo) {
 		$('#color-row').hide();
 		infoObj = playlistInfo;
 	}
-	var fadeInTime = (soundInfo.fadeInTime === undefined) ? settingsInfo.general.fadeInTime : soundInfo.fadeInTime;
-	var fadeOutTime = (soundInfo.fadeOutTime === undefined) ? settingsInfo.general.fadeOutTime : soundInfo.fadeOutTime;
+	var fadeInTime = sounds.getFadeTime(soundInfo, 'in');
+	var fadeOutTime = sounds.getFadeTime(soundInfo, 'out');
 	//$(idStart + "loop").prop("checked", soundInfo.loop);
 	$(idStart + "fadeInTime").val(fadeInTime/1000);
 	$(idStart + "fadeOutTime").val(fadeOutTime/1000);
@@ -89,9 +89,17 @@ function saveSoundSettings() {
 		$('#' + settingsSoundInfo.id).removeClass('played');
 	}
 	//tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
-	var fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
-	var fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
-	console.log(fadeInDiff);
+	var fadeInDiff, fadeOutDiff;
+	if(pagesInfo['page' + currentPage].fadeInTime){
+		fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != pagesInfo['page' + currentPage].fadeInTime);
+	} else {
+		fadeInDiff = ($('#sound-settings-fadeInTime').val()*1000 != settingsInfo.general.fadeInTime);
+	}
+	if(pagesInfo['page' + currentPage].fadeOutTime){
+		fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != pagesInfo['page' + currentPage].fadeOutTime);
+	} else {
+		fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
+	}
 	tempSoundInfo.fadeInTime = fadeInDiff ? $('#sound-settings-fadeInTime').val()*1000 : undefined;
 	tempSoundInfo.fadeOutTime = fadeOutDiff ? $('#sound-settings-fadeOutTime').val()*1000 : undefined;
 
@@ -99,11 +107,35 @@ function saveSoundSettings() {
 }
 
 // Set fade in/out to global
-function resetFade(inOrOut) {
+function resetFade(soundOrPage, inOrOut) {
+	var fadeTime;
+	if(soundOrPage === 'sound'){
+		if(inOrOut === 'in'){
+			if(pagesInfo['page' + currentPage].fadeInTime){
+				fadeTime = pagesInfo['page' + currentPage].fadeInTime;
+			} else {
+				fadeTime = settingsInfo.general.fadeInTime;
+			}
+		} else {
+			if(pagesInfo['page' + currentPage].fadeOutTime){
+				fadeTime = pagesInfo['page' + currentPage].fadeOutTime;
+			} else {
+				fadeTime = settingsInfo.general.fadeOutTime;
+			}
+		}
+	}
+	if(soundOrPage === 'page'){
+		if(inOrOut === 'in'){
+			fadeTime = settingsInfo.general.fadeInTime;
+		} else {
+			fadeTime = settingsInfo.general.fadeOutTime;
+		}
+	}
+
 	if(inOrOut === 'in'){
-		$('#sound-settings-fadeInTime').val(settingsInfo.general.fadeInTime/1000);
+		$('#' + soundOrPage + '-settings-fadeInTime').val(fadeTime/1000);
 	} else if(inOrOut === 'out'){
-		$('#sound-settings-fadeOutTime').val(settingsInfo.general.fadeOutTime/1000);
+		$('#' + soundOrPage + '-settings-fadeOutTime').val(fadeTime/1000);
 	}
 }
 

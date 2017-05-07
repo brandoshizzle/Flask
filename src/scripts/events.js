@@ -48,7 +48,6 @@ function setKeyEvents() {
 				$('#' + id).removeClass('played');
 				siblingCount++;
 			}
-			console.log(first);
 			pages.ensurePageExists(currentPage);
 			pagesInfo['page' + currentPage].keyInfo = keyInfo;
 			storage.storeObj("pagesInfo", pagesInfo);
@@ -259,12 +258,20 @@ function setKeyEvents() {
 		$("#color-picker").fadeOut();
 	});
 
-	$('#fadeInTime-global').click(function(e) {
-		settings.resetFade('in');
+	$('#sound-settings-fadeInReset').click(function(e) {
+		settings.resetFade('sound','in');
 	});
 
-	$('#fadeOutTime-global').click(function(e) {
-		settings.resetFade('out');
+	$('#sound-settings-fadeOutReset').click(function(e) {
+		settings.resetFade('sound','out');
+	});
+
+	$('#page-settings-fadeInReset').click(function(e) {
+		settings.resetFade('page','in');
+	});
+
+	$('#page-settings-fadeOutReset').click(function(e) {
+		settings.resetFade('page','out');
 	});
 
 	// Prevent firing sounds when editing input fields
