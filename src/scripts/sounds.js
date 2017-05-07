@@ -289,12 +289,21 @@ function defaultSoundInfo(){
 }
 
 function getFadeTime(soundInfo, direction){
-	var currentPageInfo = pagesInfo['page' + currentPage];
-	if(direction === 'in'){
-		return soundInfo.fadeInTime || currentPageInfo.fadeInTime || settingsInfo.general.fadeInTime;
-	} else if(direction === 'out'){
-		return soundInfo.fadeOutTime || currentPageInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+	if(soundInfo.infoObj === 'playlist'){
+		if(direction === 'in'){
+			return soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+		} else if(direction === 'out'){
+			return soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+		}
+	} else {
+		var currentPageInfo = pagesInfo['page' + currentPage];
+		if(direction === 'in'){
+			return soundInfo.fadeInTime || currentPageInfo.fadeInTime || settingsInfo.general.fadeInTime;
+		} else if(direction === 'out'){
+			return soundInfo.fadeOutTime || currentPageInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+		}
 	}
+
 }
 
 module.exports = {

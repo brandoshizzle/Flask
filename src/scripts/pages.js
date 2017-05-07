@@ -96,7 +96,11 @@ function switchPage(e) {
 
 function loadNames(){
 	for(var i = 1; i < 9; i++){
-		var name = pagesInfo['page' + i].name;
+		try {
+			var name = pagesInfo['page' + i].name;
+		} catch (e) {
+			return;
+		}
 		if(name){
 			$('#page' + i + ' span').text(name);
 		}
