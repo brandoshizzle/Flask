@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.3.3] - 2017-05-07
+## [0.4.0] - 2017-05-07
 ### Added
 - Sound Settings: Set/remove 'Played' status
 - General Settings: Mark sounds as played (or not)
-- Can set page names and page fade in/out times by right/ctrl-clicking on tab
-- Scroll on page names to get overflow pages
-- Tutorial option to menu that links to YouTube video
+- Pages: Page names and page fade in/out times by right/ctrl-clicking on tab
+- Pages: Scroll on page tabs to get overflow pages
+- Menu: Tutorial option that links to YouTube video
 
 ### Fixed
 - Sound settings "cannot read proprty 'name' of undefined" error
