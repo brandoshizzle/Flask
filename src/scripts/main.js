@@ -74,7 +74,12 @@ $(document).ready(function() {
 	clock.start();	// Start the clock
 	colors.initializeKeyColors();	// Load all the key colors!
 
-	$('.modal').modal();
+	$('.modal').modal({
+		opacity: 0.7,
+		complete: function(){
+			settings.saveSettings();
+		}
+	});
 	$(".menu-icon").sideNav({
 		closeOnClick: true
 	});
@@ -185,7 +190,7 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
-		//open links externally by default
+	//open links externally by default
     $(document).on('click', 'a[href^="http"]', function(event) {
         event.preventDefault();
         shell.openExternal(this.href);

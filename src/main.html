@@ -2,167 +2,166 @@
 
 <html>
 
-	<head>
-		<title></title>
-		<meta charset="utf-8">
-		<!--Let browser know website is optimized for mobile-->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!--Import Google Icon Font
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
-		<!--Import materialize.css and main.css-->
-		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-		<link type="text/css" rel="stylesheet" href="css/vendor/jquery-ui.structure.min.css" />
-		<link type="text/css" rel="stylesheet" href="css/vendor/jquery-ui.theme.min.css" />
-		<link type="text/css" rel="stylesheet" href="css/main.css" />
-	</head>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--Import materialize.css and main.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="css/vendor/jquery-ui.structure.min.css" />
+	<link type="text/css" rel="stylesheet" href="css/vendor/jquery-ui.theme.min.css" />
+	<link type="text/css" rel="stylesheet" href="css/main.css" />
+</head>
 
-	<body>
-		<div class="header-row">
-			<div>
-				<a data-activates="slide-out" class="button-collapse menu-icon"><i class="material-icons">menu</i></a>
-				<img src="assets/logo.png" style="display: inline-block; height: 25px;" />
-				<h4 id="programTitle" style='text-shadow: 0px 2px 2px black;'><strong>REACT</strong>ion</h4>
-				<!--<h6 id='volume' style='display:inline; margin-left: 50px;'></h6>-->
-				<div id="loadedContainer">
-					<div id="loadedCount">Loading</div>
-				</div>
-				<div id='update-link'></div>
-				<p id="clock">Time</p>
+<body>
+	<div class="header-row">
+		<div>
+			<a data-activates="slide-out" class="button-collapse menu-icon"><i class="material-icons">menu</i></a>
+			<img src="assets/logo.png" style="display: inline-block; height: 25px;" />
+			<h4 id="programTitle" style='text-shadow: 0px 2px 2px black;'><strong>REACT</strong>ion</h4>
+			<!--<h6 id='volume' style='display:inline; margin-left: 50px;'></h6>-->
+			<div id="loadedContainer">
+				<div id="loadedCount">Loading</div>
 			</div>
-			<div class="tabs-row" style='overflow:hidden;'>
-				<ul class="tabs" id="tabs" style='overflow-x: hidden;'>
-					<li class="tab"><a class="active" href="#" id="page1">[F1] <span class='pageName'>Page 1</span></a></li>
-					<li class="tab"><a href="#" id="page2">[F2] <span class='pageName'>Page 2</span></a></li>
-					<li class="tab"><a href="#" id="page3">[F3] <span class='pageName'>Page 3</span></a></li>
-					<li class="tab"><a href="#" id="page4">[F4] <span class='pageName'>Page 4</span></a></li>
-					<li class="tab"><a href="#" id="page5">[F5] <span class='pageName'>Page 5</span></a></li>
-					<li class="tab"><a href="#" id="page6">[F6] <span class='pageName'>Page 6</span></a></li>
-					<li class="tab"><a href="#" id="page7">[F7] <span class='pageName'>Page 7</span></a></li>
-					<li class="tab"><a href="#" id="page8">[F8] <span class='pageName'>Page 8</span></a></li>
-				</ul>
-			</div>
+			<div id='update-link'></div>
+			<p id="clock">Time</p>
 		</div>
-
-		<!-- Keyboard -->
-		<div class="keyboard-container">
-			<div class="section" id="keyboard1">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard2">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard3">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard4">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard5">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard6">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard7">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-			<div class="section" id="keyboard8">
-				<div id="row1"></div>
-				<div id="row2"></div>
-				<div id="row3"></div>
-				<div id="row4"></div>
-			</div>
-		</div>
-
-		<div class="playlistBox col s3 z-depth-4" id="playlistBox">
-			<p class="section-header">Playlist</p>
-			<!-- Search bar/playlist songs -->
-			<div class="input-field">
-				<input id="playlist-search" class="search" type="text" />
-				<label for="playlist-search">Search</label>
-			</div>
-			<ul id="playlist-songs" class="scrollbar-y list">
+		<div class="tabs-row" style='overflow:hidden;'>
+			<ul class="tabs" id="tabs" style='overflow-x: hidden;'>
+				<li class="tab"><a class="active" href="#" id="page1">[F1] <span class='pageName'>Page 1</span></a></li>
+				<li class="tab"><a href="#" id="page2">[F2] <span class='pageName'>Page 2</span></a></li>
+				<li class="tab"><a href="#" id="page3">[F3] <span class='pageName'>Page 3</span></a></li>
+				<li class="tab"><a href="#" id="page4">[F4] <span class='pageName'>Page 4</span></a></li>
+				<li class="tab"><a href="#" id="page5">[F5] <span class='pageName'>Page 5</span></a></li>
+				<li class="tab"><a href="#" id="page6">[F6] <span class='pageName'>Page 6</span></a></li>
+				<li class="tab"><a href="#" id="page7">[F7] <span class='pageName'>Page 7</span></a></li>
+				<li class="tab"><a href="#" id="page8">[F8] <span class='pageName'>Page 8</span></a></li>
 			</ul>
 		</div>
+	</div>
 
-		<!-- The waveform box-->
-		<div id="waveform-box">
-			<div id="waveform-info" class="z-depth-4">
-				<p id="waveform-song-name"></p>
-			</div>
-			<div id="waveform" class="z-depth-4"></div>
-			<div id="waveform-region"></div>
-			<div id="waveform-progress" hidden class="z-depth-4" style="pointer-events: none;">
-					<div class="load">
-					<div class="line"></div>
-					<div class="line"></div>
-					<div class="line"></div>
-				</div>
-			</div>
-			<div id="waveform-timeline" style="pointer-events: none;"></div>
+	<!-- Keyboard -->
+	<div class="keyboard-container">
+		<div class="section" id="keyboard1">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
 		</div>
+		<div class="section" id="keyboard2">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+		<div class="section" id="keyboard3">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+		<div class="section" id="keyboard4">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+		<div class="section" id="keyboard5">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+		<div class="section" id="keyboard6">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+		<div class="section" id="keyboard7">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+		<div class="section" id="keyboard8">
+			<div id="row1"></div>
+			<div id="row2"></div>
+			<div id="row3"></div>
+			<div id="row4"></div>
+		</div>
+	</div>
 
-		<!-- Sound Settings box -->
-		<div id="sound-settings" class="modal modal-fixed-footer" style="width:400px">
-			<div class="modal-content">
-				<h5 id="sound-settings-name" class="header editable" style="text-align: center">Song Name</h5>
-				<table class="highlight" style="padding: 20px;">
-					<tbody>
-						<tr class="settings-row">
-							<td>Path</td>
-							<td>
-								<div class="file-field input-field">
-									<div class="btn waves-effect" id="browse-button">
-										<span>Browse</span>
-									</div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate" id="sound-settings-path" type="text">
-									</div>
+	<!-- Playlist section -->
+	<div class="playlistBox z-depth-4" id="playlistBox">
+		<p class="section-header">Playlist</p>
+		<!-- Search bar/playlist songs -->
+		<div class="input-field">
+			<input id="playlist-search" class="search" type="text" />
+			<label for="playlist-search">Search</label>
+		</div>
+		<ul id="playlist-songs" class="scrollbar-y list">
+		</ul>
+	</div>
+
+	<!-- The waveform box-->
+	<div id="waveform-box">
+		<div id="waveform-info" class="z-depth-4">
+			<p id="waveform-song-name"></p>
+		</div>
+		<div id="waveform" class="z-depth-4"></div>
+		<div id="waveform-region"></div>
+		<div id="waveform-progress" hidden class="z-depth-4" style="pointer-events: none;">
+			<div class="load">
+				<div class="line"></div>
+				<div class="line"></div>
+				<div class="line"></div>
+			</div>
+		</div>
+		<div id="waveform-timeline" style="pointer-events: none;"></div>
+	</div>
+
+	<!-- Sound Settings box -->
+	<div id="sound-settings" class="modal modal-fixed-footer" style="width:400px">
+		<div class="modal-content">
+			<h5 id="sound-settings-name" class="header editable" style="text-align: center">Song Name</h5>
+			<table class="highlight" style="padding: 20px;">
+				<tbody>
+					<tr class="settings-row">
+						<td>Path</td>
+						<td>
+							<div class="file-field input-field">
+								<div class="btn waves-effect" id="browse-button">
+									<span>Browse</span>
 								</div>
-							</td>
-						</tr>
-						<tr class="settings-row">
-							<td>Played</td>
-							<td>
-								<div class="switch" style="text-align: right;">
-									<label>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" id="sound-settings-path" type="text">
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr class="settings-row">
+						<td>Played</td>
+						<td>
+							<div class="switch" style="text-align: right;">
+								<label>
 										<input id="sound-settings-played" type="checkbox">
 										<span class="lever"></span>
 									</label>
+							</div>
+						</td>
+					</tr>
+					<tr class="settings-row" id="color-row">
+						<td>Color</td>
+						<td>
+							<div id="sound-settings-color-container" style="width: 100px; height: 30px; border: 2px solid gray; border-radius: 4px;">
+								<div id="sound-settings-color" style="width:80px; height: 20px; margin: auto; margin-top: 3px;background-color: green;">
 								</div>
-							</td>
-						</tr>
-						<tr class="settings-row" id="color-row">
-							<td>Color</td>
-							<td>
-								<div id="sound-settings-color-container" style="width: 100px; height: 30px; border: 2px solid gray; border-radius: 4px;">
-									<div id="sound-settings-color" style="width:80px; height: 20px; margin: auto; margin-top: 3px;background-color: green;">
-									</div>
-								</div>
-							</td>
-						</tr>
-						<!--<tr class="settings-row">
+							</div>
+						</td>
+					</tr>
+					<!--<tr class="settings-row">
 							<td>Loop</td>
 							<td>
 								<div class="switch">
@@ -173,125 +172,138 @@
 								</div>
 							</td>
 						</tr> -->
-						<tr class="settings-row">
-							<td>Fade In</td>
-							<td>
-								<input id="sound-settings-fadeInTime" type="text" style="width: 50px;"></input>
-								<label>seconds</label>
-								<div class="btn" id="sound-settings-fadeInReset" style="float: right;">Reset</div>
-							</td>
-						</tr>
-						<tr class="settings-row">
-							<td>Fade Out</td>
-							<td>
-								<input id="sound-settings-fadeOutTime" type="text" style="width: 50px;"></input>
-								<label>seconds</label>
-								<div class="btn" id="sound-settings-fadeOutReset" style="float: right;">Reset</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="color-picker" hidden>
-					<div id="color-default" class="color-picker-color"></div>
-					<div id="color-gray" class="color-picker-color"></div>
-					<div id="color-red" class="color-picker-color"></div>
-					<div id="color-pink" class="color-picker-color"></div>
-					<div id="color-grape" class="color-picker-color"></div>
-					<div id="color-violet" class="color-picker-color"></div>
-					<!--<div id="color-indigo" class="color-picker-color"></div>-->
-					<div id="color-blue" class="color-picker-color"></div>
-					<div id="color-cyan" class="color-picker-color"></div>
-					<div id="color-teal" class="color-picker-color"></div>
-					<!--<div id="color-green" class="color-picker-color"></div>-->
-					<div id="color-lime" class="color-picker-color"></div>
-					<div id="color-yellow" class="color-picker-color"></div>
-					<div id="color-orange" class="color-picker-color"></div>
-				</div>
-			</div>
-			<div class="modal-footer ">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat" id="sound-settings-save">Save</a>
-				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+					<tr class="settings-row">
+						<td>Fade In</td>
+						<td>
+							<input id="sound-settings-fadeInTime" type="text" style="width: 50px;"></input>
+							<label>seconds</label>
+							<div class="btn" id="sound-settings-fadeInReset" style="float: right;">Reset</div>
+						</td>
+					</tr>
+					<tr class="settings-row">
+						<td>Fade Out</td>
+						<td>
+							<input id="sound-settings-fadeOutTime" type="text" style="width: 50px;"></input>
+							<label>seconds</label>
+							<div class="btn" id="sound-settings-fadeOutReset" style="float: right;">Reset</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="color-picker" hidden>
+				<div id="color-default" class="color-picker-color"></div>
+				<div id="color-gray" class="color-picker-color"></div>
+				<div id="color-red" class="color-picker-color"></div>
+				<div id="color-pink" class="color-picker-color"></div>
+				<div id="color-grape" class="color-picker-color"></div>
+				<div id="color-violet" class="color-picker-color"></div>
+				<!--<div id="color-indigo" class="color-picker-color"></div>-->
+				<div id="color-blue" class="color-picker-color"></div>
+				<div id="color-cyan" class="color-picker-color"></div>
+				<div id="color-teal" class="color-picker-color"></div>
+				<!--<div id="color-green" class="color-picker-color"></div>-->
+				<div id="color-lime" class="color-picker-color"></div>
+				<div id="color-yellow" class="color-picker-color"></div>
+				<div id="color-orange" class="color-picker-color"></div>
 			</div>
 		</div>
+		<div class="modal-footer ">
+			<a href="#" class="modal-action modal-close waves-effect btn-flat" id="sound-settings-save">Save</a>
+			<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+		</div>
+	</div>
 
-		<div id="about-modal" class="modal" style="width:500px">
-			<div class="modal-content" style="text-align: center">
-				<h5 id="sound-settings-name" class="header" style="text-align: center">REACTion</h5>
-				<h6>Making improvising sound easy.</h6>
-				<p>Version <span class="version"></span></p>
-				<p>Developed by <a href="mailto:cathcart.brandon@gmail.com">Brandon Cathcart</a></a></p>
-				<p>Like REACTion? <a href="http://paypal.me/BrandonCathcart">Buy me a beer! :)</a></p>
-				<span style="font-size: 11px">
+	<!-- ABOUT MODAL -->
+	<div id="about-modal" class="modal" style="width:500px">
+		<div class="modal-content" style="text-align: center">
+			<h5 id="sound-settings-name" class="header" style="text-align: center">REACTion</h5>
+			<h6>Making improvising sound easy.</h6>
+			<p>Version <span class="version"></span></p>
+			<p>Developed by <a href="mailto:cathcart.brandon@gmail.com">Brandon Cathcart</a></a>
+			</p>
+			<p>Like REACTion? <a href="http://paypal.me/BrandonCathcart">Buy me a beer! :)</a></p>
+			<span style="font-size: 11px">
 					<p>Copyright 2017 Brandon Cathcart</p>
 					<p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at </p>
 					<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 					<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language
 						governing permissions and limitations under the License.</p>
 				</span>
-			</div>
 		</div>
+	</div>
 
-		<!-- Global settings modal -->
-		<div id="settings-modal" class="modal model-fixed-footer" style="width:500px;">
-			<div class="modal-content" style="padding:0;">
-				<div class="header-row">
-					<h5 id="sound-settings-name" class="header" style="text-align: center; margin:0px; padding: 10px;">Global Settings</h5>
-				</div>
-				<ul id="settings-categories" class="selectable">
-					<li value='general'>General</li>
-					<li value='samples'>Samples</li>
-					<li value='playlist'>Playlist</li>
-				</ul>
-				<div id="settings-content" style="float: right; width: 70%; height: 350px;">
-					<!-- General Table -->
-					<table id="general-table" class="highlight global-settings-table" style="padding: 20px;">
-						<tbody>
-							<tr class="settings-row">
-								<td>Stop sounds (instead of pausing)</td>
-								<td>
+	<!-- GLOBAL SETTINGS MODAL -->
+	<div id="settings-modal" class="modal model-fixed-footer transparent-bg">
+		<div class="modal-content" style="padding:0;">
+
+			<div class="row">
+				<div class="col s12">
+
+					<!-- GENERAL SETTINGS CARD -->
+					<div class="card z-depth-4">
+						<div class="card-content">
+							<span class="card-title" style='font-weight:bold;'>General</span>
+							<div class="row">
+								<div class="col s10 settings-description">
+									<h3>Stop sounds (instead of pausing)</h3>
+									<p>Each time you play a sound, it will play from the start instead of holding its position.</p>
+								</div>
+								<div class="settings-switch col s2">
 									<div class="switch" style="text-align: right;">
 										<label>
-											<input id="settings-stopSounds" type="checkbox">
-											<span class="lever"></span>
-										</label>
+		  									<input id="settings-stopSounds" type="checkbox">
+		  									<span class="lever"></span>
+	  									</label>
 									</div>
-								</td>
-							</tr>
-							<tr class="settings-row">
-								<td>Mark sounds as 'Played' after playing</td>
-								<td>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col s10 settings-description">
+									<h3>Mark sounds as 'Played' after playing</h3>
+								</div>
+								<div class="settings-switch col s2">
 									<div class="switch" style="text-align: right;">
 										<label>
-											<input id="settings-markPlayed" type="checkbox">
-											<span class="lever"></span>
-										</label>
+	  									<input id="settings-markPlayed" type="checkbox">
+	  									<span class="lever"></span>
+	  								</label>
 									</div>
-								</td>
-							</tr>
-							<tr class="settings-row">
-								<td>Fade In</td>
-								<td>
-									<input class='input-field' id="settings-fadeInTime" type="text" style="width: 50px;"></input>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="settings-description col s9">
+									<h3>Fade In</h3>
+								</div>
+								<div class="settings-switch col s3" style='text-align: right;'>
+									<input class='input-field' id="settings-fadeInTime" type="text" style="width: 50px; text-align:center;"></input>
 									<label>seconds</label>
-								</td>
-							</tr>
-							<tr class="settings-row">
-								<td>Fade Out</td>
-								<td>
-									<input class='input-field' id="settings-fadeOutTime" type="text" style="width: 50px;"></input>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="settings-description col s9">
+									<h3>Fade Out</h3>
+								</div>
+								<div class="settings-switch col s3" style='text-align: right;'>
+									<input class='input-field' id="settings-fadeOutTime" type="text" style="width: 50px; text-align:center;"></input>
 									<label>seconds</label>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End General Settings Table -->
-					<!-- Samples Table -->
-					<table id="samples-table" class="highlight global-settings-table" style="padding: 20px;">
-						<tbody>
+								</div>
+							</div>
+						</div>
+					</div>
 
-							<tr class="settings-row">
-								<td>Key Mode</td>
-								<td>
+					<!-- KEYBOARD SETTINGS CARD -->
+					<div class="card z-depth-4">
+						<div class="card-content">
+							<span class="card-title" style='font-weight:bold;'>Pages</span>
+							<div class="row">
+								<div class="col s8 settings-description">
+									<h3>Keypress Mode</h3>
+									<p>Toggle: Press on, press off // Momentary: Press on, hold, release off</p>
+								</div>
+								<div class="settings-switch col s4">
 									<div class="switch" style="text-align: right;">
 										<label>
 											Toggle
@@ -300,82 +312,87 @@
 											Momentary
 										</label>
 									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End Samples Settings Table -->
-					<!-- Playlist Settings Table -->
-					<table id="playlist-table" class="highlight global-settings-table" style="padding: 20px;">
-						<tbody>
-							<tr class="settings-row">
-								<td>Send played song to bottom?</td>
-								<td>
-									<div class="switch" style="text-align: right;">
-										<label>
-											<input id="settings-playlistSoundToBottom" type="checkbox">
-											<span class="lever"></span>
-										</label>
-									</div>
-								</td>
-							</tr>
-							<tr class="settings-row">
-								<td>Delete played songs?</td>
-								<td>
-									<div class="switch" style="text-align: right;">
-										<label>
-											<input id="settings-playlistSoundToDelete" type="checkbox">
-											<span class="lever"></span>
-										</label>
-									</div>
-								</td>
-							</tr>
-							<tr class="settings-row">
-								<td>Empty Playlist</td>
-								<td>
-									<div class="btn btn-settings" id="playlist-delete" style="float: right;" onclick="playlist.empty()">Empty</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End Playlist Settings Table -->
-				</div>
-			</div>
-			<div class="modal-footer ">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat" onclick="settings.saveSettings()" id="global-settings-save">Save</a>
-				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
-			</div>
-		</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-		<!-- Update modal -->
-		<div id="update-modal" class="modal model-fixed-footer" style="width:500px;">
-			<div class="modal-content" style="padding:0;">
-				<div class="header-row">
-					<h5 id="sound-settings-name" class="header" style="text-align: center; margin:0px; padding: 10px;">Update Available</h5>
-				</div>
-				<div style="text-align:center;">
-					<strong>
+					<!-- PLAYLIST SETTINGS CARD -->
+					<div class="card z-depth-4">
+						<div class="card-content">
+							<span class="card-title" style='font-weight:bold;'>Playlist</span>
+							<div class="row">
+								<div class="col s9 settings-description">
+									<h3>Send played song to bottom of the playlist</h3>
+								</div>
+								<div class="settings-switch col s3">
+									<div class="switch" style="text-align: right;">
+										<label>
+		  									<input id="settings-playlistSoundToBottom" type="checkbox">
+		  									<span class="lever"></span>
+	  									</label>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col s9 settings-description">
+									<h3>Delete played songs</h3>
+								</div>
+								<div class="settings-switch col s3">
+									<div class="switch" style="text-align: right;">
+										<label>
+		  									<input id="settings-playlistSoundToDelete" type="checkbox">
+		  									<span class="lever"></span>
+	  									</label>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col s9 settings-description">
+									<h3>Empty Playlist</h3>
+								</div>
+								<div class="settings-switch col s3">
+									<div class="btn btn-settings" id="playlist-delete" style="float: right;" onclick="playlist.empty()">Empty</div>
+								</div>
+							</div>
+						</div>
+					</div> <!-- End Card -->
+				</div> <!-- End col 12 -->
+			</div> <!-- End row -->
+		</div> <!-- End modal content -->
+	</div> <!-- End modal -->
+
+	<!-- Update modal -->
+	<div id="update-modal" class="modal model-fixed-footer" style="width:500px;">
+		<div class="modal-content" style="padding:0;">
+			<div class="header-row">
+				<h5 id="sound-settings-name" class="header" style="text-align: center; margin:0px; padding: 10px;">Update Available</h5>
+			</div>
+			<div style="text-align:center;">
+				<strong>
 					<p>Your version: <span id="update-cVersion"></span></p>
 					<p>New version: <span id="update-rVersion"></span></p>
 					<p>Released: <span id="update-date"></span></p>
 					</strong>
-					<div id="update-changelog"></div>
-					<p>Build Type: <span id="update-prerelease"></span></p>
-					<a class="btn z-depth-4 waves-effect waves-light" id="download-btn" href="#">Download Now!</a>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat">Later</a>
+				<div id="update-changelog"></div>
+				<p>Build Type: <span id="update-prerelease"></span></p>
+				<a class="btn z-depth-4 waves-effect waves-light" id="download-btn" href="#">Download Now!</a>
 			</div>
 		</div>
+		<div class="modal-footer">
+			<a href="#" class="modal-action modal-close waves-effect btn-flat">Later</a>
+		</div>
+	</div>
 
-		<!--Page Settings-->
-		<div id="page-modal" class="modal model-fixed-footer" style="width:500px;">
-			<div class="modal-content" style="padding:0;">
-				<h5 id="page-settings-name" class="header editable input-field" style="text-align: center">Page Name</h5>
-				<table class="highlight" style="padding: 20px;">
-					<tbody>
-						<!--<tr class="settings-row">
+	<!--Page Settings-->
+	<div id="page-modal" class="modal model-fixed-footer" style="width:500px;">
+		<div class="modal-content" style="padding:0;">
+			<h5 id="page-settings-name" class="header editable input-field" style="text-align: center">Page Name</h5>
+			<table class="highlight" style="padding: 20px;">
+				<tbody>
+					<!--<tr class="settings-row">
 							<td>Loop</td>
 							<td>
 								<div class="switch">
@@ -386,82 +403,82 @@
 								</div>
 							</td>
 						</tr>-->
-						<tr class="settings-row">
-							<td>Fade In</td>
-							<td>
-								<input class='input-field' id="page-settings-fadeInTime" type="text" style="width: 50px;"></input>
-								<label>seconds</label>
-								<div class="btn" id="page-settings-fadeInReset" style="float: right;">Reset</div>
-							</td>
-						</tr>
-						<tr class="settings-row">
-							<td>Fade Out</td>
-							<td>
-								<input class='input-field' id="page-settings-fadeOutTime" type="text" style="width: 50px;"></input>
-								<label>seconds</label>
-								<div class="btn" id="page-settings-fadeOutReset" style="float: right;">Reset</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="modal-action modal-close waves-effect btn-flat" id='page-save-button'>Save</a>
-				<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
-			</div>
+					<tr class="settings-row">
+						<td>Fade In</td>
+						<td>
+							<input class='input-field' id="page-settings-fadeInTime" type="text" style="width: 50px;"></input>
+							<label>seconds</label>
+							<div class="btn" id="page-settings-fadeInReset" style="float: right;">Reset</div>
+						</td>
+					</tr>
+					<tr class="settings-row">
+						<td>Fade Out</td>
+						<td>
+							<input class='input-field' id="page-settings-fadeOutTime" type="text" style="width: 50px;"></input>
+							<label>seconds</label>
+							<div class="btn" id="page-settings-fadeOutReset" style="float: right;">Reset</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
+		<div class="modal-footer">
+			<a href="#" class="modal-action modal-close waves-effect btn-flat" id='page-save-button'>Save</a>
+			<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+		</div>
+	</div>
 
 
-		<!-- Side Nav -->
-		<ul id="slide-out" class="side-nav">
-			<li>
-				<div class="userView">
-					<div class="background" style="background-color: var(--pM)">
-						<img src="assets/menu-bg.jpg" width=100%/>
-					</div>
-					<!--<a href="#!user"><img class="circle" src="images/profile.jpg"></a>-->
-					<a href="#!name"><span class="white-text">Menu</span></a>
+	<!-- Side Nav -->
+	<ul id="slide-out" class="side-nav">
+		<li>
+			<div class="userView">
+				<div class="background" style="background-color: var(--pM)">
+					<img src="assets/menu-bg.jpg" width=100%/>
 				</div>
-			</li>
-			<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
-			<li><a class="waves-effect" href="https://www.youtube.com/watch?v=NiGRmcRhiKg"><i class="material-icons">local_library</i>Beginner's Tutorial</a></li>
-			<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart REACTion</a></li>
-			<li>
-				<div class="divider "></div>
-			</li>
-			<li><a class="waves-effect " href="mailto:cathcart.brandon@gmail.com" target="_blank "><i class="material-icons ">report_problem</i>Report Issue</a></li>
-			<li><a class="waves-effect " href="http://paypal.me/BrandonCathcart"><i class="material-icons ">monetization_on</i>Donate</a></li>
-			<li><a class="waves-effect" href="#" onclick="view.openAbout()"><i class=" material-icons">info</i>About</a></li>
-		</ul>
+				<!--<a href="#!user"><img class="circle" src="images/profile.jpg"></a>-->
+				<a href="#!name"><span class="white-text">Menu</span></a>
+			</div>
+		</li>
+		<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
+		<li><a class="waves-effect" href="https://www.youtube.com/watch?v=NiGRmcRhiKg"><i class="material-icons">local_library</i>Beginner's Tutorial</a></li>
+		<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart REACTion</a></li>
+		<li>
+			<div class="divider "></div>
+		</li>
+		<li><a class="waves-effect " href="mailto:cathcart.brandon@gmail.com" target="_blank "><i class="material-icons ">report_problem</i>Report Issue</a></li>
+		<li><a class="waves-effect " href="http://paypal.me/BrandonCathcart"><i class="material-icons ">monetization_on</i>Donate</a></li>
+		<li><a class="waves-effect" href="#" onclick="view.openAbout()"><i class=" material-icons">info</i>About</a></li>
+	</ul>
 
 
 
-		<!-- JS SCRIPT IMPORTS -->
-		<script>
-			if (typeof module === 'object') {
-				window.module = module;
-				module = undefined;
-			}
-		</script>
-		<!-- JS vendor scripts and jQuery -->
-		<script src="scripts/vendor/jquery.min.js "></script>
-		<script src="scripts/vendor/jquery-ui.min.js"></script>
-		<script src="scripts/vendor/interact.min.js "></script>
-		<script src="data/keyCodes.js "></script>
-		<script src="scripts/main.js "></script>
-		<script src="scripts/vendor/defiant.min.js "></script>
-		<script src="scripts/vendor/sortable.js "></script>
-		<script src="scripts/vendor/jeditable.js "></script>
-		<script src="scripts/vendor/mousetrap.min.js "></script>
-		<script src='scripts/vendor/jquery.mousewheel.min.js'></script>
-		<script src="scripts/vendor/wavesurfer.js "></script>
-		<script src="scripts/vendor/wavesurfer.timeline.min.js "></script>
-		<script src="scripts/vendor/howler.js "></script>
-		<script src="scripts/vendor/materialize.min.js "></script>
-		<!-- Insert this line after script imports -->
-		<script>
-			if (window.module) module = window.module;
-		</script>
-	</body>
+	<!-- JS SCRIPT IMPORTS -->
+	<script>
+		if (typeof module === 'object') {
+			window.module = module;
+			module = undefined;
+		}
+	</script>
+	<!-- JS vendor scripts and jQuery -->
+	<script src="scripts/vendor/jquery.min.js "></script>
+	<script src="scripts/vendor/jquery-ui.min.js"></script>
+	<script src="scripts/vendor/interact.min.js "></script>
+	<script src="data/keyCodes.js "></script>
+	<script src="scripts/main.js "></script>
+	<script src="scripts/vendor/defiant.min.js "></script>
+	<script src="scripts/vendor/sortable.js "></script>
+	<script src="scripts/vendor/jeditable.js "></script>
+	<script src="scripts/vendor/mousetrap.min.js "></script>
+	<script src='scripts/vendor/jquery.mousewheel.min.js'></script>
+	<script src="scripts/vendor/wavesurfer.js "></script>
+	<script src="scripts/vendor/wavesurfer.timeline.min.js "></script>
+	<script src="scripts/vendor/howler.js "></script>
+	<script src="scripts/vendor/materialize.min.js "></script>
+	<!-- Insert this line after script imports -->
+	<script>
+		if (window.module) module = window.module;
+	</script>
+</body>
 
 </html>

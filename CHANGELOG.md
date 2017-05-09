@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Settings menu: Visual redesign
+- Settings menu: Saves when exiting (no need to save explicitly anymore) 
+
 ## [0.4.0] - 2017-05-07
 ### Added
 - Sound Settings: Set/remove 'Played' status
