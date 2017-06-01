@@ -168,7 +168,7 @@ function getRegion() {
     } else if (waveformedInfo.infoObj === "playlist") {
         playlistInfo[waveformedInfo.id] = waveformedInfo;
         console.log('saving playlistInfo');
-        storage.storeObj('playlistInfo', playlistInfo);
+        //storage.storeObj('playlistInfo', playlistInfo);
     }
     if (!waveformedInfo.howl.playing()) {
         //reloadSound = true;

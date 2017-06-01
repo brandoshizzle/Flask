@@ -62,36 +62,6 @@ function createPlaylistItem(soundInfo) {
 	$(afterThisSound).before(liString);
 }
 
-/**
- *	@desc:	Makes the playlist sortable - should probably make this also populate it
- *	@param:	soundInfo: The soundInfo object
- */
-function buildPlaylist() {
-	var el = document.getElementById('playlist-songs');
-	var sortable = Sortable.create(el, {
-		animation: 250,
-		onSort: function (evt) {
-			//console.log(evt.newIndex);
-			var first = true;
-			var sounds = $('.playlistSound');
-			// Go through each sound from first to where the dragged item was moved to
-			for(i = 0; i < evt.newIndex + 2; i++){
-				//console.log(sounds[i]);
-				if(sounds[i] === undefined){return;}
-				var style = window.getComputedStyle(sounds[i]);
-				if(style.display !== 'none'){
-					if(first){
-						$(sounds[i]).css('background-color', 'var(--aM)');
-						first = false;
-					} else {
-						$(sounds[i]).css('background-color', 'var(--bgL)');
-					}
-				}
-			}
-    }
-	});
-}
-
 // Open about modal
 function openAbout() {
 	$('#about-modal').modal('open');
@@ -117,7 +87,6 @@ function updateKey(soundInfo){
 module.exports = {
 	buildKeyboard: buildKeyboard,
 	createPlaylistItem: createPlaylistItem,
-	buildPlaylist: buildPlaylist,
 	openAbout: openAbout,
 	openColorPicker: openColorPicker,
 	updateKey: updateKey

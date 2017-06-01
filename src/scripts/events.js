@@ -79,9 +79,10 @@ function setKeyEvents() {
 				waveforms.load(newSoundInfo);
 				first = false;
 			}
-
 		}
-		storage.storeObj("playlistInfo", playlistInfo);
+		if(e.originalEvent.dataTransfer.files.length > 0){
+			storage.storeObj("playlistInfo", playlistInfo);
+		}
 		updatePlaylistClickFunctions(); // Ensure new songs react properly to clicking
 		return false;
 	});

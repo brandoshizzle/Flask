@@ -25,7 +25,8 @@ var defaults = {
 		},
 		'playlist':{
 			"soundToBottomAfterPlay": true,
-			"soundDeleteAfterPlay": false
+			"soundDeleteAfterPlay": false,
+			order: ''
 		},
 		'keyboard':{
 		}

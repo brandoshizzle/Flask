@@ -25,6 +25,7 @@ function saveSettings(){
 	settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val()*1000;
 	settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val()*1000;
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
+	console.log(settingsInfo);
 	storage.storeObj('settings', settingsInfo);
 }
 
@@ -100,6 +101,13 @@ function saveSoundSettings() {
 	} else {
 		fadeOutDiff = ($('#sound-settings-fadeOutTime').val()*1000 != settingsInfo.general.fadeOutTime);
 	}
+	if($('#sound-settings-fadeInTime').val() == 0){
+		fadeInDiff = 1;
+	}
+	if($('#sound-settings-fadeOutTime').val() == 0){
+		fadeOutDiff = 1;
+	}
+	console.log(fadeInDiff);
 	tempSoundInfo.fadeInTime = fadeInDiff ? $('#sound-settings-fadeInTime').val()*1000 : undefined;
 	tempSoundInfo.fadeOutTime = fadeOutDiff ? $('#sound-settings-fadeOutTime').val()*1000 : undefined;
 
@@ -111,13 +119,13 @@ function resetFade(soundOrPage, inOrOut) {
 	var fadeTime;
 	if(soundOrPage === 'sound'){
 		if(inOrOut === 'in'){
-			if(pagesInfo['page' + currentPage].fadeInTime){
+			if(pagesInfo['page' + currentPage].fadeInTime !== undefined){
 				fadeTime = pagesInfo['page' + currentPage].fadeInTime;
 			} else {
 				fadeTime = settingsInfo.general.fadeInTime;
 			}
 		} else {
-			if(pagesInfo['page' + currentPage].fadeOutTime){
+			if(pagesInfo['page' + currentPage].fadeOutTime !== undefined){
 				fadeTime = pagesInfo['page' + currentPage].fadeOutTime;
 			} else {
 				fadeTime = settingsInfo.general.fadeOutTime;
@@ -146,8 +154,8 @@ function openPageSettings(pageNum){
 	} else {
 		$('#page-settings-name').text('Page ' + pageNum);
 	}
-	$('#page-settings-fadeInTime').val((pageInfo.fadeInTime ? pageInfo.fadeInTime : settingsInfo.general.fadeInTime)/1000)
-	$('#page-settings-fadeOutTime').val((pageInfo.fadeOutTime ? pageInfo.fadeOutTime : settingsInfo.general.fadeOutTime)/1000)
+	$('#page-settings-fadeInTime').val(pages.getFadeTime(pageInfo, 'in'));
+	$('#page-settings-fadeOutTime').val(pages.getFadeTime(pageInfo, 'out'));
 
 	$('#page-modal').modal('open');
 }

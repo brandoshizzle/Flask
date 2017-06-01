@@ -4,10 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.4.1] - 2017-05-25
+### Added
+- Playlist: Dropdown on playlist header to access action items
+- Playlist: Can set initial order via playlist dropdown
+- Playlist: Can reset to initial order via dropdown
+- Playlist: Empty Playlist now has confirmation dialogue
+
+### Fixed
+- Fade times now work properly with 0 seconds
+- Playlist settings no longer stored after dragging/drop sounds within playlist
+- Reduced playlist animation time to improve performance
+
 ### Changed
 - Settings menu: Visual redesign
-- Settings menu: Saves when exiting (no need to save explicitly anymore) 
+- Settings menu: Saves when exiting (no need to save explicitly anymore)
+- Updated Sortable.js to v1.5.1
 
 ## [0.4.0] - 2017-05-07
 ### Added

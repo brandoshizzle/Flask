@@ -2,13 +2,67 @@
 /* jshint esversion: 6 */
 var searchString;
 var searchablePlaylistInfo;
+var sortable;
+var dontSet = true;
 //const soundInfoManager = require("./soundInfoManager");
+
+/**
+ *	@desc:	Makes the playlist sortable - should probably make this also populate it
+ *	@param:	soundInfo: The soundInfo object
+ */
+function buildPlaylist() {
+	var el = document.getElementById('playlist-songs');
+	sortable = Sortable.create(el, {
+		animation: 50,
+		onSort: function (evt) {
+			var first = true;
+			var sounds = $('.playlistSound');
+			// Go through each sound from first to where the dragged item was moved to
+			for(i = 0; i < evt.newIndex + 2; i++){
+				if(sounds[i] === undefined){return;}
+				var style = window.getComputedStyle(sounds[i]);
+				if(style.display !== 'none'){
+					if(first){
+						$(sounds[i]).css('background-color', 'var(--aM)');
+						first = false;
+					} else {
+						$(sounds[i]).css('background-color', 'var(--bgL)');
+					}
+				}
+			}
+    	},
+		store: {
+			/**
+			 * Get the order of elements. Called once during initialization.
+			 * @param   {Sortable}  sortable
+			 * @returns {Array}
+			 */
+			get: function (sortable) {
+				var order = settingsInfo.playlist.order;
+				console.log(order);
+				return order ? order.split('|') : [];
+			},
+
+			/**
+			 * Save the order of elements. Called onEnd (when the item is dropped).
+			 * @param {Sortable}  sortable
+			 */
+			set: function (sortable) {
+				if(dontSet){return;}
+				var order = sortable.toArray();
+				settingsInfo.playlist.order = order.join('|');
+				storage.storeObj('settings', settingsInfo);
+			}
+		}
+	});
+
+}
+
 
 $(document).ready(function() {
 
 	// Disable search function until it stops giving errors, then allow it
 	$('#playlist-search').prop('disabled', true);
-	$('#playlist-search').attr('placeholder', 'Loading...');
 	searchablePlaylistInfo = util.cloneObj(playlistInfo);
 	searchString = '//*[contains(name, \"'+ 'poop' + '\")]';
 	var testSearchInterval = setInterval(function(){
@@ -18,7 +72,6 @@ $(document).ready(function() {
 			return;
 		}
 		$('#playlist-search').prop('disabled', false);
-		$('#playlist-search').attr('placeholder', '');
 		clearInterval(testSearchInterval);
 	}, 200);
 
@@ -82,16 +135,52 @@ function registerPlaylistItems(){
 		$("#" + playlistInfo[id].id).find('.audioName').text(playlistInfo[id].name);
 		sounds.register(playlistInfo[id]);
 	});
+
+	// Set Sortable list
+	setOrder();
 }
 
 function empty(){
-	storage.emptyObj('playlistInfo', playlistInfo);
-	$('#playlist-songs').empty();
+	$('#confirm-empty-modal').modal('open');
+    $('#confirm-empty-modal-Okay').click(function(){
+		storage.emptyObj('playlistInfo', playlistInfo);
+		$('#playlist-songs').empty();
+	});
+}
+
+function saveOrder(){
+	dontSet = false;
+	sortable.save();
+	dontSet = true;
+	$('.btn-playlist-actions').dropdown('close');
+}
+
+function setOrder(){
+	sortable.sort(sortable.options.store.get(sortable));
+	var first = true;
+	var sounds = $('.playlistSound');
+	// Reset colors properly
+	for(i = 0; i < sounds.length; i++){
+		if(sounds[i] === undefined){return;}
+		var style = window.getComputedStyle(sounds[i]);
+		if(style.display !== 'none'){
+			if(first){
+				$(sounds[i]).css('background-color', 'var(--aM)');
+				first = false;
+			} else {
+				$(sounds[i]).css('background-color', 'var(--bgL)');
+			}
+		}
+	}
+
 }
 
 
 module.exports = {
+	build: buildPlaylist,
 	getFirstPlaylistItem: getFirstPlaylistItem,
 	registerPlaylistItems: registerPlaylistItems,
-	empty: empty
+	empty: empty,
+	saveOrder: saveOrder,
+	setOrder: setOrder
 };

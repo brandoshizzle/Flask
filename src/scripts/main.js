@@ -39,8 +39,11 @@ var reloadSound = false;
  **/
 $(document).ready(function() {
 	update.checkForUpdate();
+	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
+	storage.checkAgainstDefault(settingsInfo, 'settings');
+	console.log(settingsInfo);
 	view.buildKeyboard();		// Create all the keys
-	view.buildPlaylist();		// Set up the playlist (no sounds)
+	playlist.build();		// Set up the playlist (no sounds)
 	waveforms.buildWaveform();		// Set up the waveform
 	$('.version').text(pjson.version);	// Add the version number to the "version" spans
 	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
@@ -59,9 +62,6 @@ $(document).ready(function() {
 
 	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage
 	playlist.registerPlaylistItems();
-	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
-	storage.checkAgainstDefault(settingsInfo, 'settings');
-	console.log(settingsInfo);
 	Object.keys(pagesInfo).map(function(page, index){
 		pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
 		//console.log(pagesNumSounds);
@@ -76,10 +76,27 @@ $(document).ready(function() {
 
 	$('.modal').modal({
 		opacity: 0.7,
+	});
+
+	$('#settings-modal').modal({
 		complete: function(){
+			console.log('SAVING GENERAL SETTINGS!')
 			settings.saveSettings();
 		}
 	});
+
+	$('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: true, // Displays dropdown below the button
+      alignment: 'right', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+
 	$(".menu-icon").sideNav({
 		closeOnClick: true
 	});
@@ -97,13 +114,13 @@ $(document).ready(function() {
 	$('.global-settings-table').hide();
 	$('#keyboard' + currentPage).show();
 
-	$('.selectable').selectable({
+	/*$('.selectable').selectable({
 		stop: function(){
 				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();
 				$('.global-settings-table').hide();
 				$('#'+selected+"-table").show();
 		}
-	});
+	});*/
 
 	// Set ability to move waveform region handles
 	interact('#waveform-region')

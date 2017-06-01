@@ -291,16 +291,36 @@ function defaultSoundInfo(){
 function getFadeTime(soundInfo, direction){
 	if(soundInfo.infoObj === 'playlist'){
 		if(direction === 'in'){
-			return soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+			if(soundInfo.fadeInTime === undefined){
+				return settingsInfo.general.fadeInTime;
+			} else {
+				return soundInfo.fadeInTime;
+			}
 		} else if(direction === 'out'){
-			return soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+			if(soundInfo.fadeOutTime === undefined){
+				return settingsInfo.general.fadeOutTime;
+			} else {
+				return soundInfo.fadeOutTime;
+			}
 		}
 	} else {
 		var currentPageInfo = pagesInfo['page' + currentPage];
 		if(direction === 'in'){
-			return soundInfo.fadeInTime || currentPageInfo.fadeInTime || settingsInfo.general.fadeInTime;
+			if(soundInfo.fadeInTime !== undefined){
+				return soundInfo.fadeInTime;
+			} else if(currentPageInfo.fadeInTime !== undefined){
+				return currentPageInfo.fadeInTime;
+			} else{
+				return settingsInfo.general.fadeInTime;
+			}
 		} else if(direction === 'out'){
-			return soundInfo.fadeOutTime || currentPageInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+			if(soundInfo.fadeOutTime !== undefined){
+				return soundInfo.fadeOutTime;
+			} else if(currentPageInfo.fadeOutTime !== undefined){
+				return currentPageInfo.fadeOutTime;
+			} else {
+				return settingsInfo.general.fadeOutTime;
+			}
 		}
 	}
 

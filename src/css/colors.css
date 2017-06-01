@@ -5,80 +5,82 @@
 
 @import 'vendor/open-color.css';
 :root {
-  --pM: var(--oc-blue-5);
-  --pD: var(--oc-blue-9);
-  --pL: var(--oc-blue-4);
-  --aM: var(--oc-yellow-4);
-  --tL: var(--oc-gray-0);
-  --tM: var(--oc-blue-2);
-  --tD: var(--oc-gray-9);
-  --bgD: var(--oc-gray-9);
-  --bgM: var(--oc-gray-8);
-  --bgL: var(--oc-gray-6);
+    --pM: var(--oc-blue-5);
+    --pD: var(--oc-blue-9);
+    --pL: var(--oc-blue-4);
+    --aM: var(--oc-yellow-4);
+    --tL: var(--oc-gray-0);
+    --tM: var(--oc-blue-2);
+    --tD: var(--oc-gray-9);
+    --bgD: var(--oc-gray-9);
+    --bgM: var(--oc-gray-8);
+    --bgL: var(--oc-gray-6);
 }
 
 body {
-  background-color: var(--bgD);
+    background-color: var(--bgD);
 }
 
 .playlistBox {
-  background-color: var(--bgM);
+    background-color: var(--bgM);
 }
 
 #playlist-songs li:first-child {
-  background-color: var(--aM);
+    background-color: var(--aM);
 }
 
 #playlist-songs li {
-  background-color: var(--bgL);
-  color: var(--tD);
+    background-color: var(--bgL);
+    color: var(--tD);
 }
 
 #playlist-search {
-  color: var(--bgL);
+    color: var(--bgL);
 }
 
 #waveform {
-  background-color: var(--oc-gray-8);
+    background-color: var(--oc-gray-8);
 }
 
-#waveform-region{
-  background-color: var(--pD);
+#waveform-region {
+    background-color: var(--pD);
 }
 
 #waveform-info {
-  background-color: var(--aM);
+    background-color: var(--aM);
 }
 
 .header-row {
-  background-color: var(--pM);
-  color: var(--tL);
+    background-color: var(--pM);
+    color: var(--tL);
 }
 
 .section-header {
-  color: var(--oc-gray-6);
+    color: var(--oc-gray-6);
 }
 
 .btn {
-  background-color: var(--pM);
-  color: var(--tL);
+    background-color: var(--pM);
+    color: var(--tL);
 }
 
 .btn:hover {
-  background-color: var(--pL);
+    background-color: var(--pL);
 }
 
 .btn-key {
-  box-shadow: 0px 4px 0px 0px var(--pD);
+    box-shadow: 0px 4px 0px 0px var(--pD);
 }
 
 .btn-key:hover {
-  box-shadow: 0px 3px 0px 0px var(--pD);
+    box-shadow: 0px 3px 0px 0px var(--pD);
 }
 
 .waveformed-key {
-  box-shadow: 0px 0px 2px 1px white !important;
+    box-shadow: 0px 0px 2px 1px white !important;
 }
+
+
 /*
 .waveformed-key::after {
   content: '';
@@ -107,61 +109,86 @@ body {
   opacity: 1;
 }
 */
+
 .waveformed-key:hover {
-  /*box-shadow: 0px 0px 5px 2px white !important;*/
+    /*box-shadow: 0px 0px 5px 2px white !important;*/
 }
 
 .playing-sound {
-  box-shadow: 0px 0px 5px 5px var(--aM) !important;
-  -webkit-animation: glowingPlay ease-in-out 3s infinite;
+    box-shadow: 0px 0px 5px 5px var(--aM) !important;
+    -webkit-animation: glowingPlay ease-in-out 3s infinite;
 }
 
 @-webkit-keyframes glowingPlay {
-  from{box-shadow: 0px 0px 5px var(--aM) !important;}
-  50%{box-shadow: 0px 0px 3px var(--aM);}
-  to{box-shadow: 0px 0px 5px var(--aM) !important;}
+    from {
+        box-shadow: 0px 0px 5px var(--aM) !important;
+    }
+    50% {
+        box-shadow: 0px 0px 3px var(--aM);
+    }
+    to {
+        box-shadow: 0px 0px 5px var(--aM) !important;
+    }
 }
 
 .playing-sound:hover {
-  box-shadow: 0px 0px 2px 2px var(--aM) !important;
+    box-shadow: 0px 0px 2px 2px var(--aM) !important;
 }
 
 .tabs .tab a {
-  color: var(--tL);
+    color: var(--tL);
 }
 
 .tabs .tab a:hover, .tabs .tab a.active {
-  background-color: transparent;
-  color: var(--aM);
+    background-color: transparent;
+    color: var(--aM);
 }
 
 .tabs .tab.disabled a, .tabs .tab.disabled a:hover {
-  color: rgba(102, 147, 153, 0.7);
+    color: rgba(102, 147, 153, 0.7);
 }
 
 .tabs .indicator {
-  background-color: var(--aM);
+    background-color: var(--aM);
 }
 
 
 /* label focus color */
 
 .input-field input[type=text]:focus+label {
-  color: var(--pM);
+    color: var(--pM);
 }
 
 
 /* label underline focus color */
 
 input[type=text]:focus {
-  border-bottom: 1px solid var(--pM);
-  box-shadow: 0 1px 0 0 var(--pM);
+    border-bottom: 1px solid var(--pM);
+    box-shadow: 0 1px 0 0 var(--pM);
 }
 
 .switch label input[type=checkbox]:checked+.lever {
-  background-color: var(--pL);
+    background-color: var(--pL);
 }
 
 .switch label input[type=checkbox]:checked+.lever:after {
-  background-color: var(--pM);
+    background-color: var(--pM);
+}
+
+.btn-playlist-actions {
+    background-color: var(--bgM);
+    color: var(--oc-gray-4);
+}
+.btn-playlist-actions:hover {
+    background-color: var(--oc-gray-7);
+}
+
+.dropdown-content li a{
+    background-color: var(--oc-gray-7);
+    color: var(--oc-gray-4);
+}
+
+.dropdown-content li a:hover{
+    background-color: var(--oc-gray-4);
+    color: var(--oc-gray-9);
 }

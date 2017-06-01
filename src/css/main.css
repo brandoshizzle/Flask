@@ -394,3 +394,27 @@ hr{
     border:0;
     border-top:1px solid lightgray;
 }
+
+.btn-playlist-actions{
+    display:inline-block;
+    float: right;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.dropdown-content li a{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.dropdown-content li{
+    min-height: 0px;
+}
+
+.alertify-logs .show,
+.alertify-logs .hide {
+  display: inherit !important;
+}
