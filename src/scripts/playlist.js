@@ -172,6 +172,7 @@ function setOrder(){
 			}
 		}
 	}
+	$('.btn-playlist-actions').dropdown('close');
 
 }
 
