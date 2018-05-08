@@ -17,7 +17,7 @@
 		<div>
 			<a data-activates="slide-out" class="button-collapse menu-icon"><i class="material-icons">menu</i></a>
 			<img src="assets/logo.png" style="display: inline-block; height: 25px;" />
-			<h4 id="programTitle" style='text-shadow: 0px 2px 2px black;'><strong>REACT</strong>ion</h4>
+			<h4 id="programTitle" style='text-shadow: 0px 2px 2px black;'><strong>FLASK</strong></h4>
 			<!--<h6 id='volume' style='display:inline; margin-left: 50px;'></h6>-->
 			<div id="loadedContainer">
 				<div id="loadedCount">Loading</div>
@@ -106,8 +106,10 @@
 			<input id="playlist-search" class="search" type="text" />
 			<label for="playlist-search">Search</label>
 		</div>
-		<ul id="playlist-songs" class="scrollbar-y list">
-		</ul>
+		<div class="playlist-songs-container">
+			<ul id="playlist-songs" class="scrollbar-y list">
+			</ul>
+		</div>
 	</div>
 
 	<!-- The waveform box-->
@@ -221,12 +223,12 @@
 	<!-- ABOUT MODAL -->
 	<div id="about-modal" class="modal" style="width:500px">
 		<div class="modal-content" style="text-align: center">
-			<h5 id="sound-settings-name" class="header" style="text-align: center">REACTion</h5>
+			<h5 id="sound-settings-name" class="header" style="text-align: center">FLASK</h5>
 			<h6>Making improvising sound easy.</h6>
 			<p>Version <span class="version"></span></p>
 			<p>Developed by <a href="mailto:cathcart.brandon@gmail.com">Brandon Cathcart</a></a>
 			</p>
-			<p>Like REACTion? <a href="http://paypal.me/BrandonCathcart">Buy me a beer! :)</a></p>
+			<p>Like FLASK? <a href="http://paypal.me/BrandonCathcart">Buy me a beer! :)</a></p>
 			<span style="font-size: 11px">
 					<p>Copyright 2017 Brandon Cathcart</p>
 					<p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at </p>
@@ -304,6 +306,22 @@
 						<div class="card-content">
 							<span class="card-title" style='font-weight:bold;'>Pages</span>
 							<div class="row">
+								<div class="col s9 settings-description">
+									<h3>Solo Sound</h3>
+									<p>Page Only: Allow one sound on the active page to be played at a time</p>
+									<p>Page and Playlist: Allow one sound on the active page and playlist to be played at a time.</p>
+								</div>
+								<div class="settings-switch col s3" style="text-align: right;">
+									<div class="input-field">
+										<select id="settings-soloSound">
+									      <option value="off">Off</option>
+									      <option value="pages">Page Only</option>
+									      <option value="all">Page and Playlist</option>
+									    </select>
+									</div>
+								</div>
+							</div>
+							<!--<div class="row">
 								<div class="col s8 settings-description">
 									<h3>Keypress Mode</h3>
 									<p>Toggle: Press on, press off // Momentary: Press on, hold, release off</p>
@@ -318,7 +336,7 @@
 										</label>
 									</div>
 								</div>
-							</div>
+							</div>-->
 						</div>
 					</div>
 
@@ -452,7 +470,7 @@
 		</li>
 		<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
 		<li><a class="waves-effect" href="https://www.youtube.com/watch?v=NiGRmcRhiKg"><i class="material-icons">local_library</i>Beginner's Tutorial</a></li>
-		<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart REACTion</a></li>
+		<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart FLASK</a></li>
 		<li>
 			<div class="divider "></div>
 		</li>
@@ -494,7 +512,7 @@
 	<script src='scripts/vendor/jquery.mousewheel.min.js'></script>
 	<script src="scripts/vendor/wavesurfer.js "></script>
 	<script src="scripts/vendor/wavesurfer.timeline.min.js "></script>
-	<script src="scripts/vendor/howler.js "></script>
+	<script src="scripts/vendor/howler.min.js "></script>
 	<script src="scripts/vendor/materialize.min.js "></script>
 
 	<!-- Insert this line after script imports -->

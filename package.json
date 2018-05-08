@@ -1,6 +1,6 @@
 {
-  "name": "REACTion",
-  "version": "0.4.1",
+  "name": "FLASK",
+  "version": "0.5.0",
   "description": "Software for improvising sound",
   "main": "index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "circular-json": "^0.3.1",
     "fs-jetpack": "^0.10.5",
     "gh-latest-release": "^1.0.0",
-    "marked": "^0.3.6"
+    "marked": "^0.3.6",
+    "npm": "^5.7.1"
   }
 }

@@ -11,6 +11,10 @@ function openSettings() {
 	// Set playlist settings
 	$('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlist.soundToBottomAfterPlay);
 	$('#settings-playlistSoundToDelete').prop('checked', settingsInfo.playlist.soundDeleteAfterPlay);
+	// Set pages settingsInfo
+	console.log(settingsInfo.pages.soloSound);
+	$('#settings-soloSound').val(settingsInfo.pages.soloSound).change();
+	$("select").material_select();
 
 	$('.global-settings-table').hide();
 	$('#general-table').show();
@@ -25,6 +29,7 @@ function saveSettings(){
 	settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val()*1000;
 	settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val()*1000;
 	settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
+	settingsInfo.pages.soloSound = $('#settings-soloSound').val();
 	console.log(settingsInfo);
 	storage.storeObj('settings', settingsInfo);
 }

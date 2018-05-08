@@ -84,7 +84,7 @@ function loadWavesurfer(soundInfo) {
                 var currentTime = position * rWSDur();
                 var howl = waveformedInfo.howl;
                 howl.seek(currentTime);
-                console.log(howl.seek());
+                //console.log(howl.seek());
                 wavesurfer.un('seek');
             });
 
@@ -97,17 +97,18 @@ function loadWavesurfer(soundInfo) {
  *					Loads the waveform, determines whether it should be tracking, then does it
  *	@param: soundInfo: The sound info object being waveformed
  */
-function setWaveformTracking(soundInfo, doNotLoad) {
-    var doNotLoad = doNotLoad || false;
+function setWaveformTracking(soundInfo, doNotLoadPassed) {
+    var doNotLoad = doNotLoadPassed || false;
+    var playing;
     try {
-        var playing = soundInfo.howl.playing();
+        playing = soundInfo.howl.playing();
     } catch (e) {
-        var playing = false;
+        playing = false;
     }
 
     //blog(waveformedInfo.name + ", " + playState);
     if (playing) {
-        blog('Tracking on waveform');
+        //blog('Tracking on waveform');
         sI = setInterval(trackOnWaveform, 50);
     } else {
         clearInterval(sI);
@@ -184,7 +185,7 @@ function getRegion() {
  *	@param: soundInfo: The sound info object being waveformed
  */
 function setRegion(soundInfo) {
-    console.log('setting region');
+    //console.log('setting region');
     var start = (soundInfo.startTime / rWSDur()) * $('#waveform').width();
     var end = (soundInfo.endTime / rWSDur()) * $('#waveform').width() - 4; // 4 is an empirical offset
     $('#waveform-region').css('left', start);

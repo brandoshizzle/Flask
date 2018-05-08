@@ -3,7 +3,6 @@
  */
 /*jshint esversion: 6 */
 
-var playlistPlayingSoundInfo;
 var firstPlaylistSound;
 var loadedCount = 0;
 var stopping = 0;
@@ -25,7 +24,7 @@ function registerSound(soundInfo) {
 				sound:[soundInfo.startTime, 5000]
 			},*/
 		  onend: function() {
-		    console.log('Finished!');
+		    //console.log('Finished!');
 				stop(soundInfo);
 		  },
 			onload: function(){
@@ -48,7 +47,7 @@ function registerSound(soundInfo) {
 			},
 			onplay: function(){
 				var fadeTime = getFadeTime(soundInfo, 'in');
-				console.log(fadeTime);
+				//console.log(fadeTime);
 				if(fadeTime >= 0){
 					soundInfo.fadeIn();
 				}
@@ -65,7 +64,7 @@ function registerSound(soundInfo) {
 				clearInterval(soundInfo.endCheck);
 			},
 			onstop: function(){
-				console.log('stopped');
+				//console.log('stopped');
 				soundInfo.paused = false;
 				clearInterval(soundInfo.fadeInterval);
 				clearInterval(soundInfo.endCheck);
@@ -101,38 +100,52 @@ function playSound(soundInfo) {
 	if(settingsInfo.general.stopSounds === true){
 		//soundInfo.soundInstance.paused = false;
 	}
-	// Check currentInstances to see if the key is playing or not
-	// REMOVED IN V0.3.0
-	/*if (soundInfo.soundInstance === undefined) { // in case it doesn't exist
-		blog('Creating and playing new instance.');
-		play();
-		// Song is currently playing - stop it.
-	} else */ if (soundInfo.howl.playing() /*&& !soundInfo.paused === false*/) {
+
+	if (soundInfo.howl.playing()) {
 		soundInfo.fadeOut();
-		//stop(soundInfo);
 		// Song is not playing, so play it.
 	} else {
-		//var ppc = setPPC(soundInfo); // Set play properties
 		play();
 	}
 
 	function play() {
+		var key;
 		if(soundInfo.infoObj === 'playlist'){
 			if(playlistPlayingSoundInfo !== undefined){
-				stop(playlistPlayingSoundInfo);
+				//console.log("playlist info is defined, fading out sound");
+				playlistPlayingSoundInfo.fadeOut();
 				return;
 			}
 			playlistPlayingSoundInfo = soundInfo;
 		}
 		// Sound is not paused, play it
-		console.log(soundInfo.endTime);
 		if(!soundInfo.paused){
 			soundInfo.howl.seek(soundInfo.startTime);
 		}
 		var fadeTime = getFadeTime(soundInfo, 'in');
 		soundInfo.howl.volume((fadeTime > 0) ? 0 : 1);
+
+		// Fade out currently playing sounds if user has selected that option
+		if((settingsInfo.pages.soloSound === "pages" || settingsInfo.pages.soloSound === "all") && soundInfo.infoObj !== 'playlist'){
+			for(key in keyInfo){
+				if(keyInfo[key].howl.playing()){
+					keyInfo[key].fadeOut();
+				}
+			}
+		}
+		if(settingsInfo.pages.soloSound === "all"){
+			for(key in keyInfo){
+				if(keyInfo[key].howl.playing()){
+					keyInfo[key].fadeOut();
+				}
+			}
+			for(var item in playlistInfo){
+				if(playlistInfo[item].howl.playing()){
+					playlistInfo[item].fadeOut();
+				}
+			}
+		}
 		soundInfo.howl.play();
-		//reloadSound = false;
 		waveforms.track(soundInfo);
 		$('#' + soundInfo.id).removeClass('played');
 		$('#' + soundInfo.id).addClass('playing-sound');
@@ -153,7 +166,9 @@ function stop(soundInfo){
 	}
 	// If the song is stopped in the playlist
 	if (soundInfo.infoObj === "playlist") {
+		console.log("Stopping playlist item");
 		playlistPlayingSoundInfo = undefined;
+		console.log("Playlist Info is undefined");
 		if(settingsInfo.playlist.soundDeleteAfterPlay){
 			delete playlistInfo[soundInfo.id];
 			$("#" + soundInfo.id).remove();
@@ -283,7 +298,6 @@ function defaultSoundInfo(){
 		"atEnding": function(){
 			var fadeT = getFadeTime(this, 'out');
 			return (this.howl.seek() + fadeT/1000) > this.endTime;
-			console.log(true);
 		}
 	};
 }

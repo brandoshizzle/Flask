@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+
 const fs = require("fs");
 const jsPath = "./scripts/";
 const clock = require(jsPath + "clock");
@@ -26,6 +27,7 @@ var keyInfo = {};
 var pagesInfo = {};
 var playlistInfo = {};
 var settingsInfo = {};
+var playlistPlayingSoundInfo;
 var sI;
 var currentPage = 1;
 var debug = 1;
@@ -46,7 +48,7 @@ $(document).ready(function() {
 	playlist.build();		// Set up the playlist (no sounds)
 	waveforms.buildWaveform();		// Set up the waveform
 	$('.version').text(pjson.version);	// Add the version number to the "version" spans
-	$('title').text('REACTion v' + pjson.version);	// Add the version number to the title
+	$('title').text('FLASK v' + pjson.version);	// Add the version number to the title
 	//createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
 
 	pagesInfo = storage.getInfoObj("pagesInfo");	// Load all of the key sounds from storage
@@ -114,6 +116,10 @@ $(document).ready(function() {
 	$('.global-settings-table').hide();
 	$('#keyboard' + currentPage).show();
 
+	$(document).ready(function() {
+    	$('select').material_select();
+  	});
+
 	/*$('.selectable').selectable({
 		stop: function(){
 				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();
@@ -152,7 +158,8 @@ $(document).ready(function() {
 			$(event.target).css('transition', '0.5s');
 		});
 
-		var dragStartPage;
+		// DRAGGING CODE
+		/*var dragStartPage;
     $( ".draggable" ).draggable({
 			helper: 'clone',
 			zIndex: 10000,
@@ -201,6 +208,7 @@ $(document).ready(function() {
 				}
       }
     });
+	*/
 
 	$('.tabs').mousewheel(function(e, delta) {
 		this.scrollLeft -= (delta * 40);
@@ -228,7 +236,7 @@ window.onerror = function(msg, url, line, col, error) {
 	extra += !error ? '' : '\nerror: ' + error;
 
 	// You can view the information in an alert to see things working like this:
-	dialog.showErrorBox('You broke REACTion :(', 'Please send this to the developer:\n' + msg + "\nurl: " + url + "\nline: " + line);
+	dialog.showErrorBox('You broke FLASK :(', 'Please send this to the developer:\n' + msg + "\nurl: " + url + "\nline: " + line);
 	//alert("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
 
 	var suppressErrorAlert = true;

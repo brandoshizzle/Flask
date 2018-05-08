@@ -28,7 +28,8 @@ var defaults = {
 			"soundDeleteAfterPlay": false,
 			order: ''
 		},
-		'keyboard':{
+		'pages':{
+			"soloSound": "off"
 		}
 	},
 	'pageInfo' : {

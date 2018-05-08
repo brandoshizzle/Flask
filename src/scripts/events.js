@@ -186,13 +186,11 @@ function setKeyEvents() {
 						return;
 					}
 					// If a sound is playing, make sure to stop it, not play the first one
-					if(playlistPlayingSound.playing === true){
-						soundId = playlistPlayingSound.id;
-						playlistPlayingSound.playing = false;
+					if(playlistPlayingSoundInfo){
+						soundId = playlistPlayingSoundInfo.id;
 					} else {	// Get first playlist sound
 						soundId = playlist.getFirstPlaylistItem();
-						playlistPlayingSound.id = soundId;
-						playlistPlayingSound.playing = true;
+						//console.log('got the first item');
 					}
 					sounds.playSound(playlistInfo[soundId]);
 			}
@@ -200,10 +198,14 @@ function setKeyEvents() {
 			if(key === 'ESCAPE'){
 				// Stop all playing sounds immediately
 				for(key in keyInfo){
-					keyInfo[key].howl.stop();
+					if(keyInfo[key].howl.playing()){
+						keyInfo[key].howl.stop();
+					}
 				}
 				for(key in playlistInfo){
-					playlistInfo[key].howl.stop();
+					if(playlistInfo[key].howl.playing()){
+						playlistInfo[key].howl.stop();
+					}
 				}
 				// TODO: Remove all played formatting.
 				$('.btn-key, .playlistSound').removeClass('playing-sound');

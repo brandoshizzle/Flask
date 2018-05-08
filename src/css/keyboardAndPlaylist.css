@@ -75,7 +75,11 @@
 #playlist-songs {
   margin: 0;
   position: relative;
-  height: 81%;
+  height: 100%;
+}
+
+.playlist-songs-container{
+    height: calc(100% - 106px);
 }
 
 .playlistBox {

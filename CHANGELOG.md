@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.0] - 2018-05-06
+### Added
+- Panic switch (Global stop) by pressing ESCAPE
+- Solo sound options - choose to auto-stop playing sounds when a new sound starts
+
+### Fixed
+- Fixed issue with playlist not switching song after fade out
+- General refactoring and cleaning of code
+
+### Changed
+- Name (Wowee!)
+- Removed dragging of keys
+- Enlarged the playlist box vertically
+- Upgraded to Interact.js v1.3.3
+- Upgraded Howler.js to v2.0.10
+
 ## [0.4.1] - 2017-05-25
 ### Added
 - Playlist: Dropdown on playlist header to access action items
