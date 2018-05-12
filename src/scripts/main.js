@@ -110,7 +110,8 @@ $(document).ready(function() {
 			return value;
 		}
 	}, {
-		type: 'text'
+		type: 'text',
+		tooltip: 'Click to edit'
 	});
 
 	$('.global-settings-table').hide();

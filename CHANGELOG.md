@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.5.0] - 2018-05-06
+## Unreleased
+### Changed
+- Misc fonts/logos related to new name
+- JEditable updated to v2.02
+
+## [0.5.0] - 2018-05-09
 ### Added
 - Panic switch (Global stop) by pressing ESCAPE
 - Solo sound options - choose to auto-stop playing sounds when a new sound starts
@@ -19,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Enlarged the playlist box vertically
 - Upgraded to Interact.js v1.3.3
 - Upgraded Howler.js to v2.0.10
+- Updated npm package dependencies
 
 ## [0.4.1] - 2017-05-25
 ### Added

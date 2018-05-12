@@ -1,5 +1,5 @@
 {
-  "name": "FLASK",
+  "name": "Flask",
   "version": "0.5.0",
   "description": "Software for improvising sound",
   "main": "index.js",
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/brandoshizzle/REATion#readme",
   "devDependencies": {
-    "electron": "^1.4.13",
+    "electron": "1.8.6",
     "electron-builder": "^10.17.3",
     "electron-builder-squirrel-windows": "^11.5.0",
     "gh-release": "^2.2.0"
@@ -37,7 +37,7 @@
     "circular-json": "^0.3.1",
     "fs-jetpack": "^0.10.5",
     "gh-latest-release": "^1.0.0",
-    "marked": "^0.3.6",
-    "npm": "^5.7.1"
+    "marked": "^0.3.19",
+    "npm": "^5.8.0"
   }
 }
