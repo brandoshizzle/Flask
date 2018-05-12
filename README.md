@@ -1,4 +1,4 @@
-# <img src="src/assets/logo.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" height="30" />REACTion
+# <img src="src/assets/logo.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" height="30" />Flask
 
 Making improvising sound easy.
 
@@ -12,13 +12,15 @@ Latest Stable Release: [v0.4.1](https://github.com/brandoshizzle/REACTion/releas
 
 ## Basic Instructions
 
-* Drag a sound onto a key or the playlist to add it to the program
-* Press DELETE when a song is selected to delete it
-* Click on a sound to load its waveform
-* Right click on a sound to bring up its settings
-* Drag the edges of the waveform to adjust sound start/end time (usually works, sometimes sound decides to play from beginning)
-* Drag playlist items to reorder, drag sounds to different keys (on same page)
+* Drag sounds onto a key or the playlist to add it to the program
+* Press the key to play the sound, press it again to stop
 * Press space to play the first item of the playlist (highlighted in yellow)
+* Right click on a sound to bring up its settings
+* Click on a sound to load its waveform
+* Hold CTRL and drag the edge of the waveform to adjust start/end points
+* Drag playlist items to reorder, CTRL+C/X and CTRL+V to move sounds around on the keyboards
+* Press DELETE when a song is selected to delete it
+* F1-F8 to switch pages
 
 ## Changelog
 See full Changelog [here](CHANGELOG.md)
@@ -28,15 +30,15 @@ See full Changelog [here](CHANGELOG.md)
 REACTion is lovingly built with these amazing projects:
 * [Electron](http://electron.atom.io/)
 * [Materialize](http://materializecss.com/)
-* [jQuery](https://jquery.com/)
 * [Howler](https://github.com/goldfire/howler.js)
 * [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
-* [Jeditable](https://github.com/tuupola/jquery_jeditable)
 * [Sortable](https://github.com/RubaXa/Sortable)
+* [Jeditable](https://github.com/tuupola/jquery_jeditable)
+* [jQuery](https://jquery.com/)
 
 ## License
 
-Copyright 2017 Brandon Cathcart
+Copyright 2018 Brandon Cathcart
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
