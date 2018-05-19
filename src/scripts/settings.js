@@ -63,6 +63,12 @@ function openSoundSettings(soundInfo) {
 	$(idStart + "played").prop('checked', $('#' + soundInfo.id).hasClass('played'));
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
+
+	// Set up volume event handler
+	$(idStart + "volume").on('input',function(){
+		var vol = $(idStart + "volume").val()/125;
+		soundInfo.howl.volume(vol);
+	});
 }
 
 /**
