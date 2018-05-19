@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!--Import materialize.css and main.css-->
 	<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+	<link rel="stylesheet" href="css/vendor/nouislider.css">
 	<link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 
@@ -171,11 +172,12 @@
 					<tr class="settings-row" id="color-row">
 						<td>Volume</td>
 						<td>
-							  <form action="#">
+							<div id="sound-settings-volume"></div>
+							  <!--<form action="#">
 							    <p class="range-field">
 							      <input type="range" id="sound-settings-volume" min="0" max="125" value="100" />
 							    </p>
-							  </form>
+							  </form>-->
 						</td>
 					</tr>
 					<!--<tr class="settings-row">
@@ -526,6 +528,7 @@
 	<script src="scripts/vendor/wavesurfer.timeline.min.js "></script>
 	<script src="scripts/vendor/howler.min.js "></script>
 	<script src="scripts/vendor/materialize.min.js "></script>
+	<script src="scripts/vendor/nouislider.min.js"></script>
 
 	<!-- Insert this line after script imports -->
 	<script>

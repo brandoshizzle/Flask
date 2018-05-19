@@ -252,7 +252,7 @@ function defaultSoundInfo(){
 		"loop": false,
 		"startTime": 0,
 		"endTime": null,
-		'volume': 1,
+		'volume': 0.8,
 		"playlistPosition": undefined,
 		"fadeIn": function(){
 				if(this.atEnding()){

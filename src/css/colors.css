@@ -192,3 +192,15 @@ input[type=text]:focus {
     background-color: var(--oc-gray-4);
     color: var(--oc-gray-9);
 }
+
+.noUi-connect{
+    background: var(--pM);
+  }
+
+.noUi-target.noUi-horizontal .noUi-tooltip{
+    background-color: var(--pM);
+}
+
+.noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle{
+    background-color: var(--pM);
+}

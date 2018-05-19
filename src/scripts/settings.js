@@ -61,12 +61,15 @@ function openSoundSettings(soundInfo) {
 	$(idStart + "fadeInTime").val(fadeInTime/1000);
 	$(idStart + "fadeOutTime").val(fadeOutTime/1000);
 	$(idStart + "played").prop('checked', $('#' + soundInfo.id).hasClass('played'));
+	volSlider.noUiSlider.set(soundInfo.volume * 125);
+	$(idStart + "volume").val(soundInfo.volume*125);
 	settingsSoundInfo = soundInfo;
 	$('#sound-settings').modal('open');
 
+	
 	// Set up volume event handler
-	$(idStart + "volume").on('input',function(){
-		var vol = $(idStart + "volume").val()/125;
+	volSlider.noUiSlider.on('update',function(){
+		var vol = volSlider.noUiSlider.get().replace('%','')/125;
 		soundInfo.howl.volume(vol);
 	});
 }
@@ -100,6 +103,9 @@ function saveSoundSettings() {
 	} else {
 		$('#' + settingsSoundInfo.id).removeClass('played');
 	}
+
+	tempSoundInfo.volume = volSlider.noUiSlider.get().replace('%','')/125;
+
 	//tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 	var fadeInDiff, fadeOutDiff;
 	if(pagesInfo['page' + currentPage].fadeInTime){
@@ -118,7 +124,7 @@ function saveSoundSettings() {
 	if($('#sound-settings-fadeOutTime').val() == 0){
 		fadeOutDiff = 1;
 	}
-	console.log(fadeInDiff);
+	//console.log(fadeInDiff);
 	tempSoundInfo.fadeInTime = fadeInDiff ? $('#sound-settings-fadeInTime').val()*1000 : undefined;
 	tempSoundInfo.fadeOutTime = fadeOutDiff ? $('#sound-settings-fadeOutTime').val()*1000 : undefined;
 

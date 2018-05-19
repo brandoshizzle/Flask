@@ -27,6 +27,7 @@ var keyInfo = {};
 var pagesInfo = {};
 var playlistInfo = {};
 var settingsInfo = {};
+var volSlider;
 var playlistPlayingSoundInfo;
 var sI;
 var currentPage = 1;
@@ -120,6 +121,27 @@ $(document).ready(function() {
 	$(document).ready(function() {
     	$('select').material_select();
   	});
+
+	volSlider = document.getElementById('sound-settings-volume');
+	noUiSlider.create(volSlider, {
+		start: [100],
+		connect: [true,false],
+		step: 1,
+		orientation: 'horizontal', // 'horizontal' or 'vertical'
+		range: {
+			'min': 0,
+			'max': 125
+		},
+		format: {
+			to: function ( value ) {
+			  return Math.round(value) + '%';
+			},
+			from: function ( value ) {
+			  return value.replace('%', '');
+			}
+		  }
+	});
+
 
 	/*$('.selectable').selectable({
 		stop: function(){
