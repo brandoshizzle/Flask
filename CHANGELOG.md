@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Added
+- Volume control for individual sounds
+
 ### Changed
 - Misc fonts/logos related to new name
 - JEditable updated to v2.02

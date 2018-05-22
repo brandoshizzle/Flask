@@ -3,22 +3,22 @@
 const fs = require("fs");
 const jsPath = "./scripts/";
 const clock = require(jsPath + "clock");
-const colors = require(jsPath + 'colors');
-const events = require(jsPath + 'events');
-const pages = require(jsPath + 'pages');
-const playlist = require(jsPath + 'playlist');
-const settings = require(jsPath + 'settings');
-const sounds = require(jsPath + 'sounds');
-const storage = require(jsPath + 'storage');
-const update = require(jsPath + 'update');
-const util = require(jsPath + 'util');
-const view = require(jsPath + 'view');
+const colors = require(jsPath + "colors");
+const events = require(jsPath + "events");
+const pages = require(jsPath + "pages");
+const playlist = require(jsPath + "playlist");
+const settings = require(jsPath + "settings");
+const sounds = require(jsPath + "sounds");
+const storage = require(jsPath + "storage");
+const update = require(jsPath + "update");
+const util = require(jsPath + "util");
+const view = require(jsPath + "view");
 const waveforms = require(jsPath + "waveforms");
-var pjson = require('../package.json');
+var pjson = require("../package.json");
 
-const dialog = require('electron').remote.dialog;
-const app = require('electron').remote.app;
-var shell = require('electron').shell;
+const dialog = require("electron").remote.dialog;
+const app = require("electron").remote.app;
+var shell = require("electron").shell;
 
 var wavesurfer;
 var keys;
@@ -41,148 +41,140 @@ var reloadSound = false;
  * Set up program
  **/
 $(document).ready(function() {
-	update.checkForUpdate();
-	settingsInfo = storage.getInfoObj('settings');	// Load the program settings
-	storage.checkAgainstDefault(settingsInfo, 'settings');
-	console.log(settingsInfo);
-	view.buildKeyboard();		// Create all the keys
-	playlist.build();		// Set up the playlist (no sounds)
-	waveforms.buildWaveform();		// Set up the waveform
-	$('.version').text(pjson.version);	// Add the version number to the "version" spans
-	$('title').text('FLASK v' + pjson.version);	// Add the version number to the title
-	//createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);	// Default to HTML audio, not WebAudio (sigh)
+    update.checkForUpdate();
+    settingsInfo = storage.getInfoObj("settings"); // Load the program settings
+    storage.checkAgainstDefault(settingsInfo, "settings");
+    console.log(settingsInfo);
+    view.buildKeyboard(); // Create all the keys
+    playlist.build(); // Set up the playlist (no sounds)
+    waveforms.buildWaveform(); // Set up the waveform
+    $(".version").text(pjson.version); // Add the version number to the "version" spans
+    $("title").text("FLASK v" + pjson.version); // Add the version number to the title
 
-	pagesInfo = storage.getInfoObj("pagesInfo");	// Load all of the key sounds from storage
-	// If there is no pagesInfo object, try loading legacy keyInfo into first page
-	pages.ensurePageExists(1);
-	// Update all pages with any new properties
-	Object.keys(pagesInfo).map(function(page, index) {
-		storage.checkAgainstDefault(pagesInfo[page], 'pageInfo');
-	});
-	pages.registerKeyInfos(); // register all sounds and put them on keys
-	pages.loadNames();
-	keyInfo = pagesInfo.page1.keyInfo;	// load page 1 into active keyboard, aka keyInfo
+    pagesInfo = storage.getInfoObj("pagesInfo"); // Load all of the key sounds from storage
+    // If there is no pagesInfo object, try loading legacy keyInfo into first page
+    pages.ensurePageExists(1);
+    // Update all pages with any new properties
+    Object.keys(pagesInfo).map(function(page, index) {
+        storage.checkAgainstDefault(pagesInfo[page], "pageInfo");
+    });
+    pages.registerKeyInfos(); // register all sounds and put them on keys
+    pages.loadNames();
+    keyInfo = pagesInfo.page1.keyInfo; // load page 1 into active keyboard, aka keyInfo
 
-	playlistInfo = storage.getInfoObj("playlistInfo");	// Load all of the playlist sounds from storage
-	playlist.registerPlaylistItems();
-	Object.keys(pagesInfo).map(function(page, index){
-		pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
-		//console.log(pagesNumSounds);
-	});
-	totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
-	if(totalNumSounds === 0){
-		$('#loadedContainer').hide();
-	}
-	events.setKeyEvents();	// Set up all the key presses/clicks/interaction
-	clock.start();	// Start the clock
-	colors.initializeKeyColors();	// Load all the key colors!
-
-	$('.modal').modal({
-		opacity: 0.7,
-	});
-
-	$('#settings-modal').modal({
-		complete: function(){
-			console.log('SAVING GENERAL SETTINGS!')
-			settings.saveSettings();
-		}
-	});
-
-	$('.dropdown-button').dropdown({
-      inDuration: 300,
-      outDuration: 225,
-      constrainWidth: false, // Does not change width of dropdown to that of the activator
-      hover: true, // Activate on hover
-      gutter: 0, // Spacing from edge
-      belowOrigin: true, // Displays dropdown below the button
-      alignment: 'right', // Displays dropdown with edge aligned to the left of button
-      stopPropagation: false // Stops event propagation
+    playlistInfo = storage.getInfoObj("playlistInfo"); // Load all of the playlist sounds from storage
+    playlist.registerPlaylistItems();
+    Object.keys(pagesInfo).map(function(page, index) {
+        pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
+        //console.log(pagesNumSounds);
+    });
+    totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
+    if (totalNumSounds === 0) {
+        $("#loadedContainer").hide();
     }
-  );
+    events.setKeyEvents(); // Set up all the key presses/clicks/interaction
+    clock.start(); // Start the clock
+    colors.initializeKeyColors(); // Load all the key colors!
 
-	$(".menu-icon").sideNav({
-		closeOnClick: true
-	});
-	// Set editable text properties
-	$('.editable').editable(function(value, settings) {
-		if (value === "") {
-			return "Hit enter after typing!";
-		} else {
-			return value;
-		}
-	}, {
-		type: 'text',
-		tooltip: 'Click to edit'
-	});
+    $(".modal").modal({
+        opacity: 0.7
+    });
 
-	$('.global-settings-table').hide();
-	$('#keyboard' + currentPage).show();
+    $("#settings-modal").modal({
+        complete: function() {
+            console.log("SAVING GENERAL SETTINGS!");
+            settings.saveSettings();
+        }
+    });
 
-	$(document).ready(function() {
-    	$('select').material_select();
-  	});
+    $(".dropdown-button").dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        constrainWidth: false, // Does not change width of dropdown to that of the activator
+        hover: true, // Activate on hover
+        gutter: 0, // Spacing from edge
+        belowOrigin: true, // Displays dropdown below the button
+        alignment: "right", // Displays dropdown with edge aligned to the left of button
+        stopPropagation: false // Stops event propagation
+    });
 
-	volSlider = document.getElementById('sound-settings-volume');
-	noUiSlider.create(volSlider, {
-		start: [100],
-		connect: [true,false],
-		step: 1,
-		orientation: 'horizontal', // 'horizontal' or 'vertical'
-		range: {
-			'min': 0,
-			'max': 125
-		},
-		format: {
-			to: function ( value ) {
-			  return Math.round(value) + '%';
-			},
-			from: function ( value ) {
-			  return value.replace('%', '');
-			}
-		  }
-	});
+    $(".menu-icon").sideNav({
+        closeOnClick: true
+    });
+    // Set editable text properties
+    $(".editable").editable(
+        function(value, settings) {
+            if (value === "") {
+                return "Hit enter after typing!";
+            } else {
+                return value;
+            }
+        },
+        {
+            type: "text",
+            tooltip: "Click to edit"
+        }
+    );
 
+    $(".global-settings-table").hide();
+    $("#keyboard" + currentPage).show();
 
-	/*$('.selectable').selectable({
-		stop: function(){
-				var selected = $('#settings-categories > .ui-selected').text().toLowerCase();
-				$('.global-settings-table').hide();
-				$('#'+selected+"-table").show();
-		}
-	});*/
+    $(document).ready(function() {
+        $("select").material_select();
+    });
 
-	// Set ability to move waveform region handles
-	interact('#waveform-region')
-		.resizable({
-			preserveAspectRatio: false,
-			edges: {
-				left: true,
-				right: true,
-				bottom: false,
-				top: false
-			},
-			restrict: {
-				restriction: 'parent'
-			}
-		})
-		.on('resizemove', function(event) {
-			var target = event.target,
-				x = (parseFloat(target.getAttribute('data-x')) || 0);
-			// update the element's style
-			target.style.width = event.rect.width + 'px';
-			x += event.deltaRect.left;
-			target.style.webkitTransform = target.style.transform =
-				'translate(' + x + 'px, 0px)';
-			target.setAttribute('data-x', x);
-			$(event.target).css('transition', '0s');
-		})
-		.on('resizeend', function(event) {
-			waveforms.getRegion();
-			$(event.target).css('transition', '0.5s');
-		});
+    volSlider = document.getElementById("sound-settings-volume");
+    noUiSlider.create(volSlider, {
+        start: [100],
+        connect: [true, false],
+        step: 1,
+        orientation: "horizontal", // 'horizontal' or 'vertical'
+        range: {
+            min: 0,
+            max: 125
+        },
+        format: {
+            to: function(value) {
+                return Math.round(value) + "%";
+            },
+            from: function(value) {
+                return value.replace("%", "");
+            }
+        }
+    });
 
-		// DRAGGING CODE
-		/*var dragStartPage;
+    // Set ability to move waveform region handles
+    interact("#waveform-region")
+        .resizable({
+            preserveAspectRatio: false,
+            edges: {
+                left: true,
+                right: true,
+                bottom: false,
+                top: false
+            },
+            restrict: {
+                restriction: "parent"
+            }
+        })
+        .on("resizemove", function(event) {
+            var target = event.target,
+                x = parseFloat(target.getAttribute("data-x")) || 0;
+            // update the element's style
+            target.style.width = event.rect.width + "px";
+            x += event.deltaRect.left;
+            target.style.webkitTransform = target.style.transform =
+                "translate(" + x + "px, 0px)";
+            target.setAttribute("data-x", x);
+            $(event.target).css("transition", "0s");
+        })
+        .on("resizeend", function(event) {
+            waveforms.getRegion();
+            $(event.target).css("transition", "0.5s");
+        });
+
+    // DRAGGING CODE
+    /*var dragStartPage;
     $( ".draggable" ).draggable({
 			helper: 'clone',
 			zIndex: 10000,
@@ -233,43 +225,41 @@ $(document).ready(function() {
     });
 	*/
 
-	$('.tabs').mousewheel(function(e, delta) {
-		this.scrollLeft -= (delta * 40);
-		e.preventDefault();
-	});
+    $(".tabs").mousewheel(function(e, delta) {
+        this.scrollLeft -= delta * 40;
+        e.preventDefault();
+    });
 
-	//open links externally by default
-    $(document).on('click', 'a[href^="http"]', function(event) {
+    //open links externally by default
+    $(document).on("click", 'a[href^="http"]', function(event) {
         event.preventDefault();
         shell.openExternal(this.href);
     });
-
-	// Trigger file loaded event after each preloading
-	//createjs.Sound.on("fileload", sounds.fileLoaded);
-
 });
 
-function restart(){
-	app.relaunch();
-	app.quit();
+function restart() {
+    app.relaunch();
+    app.quit();
 }
 
 window.onerror = function(msg, url, line, col, error) {
-	var extra = !col ? '' : '\ncolumn: ' + col;
-	extra += !error ? '' : '\nerror: ' + error;
+    var extra = !col ? "" : "\ncolumn: " + col;
+    extra += !error ? "" : "\nerror: " + error;
 
-	// You can view the information in an alert to see things working like this:
-	dialog.showErrorBox('You broke FLASK :(', 'Please send this to the developer:\n' + msg + "\nurl: " + url + "\nline: " + line);
-	//alert("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
+    // You can view the information in an alert to see things working like this:
+    dialog.showErrorBox(
+        "You broke FLASK :(",
+        "Please send this to the developer:\n" +
+            msg +
+            "\nurl: " +
+            url +
+            "\nline: " +
+            line
+    );
+    //alert("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
 
-	var suppressErrorAlert = true;
-	// If you return true, then error alerts (like in older versions of
-	// Internet Explorer) will be suppressed.
-	return suppressErrorAlert;
+    var suppressErrorAlert = true;
+    // If you return true, then error alerts (like in older versions of
+    // Internet Explorer) will be suppressed.
+    return suppressErrorAlert;
 };
-
-function blog(message) {
-	if (debug === 1) {
-		console.log(message);
-	}
-}
