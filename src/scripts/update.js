@@ -63,7 +63,7 @@ function versionUpdates(){
 	/*
 	var changelog = fs.readFileSync("./CHANGELOG.md", "utf8");
 	var pVersion = settingsInfo.utility.pVersion;
-	var cVersion = pjson.version;
+	
 	$('#update-cVersion').text(cVersion);
 	$('#update-rVersion').text(pVersion);
 	$('#update-changelog').html(marked(changelog));
@@ -72,6 +72,7 @@ function versionUpdates(){
 	settingsInfo.utility.pVersion = cVersion;
 	$('#update-modal').modal('open');
 	*/
+	var cVersion = pjson.version;
 	settingsInfo.utility.firstOpen = false;
 	settingsInfo.utility.pVersion = cVersion;
 	storage.storeObj("settings", settingsInfo);
