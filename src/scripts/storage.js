@@ -30,6 +30,10 @@ var defaults = {
 		},
 		'pages':{
 			"soloSound": "off"
+		},
+		'utility':{
+			"firstOpen": true,
+			"pVersion": "0.1.0"
 		}
 	},
 	'pageInfo' : {

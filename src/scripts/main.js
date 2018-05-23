@@ -41,10 +41,11 @@ var reloadSound = false;
  * Set up program
  **/
 $(document).ready(function() {
-    update.checkForUpdate();
     settingsInfo = storage.getInfoObj("settings"); // Load the program settings
     storage.checkAgainstDefault(settingsInfo, "settings");
-    console.log(settingsInfo);
+    update.checkForUpdate();
+    update.versionUpdates();
+    //console.log(settingsInfo);
     view.buildKeyboard(); // Create all the keys
     playlist.build(); // Set up the playlist (no sounds)
     waveforms.buildWaveform(); // Set up the waveform
@@ -128,6 +129,7 @@ $(document).ready(function() {
         start: [100],
         connect: [true, false],
         step: 1,
+        behaviour: 'drag',
         orientation: "horizontal", // 'horizontal' or 'vertical'
         range: {
             min: 0,

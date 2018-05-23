@@ -269,6 +269,11 @@ function setKeyEvents() {
 		settings.resetFade('sound','out');
 	});
 
+	$('#volume-row').dblclick(function(e) {
+		console.log('yo');
+		volSlider.noUiSlider.set(100);
+	});
+
 	$('#page-settings-fadeInReset').click(function(e) {
 		settings.resetFade('page','in');
 	});

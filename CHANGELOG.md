@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
 - Volume control for individual sounds
+- Double-click volume bar to reset to 100%
 
 ### Changed
 - Misc fonts/logos related to new name
