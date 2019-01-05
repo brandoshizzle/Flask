@@ -32,7 +32,6 @@ var defaults = {
 			"soloSound": "off"
 		},
 		'utility':{
-			"firstOpen": true,
 			"pVersion": "0.1.0"
 		}
 	},

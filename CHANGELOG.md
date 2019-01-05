@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Solo sound options - choose to auto-stop playing sounds when a new sound starts
 - Volume control for individual sounds
 - Double-click volume bar to reset to 100%
+- Show changelog on first time after update
 
 ### Fixed
 - Fixed issue with playlist not switching song after fade out

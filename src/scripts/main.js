@@ -43,9 +43,6 @@ var reloadSound = false;
 $(document).ready(function() {
     settingsInfo = storage.getInfoObj("settings"); // Load the program settings
     storage.checkAgainstDefault(settingsInfo, "settings");
-    update.checkForUpdate();
-    update.versionUpdates();
-    //console.log(settingsInfo);
     view.buildKeyboard(); // Create all the keys
     playlist.build(); // Set up the playlist (no sounds)
     waveforms.buildWaveform(); // Set up the waveform
@@ -67,8 +64,8 @@ $(document).ready(function() {
     playlist.registerPlaylistItems();
     Object.keys(pagesInfo).map(function(page, index) {
         pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
-        //console.log(pagesNumSounds);
     });
+    update.checkForUpdate();
     totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
     if (totalNumSounds === 0) {
         $("#loadedContainer").hide();
