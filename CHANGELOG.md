@@ -4,31 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.6.0] - 2018-05-22
-### Added
-- Volume control for individual sounds
-- Double-click volume bar to reset to 100%
-
-### Changed
-- Misc fonts/logos related to new name
-- JEditable updated to v2.02
-
-## [0.5.0] - 2018-05-09
+## [0.5.0] - XXXX-XX-XX
 ### Added
 - Panic switch (Global stop) by pressing ESCAPE
 - Solo sound options - choose to auto-stop playing sounds when a new sound starts
+- Volume control for individual sounds
+- Double-click volume bar to reset to 100%
 
 ### Fixed
 - Fixed issue with playlist not switching song after fade out
+- Fixed issue with loaded bar not hiding when errors loading songs
+- Removed missed restricted characters from song ids
 - General refactoring and cleaning of code
 
 ### Changed
 - Name (Wowee!)
+- Misc fonts/logos related to new name
+- JEditable updated to v2.02
 - Removed dragging of keys
 - Enlarged the playlist box vertically
 - Upgraded to Interact.js v1.3.3
 - Upgraded Howler.js to v2.0.10
 - Updated npm package dependencies
+
 
 ## [0.4.1] - 2017-05-25
 ### Added

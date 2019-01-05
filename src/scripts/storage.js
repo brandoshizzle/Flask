@@ -103,6 +103,11 @@ function emptyObj(objName, obj){
 	storeObj(objName, obj);
 }
 
+/**
+ *	@desc: Ensures that all loaded settings and soundInfos have the properties they need
+ *				Called when loading stored keyInfo and settings
+ *	@param: key: The letter (or character) of the key to check (string)
+ */
 function checkAgainstDefault(obj, defaultName) {
 	var changed = false;
 	// Update the object with any new properties

@@ -100,7 +100,7 @@ function saveSoundSettings() {
     var tempSoundInfo = settingsSoundInfo;
     if (tempSoundInfo.path != $("#sound-settings-path").val()) {
         tempSoundInfo.path = $("#sound-settings-path").val();
-        sounds.register(tempSoundInfo);
+        sounds.createNewHowl(tempSoundInfo);
         waveforms.load(tempSoundInfo);
         //view.resetEndTime();
         //view.resetStartTime();
@@ -197,6 +197,20 @@ function resetFade(soundOrPage, inOrOut) {
     }
 }
 
+function resetVolumes(){
+    for(var page in pagesInfo){
+        for(var key in pagesInfo[page].keyInfo){
+            pagesInfo[page].keyInfo[key].volume = 0.8;
+        }
+    }
+    for(var sound in playlistInfo){
+        playlistInfo[sound].volume = 0.8;
+    }
+    keyInfo = pagesInfo.page1.keyInfo;
+    storage.storeObj("pagesInfo", pagesInfo);
+	storage.storeObj("playlistInfo", playlistInfo);
+}
+
 function openPageSettings(pageNum) {
     var pageInfo = pagesInfo["page" + pageNum];
     if (pageInfo.name) {
@@ -242,5 +256,6 @@ module.exports = {
     saveSoundSettings: saveSoundSettings,
     resetFade: resetFade,
     openPageSettings: openPageSettings,
-    savePageSettings: savePageSettings
+    savePageSettings: savePageSettings,
+    resetVolumes: resetVolumes
 };

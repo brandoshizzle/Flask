@@ -241,6 +241,7 @@ tr td {
   border: 2px solid gray;
   border-radius: 4px;
   background-color: var(--oc-gray-2);
+  z-index: 1000;
 }
 
 .color-picker-color {

@@ -1,6 +1,6 @@
 {
   "name": "Flask",
-  "version": "0.6.0",
+  "version": "0.5.0",
   "description": "Software for improvising sound",
   "main": "index.js",
   "scripts": {

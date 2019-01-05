@@ -126,7 +126,7 @@ function registerPlaylistItems() {
         $("#" + playlistInfo[id].id)
             .find(".audioName")
             .text(playlistInfo[id].name);
-        sounds.register(playlistInfo[id]);
+        sounds.createNewHowl(playlistInfo[id]);
     });
 
     // Set Sortable list

@@ -208,7 +208,7 @@ $(document).ready(function() {
 				keyInfo[targetId].id = targetId;
 				try {
 					pagesInfo['page' + dragStartPage].keyInfo[draggedId].id = draggedId;
-					sounds.register(pagesInfo['page' + dragStartPage].keyInfo[draggedId]);
+					sounds.createNewHowl(pagesInfo['page' + dragStartPage].keyInfo[draggedId]);
 				} catch(err){
 					draggedInfo = {};
 					storage.checkAgainstDefault(draggedInfo, 'soundInfo');
@@ -217,7 +217,7 @@ $(document).ready(function() {
 					delete pagesInfo['page' + dragStartPage].keyInfo[draggedId];
 				}
 				// re-register the sounds
-				sounds.register(keyInfo[targetId]);
+				sounds.createNewHowl(keyInfo[targetId]);
 				view.updateKey(keyInfo[targetId]);
 				if(currentPage === dragStartPage && keyInfo[draggedId] !== undefined){
 					keyInfo = pagesInfo['page'+currentPage].keyInfo;	// updates properly

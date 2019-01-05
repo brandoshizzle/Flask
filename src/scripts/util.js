@@ -33,7 +33,7 @@ function cleanName(name) {
 function prepareForId(str) {
     var replaced = str
         .replace(/ /g, "_")
-        .replace(/[{()}',.]/g, "")
+        .replace(/[{()}',.!@#$%^*]/g, "")
         .replace(/[&]/g, "and")
         .replace(/[[\]]/g, "");
     return replaced;
@@ -105,7 +105,7 @@ function pasteKey(destinationSoundInfo) {
     keyInfo[id] = destinationSoundInfo;
     view.updateKey(keyInfo[id]);
     storage.checkAgainstDefault(keyInfo[id], "soundInfo");
-    sounds.register(keyInfo[id]);
+    sounds.createNewHowl(keyInfo[id]);
     $("#" + id).removeClass("played");
     pagesInfo["page" + currentPage].keyInfo = keyInfo;
     storage.storeObj("pagesInfo", pagesInfo);

@@ -12,7 +12,7 @@ var stopping = 0;
  *					Sounds that fail the path check get the soundNotLoaded class
  *	@param:	soundInfo: Object containing info related to the sound object
  */
-function registerSound(soundInfo) {
+function createNewHowl(soundInfo) {
     // Check if path to sound file exists
     if (fs.existsSync(soundInfo.path)) {
         // Register sound with Howler
@@ -27,13 +27,10 @@ function registerSound(soundInfo) {
                 if (soundInfo.endTime === null) {
                     soundInfo.endTime = soundInfo.howl.duration();
                 }
-
-                loadedCount++;
-                var loadedPercent = loadedCount / totalNumSounds * 100 + "%";
-                $("#loadedCount").width(loadedPercent);
-                if (loadedCount === totalNumSounds) {
-                    $("#loadedContainer").css("display", "none");
-                }
+                addToLoadingBar();
+            },
+            onloaderror: function(){
+                addToLoadingBar();
             },
             onplay: function() {
                 var fadeTime = getFadeTime(soundInfo, "in");
@@ -61,18 +58,21 @@ function registerSound(soundInfo) {
                     soundInfo.startTime / soundInfo.howl.duration()
                 );
             }
-            /*
-			onfade: function(){
-				if(stopping){
-					stop(soundInfo);
-					stopping = false;
-				}
-			}*/
         });
     } else {
-        // Let the user know with a toast
+        // Song path does not exist - don't load the song
         Materialize.toast(soundInfo.name + " was not found.", 3000);
         $("#" + soundInfo.id).addClass("soundNotLoaded");
+        addToLoadingBar();
+    }
+}
+
+function addToLoadingBar(){
+    loadedCount++;
+    var loadedPercent = loadedCount / totalNumSounds * 100 + "%";
+    $("#loadedCount").width(loadedPercent);
+    if (loadedCount === totalNumSounds) {
+        $("#loadedContainer").css("display", "none");
     }
 }
 
@@ -89,13 +89,11 @@ function playSound(soundInfo) {
     }
 
     if (soundInfo.howl.playing()) {
+        // Song is playing. Fade it out
         soundInfo.fadeOut();
-        // Song is not playing, so play it.
+        return;
     } else {
-        play();
-    }
-
-    function play() {
+        // Song is not playing, so play it.
         var key;
         if (soundInfo.infoObj === "playlist") {
             if (playlistPlayingSoundInfo !== undefined) {
@@ -112,7 +110,7 @@ function playSound(soundInfo) {
         var fadeTime = getFadeTime(soundInfo, "in");
         soundInfo.howl.volume(fadeTime > 0 ? 0 : 1);
 
-        // Fade out currently playing sounds if user has selected that option
+        // Fade out currently playing sounds if user has selected solo sounds
         if (
             (settingsInfo.pages.soloSound === "pages" ||
                 settingsInfo.pages.soloSound === "all") &&
@@ -183,6 +181,10 @@ function getDuration(soundInfo) {
     return (soundInfo.howl.duration() / 1000).toFixed(2);
 }
 
+/**
+ *	@desc:	The constructor function for a new sound info object. 
+ *	@param:	None.
+ */
 function defaultSoundInfo() {
     return {
         id: "",
@@ -281,7 +283,7 @@ function getFadeTime(soundInfo, direction) {
 }
 
 module.exports = {
-    register: registerSound,
+    createNewHowl: createNewHowl,
     playSound: playSound,
     getDuration: getDuration,
     stop: stop,
