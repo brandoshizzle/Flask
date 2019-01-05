@@ -4,8 +4,8 @@
  *		storeObj, checkKeyInfo, loadKeyInfo, cleanName
  */
 /*jshint esversion: 6 */
-const circularJSON = require('circular-json');
-const dialog = require('electron').remote.dialog;
+const circularJSON = require("circular-json");
+const dialog = require("electron").remote.dialog;
 var clipboard;
 
 /**
@@ -14,15 +14,15 @@ var clipboard;
  *	@return: The initial name without the file type ending
  */
 function cleanName(name) {
-	name = name.toString();
-	var pos = name.lastIndexOf("\\");
-	// If \ is not found, user is on OSX - check for /
-	if (pos === -1) {
-		pos = name.lastIndexOf("\/");
-	}
-	name = name.substring(pos + 1);
-	pos = name.lastIndexOf(".");
-	return name.substring(0, pos);
+    name = name.toString();
+    var pos = name.lastIndexOf("\\");
+    // If \ is not found, user is on OSX - check for /
+    if (pos === -1) {
+        pos = name.lastIndexOf("/");
+    }
+    name = name.substring(pos + 1);
+    pos = name.lastIndexOf(".");
+    return name.substring(0, pos);
 }
 
 /**
@@ -31,8 +31,12 @@ function cleanName(name) {
  *	@return: The prepared name
  */
 function prepareForId(str) {
-	var replaced = str.replace(/ /g, '_').replace(/[{()}',.]/g, '').replace(/[&]/g, 'and').replace(/[[\]]/g,'');
-	return replaced;
+    var replaced = str
+        .replace(/ /g, "_")
+        .replace(/[{()}',.!@#$%^*]/g, "")
+        .replace(/[&]/g, "and")
+        .replace(/[[\]]/g, "");
+    return replaced;
 }
 
 /**
@@ -40,21 +44,23 @@ function prepareForId(str) {
  *	@param: none
  */
 function openBrowse() {
-	var currentPath = $('#sound-settings-path').val();
-	var options = {
-		title: 'Replace Sound File',
-		defaultPath: currentPath,
-		filters: [{
-			name: '*.wav, *.mp3, *.m4a, *.wma, *ogg',
-			extensions: ['wav', 'mp3', 'm4a', 'mp4', 'wma', 'ogg']
-		}],
-		properties: ['openFile']
-	};
-	var newPath = dialog.showOpenDialog(options);
-	if (newPath !== undefined) {
-		$('#sound-settings-path').val(newPath);
-		$('#sound-settings-name').text(cleanName(newPath));
-	}
+    var currentPath = $("#sound-settings-path").val();
+    var options = {
+        title: "Replace Sound File",
+        defaultPath: currentPath,
+        filters: [
+            {
+                name: "*.wav, *.mp3, *.m4a, *.wma, *ogg",
+                extensions: ["wav", "mp3", "m4a", "mp4", "wma", "ogg"]
+            }
+        ],
+        properties: ["openFile"]
+    };
+    var newPath = dialog.showOpenDialog(options);
+    if (newPath !== undefined) {
+        $("#sound-settings-path").val(newPath);
+        $("#sound-settings-name").text(cleanName(newPath));
+    }
 }
 
 /**
@@ -63,54 +69,55 @@ function openBrowse() {
  *	@return: A duplicate of that object
  */
 function cloneObj(obj) {
-	return circularJSON.parse(circularJSON.stringify(obj));
+    return circularJSON.parse(circularJSON.stringify(obj));
 }
 
 function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) return false;
     }
     return true;
 }
 
-function copyKey(copiedSoundInfo){
-	clipboard = cloneObj(copiedSoundInfo);
+function copyKey(copiedSoundInfo) {
+    clipboard = cloneObj(copiedSoundInfo);
 }
 
-function cutKey(cutSoundInfo){
-	clipboard = cloneObj(cutSoundInfo);
-	var id = cutSoundInfo.id;
-	$('#' + id).removeClass('played');
-	$('#' + id).css("background-color", 'var(--pM)');
-	$("#" + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
-	$('#' + id).find('.audioName').text('');
-	delete keyInfo[cutSoundInfo.id];
-	//createjs.Sound.removeSound(id);
-	pagesInfo['page' + currentPage].keyInfo = keyInfo;
-	storage.storeObj('pagesInfo', pagesInfo);
+function cutKey(cutSoundInfo) {
+    clipboard = cloneObj(cutSoundInfo);
+    var id = cutSoundInfo.id;
+    $("#" + id).removeClass("played");
+    $("#" + id).css("background-color", "var(--pM)");
+    $("#" + id).css("box-shadow", "0px 4px 0px 0px var(--pD)");
+    $("#" + id)
+        .find(".audioName")
+        .text("");
+    delete keyInfo[cutSoundInfo.id];
+    //createjs.Sound.removeSound(id);
+    pagesInfo["page" + currentPage].keyInfo = keyInfo;
+    storage.storeObj("pagesInfo", pagesInfo);
 }
 
-function pasteKey(destinationSoundInfo){
-	var id = destinationSoundInfo.id;
-	destinationSoundInfo = clipboard;
-	destinationSoundInfo.id = id;
-	keyInfo[id] = destinationSoundInfo;
-	view.updateKey(keyInfo[id]);
-	storage.checkAgainstDefault(keyInfo[id], 'soundInfo')
-	sounds.register(keyInfo[id]);
-	$('#' + id).removeClass('played');
-	pagesInfo['page' + currentPage].keyInfo = keyInfo;
-	storage.storeObj('pagesInfo', pagesInfo);
+function pasteKey(destinationSoundInfo) {
+    var id = destinationSoundInfo.id;
+    destinationSoundInfo = clipboard;
+    destinationSoundInfo.id = id;
+    keyInfo[id] = destinationSoundInfo;
+    view.updateKey(keyInfo[id]);
+    storage.checkAgainstDefault(keyInfo[id], "soundInfo");
+    sounds.createNewHowl(keyInfo[id]);
+    $("#" + id).removeClass("played");
+    pagesInfo["page" + currentPage].keyInfo = keyInfo;
+    storage.storeObj("pagesInfo", pagesInfo);
 }
 
 module.exports = {
-	cleanName: cleanName,
-	prepareForId: prepareForId,
-	openBrowse: openBrowse,
-	cloneObj: cloneObj,
-	isEmpty: isEmpty,
-	copyKey: copyKey,
-	cutKey: cutKey,
-	pasteKey: pasteKey
+    cleanName: cleanName,
+    prepareForId: prepareForId,
+    openBrowse: openBrowse,
+    cloneObj: cloneObj,
+    isEmpty: isEmpty,
+    copyKey: copyKey,
+    cutKey: cutKey,
+    pasteKey: pasteKey
 };

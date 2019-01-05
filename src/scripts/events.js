@@ -41,7 +41,7 @@ function setKeyEvents() {
 				}
 				var id = targetKey.attr('id');
 				// Create a new sound info object
-				newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path, id);
+				newSoundInfo = soundInfoManager.createNewSoundInfo(f.path, id);
 				// Store the new sound info object in the keyInfo object
 				keyInfo[id] = newSoundInfo;
 				targetKey.find('.audioName').text(newSoundInfo.name);
@@ -72,7 +72,7 @@ function setKeyEvents() {
 		var first = true;
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// Create new soundInfo object
-			var newSoundInfo = soundInfoManager.createSoundInfoFromPath(f.path);
+			var newSoundInfo = soundInfoManager.createNewSoundInfo(f.path);
 			playlistInfo[newSoundInfo.id] = newSoundInfo;
 			view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
 			if(first){
@@ -267,6 +267,11 @@ function setKeyEvents() {
 
 	$('#sound-settings-fadeOutReset').click(function(e) {
 		settings.resetFade('sound','out');
+	});
+
+	$('#volume-row').dblclick(function(e) {
+		console.log('yo');
+		volSlider.noUiSlider.set(100);
 	});
 
 	$('#page-settings-fadeInReset').click(function(e) {

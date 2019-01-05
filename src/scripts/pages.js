@@ -66,7 +66,7 @@ function registerKeyInfos(){
 				delete tempKeyInfo[id];
 			} else {
 				$("#" + tempKeyInfo[id].id).find('.audioName').text(tempKeyInfo[id].name);
-				sounds.register(tempKeyInfo[id]);
+				sounds.createNewHowl(tempKeyInfo[id]);
 			}
 		});
 	});
