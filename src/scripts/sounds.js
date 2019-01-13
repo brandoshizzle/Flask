@@ -2,7 +2,7 @@
  *	These functions deal with anything related to the audio engine
  */
 /*jshint esversion: 6 */
-
+const util = require("./util");
 var firstPlaylistSound;
 var loadedCount = 0;
 var stopping = 0;
@@ -20,36 +20,36 @@ function createNewHowl(soundInfo) {
             src: [soundInfo.path],
             loop: soundInfo.loop,
             html5: true,
-            onend: function() {
+            onend: function () {
                 stop(soundInfo);
             },
-            onload: function() {
+            onload: function () {
                 if (soundInfo.endTime === null) {
                     soundInfo.endTime = soundInfo.howl.duration();
                 }
                 addToLoadingBar();
             },
-            onloaderror: function(){
+            onloaderror: function () {
                 addToLoadingBar();
             },
-            onplay: function() {
+            onplay: function () {
                 var fadeTime = getFadeTime(soundInfo, "in");
                 if (fadeTime >= 0) {
                     soundInfo.fadeIn();
                 }
                 soundInfo.paused = false;
-                soundInfo.endCheck = setInterval(function() {
+                soundInfo.endCheck = setInterval(function () {
                     if (soundInfo.atEnding()) {
                         clearInterval(soundInfo.endCheck);
                         soundInfo.fadeOut();
                     }
                 }, 50);
             },
-            onpause: function() {
+            onpause: function () {
                 soundInfo.paused = true;
                 clearInterval(soundInfo.endCheck);
             },
-            onstop: function() {
+            onstop: function () {
                 soundInfo.paused = false;
                 clearInterval(soundInfo.fadeInterval);
                 clearInterval(soundInfo.endCheck);
@@ -67,7 +67,7 @@ function createNewHowl(soundInfo) {
     }
 }
 
-function addToLoadingBar(){
+function addToLoadingBar() {
     loadedCount++;
     var loadedPercent = loadedCount / totalNumSounds * 100 + "%";
     $("#loadedCount").width(loadedPercent);
@@ -108,7 +108,7 @@ function playSound(soundInfo) {
             soundInfo.howl.seek(soundInfo.startTime);
         }
         var fadeTime = getFadeTime(soundInfo, "in");
-        soundInfo.howl.volume(fadeTime > 0 ? 0 : 1);
+        soundInfo.howl.volume(fadeTime > 0 ? 0 : soundInfo.volume);
 
         // Fade out currently playing sounds if user has selected solo sounds
         if (
@@ -117,19 +117,19 @@ function playSound(soundInfo) {
             soundInfo.infoObj !== "playlist"
         ) {
             for (key in keyInfo) {
-                if (keyInfo[key].howl.playing()) {
+                if (keyInfo[key].howl && keyInfo[key].howl.playing()) {
                     keyInfo[key].fadeOut();
                 }
             }
         }
         if (settingsInfo.pages.soloSound === "all") {
             for (key in keyInfo) {
-                if (keyInfo[key].howl.playing()) {
+                if (keyInfo[key].howl && keyInfo[key].howl.playing()) {
                     keyInfo[key].fadeOut();
                 }
             }
             for (var item in playlistInfo) {
-                if (playlistInfo[item].howl.playing()) {
+                if (playlistInfo[item].howl && playlistInfo[item].howl.playing()) {
                     playlistInfo[item].fadeOut();
                 }
             }
@@ -185,64 +185,85 @@ function getDuration(soundInfo) {
  *	@desc:	The constructor function for a new sound info object. 
  *	@param:	None.
  */
-function defaultSoundInfo() {
-    return {
-        id: "",
-        infoObj: "",
-        name: "",
-        path: "",
-        color: "default",
-        loop: false,
-        startTime: 0,
-        endTime: null,
-        volume: 0.8,
-        playlistPosition: undefined,
-        fadeIn: function() {
-            if (this.atEnding()) {
-                sounds.stop(this);
-            }
-            var duration = getFadeTime(this, "in");
-            this.fadeInterval = setInterval(() => {
-                var newVol = this.howl.volume() + this.volume * 50 / duration;
-                if (newVol >= this.volume) {
-                    newVol = this.volume;
-                    this.howl.volume(newVol);
-                    clearInterval(this.fadeInterval);
-                    return;
-                }
+function SoundInfo(path, id) {
+    this.name = util.cleanName(path);
+    this.id = id || getPlaylistId(this);
+    this.path = path;
+    this.howl = undefined;
+    this.infoObj = (id === undefined ? "playlist" : "key");
+    this.color = "default";
+    this.loop = false;
+    this.startTime = 0;
+    this.endTime = null;
+    this.volume = 0.8;
+    this.playlistPosition = undefined;
+
+    this.fadeIn = function () {
+        if (this.atEnding()) {
+            sounds.stop(this);
+        }
+        var duration = getFadeTime(this, "in");
+        this.fadeInterval = setInterval(() => {
+            var newVol = this.howl.volume() + this.volume * 50 / duration;
+            if (newVol >= this.volume) {
+                newVol = this.volume;
                 this.howl.volume(newVol);
-            }, 50);
-        },
-        fadeOut: function() {
-            var duration = getFadeTime(this, "out");
-            clearInterval(this.fadeInterval);
-            if (duration === 0) {
+                clearInterval(this.fadeInterval);
+                return;
+            }
+            this.howl.volume(newVol);
+        }, 50);
+    }
+    this.fadeOut = function () {
+        var duration = getFadeTime(this, "out");
+        clearInterval(this.fadeInterval);
+        if (duration === 0) {
+            sounds.stop(this);
+            return;
+        }
+        if (this.atEnding()) {
+            duration = (this.endTime - this.howl.seek()) * 1000;
+        }
+        this.fadeInterval = setInterval(() => {
+            var newVol = this.howl.volume() - this.volume * 50 / duration;
+            if (newVol <= 0) {
+                newVol = 0;
+                this.howl.volume(newVol);
+                clearInterval(this.fadeInterval);
                 sounds.stop(this);
                 return;
             }
-            if (this.atEnding()) {
-                duration = (this.endTime - this.howl.seek()) * 1000;
-            }
-            this.fadeInterval = setInterval(() => {
-                var newVol = this.howl.volume() - this.volume * 50 / duration;
-                if (newVol <= 0) {
-                    newVol = 0;
-                    this.howl.volume(newVol);
-                    clearInterval(this.fadeInterval);
-                    sounds.stop(this);
-                    return;
+            this.howl.volume(newVol);
+        }, 50);
+    }
+    this.fadeInterval = undefined;
+    this.fadeInTime = undefined;
+    this.fadeOutTime = undefined;
+    this.atEnding = function () {
+        var fadeT = getFadeTime(this, "out");
+        return this.howl.seek() + fadeT / 1000 > this.endTime;
+    }
+
+
+    function getPlaylistId(that) {
+        // New sound is in the playlist
+        // Create a unique id for the playlist item (to allow multiple of same!)
+        var preppedId = util.prepareForId(that.name);
+        var count = 0,
+            tempId;
+        do {
+            var duplicate = false;
+            tempId = (count > 0) ? (preppedId + count) : preppedId;
+            for (var item in playlistInfo) {
+                if (playlistInfo[item].id == tempId) {
+                    duplicate = true;
+                    count++;
+                    break;
                 }
-                this.howl.volume(newVol);
-            }, 50);
-        },
-        fadeInterval: undefined,
-        fadeInTime: undefined,
-        fadeOutTime: undefined,
-        atEnding: function() {
-            var fadeT = getFadeTime(this, "out");
-            return this.howl.seek() + fadeT / 1000 > this.endTime;
-        }
-    };
+            }
+        } while (duplicate);
+        return tempId;
+    }
 }
 
 function getFadeTime(soundInfo, direction) {
@@ -287,6 +308,6 @@ module.exports = {
     playSound: playSound,
     getDuration: getDuration,
     stop: stop,
-    defaultSoundInfo: defaultSoundInfo,
-    getFadeTime: getFadeTime
+    getFadeTime: getFadeTime,
+    SoundInfo: SoundInfo
 };

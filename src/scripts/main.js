@@ -40,7 +40,7 @@ var reloadSound = false;
 /**
  * Set up program
  **/
-$(document).ready(function() {
+$(document).ready(function () {
     settingsInfo = storage.getInfoObj("settings"); // Load the program settings
     storage.checkAgainstDefault(settingsInfo, "settings");
     view.buildKeyboard(); // Create all the keys
@@ -53,7 +53,7 @@ $(document).ready(function() {
     // If there is no pagesInfo object, try loading legacy keyInfo into first page
     pages.ensurePageExists(1);
     // Update all pages with any new properties
-    Object.keys(pagesInfo).map(function(page, index) {
+    Object.keys(pagesInfo).map(function (page, index) {
         storage.checkAgainstDefault(pagesInfo[page], "pageInfo");
     });
     pages.registerKeyInfos(); // register all sounds and put them on keys
@@ -62,7 +62,7 @@ $(document).ready(function() {
 
     playlistInfo = storage.getInfoObj("playlistInfo"); // Load all of the playlist sounds from storage
     playlist.registerPlaylistItems();
-    Object.keys(pagesInfo).map(function(page, index) {
+    Object.keys(pagesInfo).map(function (page, index) {
         pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
     });
     update.checkForUpdate();
@@ -79,7 +79,7 @@ $(document).ready(function() {
     });
 
     $("#settings-modal").modal({
-        complete: function() {
+        complete: function () {
             console.log("SAVING GENERAL SETTINGS!");
             settings.saveSettings();
         }
@@ -101,14 +101,13 @@ $(document).ready(function() {
     });
     // Set editable text properties
     $(".editable").editable(
-        function(value, settings) {
+        function (value, settings) {
             if (value === "") {
                 return "Hit enter after typing!";
             } else {
                 return value;
             }
-        },
-        {
+        }, {
             type: "text",
             tooltip: "Click to edit"
         }
@@ -117,7 +116,7 @@ $(document).ready(function() {
     $(".global-settings-table").hide();
     $("#keyboard" + currentPage).show();
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("select").material_select();
     });
 
@@ -133,10 +132,10 @@ $(document).ready(function() {
             max: 125
         },
         format: {
-            to: function(value) {
+            to: function (value) {
                 return Math.round(value) + "%";
             },
-            from: function(value) {
+            from: function (value) {
                 return value.replace("%", "");
             }
         }
@@ -156,7 +155,7 @@ $(document).ready(function() {
                 restriction: "parent"
             }
         })
-        .on("resizemove", function(event) {
+        .on("resizemove", function (event) {
             var target = event.target,
                 x = parseFloat(target.getAttribute("data-x")) || 0;
             // update the element's style
@@ -167,7 +166,7 @@ $(document).ready(function() {
             target.setAttribute("data-x", x);
             $(event.target).css("transition", "0s");
         })
-        .on("resizeend", function(event) {
+        .on("resizeend", function (event) {
             waveforms.getRegion();
             $(event.target).css("transition", "0.5s");
         });
@@ -224,13 +223,13 @@ $(document).ready(function() {
     });
 	*/
 
-    $(".tabs").mousewheel(function(e, delta) {
+    $(".tabs").mousewheel(function (e, delta) {
         this.scrollLeft -= delta * 40;
         e.preventDefault();
     });
 
     //open links externally by default
-    $(document).on("click", 'a[href^="http"]', function(event) {
+    $(document).on("click", 'a[href^="http"]', function (event) {
         event.preventDefault();
         shell.openExternal(this.href);
     });
@@ -240,7 +239,7 @@ function restart() {
     app.relaunch();
     app.quit();
 }
-
+/*
 window.onerror = function(msg, url, line, col, error) {
     var extra = !col ? "" : "\ncolumn: " + col;
     extra += !error ? "" : "\nerror: " + error;
@@ -262,3 +261,4 @@ window.onerror = function(msg, url, line, col, error) {
     // Internet Explorer) will be suppressed.
     return suppressErrorAlert;
 };
+*/

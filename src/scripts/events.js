@@ -5,9 +5,6 @@
  */
 /*jshint esversion: 6 */
 
-// Required js scripts
-const soundInfoManager = require("./soundInfoManager");
-
 var settingsInfoObj; // Either keyInfo or playlistInfo, whichever has the sound being changed in settings
 var specialKeys = ['MINUS', 'EQUALS', 'OPEN_BRACKET', 'CLOSE_BRACKET', 'SEMICOLON', 'QUOTE', 'BACK_SLASH', 'BESIDE_Z', 'COMMA', 'PERIOD', 'SLASH'];
 var playlistPlayingSound = {
@@ -23,25 +20,26 @@ var curVol;
 function setKeyEvents() {
 
 	// Handles when a file is dropped on a key
-	keys.on('drop', function(e) {
+	keys.on('drop', function (e) {
 		e.originalEvent.preventDefault(); // Prevent default action
-		try{
+		try {
 			// grab the id of the target key
 			var siblingCount = -1;
 			var newSoundInfo;
 			var first = true;
 			for (let f of e.originalEvent.dataTransfer.files) {
 				var targetKey = $(e.target);
-				if(first){
+				if (first) {
 					first = targetKey.attr('id');
 				}
-				if(siblingCount > -1){
-					if(siblingCount < targetKey.nextAll().length)
-					targetKey = $(e.target).nextAll().eq(siblingCount);
+				if (siblingCount > -1) {
+					if (siblingCount < targetKey.nextAll().length)
+						targetKey = $(e.target).nextAll().eq(siblingCount);
 				}
 				var id = targetKey.attr('id');
 				// Create a new sound info object
-				newSoundInfo = soundInfoManager.createNewSoundInfo(f.path, id);
+				newSoundInfo = new sounds.SoundInfo(f.path, id);
+				sounds.createNewHowl(newSoundInfo);
 				// Store the new sound info object in the keyInfo object
 				keyInfo[id] = newSoundInfo;
 				targetKey.find('.audioName').text(newSoundInfo.name);
@@ -52,35 +50,36 @@ function setKeyEvents() {
 			pagesInfo['page' + currentPage].keyInfo = keyInfo;
 			storage.storeObj("pagesInfo", pagesInfo);
 			waveforms.load(keyInfo[first]);
-		}
-		catch(err){}
+		} catch (err) {}
 		return false;
 	});
 
-	keys.on('dragover', function(e) {
+	keys.on('dragover', function (e) {
 		//$('#' + e.target.id).css("box-shadow", "0px 0px 4px 4px rgba(255,247,99,1)");
 		return false;
 	});
-	keys.on('dragleave', function(e) {
+	keys.on('dragleave', function (e) {
 		//$('#' + e.target.id).css("box-shadow", "0px 0px");
 		return false;
 	});
 
 	// File is dropped onto playlist box - register and add info
-	$('.playlistBox').on('drop', function(e) {
+	$('.playlistBox').on('drop', function (e) {
 		e.originalEvent.preventDefault(); // Prevent default action
 		var first = true;
 		for (let f of e.originalEvent.dataTransfer.files) {
 			// Create new soundInfo object
-			var newSoundInfo = soundInfoManager.createNewSoundInfo(f.path);
+			newSoundInfo = new sounds.SoundInfo(f.path);
+			console.log(newSoundInfo);
+			sounds.createNewHowl(newSoundInfo);
 			playlistInfo[newSoundInfo.id] = newSoundInfo;
 			view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
-			if(first){
+			if (first) {
 				waveforms.load(newSoundInfo);
 				first = false;
 			}
 		}
-		if(e.originalEvent.dataTransfer.files.length > 0){
+		if (e.originalEvent.dataTransfer.files.length > 0) {
 			storage.storeObj("playlistInfo", playlistInfo);
 		}
 		updatePlaylistClickFunctions(); // Ensure new songs react properly to clicking
@@ -88,7 +87,7 @@ function setKeyEvents() {
 	});
 
 	// Click on keyboard key
-	$('.btn-key').on('click', function(e) {
+	$('.btn-key').on('click', function (e) {
 		clickSound(e, keyInfo);
 	});
 
@@ -96,17 +95,18 @@ function setKeyEvents() {
 	function clickSound(e, infoObj) {
 		var id = e.target.id;
 		if (!infoObj.hasOwnProperty(id)) {
-			infoObj[id] = {}; infoObj[id].id = id;
+			infoObj[id] = {};
+			infoObj[id].id = id;
 			storage.checkAgainstDefault(infoObj[id], 'soundInfo');
 		}
 		waveforms.track(infoObj[id]);
 	}
 
 	// Right click to bring up settings and populate them
-	keys.on('contextmenu', function(e) {
+	keys.on('contextmenu', function (e) {
 		var key = e.target.id;
 		settingsInfoObj = keyInfo;
-		if(keyInfo.hasOwnProperty(key)){
+		if (keyInfo.hasOwnProperty(key)) {
 			settings.openSoundSettings(keyInfo[key]);
 			//waveforms.load(keyInfo[key]);
 		}
@@ -115,11 +115,11 @@ function setKeyEvents() {
 	// Set functions when clicking on playlist sounds
 	function updatePlaylistClickFunctions() {
 		// Click on playlist sound -> load waveform
-		$('.playlistSound').on('click', function(e) {
+		$('.playlistSound').on('click', function (e) {
 			clickSound(e, playlistInfo);
 		});
 		// Right-click on playlist sound -> open sound settings
-		$('#playlist-songs li').on('contextmenu', function(e) {
+		$('#playlist-songs li').on('contextmenu', function (e) {
 			var id = e.target.id;
 			settingsInfoObj = playlistInfo;
 			settings.openSoundSettings(playlistInfo[id]);
@@ -129,11 +129,11 @@ function setKeyEvents() {
 	updatePlaylistClickFunctions();
 
 	// Handles pressing a real key anywhere on the page
-	$(document).keydown(function(e) {
+	$(document).keydown(function (e) {
 		var key = keyboardMap[e.which];
 		var code = e.which;
 
-		if(key === 'CONTROL'){
+		if (key === 'CONTROL') {
 			ctrl = true;
 			$('#waveform').css('pointer-events', 'none');
 		}
@@ -144,7 +144,7 @@ function setKeyEvents() {
 			if ((code > 64 && code < 91) || (code > 47 && code < 58) || ($.inArray(key, specialKeys) > -1)) {
 				// Check if the sound was loaded or not, and if it even exists
 				key = 'page' + currentPage + '_' + key;
-				if(keyInfo.hasOwnProperty(key)){
+				if (keyInfo.hasOwnProperty(key)) {
 					if (!$("#" + key).parent().hasClass('soundNotLoaded')) {
 						sounds.playSound(keyInfo[key]);
 					} else { // User tries to play a not-loaded sound
@@ -154,7 +154,7 @@ function setKeyEvents() {
 				// User presses the delete key
 			} else if (key === 'DELETE' || key === 'BACK_SPACE') {
 				id = $('.waveformed-key').attr('id');
-				if(id === undefined){
+				if (id === undefined) {
 					return;
 				}
 				// If the deleted sound was in the keys
@@ -181,29 +181,29 @@ function setKeyEvents() {
 				waveforms.reset();
 			} else if (key === 'SPACE') {
 				// Play from the playlist
-					var soundId;
-					if(playlist.getFirstPlaylistItem() === 'no sounds!'){
-						return;
-					}
-					// If a sound is playing, make sure to stop it, not play the first one
-					if(playlistPlayingSoundInfo){
-						soundId = playlistPlayingSoundInfo.id;
-					} else {	// Get first playlist sound
-						soundId = playlist.getFirstPlaylistItem();
-						//console.log('got the first item');
-					}
-					sounds.playSound(playlistInfo[soundId]);
+				var soundId;
+				if (playlist.getFirstPlaylistItem() === 'no sounds!') {
+					return;
+				}
+				// If a sound is playing, make sure to stop it, not play the first one
+				if (playlistPlayingSoundInfo) {
+					soundId = playlistPlayingSoundInfo.id;
+				} else { // Get first playlist sound
+					soundId = playlist.getFirstPlaylistItem();
+					//console.log('got the first item');
+				}
+				sounds.playSound(playlistInfo[soundId]);
 			}
 
-			if(key === 'ESCAPE'){
+			if (key === 'ESCAPE') {
 				// Stop all playing sounds immediately
-				for(key in keyInfo){
-					if(keyInfo[key].howl.playing()){
+				for (key in keyInfo) {
+					if (keyInfo[key].howl.playing()) {
 						keyInfo[key].howl.stop();
 					}
 				}
-				for(key in playlistInfo){
-					if(playlistInfo[key].howl.playing()){
+				for (key in playlistInfo) {
+					if (playlistInfo[key].howl.playing()) {
 						playlistInfo[key].howl.stop();
 					}
 				}
@@ -213,20 +213,20 @@ function setKeyEvents() {
 
 		}
 
-		Mousetrap.bind(['command+x', 'ctrl+x'], function() {
-			if(!$(e.target).is('input')){
+		Mousetrap.bind(['command+x', 'ctrl+x'], function () {
+			if (!$(e.target).is('input')) {
 				util.cutKey(waveformedInfo);
 				return false;
 			}
 		});
-		Mousetrap.bind(['command+c', 'ctrl+c'], function() {
-			if(!$(e.target).is('input')){
+		Mousetrap.bind(['command+c', 'ctrl+c'], function () {
+			if (!$(e.target).is('input')) {
 				util.copyKey(waveformedInfo);
 				return false;
 			}
 		});
-		Mousetrap.bind(['command+v', 'ctrl+v'], function() {
-			if(!$(e.target).is('input')){
+		Mousetrap.bind(['command+v', 'ctrl+v'], function () {
+			if (!$(e.target).is('input')) {
 				util.pasteKey(waveformedInfo);
 				return false;
 			}
@@ -235,18 +235,18 @@ function setKeyEvents() {
 		return false;
 	});
 
-	$(document).keyup(function(e) {
+	$(document).keyup(function (e) {
 		var key = keyboardMap[e.which];
 		var code = e.which;
 
-		if(key === 'CONTROL'){
+		if (key === 'CONTROL') {
 			ctrl = false;
 			$('#waveform').css('pointer-events', 'inherit');
 		}
 	});
 
 	// Close/save sound settings when save key is pressed.
-	$('#sound-settings-save').click(function(e) {
+	$('#sound-settings-save').click(function (e) {
 		var tempSoundInfo = settings.saveSoundSettings();
 		var itIsKeyInfo = (settingsInfoObj === keyInfo);
 		settingsInfoObj[tempSoundInfo.id] = tempSoundInfo;
@@ -261,62 +261,62 @@ function setKeyEvents() {
 		$("#color-picker").fadeOut();
 	});
 
-	$('#sound-settings-fadeInReset').click(function(e) {
-		settings.resetFade('sound','in');
+	$('#sound-settings-fadeInReset').click(function (e) {
+		settings.resetFade('sound', 'in');
 	});
 
-	$('#sound-settings-fadeOutReset').click(function(e) {
-		settings.resetFade('sound','out');
+	$('#sound-settings-fadeOutReset').click(function (e) {
+		settings.resetFade('sound', 'out');
 	});
 
-	$('#volume-row').dblclick(function(e) {
+	$('#volume-row').dblclick(function (e) {
 		console.log('yo');
 		volSlider.noUiSlider.set(100);
 	});
 
-	$('#page-settings-fadeInReset').click(function(e) {
-		settings.resetFade('page','in');
+	$('#page-settings-fadeInReset').click(function (e) {
+		settings.resetFade('page', 'in');
 	});
 
-	$('#page-settings-fadeOutReset').click(function(e) {
-		settings.resetFade('page','out');
+	$('#page-settings-fadeOutReset').click(function (e) {
+		settings.resetFade('page', 'out');
 	});
 
 	// Prevent firing sounds when editing input fields
-	$('#sound-settings, .input-field').keydown(function(e) {
+	$('#sound-settings, .input-field').keydown(function (e) {
 		e.stopPropagation();
 	});
 
 	// Open dialog box when browse button is pressed.
-	$('#browse-button').click(function(e) {
+	$('#browse-button').click(function (e) {
 		util.openBrowse();
 	});
 
-	$("#sound-settings-color-container").click(function(e) {
+	$("#sound-settings-color-container").click(function (e) {
 		view.openColorPicker();
 	});
 
-	$(".color-picker-color").click(function(e) {
+	$(".color-picker-color").click(function (e) {
 		colors.setPickedColor(e.target.id);
 		$("#color-picker").fadeOut();
 	});
 
 	// Prevent Dragging files onto main window
-	$(document).on('drop', function(e) {
+	$(document).on('drop', function (e) {
 		e.preventDefault();
 		return false;
 	});
 
-	$(document).on('dragover', function(e) {
+	$(document).on('dragover', function (e) {
 		e.preventDefault();
 		return false;
 	});
 
-	$('.search').on('keyup',function(){
+	$('.search').on('keyup', function () {
 		var first = true;
-		$('#playlist-songs li').each(function(){
-			if($(this).is(":visible") === true){
-				if(first === true){
+		$('#playlist-songs li').each(function () {
+			if ($(this).is(":visible") === true) {
+				if (first === true) {
 					$(this).css('background-color', 'var(--aM)');
 					first = false;
 				} else {

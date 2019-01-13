@@ -3,39 +3,38 @@
  */
 
 /*jshint esversion: 6 */
-const soundInfoManager = require("./soundInfoManager");
 const jetpack = require('fs-jetpack');
 const app = require('electron').remote.app;
 
 var appDir = app.getPath('userData');
-$(function(){
+$(function () {
 	jetpack.dir(appDir).dir('data');
 });
 var dataDir = appDir + '\\data\\';
 
 var defaults = {
-	'soundInfo': sounds.defaultSoundInfo(),
-	'settings' : {
-		'general':{
+	'soundInfo': new sounds.SoundInfo(""),
+	'settings': {
+		'general': {
 			'prereleaseUpdates': false,
 			'stopSounds': false,
 			'markPlayed': true,
 			'fadeInTime': 1500,
 			'fadeOutTime': 1500
 		},
-		'playlist':{
+		'playlist': {
 			"soundToBottomAfterPlay": true,
 			"soundDeleteAfterPlay": false,
 			order: ''
 		},
-		'pages':{
+		'pages': {
 			"soloSound": "off"
 		},
-		'utility':{
+		'utility': {
 			"pVersion": "0.1.0"
 		}
 	},
-	'pageInfo' : {
+	'pageInfo': {
 		'name': '',
 		fadeInTime: undefined,
 		fadeOutTime: undefined,
@@ -55,7 +54,7 @@ function getInfoObj(objName) {
 	var tempObj = {};
 	var objPath = dataDir + objName + '.json';
 	// Use JSON storage if it exists, otherwise pull from (legacy) localStorage
-	if(jetpack.exists(objPath)){
+	if (jetpack.exists(objPath)) {
 		tempObj = JSON.parse(jetpack.read(objPath));
 	} else {
 		console.log(objName + '.json does not exist. Using localStorage instead.');
@@ -79,10 +78,10 @@ function storeObj(objName, obj) {
 	// Clean soundInstances from storage
 	var clonedObj = util.cloneObj(obj);
 	//console.log(clonedObj);
-	if(objName === 'playlistInfo'){
+	if (objName === 'playlistInfo') {
 		stripPlayState(clonedObj);
-	} else if(objName === 'pagesInfo'){
-		Object.keys(clonedObj).map(function(prop, index) {
+	} else if (objName === 'pagesInfo') {
+		Object.keys(clonedObj).map(function (prop, index) {
 			stripPlayState(clonedObj[prop].keyInfo);
 		});
 	}
@@ -93,11 +92,11 @@ function storeObj(objName, obj) {
 	console.log('Storing new ' + objName + ' to json.');
 }
 
-function deleteObj(objName){
+function deleteObj(objName) {
 	jetpack.remove(dataDir + objName + '.json');
 }
 
-function emptyObj(objName, obj){
+function emptyObj(objName, obj) {
 	obj = {};
 	storeObj(objName, obj);
 }
@@ -110,12 +109,12 @@ function emptyObj(objName, obj){
 function checkAgainstDefault(obj, defaultName) {
 	var changed = false;
 	// Update the object with any new properties
-	Object.keys(defaults[defaultName]).map(function(prop, index) {
+	Object.keys(defaults[defaultName]).map(function (prop, index) {
 		if (!obj.hasOwnProperty(prop)) {
 			obj[prop] = defaults[defaultName][prop];
 		}
-		if(typeof defaults[defaultName][prop] == "object" && defaults[defaultName][prop] !== null && defaultName === 'settings'){
-			Object.keys(defaults[defaultName][prop]).map(function(prop2, index) {
+		if (typeof defaults[defaultName][prop] == "object" && defaults[defaultName][prop] !== null && defaultName === 'settings') {
+			Object.keys(defaults[defaultName][prop]).map(function (prop2, index) {
 				if (!obj[prop].hasOwnProperty(prop2)) {
 					obj[prop][prop2] = defaults[defaultName][prop][prop2];
 				}
@@ -124,12 +123,12 @@ function checkAgainstDefault(obj, defaultName) {
 	});
 
 	// Check that the object does not have depreciated properties (and delete them)
-	Object.keys(obj).map(function(prop, index) {
+	Object.keys(obj).map(function (prop, index) {
 		if (!defaults[defaultName].hasOwnProperty(prop)) {
 			delete obj[prop];
 		}
-		if(typeof obj[prop] == "object" && obj[prop] !== null && defaultName === 'settings'){
-			Object.keys(obj[prop]).map(function(prop2, index) {
+		if (typeof obj[prop] == "object" && obj[prop] !== null && defaultName === 'settings') {
+			Object.keys(obj[prop]).map(function (prop2, index) {
 				if (!defaults[defaultName][prop].hasOwnProperty(prop2)) {
 					delete obj[prop][prop2];
 				}
@@ -138,8 +137,8 @@ function checkAgainstDefault(obj, defaultName) {
 	});
 }
 
-function stripPlayState(infoObj){
-	Object.keys(infoObj).map(function(prop, index) {
+function stripPlayState(infoObj) {
+	Object.keys(infoObj).map(function (prop, index) {
 		delete infoObj[prop].howl;
 	});
 }

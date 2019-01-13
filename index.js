@@ -1,14 +1,18 @@
 /*jshint esversion: 6 */
 const electron = require("electron");
-const {app, BrowserWindow, dialog} = electron;
+const {
+	app,
+	BrowserWindow,
+	dialog
+} = electron;
 
-app.on('ready', function() {
+app.on('ready', function () {
 	var win = new BrowserWindow();
 	win.maximize();
 	win.loadURL('file://' + __dirname + '/src/main.html');
-	win.openDevTools();
+	//win.openDevTools();
 });
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', function () {
 	app.quit();
 });

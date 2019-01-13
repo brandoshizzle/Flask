@@ -20,7 +20,7 @@ function buildWaveform() {
     });
     //wavesurfer.empty();
     // When ready, hide loader and add the timeline
-    wavesurfer.on('ready', function() {
+    wavesurfer.on('ready', function () {
         $('#waveform-progress').hide();
         var timeline = Object.create(WaveSurfer.Timeline);
         timeline.init({
@@ -37,8 +37,8 @@ function buildWaveform() {
  */
 function loadWavesurfer(soundInfo) {
     // Change the target key of the waveform
-    $('#' + prevTarget).removeClass('waveformed-key');
-    $('#' + soundInfo.id).addClass('waveformed-key');
+    $("#" + prevTarget).removeClass('waveformed-key');
+    $("#" + soundInfo.id).addClass('waveformed-key');
     prevTarget = soundInfo.id;
 
     if (soundInfo.path === "") {
@@ -64,13 +64,13 @@ function loadWavesurfer(soundInfo) {
     waveformedInfo = soundInfo;
 
     // When the wavesurfer is loaded
-    wavesurfer.on('ready', function() {
+    wavesurfer.on('ready', function () {
         //setRegion(soundInfo);
         setRegion(soundInfo); // Resize region to reflect proper size
 
         var percentComplete;
 
-        if(waveformedInfo.paused){
+        if (waveformedInfo.paused) {
             if (waveformedInfo.howl !== undefined) {
                 percentComplete = Number(waveformedInfo.howl.seek()) / Number(waveformedInfo.howl.duration()) || 0;
             }
@@ -79,8 +79,8 @@ function loadWavesurfer(soundInfo) {
         }
         wavesurfer.seekTo(parseFloat(percentComplete)); // Move playhead to start time
         // If waveform is clicked, set time to wherever the click occured
-        wavesurfer.drawer.on('click', function(e) {
-            wavesurfer.on('seek', function(position) {
+        wavesurfer.drawer.on('click', function (e) {
+            wavesurfer.on('seek', function (position) {
                 var currentTime = position * rWSDur();
                 var howl = waveformedInfo.howl;
                 howl.seek(currentTime);
