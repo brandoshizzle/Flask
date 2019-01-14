@@ -5,7 +5,7 @@ Making improvising sound easy.
 ![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
 
 ## Latest Release
-Latest Stable Release: [v0.4.1](https://github.com/brandoshizzle/REACTion/releases/latest)
+Latest Stable Release: [v0.5.0](https://github.com/brandoshizzle/REACTion/releases/latest)
 
 [Download for Windows and OSX](https://brandoshizzle.github.io/REACTion/#download)
 
