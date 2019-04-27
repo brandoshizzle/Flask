@@ -1,11 +1,11 @@
 /*	SOUNDS.JS
  *	These functions deal with anything related to the audio engine
  */
-/*jshint esversion: 6 */
-const util = require("./util");
-var firstPlaylistSound;
+const fs = require('fs');
+const util = require('./util');
+
+let firstPlaylistSound;
 var loadedCount = 0;
-var stopping = 0;
 
 /**
  *	@desc:	Checks whether the sound path is valid and registers it with Hower
@@ -20,60 +20,68 @@ function createNewHowl(soundInfo) {
             src: [soundInfo.path],
             loop: soundInfo.loop,
             html5: true,
-            onend: function () {
+            onend: function() {
                 stop(soundInfo);
             },
-            onload: function () {
+            onload: function() {
                 if (soundInfo.endTime === null) {
                     soundInfo.endTime = soundInfo.howl.duration();
                 }
                 addToLoadingBar();
             },
-            onloaderror: function () {
+            onloaderror: function() {
                 addToLoadingBar();
             },
-            onplay: function () {
-                var fadeTime = getFadeTime(soundInfo, "in");
+            onplay: function() {
+                var fadeTime = getFadeTime(soundInfo, 'in');
                 if (fadeTime >= 0) {
                     soundInfo.fadeIn();
                 }
                 soundInfo.paused = false;
-                soundInfo.endCheck = setInterval(function () {
+                soundInfo.endCheck = setInterval(function() {
                     if (soundInfo.atEnding()) {
                         clearInterval(soundInfo.endCheck);
                         soundInfo.fadeOut();
                     }
                 }, 50);
             },
-            onpause: function () {
+            onpause: function() {
                 soundInfo.paused = true;
                 clearInterval(soundInfo.endCheck);
             },
-            onstop: function () {
+            onstop: function() {
                 soundInfo.paused = false;
                 clearInterval(soundInfo.fadeInterval);
                 clearInterval(soundInfo.endCheck);
                 soundInfo.howl.seek(soundInfo.startTime);
-                wavesurfer.seekTo(
-                    soundInfo.startTime / soundInfo.howl.duration()
-                );
+                wavesurfer.seekTo(soundInfo.startTime / soundInfo.howl.duration());
             }
         });
     } else {
         // Song path does not exist - don't load the song
-        Materialize.toast(soundInfo.name + " was not found.", 3000);
-        $("#" + soundInfo.id).addClass("soundNotLoaded");
+        console.log('sounds js');
+        M.toast({
+            html: soundInfo.name + ' was not loaded.',
+            displayLength: 3000
+        });
+        $('#' + soundInfo.id).addClass('soundNotLoaded');
         addToLoadingBar();
     }
 }
 
 function addToLoadingBar() {
     loadedCount++;
-    var loadedPercent = loadedCount / totalNumSounds * 100 + "%";
-    $("#loadedCount").width(loadedPercent);
+    var loadedPercent = (loadedCount / totalNumSounds) * 100 + '%';
+    $('#loadedCount').width(loadedPercent);
     if (loadedCount === totalNumSounds) {
-        $("#loadedContainer").css("display", "none");
+        $('#loadedContainer').css('display', 'none');
     }
+}
+
+function resetLoadingBar() {
+    loadedCount = 0;
+    totalNumSounds = 0;
+    pagesNumSounds = 0;
 }
 
 /**
@@ -81,7 +89,7 @@ function addToLoadingBar() {
  *	@param:	soundInfo: Object containing all sound information
  */
 function playSound(soundInfo) {
-    if (soundInfo.endTime == "0.00" || soundInfo.endTime == null) {
+    if (soundInfo.endTime == '0.00' || soundInfo.endTime == null) {
         soundInfo.endTime = sounds.getDuration(soundInfo);
     }
     if (settingsInfo.general.stopSounds === true) {
@@ -95,7 +103,7 @@ function playSound(soundInfo) {
     } else {
         // Song is not playing, so play it.
         var key;
-        if (soundInfo.infoObj === "playlist") {
+        if (soundInfo.infoObj === 'playlist') {
             if (playlistPlayingSoundInfo !== undefined) {
                 //console.log("playlist info is defined, fading out sound");
                 playlistPlayingSoundInfo.fadeOut();
@@ -107,14 +115,13 @@ function playSound(soundInfo) {
         if (!soundInfo.paused) {
             soundInfo.howl.seek(soundInfo.startTime);
         }
-        var fadeTime = getFadeTime(soundInfo, "in");
+        var fadeTime = getFadeTime(soundInfo, 'in');
         soundInfo.howl.volume(fadeTime > 0 ? 0 : soundInfo.volume);
 
         // Fade out currently playing sounds if user has selected solo sounds
         if (
-            (settingsInfo.pages.soloSound === "pages" ||
-                settingsInfo.pages.soloSound === "all") &&
-            soundInfo.infoObj !== "playlist"
+            (settingsInfo.pages.soloSound === 'pages' || settingsInfo.pages.soloSound === 'all') &&
+			soundInfo.infoObj !== 'playlist'
         ) {
             for (key in keyInfo) {
                 if (keyInfo[key].howl && keyInfo[key].howl.playing()) {
@@ -122,7 +129,7 @@ function playSound(soundInfo) {
                 }
             }
         }
-        if (settingsInfo.pages.soloSound === "all") {
+        if (settingsInfo.pages.soloSound === 'all') {
             for (key in keyInfo) {
                 if (keyInfo[key].howl && keyInfo[key].howl.playing()) {
                     keyInfo[key].fadeOut();
@@ -136,8 +143,8 @@ function playSound(soundInfo) {
         }
         soundInfo.howl.play();
         waveforms.track(soundInfo);
-        $("#" + soundInfo.id).removeClass("played");
-        $("#" + soundInfo.id).addClass("playing-sound");
+        $('#' + soundInfo.id).removeClass('played');
+        $('#' + soundInfo.id).addClass('playing-sound');
     }
 }
 
@@ -149,26 +156,32 @@ function stop(soundInfo) {
         soundInfo.howl.seek(soundInfo.startTime);
     }
     waveforms.track(soundInfo, true);
-    $("#" + soundInfo.id).removeClass("playing-sound");
+    $('#' + soundInfo.id).removeClass('playing-sound');
     if (settingsInfo.general.markPlayed) {
-        $("#" + soundInfo.id).addClass("played");
+        $('#' + soundInfo.id).addClass('played');
     }
     // If the song is stopped in the playlist
-    if (soundInfo.infoObj === "playlist") {
-        console.log("Stopping playlist item");
+    if (soundInfo.infoObj === 'playlist') {
         playlistPlayingSoundInfo = undefined;
-        console.log("Playlist Info is undefined");
         if (settingsInfo.playlist.soundDeleteAfterPlay) {
             delete playlistInfo[soundInfo.id];
-            $("#" + soundInfo.id).remove();
-            storage.storeObj("playlistInfo", playlistInfo);
+            $('#' + soundInfo.id).remove();
+            //storage.storeObj('playlistInfo', playlistInfo);
+            //storage.saveShow();
         } else if (settingsInfo.playlist.soundToBottomAfterPlay) {
-            $("#" + soundInfo.id).appendTo("#playlist-songs");
-            $("#" + soundInfo.id).css("background-color", "var(--bgL)");
+            $('#' + soundInfo.id).appendTo('#playlist-songs');
+            $('#' + soundInfo.id).css('background-color', 'var(--bgL)');
             firstPlaylistSound = playlist.getFirstPlaylistItem();
-            $("#" + firstPlaylistSound).css("background-color", "var(--aM)");
+            $('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
         }
-        $("#" + firstPlaylistSound).click();
+        if (document.getElementById('playlist-autoplay').checked) {
+            $('#' + soundInfo.id).appendTo('#playlist-songs');
+            $('#' + soundInfo.id).css('background-color', 'var(--bgL)');
+            firstPlaylistSound = playlist.getFirstPlaylistItem();
+            $('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
+            playSound(playlistInfo[firstPlaylistSound]);
+        }
+        $('#' + firstPlaylistSound).click();
     }
 }
 
@@ -182,7 +195,7 @@ function getDuration(soundInfo) {
 }
 
 /**
- *	@desc:	The constructor function for a new sound info object. 
+ *	@desc:	The constructor function for a new sound info object.
  *	@param:	None.
  */
 function SoundInfo(path, id) {
@@ -190,21 +203,21 @@ function SoundInfo(path, id) {
     this.id = id || getPlaylistId(this);
     this.path = path;
     this.howl = undefined;
-    this.infoObj = (id === undefined ? "playlist" : "key");
-    this.color = "default";
+    this.infoObj = id === undefined ? 'playlist' : 'key';
+    this.color = 'blue';
     this.loop = false;
     this.startTime = 0;
     this.endTime = null;
     this.volume = 0.8;
     this.playlistPosition = undefined;
 
-    this.fadeIn = function () {
+    this.fadeIn = function() {
         if (this.atEnding()) {
             sounds.stop(this);
         }
-        var duration = getFadeTime(this, "in");
+        var duration = getFadeTime(this, 'in');
         this.fadeInterval = setInterval(() => {
-            var newVol = this.howl.volume() + this.volume * 50 / duration;
+            var newVol = this.howl.volume() + (this.volume * 50) / duration;
             if (newVol >= this.volume) {
                 newVol = this.volume;
                 this.howl.volume(newVol);
@@ -213,9 +226,9 @@ function SoundInfo(path, id) {
             }
             this.howl.volume(newVol);
         }, 50);
-    }
-    this.fadeOut = function () {
-        var duration = getFadeTime(this, "out");
+    };
+    this.fadeOut = function() {
+        var duration = getFadeTime(this, 'out');
         clearInterval(this.fadeInterval);
         if (duration === 0) {
             sounds.stop(this);
@@ -225,7 +238,7 @@ function SoundInfo(path, id) {
             duration = (this.endTime - this.howl.seek()) * 1000;
         }
         this.fadeInterval = setInterval(() => {
-            var newVol = this.howl.volume() - this.volume * 50 / duration;
+            var newVol = this.howl.volume() - (this.volume * 50) / duration;
             if (newVol <= 0) {
                 newVol = 0;
                 this.howl.volume(newVol);
@@ -235,15 +248,16 @@ function SoundInfo(path, id) {
             }
             this.howl.volume(newVol);
         }, 50);
-    }
+    };
     this.fadeInterval = undefined;
     this.fadeInTime = undefined;
+    this.fadeInType = 'default';
     this.fadeOutTime = undefined;
-    this.atEnding = function () {
-        var fadeT = getFadeTime(this, "out");
+    this.fadeOutType = 'default';
+    this.atEnding = function() {
+        var fadeT = getFadeTime(this, 'out');
         return this.howl.seek() + fadeT / 1000 > this.endTime;
-    }
-
+    };
 
     function getPlaylistId(that) {
         // New sound is in the playlist
@@ -253,7 +267,7 @@ function SoundInfo(path, id) {
             tempId;
         do {
             var duplicate = false;
-            tempId = (count > 0) ? (preppedId + count) : preppedId;
+            tempId = count > 0 ? preppedId + count : preppedId;
             for (var item in playlistInfo) {
                 if (playlistInfo[item].id == tempId) {
                     duplicate = true;
@@ -267,37 +281,37 @@ function SoundInfo(path, id) {
 }
 
 function getFadeTime(soundInfo, direction) {
-    if (soundInfo.infoObj === "playlist") {
-        if (direction === "in") {
-            if (soundInfo.fadeInTime === undefined) {
+    if (soundInfo.infoObj === 'playlist') {
+        if (direction === 'in') {
+            if (soundInfo.fadeInType === 'default') {
                 return settingsInfo.general.fadeInTime;
             } else {
-                return soundInfo.fadeInTime;
+                return soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
             }
-        } else if (direction === "out") {
-            if (soundInfo.fadeOutTime === undefined) {
+        } else if (direction === 'out') {
+            if (soundInfo.fadeOutType === 'default') {
                 return settingsInfo.general.fadeOutTime;
             } else {
-                return soundInfo.fadeOutTime;
+                return soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
             }
         }
     } else {
-        var currentPageInfo = pagesInfo["page" + currentPage];
-        if (direction === "in") {
-            if (soundInfo.fadeInTime !== undefined) {
-                return soundInfo.fadeInTime;
-            } else if (currentPageInfo.fadeInTime !== undefined) {
-                return currentPageInfo.fadeInTime;
-            } else {
+        var currentPageInfo = pagesInfo['page' + currentPage];
+        if (direction === 'in') {
+            if (soundInfo.fadeInType === 'default') {
                 return settingsInfo.general.fadeInTime;
-            }
-        } else if (direction === "out") {
-            if (soundInfo.fadeOutTime !== undefined) {
-                return soundInfo.fadeOutTime;
-            } else if (currentPageInfo.fadeOutTime !== undefined) {
-                return currentPageInfo.fadeOutTime;
+            } else if (soundInfo.fadeInType === 'page') {
+                return currentPageInfo.fadeInTime || settingsInfo.general.fadeInTime;
             } else {
+                return soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+            }
+        } else if (direction === 'out') {
+            if (soundInfo.fadeOutType === 'default') {
                 return settingsInfo.general.fadeOutTime;
+            } else if (soundInfo.fadeOutType === 'page') {
+                return currentPageInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+            } else {
+                return soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
             }
         }
     }
@@ -305,9 +319,10 @@ function getFadeTime(soundInfo, direction) {
 
 module.exports = {
     createNewHowl: createNewHowl,
-    playSound: playSound,
     getDuration: getDuration,
-    stop: stop,
     getFadeTime: getFadeTime,
-    SoundInfo: SoundInfo
+    playSound: playSound,
+    resetLoadingBar: resetLoadingBar,
+    SoundInfo: SoundInfo,
+    stop: stop
 };

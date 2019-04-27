@@ -1,162 +1,182 @@
+root {
+	user-select: none;
+}
+
 .btn-key {
-  line-height: 1.2;
-  padding: 0px;
-  height: 5.15vw;
-  width: 5.15vw;
-  margin: 0.3vw;
-  text-shadow: 0px 1px 1px black;
+	line-height: 1.2;
+	padding: 0px;
+	height: 5.15vw;
+	width: 5.15vw;
+	margin: 0.3vw;
+	text-shadow: 0px 1px 1px black;
+	transition: 0.2s ease-in-out;
+}
+
+.btn-key:hover {
+	transform: translateY(-2px);
 }
 
 .keyLetter {
-  font-size: 1.5vw;
-  pointer-events: none;
+	font-size: 1.5vw;
+	pointer-events: none;
 }
 
 .audioName {
-  padding-top: 0px;
-  text-transform: none;
-  height: 100%;
-  width: 100%;
-  font-size: 0.9vw;
-  pointer-events: none;
-  /*white-space: pre-wrap;*/
+	padding-top: 0px;
+	text-transform: none;
+	height: 100%;
+	width: 100%;
+	font-size: 0.9vw;
+	pointer-events: none;
+	/*white-space: pre-wrap;*/
 }
 
 .played {
-  opacity: 0.2;
+	opacity: 0.2;
 }
 
 #row2 {
-  padding-left: 1.6vw;
+	padding-left: 1.6vw;
 }
 
 #row3 {
-  padding-left: 3.2vw;
+	padding-left: 3.2vw;
 }
 
 .container {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .keyboard-container {
-  width: 100%;
-  height: 60vh;
-  padding-left: 10px;
+	width: 100%;
+	height: calc(100vh - 88.4px);
+	padding-left: 10px;
 }
 
 .section {
-  position: absolute;
-  display: none;
-  margin: 0;
-  padding: 0;
-  padding-top: 20px;
-  width: 75vw;
-  height: 60%;
-  background-color: var(--bgD);
-  border-radius: 10px;
+	position: absolute;
+	display: none;
+	margin: 0;
+	padding: 0;
+	padding-top: 20px;
+	width: 75vw;
+	height: 50%;
+	background-color: var(--bgD);
+	border-radius: 10px;
 }
 
 .soundNotLoaded {
-  background-color: #f44336;
-  opacity: 0.3;
-  cursor: default;
+	background-color: #f44336;
+	opacity: 0.3;
+	cursor: default;
 }
 
 .soundNotLoaded:hover {
-  background-color: #c62828;
+	background-color: #c62828;
 }
 
 .section-header {
-  margin-top: 0;
-  border-radius: 10px solid black;
+	margin-top: 0;
+	border-radius: 10px solid black;
 }
 
 #playlist-songs {
-  margin: 0;
-  position: relative;
-  height: 100%;
+	margin: 0;
+	position: relative;
+	height: 100%;
 }
 
-.playlist-songs-container{
-    height: calc(100% - 106px);
+.playlist-songs-container {
+	height: calc(100% - 106px);
 }
 
 .playlistBox {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  height: 92%;
-  width: 22%;
-  border-radius: 3px;
-  padding: 10px;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	height: 92%;
+	width: 22%;
+	border-radius: 3px;
+	padding: 10px;
 }
 
 #playlist-songs li {
-  padding: 3px;
-  margin: 3px;
-  box-shadow: 0px 1px 0px 0px var(--oc-gray-7);
-  transition: 0.5s;
+	padding: 3px;
+	margin: 3px;
+	box-shadow: 0px 1px 0px 0px var(--oc-gray-7);
+	transition: 0.5s;
 }
 
 #playlist-songs li:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
-
 
 /*
 *	Scroll bar styling
 */
 
 .scrollbar-y {
-  overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 .scrollbar-y::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
 }
 
 .scrollbar-y::-webkit-scrollbar {
-  width: 12px;
+	width: 12px;
 }
 
 .scrollbar-y::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-  background-color: var(--pM);
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: var(--pM);
 }
 
 .scrollbar-x {
-  overflow-x: scroll;
+	overflow-x: scroll;
 }
 
 .scrollbar-x::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
 }
 
 .scrollbar-x::-webkit-scrollbar {
-  width: 12px;
+	width: 12px;
 }
 
 .scrollbar-x::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-  background-color: var(--aM);
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: var(--aM);
 }
 
 .sortable-ghost {
-  color: rgba(0, 0, 0, 0);
-  border: 1px dashed white;
+	color: rgba(0, 0, 0, 0);
+	border: 1px dashed white;
 }
 
 .sortable-drag {
-  opacity: 0.8;
+	opacity: 0.8;
 }
 
 .keyboard-transitions {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.ds-selected {
+	border: 2px solid #ddd;
+}
+
+.ds-selector {
+	z-index: 1000;
+	/* opacity: 0.2; */
+	background: #ffd70033 !important;
+	border: 2px solid var(--oc-yellow-6) !important;
+	border-radius: 5px;
 }

@@ -1,0 +1,40 @@
+#sound-settings-modal {
+	width: 550px !important;
+}
+
+tr td {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: 50px;
+}
+
+.settings-row {
+	position: relative;
+	cursor: default;
+}
+
+#sound-settings-path {
+	display: inline-block;
+	width: 180px;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+
+#sound-settings-modal input {
+	margin: 2px;
+}
+
+#sound-settings-name {
+	transition: 0.2s ease-in-out;
+	&:hover {
+		cursor: text;
+		border: 1px solid #d0d0e1;
+		border-radius: 5px;
+	}
+}
+
+#sound-settings-modal .settings-row .row {
+	margin-bottom: 0px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}

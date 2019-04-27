@@ -10,51 +10,51 @@ var dontSet = true;
  *	@param:	soundInfo: The soundInfo object
  */
 function buildPlaylist() {
-    var el = document.getElementById("playlist-songs");
+    var el = document.getElementById('playlist-songs');
     sortable = Sortable.create(el, {
         animation: 50,
         onSort: function(evt) {
             var first = true;
-            var sounds = $(".playlistSound");
+            var sounds = $('.playlistSound');
             // Go through each sound from first to where the dragged item was moved to
             for (i = 0; i < evt.newIndex + 2; i++) {
                 if (sounds[i] === undefined) {
                     return;
                 }
                 var style = window.getComputedStyle(sounds[i]);
-                if (style.display !== "none") {
+                if (style.display !== 'none') {
                     if (first) {
-                        $(sounds[i]).css("background-color", "var(--aM)");
+                        $(sounds[i]).css('background-color', 'var(--aM)');
                         first = false;
                     } else {
-                        $(sounds[i]).css("background-color", "var(--bgL)");
+                        $(sounds[i]).css('background-color', 'var(--bgL)');
                     }
                 }
             }
         },
         store: {
             /**
-             * Get the order of elements. Called once during initialization.
-             * @param   {Sortable}  sortable
-             * @returns {Array}
-             */
+			 * Get the order of elements. Called once during initialization.
+			 * @param   {Sortable}  sortable
+			 * @returns {Array}
+			 */
             get: function(sortable) {
                 var order = settingsInfo.playlist.order;
-                console.log(order);
-                return order ? order.split("|") : [];
+                return order ? order.split('|') : [];
             },
 
             /**
-             * Save the order of elements. Called onEnd (when the item is dropped).
-             * @param {Sortable}  sortable
-             */
+			 * Save the order of elements. Called onEnd (when the item is dropped).
+			 * @param {Sortable}  sortable
+			 */
             set: function(sortable) {
                 if (dontSet) {
                     return;
                 }
                 var order = sortable.toArray();
-                settingsInfo.playlist.order = order.join("|");
-                storage.storeObj("settings", settingsInfo);
+                settingsInfo.playlist.order = order.join('|');
+                //storage.storeObj('settings', settingsInfo);
+                storage.saveShow();
             }
         }
     });
@@ -62,69 +62,69 @@ function buildPlaylist() {
 
 $(document).ready(function() {
     // Disable search function until it stops giving errors, then allow it
-    $("#playlist-search").prop("disabled", true);
+    $('#playlist-search').prop('disabled', true);
     searchablePlaylistInfo = util.cloneObj(playlistInfo);
-    searchString = '//*[contains(name, "' + "poop" + '")]';
+    searchString = '//*[contains(name, "' + 'poop' + '")]';
     var testSearchInterval = setInterval(function() {
         try {
             var search = JSON.search(searchablePlaylistInfo, searchString);
         } catch (e) {
             return;
         }
-        $("#playlist-search").prop("disabled", false);
+        $('#playlist-search').prop('disabled', false);
         clearInterval(testSearchInterval);
     }, 200);
 });
 
-$(".search").on("keyup paste", function(e) {
-    if (keyboardMap[e.which] === "ENTER") {
-        $(".search").blur();
+$('.search').on('keyup paste', function(e) {
+    if (keyboardMap[e.which] === 'ENTER') {
+        $('.search').blur();
         return false;
     }
-    if ($(".search").val().length < 1) {
-        $(".playlistSound").show();
+    if ($('.search').val().length < 1) {
+        $('.playlistSound').show();
         return;
     }
-    if ($(".search").val().length > 1) {
+    if ($('.search').val().length > 1) {
         searchablePlaylistInfo = util.cloneObj(playlistInfo);
         Object.keys(searchablePlaylistInfo).map(function(prop, index) {
             delete searchablePlaylistInfo[prop].howl;
         });
     }
-    searchString = '//*[contains(name, "' + $(".search").val() + '")]';
+    searchString = '//*[contains(name, "' + $('.search').val() + '")]';
     var search = JSON.search(searchablePlaylistInfo, searchString);
-    $(".playlistSound").each(function() {
+    $('.playlistSound').each(function() {
         $(this).hide();
-        $(this).css("background-color", "var(--bgL)");
+        $(this).css('background-color', 'var(--bgL)');
     });
     if (search.length > 0) {
         for (i = 0; i < search.length; i++) {
-            $("#" + search[i].id).show();
+            $('#' + search[i].id).show();
             if (i === 0) {
-                $("#" + search[i].id).css("background-color", "var(--aM)");
+                $('#' + search[i].id).css('background-color', 'var(--aM)');
             }
         }
     }
 });
 
 function getFirstPlaylistItem() {
-    var playlist = $(".playlistSound");
+    var playlist = $('.playlistSound');
     for (var i = 0; i < playlist.length; i++) {
         var style = window.getComputedStyle(playlist[i]);
-        if (style.display !== "none") {
+        if (style.display !== 'none') {
             return playlist[i].id;
         }
     }
-    return "no sounds!"; // Returns this if no results
+    return 'no sounds!'; // Returns this if no results
 }
 
 function registerPlaylistItems() {
     Object.keys(playlistInfo).map(function(id, index) {
         // Ensure all parameters are up to date
-        storage.checkAgainstDefault(playlistInfo[id], "soundInfo");
+        storage.checkAgainstDefault(playlistInfo[id], 'soundInfo');
         view.createPlaylistItem(playlistInfo[id]);
-        $("#" + playlistInfo[id].id)
-            .find(".audioName")
+        $('#' + playlistInfo[id].id)
+            .find('.audioName')
             .text(playlistInfo[id].name);
         sounds.createNewHowl(playlistInfo[id]);
     });
@@ -134,10 +134,10 @@ function registerPlaylistItems() {
 }
 
 function empty() {
-    $("#confirm-empty-modal").modal("open");
-    $("#confirm-empty-modal-Okay").click(function() {
-        storage.emptyObj("playlistInfo", playlistInfo);
-        $("#playlist-songs").empty();
+    $('#confirm-empty-modal').modal('open');
+    $('#confirm-empty-modal-delete').click(function() {
+        storage.emptyObj('playlistInfo', playlistInfo);
+        $('#playlist-songs').empty();
     });
 }
 
@@ -145,29 +145,30 @@ function saveOrder() {
     dontSet = false;
     sortable.save();
     dontSet = true;
-    $(".btn-playlist-actions").dropdown("close");
+    M.Dropdown.getInstance(document.getElementById('btn-playlist-actions')).close();
 }
 
 function setOrder() {
     sortable.sort(sortable.options.store.get(sortable));
     var first = true;
-    var sounds = $(".playlistSound");
+    var sounds = $('.playlistSound');
     // Reset colors properly
     for (i = 0; i < sounds.length; i++) {
         if (sounds[i] === undefined) {
             return;
         }
         var style = window.getComputedStyle(sounds[i]);
-        if (style.display !== "none") {
+        if (style.display !== 'none') {
             if (first) {
-                $(sounds[i]).css("background-color", "var(--aM)");
+                $(sounds[i]).css('background-color', 'var(--aM)');
                 first = false;
             } else {
-                $(sounds[i]).css("background-color", "var(--bgL)");
+                $(sounds[i]).css('background-color', 'var(--bgL)');
             }
         }
     }
-    $(".btn-playlist-actions").dropdown("close");
+    M.Dropdown.getInstance(document.getElementById('btn-playlist-actions')).close();
+    //$("#btn-playlist-actions").dropdown("close");
 }
 
 module.exports = {

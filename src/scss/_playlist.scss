@@ -1,0 +1,23 @@
+#btn-playlist-actions {
+    border: none;
+    float: right;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+}
+
+#btn-playlist-actions i {
+    margin-top: -16px;
+}
+
+.dropdown-content li a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.dropdown-content li {
+    min-height: 0px;
+}

@@ -1,45 +1,56 @@
 {
-  "name": "Flask",
-  "version": "0.5.0",
-  "description": "Software for improvising sound",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron index.js",
-    "build:win": "build --win --ia32 --x64",
-    "pack": "build --dir",
-    "build:mac": "build --mac --x64",
-    "release": "gh-release"
-  },
-  "build": {
-    "win": {},
-    "mac": {
-      "category": "public.app-category.music"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brandoshizzle/REACTion.git"
-  },
-  "author": "Brandon Cathcart <cathcart.brandon@gmail.com>",
-  "license": "Apache 2.0",
-  "bugs": {
-    "url": "https://github.com/brandoshizzle/REACTion/issues"
-  },
-  "homepage": "https://github.com/brandoshizzle/REATion#readme",
-  "devDependencies": {
-    "electron": "1.8.6",
-    "electron-builder": "^10.17.3",
-    "electron-builder-squirrel-windows": "^11.5.0",
-    "gh-release": "^2.2.0",
-    "npm": "^5.8.0"
-  },
-  "dependencies": {
-    "circular-json": "^0.3.1",
-    "compare-versions": "^3.2.1",
-    "fs-jetpack": "^0.10.5",
-    "gh-latest-release": "^1.0.0",
-    "marked": "^0.3.19",
-    "materialize-css": "^1.0.0-rc.1"
-  }
+	"name": "Flask",
+	"version": "1.0.0",
+	"description": "Software for improvising sound",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "electron index.js",
+		"build:win": "build --win --ia32 --x64",
+		"pack": "build --dir",
+		"build:mac": "build --mac --x64",
+		"release": "gh-release"
+	},
+	"build": {
+		"win": {},
+		"mac": {
+			"category": "public.app-category.music"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/brandoshizzle/REACTion.git"
+	},
+	"author": "Brandon Cathcart <cathcart.brandon@gmail.com>",
+	"license": "Apache 2.0",
+	"bugs": {
+		"url": "https://github.com/brandoshizzle/REACTion/issues"
+	},
+	"homepage": "https://github.com/brandoshizzle/REATion#readme",
+	"devDependencies": {
+		"electron-builder": "^10.17.3",
+		"electron-builder-squirrel-windows": "^11.5.0",
+		"electron-connect": "^0.6.3",
+		"eslint": "^5.16.0",
+		"eslint-config-jquery": "^1.0.1",
+		"eslint-config-prettier": "^4.1.0",
+		"eslint-plugin-prettier": "^3.0.1",
+		"gh-release": "^2.2.0",
+		"gulp": "^4.0.0",
+		"gulp-connect": "latest",
+		"gulp-sass": "latest",
+		"gulp-util": "^3.0.8",
+		"npm": "^5.10.0",
+		"prettier": "^1.17.0"
+	},
+	"dependencies": {
+		"circular-json": "^0.3.1",
+		"compare-versions": "^3.4.0",
+		"dotenv": "^6.2.0",
+		"electron": "^4.1.4",
+		"fs-jetpack": "^0.10.5",
+		"gh-latest-release": "^1.0.0",
+		"marked": "^0.6.2",
+		"materialize-css": "^1.0.0"
+	}
 }

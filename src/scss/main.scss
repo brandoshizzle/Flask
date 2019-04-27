@@ -1,0 +1,63 @@
+@import 'colors.css';
+@import 'keyboardAndPlaylist.css';
+
+@import 'base';
+@import 'header';
+@import 'playlist';
+@import 'settings-modal';
+@import 'sound-settings-modal';
+@import 'update-modal';
+@import 'waveform';
+
+* {
+	user-select: none;
+}
+
+div.hopscotch-bubble .hopscotch-content {
+	line-height: 25px;
+	font-size: 16px;
+}
+
+div.hopscotch-bubble h3 {
+	font-size: 20px;
+	line-height: 30px;
+}
+
+div.hopscotch-bubble .hopscotch-nav-button {
+	width: 64px;
+	height: 32px;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+/* Questionable */
+
+.color-picker-color {
+	height: 20px;
+	width: 40px;
+	border: 1px solid gray;
+	border-radius: 2px;
+	margin: 4px 0px -4px 4px;
+	display: inline-block;
+}
+
+.selectable li:hover {
+	color: var(--tD);
+	background-color: var(--oc-gray-2);
+	cursor: pointer;
+}
+
+.selectable .ui-selected {
+	background-color: var(--pM) !important;
+	color: white;
+}
+
+.transparent-bg {
+	background-color: rgba(0, 0, 0, 0);
+	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+	max-height: 90%;
+}
+
+.transparent-bg::-webkit-scrollbar {
+	display: none;
+}

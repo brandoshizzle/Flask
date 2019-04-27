@@ -1,11 +1,11 @@
 /* UTIL.JS
  * These functions deal with minor tasks that help others, mostly
  * Functions:
- *		storeObj, checkKeyInfo, loadKeyInfo, cleanName
+ *		checkKeyInfo, loadKeyInfo, cleanName
  */
 /*jshint esversion: 6 */
-const circularJSON = require("circular-json");
-const dialog = require("electron").remote.dialog;
+const circularJSON = require('circular-json');
+const dialog = require('electron').remote.dialog;
 var clipboard;
 
 /**
@@ -15,13 +15,13 @@ var clipboard;
  */
 function cleanName(name) {
     name = name.toString();
-    var pos = name.lastIndexOf("\\");
+    var pos = name.lastIndexOf('\\');
     // If \ is not found, user is on OSX - check for /
     if (pos === -1) {
-        pos = name.lastIndexOf("/");
+        pos = name.lastIndexOf('/');
     }
     name = name.substring(pos + 1);
-    pos = name.lastIndexOf(".");
+    pos = name.lastIndexOf('.');
     return name.substring(0, pos);
 }
 
@@ -32,10 +32,10 @@ function cleanName(name) {
  */
 function prepareForId(str) {
     var replaced = str
-        .replace(/ /g, "_")
-        .replace(/[{()}',.!@#$%^*]/g, "")
-        .replace(/[&]/g, "and")
-        .replace(/[[\]]/g, "");
+        .replace(/ /g, '_')
+        .replace(/[{()}',.!@#$%^*]/g, '')
+        .replace(/[&]/g, 'and')
+        .replace(/[[\]]/g, '');
     return replaced;
 }
 
@@ -44,22 +44,22 @@ function prepareForId(str) {
  *	@param: none
  */
 function openBrowse() {
-    var currentPath = $("#sound-settings-path").val();
+    var currentPath = $('#sound-settings-path').val();
     var options = {
-        title: "Replace Sound File",
+        title: 'Replace Sound File',
         defaultPath: currentPath,
         filters: [
             {
-                name: "*.wav, *.mp3, *.m4a, *.wma, *ogg",
-                extensions: ["wav", "mp3", "m4a", "mp4", "wma", "ogg"]
+                name: '*.wav, *.mp3, *.m4a, *.wma, *ogg',
+                extensions: ['wav', 'mp3', 'm4a', 'mp4', 'wma', 'ogg']
             }
         ],
-        properties: ["openFile"]
+        properties: ['openFile']
     };
     var newPath = dialog.showOpenDialog(options);
     if (newPath !== undefined) {
-        $("#sound-settings-path").val(newPath);
-        $("#sound-settings-name").text(cleanName(newPath));
+        $('#sound-settings-path').val(newPath);
+        $('#sound-settings-name').text(cleanName(newPath));
     }
 }
 
@@ -86,16 +86,17 @@ function copyKey(copiedSoundInfo) {
 function cutKey(cutSoundInfo) {
     clipboard = cloneObj(cutSoundInfo);
     var id = cutSoundInfo.id;
-    $("#" + id).removeClass("played");
-    $("#" + id).css("background-color", "var(--pM)");
-    $("#" + id).css("box-shadow", "0px 4px 0px 0px var(--pD)");
-    $("#" + id)
-        .find(".audioName")
-        .text("");
+    $('#' + id).removeClass('played');
+    $('#' + id).css('background-color', 'var(--pM)');
+    $('#' + id).css('box-shadow', '0px 4px 0px 0px var(--pD)');
+    $('#' + id)
+        .find('.audioName')
+        .text('');
     delete keyInfo[cutSoundInfo.id];
     //createjs.Sound.removeSound(id);
-    pagesInfo["page" + currentPage].keyInfo = keyInfo;
-    storage.storeObj("pagesInfo", pagesInfo);
+    pagesInfo['page' + currentPage].keyInfo = keyInfo;
+    //storage.storeObj('pagesInfo', pagesInfo);
+    storage.saveShow();
 }
 
 function pasteKey(destinationSoundInfo) {
@@ -104,11 +105,12 @@ function pasteKey(destinationSoundInfo) {
     destinationSoundInfo.id = id;
     keyInfo[id] = destinationSoundInfo;
     view.updateKey(keyInfo[id]);
-    storage.checkAgainstDefault(keyInfo[id], "soundInfo");
+    storage.checkAgainstDefault(keyInfo[id], 'soundInfo');
     sounds.createNewHowl(keyInfo[id]);
-    $("#" + id).removeClass("played");
-    pagesInfo["page" + currentPage].keyInfo = keyInfo;
-    storage.storeObj("pagesInfo", pagesInfo);
+    $('#' + id).removeClass('played');
+    pagesInfo['page' + currentPage].keyInfo = keyInfo;
+    //storage.storeObj('pagesInfo', pagesInfo);
+    storage.saveShow();
 }
 
 module.exports = {

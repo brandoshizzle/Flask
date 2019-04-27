@@ -1,0 +1,147 @@
+#waveform-box {
+	position: absolute;
+	bottom: 0px;
+	width: 75%;
+	margin: 10px;
+	padding: 0;
+	-webkit-user-drag: none;
+}
+
+#waveform {
+	border-top-right-radius: 3px;
+	height: 128px;
+	margin: 0;
+	padding: 0px;
+	-webkit-user-drag: none;
+}
+
+#waveform-region {
+	position: absolute;
+	top: 28px;
+	width: 100%;
+	left: 0;
+	height: 84%;
+	margin: 0;
+	border-left: 3px solid var(--tD);
+	border-right: 3px solid var(--tD);
+	//transition: 0.5s;
+	box-sizing: border-box;
+	-webkit-user-drag: none;
+}
+
+#waveform-info {
+	height: 28px;
+	width: 50%;
+	margin-left: 0px;
+	padding-left: 10px;
+	padding-top: 4px;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+
+	p {
+		margin: 0;
+		padding: 0;
+	}
+	-webkit-user-drag: none;
+}
+
+#waveform-timeline {
+	height: 20px;
+	background-color: var(--pD);
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	border-top: 1px outset darkgray;
+}
+
+#waveform-progress {
+	position: absolute;
+	top: 45%;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+
+.line {
+	position: relative;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	background-color: #4b9cdb;
+	bottom: 0px;
+}
+
+.load {
+	height: 50px;
+	width: 70px;
+	position: absolute;
+	top: 34%;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+
+.resize-container {
+	width: 100%;
+	height: 240px;
+}
+
+#resize-handle-right {
+	transform: translate(0px, 150px);
+	left: -3px;
+	top: -147px;
+}
+
+#resize-handle-left {
+	transform: translate(200px, 773px);
+	left: 10px;
+	top: -147px;
+}
+
+.resize-handle {
+	position: absolute;
+	width: 3px;
+	height: 128px;
+	z-index: 100;
+	background-color: var(--bgD);
+	cursor: w-resize;
+}
+.resize-handle:after {
+	display: block;
+	position: absolute;
+	width: 10px;
+	background-color: var(--bgD);
+	height: 20px;
+	content: '';
+	top: 60px;
+	left: -4px;
+	border-radius: 3px;
+}
+/* =Animate the waveform loading
+  ------------------------ */
+
+.load .line:nth-last-child(1) {
+	animation: loadingA 1.5s 1s infinite;
+}
+
+.load .line:nth-last-child(2) {
+	animation: loadingA 1.5s 0.5s infinite;
+}
+
+.load .line:nth-last-child(3) {
+	animation: loadingA 1.5s 0s infinite;
+}
+
+@keyframes loadingA {
+	0 {
+		height: 15px;
+	}
+
+	50% {
+		height: 35px;
+	}
+
+	100% {
+		height: 15px;
+	}
+}

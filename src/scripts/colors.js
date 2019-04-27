@@ -3,6 +3,19 @@
  */
 
 var pickedColor; // The colour chosen in the sound settings menu
+const colorList = {
+	"#339af0": "blue",
+	"#f03e3e": "red",
+	"#d6336c": "pink",
+	"#ae3ec9": "grape",
+	"#7048e8": "violet",
+	"#1098ad": "cyan",
+	"#0ca678": "teal",
+	"#74b816": "lime",
+	"#f59f00": "yellow",
+	"#f76707": "orange",
+	"#495057": "gray"
+}
 
 /**
  *	@desc:	Sets the color of the key that was changed in the sound settings
@@ -20,9 +33,9 @@ function setKeyColor(soundInfo) {
  *	@param:	N/A
  */
 function initializeKeyColors() {
-	Object.keys(pagesInfo).map(function(id, index){
+	Object.keys(pagesInfo).map(function (id, index) {
 		var tempKeyInfo = pagesInfo[id].keyInfo;
-		Object.keys(tempKeyInfo).map(function(id, index) {
+		Object.keys(tempKeyInfo).map(function (id, index) {
 			var soundInfo = tempKeyInfo[id];
 			var openColor = makeColor(soundInfo.color);
 			var darkOpenColor = makeColor(soundInfo.color, true);
@@ -37,8 +50,8 @@ function initializeKeyColors() {
  *									ex. 'color-blue', 'color-pink'
  */
 function setColorPickerColors() {
-	$("#color-picker div").each(function() {
-		var color = makeColor(this.id.replace("color-", ""));
+	$("#color-picker option").each(function () {
+		var color = makeColor(this.innerHTML.toLowerCase);
 		$(this).css("background-color", color);
 	});
 }
@@ -48,9 +61,9 @@ function setColorPickerColors() {
  *	@param:	color: The color to change to, taken from the id of the clicked element
  *									ex. 'color-blue', 'color-pink'
  */
-function setPickedColor(color) {
-	pickedColor = color.replace("color-", "");
-	$('#sound-settings-color').css("background-color", makeColor(pickedColor));
+function setPickedColor() {
+	var pickedHex = $('select[name="colorpicker"]').val();
+	pickedColor = colorList[pickedHex];
 }
 
 /**
@@ -59,23 +72,38 @@ function setPickedColor(color) {
  */
 function makeColor(colorStr, darkBool) {
 	var dark = darkBool || false;
-	if (colorStr === "default") {
-		if(dark){
+	if (colorStr === "blue" || colorStr === "default") {
+		if (dark) {
 			return "var(--pD)";
 		}
 		return "var(--pM)";
 	}
-	if(dark){
+	if (dark) {
 		var num = (colorStr === 'gray') ? 8 : 9;
 		return "var(--oc-" + colorStr + "-" + num + ")";
 	}
 	return "var(--oc-" + colorStr + "-7)";
 }
 
+function loadColorIntoSoundSettings(colorName) {
+	let colorHEX = "";
+	if (colorName === "default") {
+		colorHEX = "#339af0";
+	} else {
+		colorHEX = Object.entries(colorList).find(arr => {
+			return arr[1] === colorName;
+		})[0];
+	}
+	pickedColor = colorName;
+	$('select[name="colorpicker"]').simplecolorpicker('selectColor', colorHEX);
+}
+
+
 module.exports = {
 	setKeyColor: setKeyColor,
 	initializeKeyColors: initializeKeyColors,
 	setColorPickerColors: setColorPickerColors,
 	makeColor: makeColor,
-	setPickedColor: setPickedColor
+	setPickedColor: setPickedColor,
+	loadColorIntoSoundSettings: loadColorIntoSoundSettings
 };

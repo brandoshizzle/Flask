@@ -1,0 +1,36 @@
+#update-modal {
+    max-height: 90% !important;
+
+    p {
+        margin: 0px !important;
+    }
+}
+
+#update-changelog {
+    border: 1px solid gray;
+    margin: 20px;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
+    text-align: left;
+    font-size: 12px;
+
+    li {
+        list-style: disc;
+        list-style-type: circle;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+
+    ul {
+        margin-top: 0;
+    }
+}
+
+#download-button {
+    width: 400px;
+    height: 100px;
+}

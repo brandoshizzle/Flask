@@ -4,42 +4,45 @@
 
 /*jshint esversion: 6 */
 const jetpack = require('fs-jetpack');
+//const playlist = require('./scripts/playlist');
 const app = require('electron').remote.app;
+const dialog = require('electron').remote.dialog;
+var userFilePath;
 
 var appDir = app.getPath('userData');
-$(function () {
-	jetpack.dir(appDir).dir('data');
+$(function() {
+    jetpack.dir(appDir).dir('data');
 });
 var dataDir = appDir + '\\data\\';
 
 var defaults = {
-	'soundInfo': new sounds.SoundInfo(""),
-	'settings': {
-		'general': {
-			'prereleaseUpdates': false,
-			'stopSounds': false,
-			'markPlayed': true,
-			'fadeInTime': 1500,
-			'fadeOutTime': 1500
-		},
-		'playlist': {
-			"soundToBottomAfterPlay": true,
-			"soundDeleteAfterPlay": false,
-			order: ''
-		},
-		'pages': {
-			"soloSound": "off"
-		},
-		'utility': {
-			"pVersion": "0.1.0"
-		}
-	},
-	'pageInfo': {
-		'name': '',
-		fadeInTime: undefined,
-		fadeOutTime: undefined,
-		'keyInfo': {}
-	}
+    soundInfo: new sounds.SoundInfo(''),
+    settings: {
+        general: {
+            prereleaseUpdates: false,
+            stopSounds: false,
+            markPlayed: true,
+            fadeInTime: 1500,
+            fadeOutTime: 1500
+        },
+        playlist: {
+            soundToBottomAfterPlay: true,
+            soundDeleteAfterPlay: false,
+            order: ''
+        },
+        pages: {
+            soloSound: 'off'
+        },
+        utility: {
+            pVersion: '0.1.0'
+        }
+    },
+    pageInfo: {
+        name: '',
+        fadeInTime: undefined,
+        fadeOutTime: undefined,
+        keyInfo: {}
+    }
 };
 
 /**
@@ -51,54 +54,137 @@ var defaults = {
  						obj: The actual object of objName
  */
 function getInfoObj(objName) {
-	var tempObj = {};
-	var objPath = dataDir + objName + '.json';
-	// Use JSON storage if it exists, otherwise pull from (legacy) localStorage
-	if (jetpack.exists(objPath)) {
-		tempObj = JSON.parse(jetpack.read(objPath));
-	} else {
-		console.log(objName + '.json does not exist. Using localStorage instead.');
-		// Pull keyInfo string from localStorage
-		var infoString = localStorage.getItem(objName);
-		// Only parse it if it exists!
-		if (infoString !== null) {
-			tempObj = JSON.parse(infoString);
-		}
-	}
-	//checkInfoObj(tempObj, objName);
-	return tempObj; // Return the sucker
+    var tempObj = {};
+    var objPath = dataDir + objName + '.json';
+    // Use JSON storage if it exists, otherwise pull from (legacy) localStorage
+    if (jetpack.exists(objPath)) {
+        tempObj = JSON.parse(jetpack.read(objPath));
+    } else {
+        console.log(objName + '.json does not exist. Using localStorage instead.');
+        // Pull keyInfo string from localStorage
+        var infoString = localStorage.getItem(objName);
+        // Only parse it if it exists!
+        if (infoString !== null) {
+            tempObj = JSON.parse(infoString);
+        }
+    }
+    //checkInfoObj(tempObj, objName);
+    return tempObj; // Return the sucker
 }
 
 /**
- *	@desc: Save changed object to local storage
- *	@param: keyName: The name of the localStorage object
+ *	@desc: Save changed object to file
+ *	@param: objName: The name of the object to be stored
  *					obj : The object being stringified and stored
  */
 function storeObj(objName, obj) {
-	// Clean soundInstances from storage
-	var clonedObj = util.cloneObj(obj);
-	//console.log(clonedObj);
-	if (objName === 'playlistInfo') {
-		stripPlayState(clonedObj);
-	} else if (objName === 'pagesInfo') {
-		Object.keys(clonedObj).map(function (prop, index) {
-			stripPlayState(clonedObj[prop].keyInfo);
-		});
-	}
-	//console.log(dataDir + objName);
-	jetpack.writeAsync(dataDir + objName + '.json', clonedObj, {
-		atomic: true
-	});
-	console.log('Storing new ' + objName + ' to json.');
+    // Clean soundInstances from storage
+    var clonedObj = util.cloneObj(obj);
+    if (objName === 'playlistInfo') {
+        stripPlayState(clonedObj);
+    } else if (objName === 'pagesInfo') {
+        Object.keys(clonedObj).map(function(prop, index) {
+            stripPlayState(clonedObj[prop].keyInfo);
+        });
+    }
+    jetpack.writeAsync(dataDir + objName + '.json', clonedObj, {
+        atomic: true
+    });
+    console.log('Storing new ' + objName + ' to json.');
+}
+
+function newShow() {
+    // Show save dialog to send to file
+    const saveOptions = {
+        title: 'New Show',
+        defaultPath: 'Show',
+        buttonLabel: 'Create',
+        filters: [{ name: 'Flask Shows', extensions: ['flask'] }]
+    };
+    dialog.showSaveDialog(saveOptions, (filename, bookmark) => {
+        if (filename === undefined) {
+            return;
+        }
+        userFilePath = filename;
+        console.log(filename);
+        // Initialize everything
+        clearShow();
+        saveShow();
+    });
+}
+
+function clearShow() {
+    showInfo = { pagesInfo: {}, playlistInfo: {}, settingsInfo: {} };
+    pagesInfo = showInfo.pagesInfo;
+    playlistInfo = showInfo.playlistInfo;
+    keyInfo = {};
+    $('#playlist-songs').empty();
+    const keyboards = document.getElementById('keyboard-container').children;
+    for (let i = 0; i < keyboards.length; i++) {
+        const rows = keyboards[i].children;
+        for (let j = 0; j < rows.length; j++) {
+            const keys = rows[j].children;
+            for (let k = 0; k < keys.length; k++) {
+                const keyEl = keys[k];
+                keyEl.children[1].innerHTML = '';
+                keyEl.style.backgroundColor = 'var(--pM)';
+                keyEl.style.boxShadow = '0px 4px 0px 0px var(--pD)';
+                keyEl.classList.remove('played');
+                keyEl.classList.remove('waveformed-key');
+            }
+        }
+    }
+    const tabs = document.getElementById('tabs').children;
+    for (let i = 0; i < tabs.length - 1; i++) {
+        tabs[i].children[0].children[0].innerHTML = 'Page ' + (i + 1);
+    }
+    dragSelect.clearSelection();
+    M.Sidenav.getInstance($('.sidenav')).close();
+}
+
+function openShow() {
+    const openOptions = {
+        title: 'Open Show',
+        filters: [{ name: 'Flask Shows', extensions: ['flask'] }],
+        properties: ['openFile']
+    };
+    dialog.showOpenDialog(openOptions, filepaths => {
+        userFilePath = filepaths[0];
+        clearShow();
+        loadShow(userFilePath);
+    });
+}
+
+function saveShow() {
+    let clonedPlaylistInfo = util.cloneObj(playlistInfo);
+    let clonedPagesInfo = util.cloneObj(pagesInfo);
+    let clonedSettingInfo = util.cloneObj(settingsInfo);
+    stripPlayState(clonedPlaylistInfo);
+    Object.keys(clonedPagesInfo).map(function(prop, index) {
+        stripPlayState(clonedPagesInfo[prop].keyInfo);
+    });
+    const showInfo = {
+        pagesInfo: clonedPagesInfo,
+        playlistInfo: clonedPlaylistInfo,
+        settingsInfo: clonedSettingInfo
+    };
+    if (userFilePath === undefined) {
+        userFilePath = 'C:\\Users\\Brandon\\Documents\\Show.flask';
+    }
+    jetpack.writeAsync(userFilePath, showInfo, {
+        atomic: true
+    });
+    console.log('Saving show.');
 }
 
 function deleteObj(objName) {
-	jetpack.remove(dataDir + objName + '.json');
+    jetpack.remove(dataDir + objName + '.json');
 }
 
 function emptyObj(objName, obj) {
-	obj = {};
-	storeObj(objName, obj);
+    obj = {};
+    //storeObj(objName, obj);
+    saveShow();
 }
 
 /**
@@ -107,46 +193,53 @@ function emptyObj(objName, obj) {
  *	@param: key: The letter (or character) of the key to check (string)
  */
 function checkAgainstDefault(obj, defaultName) {
-	var changed = false;
-	// Update the object with any new properties
-	Object.keys(defaults[defaultName]).map(function (prop, index) {
-		if (!obj.hasOwnProperty(prop)) {
-			obj[prop] = defaults[defaultName][prop];
-		}
-		if (typeof defaults[defaultName][prop] == "object" && defaults[defaultName][prop] !== null && defaultName === 'settings') {
-			Object.keys(defaults[defaultName][prop]).map(function (prop2, index) {
-				if (!obj[prop].hasOwnProperty(prop2)) {
-					obj[prop][prop2] = defaults[defaultName][prop][prop2];
-				}
-			});
-		}
-	});
+    var changed = false;
+    // Update the object with any new properties
+    Object.keys(defaults[defaultName]).map(function(prop, index) {
+        if (!obj.hasOwnProperty(prop)) {
+            obj[prop] = defaults[defaultName][prop];
+        }
+        if (
+            typeof defaults[defaultName][prop] == 'object' &&
+			defaults[defaultName][prop] !== null &&
+			defaultName === 'settings'
+        ) {
+            Object.keys(defaults[defaultName][prop]).map(function(prop2, index) {
+                if (!obj[prop].hasOwnProperty(prop2)) {
+                    obj[prop][prop2] = defaults[defaultName][prop][prop2];
+                }
+            });
+        }
+    });
 
-	// Check that the object does not have depreciated properties (and delete them)
-	Object.keys(obj).map(function (prop, index) {
-		if (!defaults[defaultName].hasOwnProperty(prop)) {
-			delete obj[prop];
-		}
-		if (typeof obj[prop] == "object" && obj[prop] !== null && defaultName === 'settings') {
-			Object.keys(obj[prop]).map(function (prop2, index) {
-				if (!defaults[defaultName][prop].hasOwnProperty(prop2)) {
-					delete obj[prop][prop2];
-				}
-			});
-		}
-	});
+    // Check that the object does not have depreciated properties (and delete them)
+    Object.keys(obj).map(function(prop, index) {
+        if (!defaults[defaultName].hasOwnProperty(prop)) {
+            delete obj[prop];
+        }
+        if (typeof obj[prop] == 'object' && obj[prop] !== null && defaultName === 'settings') {
+            Object.keys(obj[prop]).map(function(prop2, index) {
+                if (!defaults[defaultName][prop].hasOwnProperty(prop2)) {
+                    delete obj[prop][prop2];
+                }
+            });
+        }
+    });
 }
 
 function stripPlayState(infoObj) {
-	Object.keys(infoObj).map(function (prop, index) {
-		delete infoObj[prop].howl;
-	});
+    Object.keys(infoObj).map(function(prop, index) {
+        delete infoObj[prop].howl;
+    });
 }
 
 module.exports = {
-	getInfoObj: getInfoObj,
-	storeObj: storeObj,
-	deleteObj: deleteObj,
-	checkAgainstDefault: checkAgainstDefault,
-	emptyObj: emptyObj
+    checkAgainstDefault: checkAgainstDefault,
+    deleteObj: deleteObj,
+    emptyObj: emptyObj,
+    getInfoObj: getInfoObj,
+    newShow: newShow,
+    openShow: openShow,
+    saveShow: saveShow,
+    storeObj: storeObj
 };

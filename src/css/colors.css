@@ -3,7 +3,8 @@
 * Recommended color scheme at http://materializecss.com/color.html
 */
 
-@import 'vendor/open-color.css';
+@import "vendor/open-color.css";
+
 :root {
     --pM: var(--oc-blue-5);
     --pD: var(--oc-blue-9);
@@ -80,7 +81,6 @@ body {
     box-shadow: 0px 0px 2px 1px white !important;
 }
 
-
 /*
 .waveformed-key::after {
   content: '';
@@ -110,22 +110,20 @@ body {
 }
 */
 
-.waveformed-key:hover {
-    /*box-shadow: 0px 0px 5px 2px white !important;*/
-}
-
 .playing-sound {
     box-shadow: 0px 0px 5px 5px var(--aM) !important;
-    -webkit-animation: glowingPlay ease-in-out 3s infinite;
+    animation: glowingPlay ease-in-out 3s infinite;
 }
 
-@-webkit-keyframes glowingPlay {
+@keyframes glowingPlay {
     from {
         box-shadow: 0px 0px 5px var(--aM) !important;
     }
+
     50% {
         box-shadow: 0px 0px 3px var(--aM);
     }
+
     to {
         box-shadow: 0px 0px 5px var(--aM) !important;
     }
@@ -139,12 +137,14 @@ body {
     color: var(--tL);
 }
 
-.tabs .tab a:hover, .tabs .tab a.active {
+.tabs .tab a:hover,
+.tabs .tab a.active {
     background-color: transparent;
     color: var(--aM);
 }
 
-.tabs .tab.disabled a, .tabs .tab.disabled a:hover {
+.tabs .tab.disabled a,
+.tabs .tab.disabled a:hover {
     color: rgba(102, 147, 153, 0.7);
 }
 
@@ -152,55 +152,55 @@ body {
     background-color: var(--aM);
 }
 
-
 /* label focus color */
 
-.input-field input[type=text]:focus+label {
+.input-field input[type="text"]:focus+label {
     color: var(--pM);
 }
 
-
 /* label underline focus color */
 
-input[type=text]:focus {
+input[type="text"]:focus {
     border-bottom: 1px solid var(--pM);
     box-shadow: 0 1px 0 0 var(--pM);
 }
 
-.switch label input[type=checkbox]:checked+.lever {
+.switch label input[type="checkbox"]:checked+.lever {
     background-color: var(--pL);
 }
 
-.switch label input[type=checkbox]:checked+.lever:after {
+.switch label input[type="checkbox"]:checked+.lever:after {
     background-color: var(--pM);
 }
 
-.btn-playlist-actions {
+#btn-playlist-actions {
     background-color: var(--bgM);
     color: var(--oc-gray-4);
 }
-.btn-playlist-actions:hover {
+
+#btn-playlist-actions:hover {
     background-color: var(--oc-gray-7);
 }
 
-.dropdown-content li a{
+.dropdown-content li a {
     background-color: var(--oc-gray-7);
     color: var(--oc-gray-4);
 }
 
-.dropdown-content li a:hover{
+.dropdown-content li a:hover {
     background-color: var(--oc-gray-4);
     color: var(--oc-gray-9);
 }
 
-.noUi-connect{
+.noUi-connect {
     background: var(--pM);
-  }
+}
 
-.noUi-target.noUi-horizontal .noUi-tooltip{
+.noUi-target.noUi-horizontal .noUi-tooltip {
     background-color: var(--pM);
 }
 
-.noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle{
+.noUi-horizontal .noUi-handle,
+.noUi-vertical .noUi-handle {
     background-color: var(--pM);
 }

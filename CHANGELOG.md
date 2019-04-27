@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0] - XXXX-XX-XX
+
+### Added
+
+-   Select and edit multiple keys at once
+-   Save and load shows
+-   Grab the edge of the waveform to adjust start and end points - no Ctrl or Cmd required
+-   Autoplay switch available on playlist
+
+### Changed
+
+-   Color picker in sound settings
+-   Fade in time now dropdown - much more intuitive
+-   Main settings redesigned
+-   Ctrl/Cmd + P opens the settings
+-   Updated to Electron v4.1.4
+-   Updated Sortable JS to v1.8.4
+
 ## [0.5.0] - 2019-01-13
 
 ### Added

@@ -1,0 +1,94 @@
+.btn-settings {
+	line-height: 30px;
+	height: 30px;
+}
+
+#settings-modal {
+	padding: 0px;
+	border-radius: 10px;
+	width: 700px;
+
+	.modal-content {
+		padding: 15px;
+		padding-top: 0px;
+	}
+
+	.tabs-row {
+		background: var(--pD);
+		width: 100% !important;
+		padding-bottom: 2px;
+		box-shadow: 0px 3px 5px var(--oc-gray-5);
+	}
+}
+
+.settings-description {
+	padding-left: 0px !important;
+
+	h3 {
+		font-size: 14px;
+		margin-bottom: 0px;
+		line-height: 43px;
+	}
+
+	p {
+		font-size: 12px;
+		margin-top: 0px;
+		color: gray !important;
+	}
+}
+
+.card-content .row {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.switch label input {
+	position: relative !important;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.settings-switch {
+	line-height: 43px;
+
+	input {
+		margin-bottom: 0px;
+	}
+}
+
+hr {
+	height: 0;
+	border: 0;
+	border-top: 1px solid lightgray;
+}
+
+.modal-footer .btn {
+	margin-left: 10px !important;
+}
+
+#settings-menu {
+	td {
+		&:hover {
+			cursor: pointer;
+			background: rgba(215, 222, 234, 0.3);
+		}
+	}
+	tr {
+		border: none;
+	}
+}
+
+.settings-section {
+	padding-left: 20px;
+
+	.row {
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		margin-bottom: 5px;
+		padding-bottom: 5px;
+	}
+}
+
+.settings-menu-active {
+	background: rgba(89, 191, 255, 0.3) !important;
+	// color: white;
+}
