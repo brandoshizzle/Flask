@@ -182,9 +182,19 @@ function stop(soundInfo) {
             }
             playSound(playlistInfo[firstPlaylistSound]);
         }
-        // @TODO: Check if song is playing, if so then DON'T CLICK
-        $('#' + firstPlaylistSound).click();
+        if (!keysArePlaying()) {
+            $('#' + firstPlaylistSound).click();
+        }
     }
+}
+
+function keysArePlaying() {
+    for (key in keyInfo) {
+        if (keyInfo[key].howl && keyInfo[key].howl.playing()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
