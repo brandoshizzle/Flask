@@ -318,7 +318,7 @@ function loadShow(pathToFile) {
         pagesNumSounds += Object.keys(pagesInfo[page].keyInfo).length;
     });
     // From playlist:
-    totalNumSounds = Object.keys(playlistInfo).length + pagesNumSounds;
+    totalNumSounds = Object.keys(playlistInfo).length - 1 + pagesNumSounds;
     // Hide on new project
     if (totalNumSounds === 0) {
         $('#loadedContainer').hide();

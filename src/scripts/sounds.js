@@ -169,18 +169,20 @@ function stop(soundInfo) {
             //storage.storeObj('playlistInfo', playlistInfo);
             //storage.saveShow();
         } else if (settingsInfo.playlist.soundToBottomAfterPlay) {
-            $('#' + soundInfo.id).appendTo('#playlist-songs');
-            $('#' + soundInfo.id).css('background-color', 'var(--bgL)');
+            playlist.moveSoundToBottom(soundInfo.id);
             firstPlaylistSound = playlist.getFirstPlaylistItem();
             $('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
         }
         if (document.getElementById('playlist-autoplay').checked) {
-            $('#' + soundInfo.id).appendTo('#playlist-songs');
-            $('#' + soundInfo.id).css('background-color', 'var(--bgL)');
-            firstPlaylistSound = playlist.getFirstPlaylistItem();
-            $('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
+            // Ensure sound is moved to the bottom
+            if (!settingsInfo.playlist.soundToBottomAfterPlay) {
+                playlist.moveSoundToBottom(soundInfo.id);
+                firstPlaylistSound = playlist.getFirstPlaylistItem();
+                $('#' + firstPlaylistSound).css('background-color', 'var(--aM)');
+            }
             playSound(playlistInfo[firstPlaylistSound]);
         }
+        // @TODO: Check if song is playing, if so then DON'T CLICK
         $('#' + firstPlaylistSound).click();
     }
 }

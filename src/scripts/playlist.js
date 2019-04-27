@@ -39,7 +39,7 @@ function buildPlaylist() {
 			 * @returns {Array}
 			 */
             get: function(sortable) {
-                var order = settingsInfo.playlist.order;
+                var order = playlistInfo.order;
                 return order ? order.split('|') : [];
             },
 
@@ -52,8 +52,9 @@ function buildPlaylist() {
                     return;
                 }
                 var order = sortable.toArray();
-                settingsInfo.playlist.order = order.join('|');
+                playlistInfo.order = order.join('|');
                 //storage.storeObj('settings', settingsInfo);
+                M.toast({ html: 'Playlist order saved' });
                 storage.saveShow();
             }
         }
@@ -121,12 +122,14 @@ function getFirstPlaylistItem() {
 function registerPlaylistItems() {
     Object.keys(playlistInfo).map(function(id, index) {
         // Ensure all parameters are up to date
-        storage.checkAgainstDefault(playlistInfo[id], 'soundInfo');
-        view.createPlaylistItem(playlistInfo[id]);
-        $('#' + playlistInfo[id].id)
-            .find('.audioName')
-            .text(playlistInfo[id].name);
-        sounds.createNewHowl(playlistInfo[id]);
+        if (id !== 'order') {
+            storage.checkAgainstDefault(playlistInfo[id], 'soundInfo');
+            view.createPlaylistItem(playlistInfo[id]);
+            $('#' + playlistInfo[id].id)
+                .find('.audioName')
+                .text(playlistInfo[id].name);
+            sounds.createNewHowl(playlistInfo[id]);
+        }
     });
 
     // Set Sortable list
@@ -139,6 +142,16 @@ function empty() {
         storage.emptyObj('playlistInfo', playlistInfo);
         $('#playlist-songs').empty();
     });
+}
+
+function moveSoundToBottom(id) {
+    //$('#' + soundInfo.id).appendTo('#playlist-songs');
+    $('#' + id).css('background-color', 'var(--bgL)');
+    let order = sortable.toArray();
+    console.log(sortable.toArray());
+    order.push(order.shift());
+    console.log(order);
+    sortable.sort(order);
 }
 
 function saveOrder() {
@@ -165,6 +178,7 @@ function setOrder() {
             } else {
                 $(sounds[i]).css('background-color', 'var(--bgL)');
             }
+            $(sounds[i]).removeClass('played');
         }
     }
     M.Dropdown.getInstance(document.getElementById('btn-playlist-actions')).close();
@@ -173,9 +187,10 @@ function setOrder() {
 
 module.exports = {
     build: buildPlaylist,
-    getFirstPlaylistItem: getFirstPlaylistItem,
-    registerPlaylistItems: registerPlaylistItems,
     empty: empty,
+    getFirstPlaylistItem: getFirstPlaylistItem,
+    moveSoundToBottom: moveSoundToBottom,
+    registerPlaylistItems: registerPlaylistItems,
     saveOrder: saveOrder,
     setOrder: setOrder
 };
