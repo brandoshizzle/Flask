@@ -223,9 +223,7 @@ tr td {
 #sound-settings-name {
   transition: 0.2s ease-in-out; }
   #sound-settings-name:hover {
-    cursor: text;
-    border: 1px solid #d0d0e1;
-    border-radius: 5px; }
+    cursor: text; }
 
 #sound-settings-modal .settings-row .row {
   margin-bottom: 0px;
@@ -423,3 +421,7 @@ div.hopscotch-bubble .hopscotch-nav-button {
 
 .transparent-bg::-webkit-scrollbar {
   display: none; }
+
+.edit-icon {
+  margin-top: -5px;
+  margin-left: 5px; }
