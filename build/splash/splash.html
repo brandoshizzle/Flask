@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Loading Flask</title>
+		<style>
+			body {
+				padding: 0px;
+				margin: 0px;
+				overflow-y: hidden;
+				overflow-x: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="Synfig Animation 3.0000.png" height="500px" alt="" />
+		<script>
+			let img = document.querySelector('img');
+			let counter = 0;
+			let cString;
+			setInterval(() => {
+				if (counter < 10) {
+					cString = '0' + counter;
+				} else {
+					cString = counter;
+				}
+				console.log(cString);
+				img.src = `Synfig Animation 3.00${cString}.png`;
+				counter++;
+				if (counter === 51) {
+					counter = 0;
+				}
+			}, 42);
+		</script>
+	</body>
+</html>

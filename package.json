@@ -44,6 +44,7 @@
 		"prettier": "^1.17.0"
 	},
 	"dependencies": {
+		"@trodi/electron-splashscreen": "^0.3.4",
 		"circular-json": "^0.3.1",
 		"compare-versions": "^3.4.0",
 		"dotenv": "^6.2.0",
