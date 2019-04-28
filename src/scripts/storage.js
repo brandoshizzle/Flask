@@ -21,17 +21,19 @@ var defaults = {
         general: {
             prereleaseUpdates: false,
             stopSounds: false,
-            markPlayed: true,
-            fadeInTime: 1500,
-            fadeOutTime: 1500
+            markPlayed: true
         },
         playlist: {
             soundToBottomAfterPlay: true,
             soundDeleteAfterPlay: false,
-            order: ''
+            order: '',
+            fadeInTime: 1500,
+            fadeOutTime: 1500
         },
         pages: {
-            soloSound: 'off'
+            soloSound: 'off',
+            fadeInTime: 1500,
+            fadeOutTime: 1500
         },
         utility: {
             pVersion: '0.1.0'

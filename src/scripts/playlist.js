@@ -39,7 +39,7 @@ function buildPlaylist() {
 			 * @returns {Array}
 			 */
             get: function(sortable) {
-                var order = playlistInfo.order;
+                var order = settingsInfo.playlist.order;
                 return order ? order.split('|') : [];
             },
 
@@ -52,7 +52,7 @@ function buildPlaylist() {
                     return;
                 }
                 var order = sortable.toArray();
-                playlistInfo.order = order.join('|');
+                settingsInfo.playlist.order = order.join('|');
                 //storage.storeObj('settings', settingsInfo);
                 M.toast({ html: 'Playlist order saved' });
                 storage.saveShow();
@@ -121,8 +121,8 @@ function getFirstPlaylistItem() {
 
 function registerPlaylistItems() {
     Object.keys(playlistInfo).map(function(id, index) {
-        // Ensure all parameters are up to date
         if (id !== 'order') {
+            // Ensure all parameters are up to date
             storage.checkAgainstDefault(playlistInfo[id], 'soundInfo');
             view.createPlaylistItem(playlistInfo[id]);
             $('#' + playlistInfo[id].id)

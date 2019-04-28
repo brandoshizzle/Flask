@@ -296,34 +296,34 @@ function getFadeTime(soundInfo, direction) {
     if (soundInfo.infoObj === 'playlist') {
         if (direction === 'in') {
             if (soundInfo.fadeInType === 'default') {
-                return settingsInfo.general.fadeInTime;
+                return settingsInfo.playlist.fadeInTime;
             } else {
-                return soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+                return soundInfo.fadeInTime || settingsInfo.playlist.fadeInTime;
             }
         } else if (direction === 'out') {
             if (soundInfo.fadeOutType === 'default') {
-                return settingsInfo.general.fadeOutTime;
+                return settingsInfo.playlist.fadeOutTime;
             } else {
-                return soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+                return soundInfo.fadeOutTime || settingsInfo.playlist.fadeOutTime;
             }
         }
     } else {
         var currentPageInfo = pagesInfo['page' + currentPage];
         if (direction === 'in') {
             if (soundInfo.fadeInType === 'default') {
-                return settingsInfo.general.fadeInTime;
+                return settingsInfo.pages.fadeInTime;
             } else if (soundInfo.fadeInType === 'page') {
-                return currentPageInfo.fadeInTime || settingsInfo.general.fadeInTime;
+                return currentPageInfo.fadeInTime || settingsInfo.pages.fadeInTime;
             } else {
-                return soundInfo.fadeInTime || settingsInfo.general.fadeInTime;
+                return soundInfo.fadeInTime || settingsInfo.pages.fadeInTime;
             }
         } else if (direction === 'out') {
             if (soundInfo.fadeOutType === 'default') {
-                return settingsInfo.general.fadeOutTime;
+                return settingsInfo.pages.fadeOutTime;
             } else if (soundInfo.fadeOutType === 'page') {
-                return currentPageInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+                return currentPageInfo.fadeOutTime || settingsInfo.pages.fadeOutTime;
             } else {
-                return soundInfo.fadeOutTime || settingsInfo.general.fadeOutTime;
+                return soundInfo.fadeOutTime || settingsInfo.pages.fadeOutTime;
             }
         }
     }

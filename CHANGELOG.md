@@ -9,10 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
--   Select and edit multiple keys at once
+-   Tutorial to take you through the basic features
 -   Save and load shows
--   Grab the edge of the waveform to adjust start and end points - no Ctrl or Cmd required
--   Autoplay switch available on playlist
+-   Select and edit multiple keys at once
+-   Waveform start and end time handles! - no Ctrl or Cmd required
+-   Autoplay switch for playlist
+-   Splash screen
+-   Edit icon next to sound/page names
 
 ### Changed
 
@@ -20,8 +23,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Fade in time now dropdown - much more intuitive
 -   Main settings redesigned
 -   Ctrl/Cmd + P opens the settings
+-   Ctrl/Cmd + S tells you that Flask is always saving
 -   Updated to Electron v4.1.4
 -   Updated Sortable JS to v1.8.4
+-   Updated Materialize to v1.0.0
+
+### Fixed
+
+-   Next playlist waveform doesn't load if another sound is playing
+-
 
 ## [0.5.0] - 2019-01-13
 

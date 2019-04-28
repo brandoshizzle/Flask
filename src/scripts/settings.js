@@ -8,8 +8,10 @@ function openSettings() {
     $('#settings-tabs').tabs('updateTabIndicator');
     $('#settings-stopSounds').prop('checked', settingsInfo.general.stopSounds);
     $('#settings-markPlayed').prop('checked', settingsInfo.general.markPlayed);
-    $('#settings-fadeInTime').val(settingsInfo.general.fadeInTime / 1000);
-    $('#settings-fadeOutTime').val(settingsInfo.general.fadeOutTime / 1000);
+    $('#settings-pages-fadeInTime').val(settingsInfo.pages.fadeInTime / 1000);
+    $('#settings-pages-fadeOutTime').val(settingsInfo.pages.fadeOutTime / 1000);
+    $('#settings-playlist-fadeInTime').val(settingsInfo.playlist.fadeInTime / 1000);
+    $('#settings-playlist-fadeOutTime').val(settingsInfo.playlist.fadeOutTime / 1000);
     $('#settings-prereleaseUpdates').prop('checked', settingsInfo.general.prereleaseUpdates);
     // Set playlist settings
     $('#settings-playlistSoundToBottom').prop('checked', settingsInfo.playlist.soundToBottomAfterPlay);
@@ -38,8 +40,10 @@ function saveSettings() {
     settingsInfo.playlist.soundDeleteAfterPlay = $('#settings-playlistSoundToDelete').prop('checked');
     settingsInfo.general.stopSounds = $('#settings-stopSounds').prop('checked');
     settingsInfo.general.markPlayed = $('#settings-markPlayed').prop('checked');
-    settingsInfo.general.fadeInTime = $('#settings-fadeInTime').val() * 1000;
-    settingsInfo.general.fadeOutTime = $('#settings-fadeOutTime').val() * 1000;
+    settingsInfo.pages.fadeInTime = $('#settings-pages-fadeInTime').val() * 1000;
+    settingsInfo.pages.fadeOutTime = $('#settings-pages-fadeOutTime').val() * 1000;
+    settingsInfo.playlist.fadeInTime = $('#settings-playlist-fadeInTime').val() * 1000;
+    settingsInfo.playlist.fadeOutTime = $('#settings-playlist-fadeOutTime').val() * 1000;
     settingsInfo.general.prereleaseUpdates = $('#settings-prereleaseUpdates');
     settingsInfo.pages.soloSound = $('#settings-soloSound').val();
     //storage.storeObj("settings", settingsInfo);
@@ -104,10 +108,12 @@ function openSoundSettings(elArray) {
         $('#sound-settings-fadeOutType option[value="page"]').removeAttr('disabled');
         $('#sound-settings-fadeInType option[value="page"]').removeAttr('disabled');
     }
-    $('#sound-settings-fadeOutType').val(soundInfo.fadeOutType);
-    $('#sound-settings-fadeOutType').formSelect();
+    soundInfo.fadeInType = soundInfo.fadeInType || 'default';
     $('#sound-settings-fadeInType').val(soundInfo.fadeInType);
     $('#sound-settings-fadeInType').formSelect();
+    soundInfo.fadeOutType = soundInfo.fadeOutType || 'default';
+    $('#sound-settings-fadeOutType').val(soundInfo.fadeOutType);
+    $('#sound-settings-fadeOutType').formSelect();
 
     $(idStart + 'played').prop('checked', $('#' + soundInfo.id).hasClass('played'));
     volSlider.noUiSlider.set(soundInfo.volume * 125);
@@ -160,28 +166,28 @@ function saveSoundSettings() {
     if (!Array.isArray(soundSettingsElArray)) {
         soundSettingsElArray = [soundSettingsElArray];
     }
+    console.log(soundSettingsElArray);
     for (var el of soundSettingsElArray) {
         let keyOrPlaylistInfo;
-        let settingsSoundInfo;
+        let tempSoundInfo;
         // ensure the key is not a blank key
         if (keyInfo.hasOwnProperty(el.id)) {
             keyOrPlaylistInfo = 'keyInfo';
-            settingsSoundInfo = keyInfo[el.id];
+            tempSoundInfo = keyInfo[el.id];
         } else if (playlistInfo.hasOwnProperty(el.id)) {
             keyOrPlaylistInfo = 'playlistInfo';
-            settingsSoundInfo = playlistInfo[el.id];
+            tempSoundInfo = playlistInfo[el.id];
         } else {
             continue;
         }
 
-        let tempSoundInfo = settingsSoundInfo;
         if (tempSoundInfo.path != $('#sound-settings-path').text() && soundSettingsElArray.length === 1) {
             tempSoundInfo.path = $('#sound-settings-path').val();
             sounds.createNewHowl(tempSoundInfo);
             waveforms.load(tempSoundInfo);
         }
         if ($('#sound-settings-name').text() !== '' && soundSettingsElArray.length === 1) {
-            if (waveformedInfo === settingsSoundInfo && waveformedInfo != undefined) {
+            if (waveformedInfo === tempSoundInfo && waveformedInfo != undefined) {
                 if (waveformedInfo.name === tempSoundInfo.name) {
                     $('#waveform-song-name').text($('#sound-settings-name').text());
                 }
@@ -190,7 +196,7 @@ function saveSoundSettings() {
         }
 
         // If on the keyboard, set the color
-        if (settingsSoundInfo.infoObj !== 'playlist') {
+        if (tempSoundInfo.infoObj !== 'playlist') {
             colors.setKeyColor(tempSoundInfo);
         }
 
@@ -208,6 +214,7 @@ function saveSoundSettings() {
 
         tempSoundInfo.fadeInType = document.querySelector('#sound-settings-fadeInType').value;
         tempSoundInfo.fadeOutType = document.querySelector('#sound-settings-fadeOutType').value;
+        console.log(tempSoundInfo);
 
         // Set fade parameters
         tempSoundInfo.fadeInTime = $('#sound-settings-fadeInTime').val() * 1000;
@@ -297,8 +304,8 @@ function savePageSettings(pageNum) {
         $('#page' + pageNum + ' span').text(pageInfo.name);
     }
 
-    var fadeInDiff = $('#page-settings-fadeInTime').val() * 1000 != settingsInfo.general.fadeInTime;
-    var fadeOutDiff = $('#page-settings-fadeOutTime').val() * 1000 != settingsInfo.general.fadeOutTime;
+    var fadeInDiff = $('#page-settings-fadeInTime').val() * 1000 != settingsInfo.pages.fadeInTime;
+    var fadeOutDiff = $('#page-settings-fadeOutTime').val() * 1000 != settingsInfo.pages.fadeOutTime;
     pageInfo.fadeInTime = fadeInDiff ? $('#page-settings-fadeInTime').val() * 1000 : undefined;
     pageInfo.fadeOutTime = fadeOutDiff ? $('#page-settings-fadeOutTime').val() * 1000 : undefined;
 

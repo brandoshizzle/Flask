@@ -280,7 +280,7 @@
 					<table class="highlight">
 						<thead>
 							<tr>
-								<th>Settings</th>
+								<th>Preferences</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -301,22 +301,23 @@
 						<!-- GENERAL SETTINGS -->
 						<div class="settings-section" id="settings-general">
 							<div class="row">
-								<div class="col s9 settings-description">
-									<h3>Stop sounds (instead of pausing)</h3>
-									<p>Each time you play a sound, it will play from the start instead of holding its position.</p>
-								</div>
-								<div class="settings-switch col s3">
-									<div class="switch" style="text-align: right;">
-										<label>
-											<input id="settings-stopSounds" type="checkbox">
-											<span class="lever"></span>
-										</label>
+									<div class="col s8 settings-description">
+										<h3>Sound stop behaviour</h3>
+									</div>
+									<div class="settings-switch col s4">
+										<div class="switch" style="text-align: right;">
+											<label>
+												Pause
+												<input id="settings-stopSounds" type="checkbox">
+												<span class="lever"></span>
+												Stop
+											</label>
+										</div>
 									</div>
 								</div>
-							</div>
 							<div class="row">
 								<div class="col s9 settings-description">
-									<h3>Mark sounds as 'Played' after playing</h3>
+									<h3>Mark sounds when played</h3>
 								</div>
 								<div class="settings-switch col s3">
 									<div class="switch" style="text-align: right;">
@@ -325,24 +326,6 @@
 											<span class="lever"></span>
 										</label>
 									</div>
-								</div>
-							</div>
-							<div class="row valign-wrapper">
-								<div class="settings-description col s9">
-									<h3>Default Fade In</h3>
-								</div>
-								<div class="settings-switch col s3" style='text-align: right;'>
-									<input class='input-field' id="settings-fadeInTime" type="text" style="width: 50px; text-align:center;"></input>
-									<label>seconds</label>
-								</div>
-							</div>
-							<div class="row valign-wrapper">
-								<div class="settings-description col s9">
-									<h3>Default Fade Out</h3>
-								</div>
-								<div class="settings-switch col s3" style='text-align: right;'>
-									<input class='input-field' id="settings-fadeOutTime" type="text" style="width: 50px; text-align:center;"></input>
-									<label>seconds</label>
 								</div>
 							</div>
 							<div class="row valign-wrapper">
@@ -372,6 +355,24 @@
 											<option value="all">Page and Playlist</option>
 										</select>
 									</div>
+								</div>
+							</div>
+							<div class="row valign-wrapper">
+								<div class="settings-description col s9">
+									<h3>Default Fade In</h3>
+								</div>
+								<div class="settings-switch col s3" style='text-align: right;'>
+									<input class='input-field' id="settings-pages-fadeInTime" type="text" style="width: 50px; text-align:center;"></input>
+									<label>seconds</label>
+								</div>
+							</div>
+							<div class="row valign-wrapper">
+								<div class="settings-description col s9">
+									<h3>Default Fade Out</h3>
+								</div>
+								<div class="settings-switch col s3" style='text-align: right;'>
+									<input class='input-field' id="settings-pages-fadeOutTime" type="text" style="width: 50px; text-align:center;"></input>
+									<label>seconds</label>
 								</div>
 							</div>
 							<!--<div class="row">
@@ -420,6 +421,24 @@
 									</div>
 								</div>
 							</div>
+							<div class="row valign-wrapper">
+									<div class="settings-description col s9">
+										<h3>Default Fade In</h3>
+									</div>
+									<div class="settings-switch col s3" style='text-align: right;'>
+										<input class='input-field' id="settings-playlist-fadeInTime" type="text" style="width: 50px; text-align:center;"></input>
+										<label>seconds</label>
+									</div>
+								</div>
+								<div class="row valign-wrapper">
+									<div class="settings-description col s9">
+										<h3>Default Fade Out</h3>
+									</div>
+									<div class="settings-switch col s3" style='text-align: right;'>
+										<input class='input-field' id="settings-playlist-fadeOutTime" type="text" style="width: 50px; text-align:center;"></input>
+										<label>seconds</label>
+									</div>
+								</div>
 							<div class="row">
 								<div class="col s9 settings-description">
 									<h3>Empty Playlist</h3>
@@ -517,12 +536,11 @@
 		</li>
 		<li><a class="waves-effect" href="#" onclick="storage.newShow()"><i class="material-icons">create_new_folder</i>New Show</a></li>
 		<li><a class="waves-effect" href="#" onclick="storage.openShow()"><i class="material-icons">folder</i>Open Show</a></li>
+		<li><div class="divider "></div></li>
 		<li><a class="waves-effect" href="#" onclick="tutorial.startHopscotch()"><i class="material-icons">map</i>Tutorial</a></li>
-		<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Settings</a></li>
+		<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Preferences</a></li>
 		<!-- f<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart Flask</a></li> -->
-		<li>
-			<div class="divider "></div>
-		</li>
+		<li><div class="divider "></div></li>
 		<li><a class="waves-effect " href="mailto:cathcart.brandon@gmail.com" target="_blank "><i class="material-icons ">bug_report</i>Report
 				Issue</a></li>
 		<li><a class="waves-effect " href="http://paypal.me/BrandonCathcart"><i class="material-icons ">monetization_on</i>Donate</a></li>
