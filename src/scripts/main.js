@@ -180,6 +180,8 @@ function loadWaveformHandles() {
 	 *  WAVEFORM REGION INITIALIZATION
 	 *  Yes, it gets its own section.
 	 */
+    $('#resize-handle-left').hide();
+    $('#resize-handle-right').hide();
     waveforms.recalculateRegionHandle();
     interact('#waveform-region')
         .styleCursor(false)
