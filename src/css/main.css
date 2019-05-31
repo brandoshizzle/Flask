@@ -13,7 +13,8 @@
 
 body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  overflow-y: hidden; }
 
 *:focus {
   outline: none; }
@@ -358,7 +359,8 @@ tr td {
   content: '';
   top: 60px;
   left: -4px;
-  border-radius: 3px; }
+  border-radius: 3px;
+  box-shadow: 0px 0px 2px white; }
 
 /* =Animate the waveform loading
   ------------------------ */
@@ -425,3 +427,8 @@ div.hopscotch-bubble .hopscotch-nav-button {
 .edit-icon {
   margin-top: -5px;
   margin-left: 5px; }
+
+.upgrade-icon {
+  color: #ffd43b !important;
+  margin-right: 28px !important;
+  margin-left: -13px !important; }

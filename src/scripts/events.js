@@ -3,7 +3,6 @@
  * Functions:
  *		setKeyEvents
  */
-
 let settingsInfoObj; // Either keyInfo or playlistInfo, whichever has the sound being changed in settings
 const specialKeys = [
     'MINUS',
@@ -24,6 +23,7 @@ const playlistPlayingSound = {
 };
 let curVol;
 let ctrl = false;
+let panicOnce = false;
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -244,21 +244,38 @@ function setKeyEvents() {
             }
 
             if (key === 'ESCAPE') {
-                // Stop all playing sounds immediately
-                for (key in keyInfo) {
-                    if (keyInfo[key].howl.playing()) {
-                        keyInfo[key].howl.stop();
+                // Show pop-up and start counter
+                if (!panicOnce) {
+                    M.toast({
+                        html: 'Hit ESCAPE again to stop all sounds!',
+                        displayLength: 3000
+                    });
+                    panicOnce = true;
+                    setTimeout(() => {
+                        panicOnce = false;
+                    }, 2000);
+                } else {
+                    // Stop all playing sounds immediately
+                    M.toast({
+                        html: 'All sounds stopped.',
+                        displayLength: 3000
+                    });
+                    for (key in keyInfo) {
+                        if (keyInfo[key].howl.playing()) {
+                            keyInfo[key].howl.stop();
+                        }
                     }
-                }
-                for (key in playlistInfo) {
-                    if (playlistInfo[key].howl.playing()) {
-                        playlistInfo[key].howl.stop();
+                    for (key in playlistInfo) {
+                        if (playlistInfo[key].howl.playing()) {
+                            playlistInfo[key].howl.stop();
+                        }
                     }
-                }
 
-                $('.btn-key, .playlistSound').removeClass('playing-sound');
-                // Remove drag selection
-                dragSelect.clearSelection();
+                    $('.btn-key, .playlistSound').removeClass('playing-sound');
+                    // Remove drag selection
+                    dragSelect.clearSelection();
+                    panicOnce = false;
+                }
             }
         }
 
@@ -292,7 +309,14 @@ function setKeyEvents() {
                 return false;
             }
         });
-
+        Mousetrap.bind(['command+r', 'ctrl+r'], function() {
+            if (!$(e.target).is('input')) {
+                // const app = require('electron').remote.app;
+                // app.relaunch();
+                // app.quit();
+                return false;
+            }
+        });
         return false;
     });
 

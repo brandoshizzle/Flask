@@ -13,12 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Save and load shows
 -   Select and edit multiple keys at once
 -   Waveform start and end time handles! - no Ctrl or Cmd required
+-   Separate playlist and pages fade times
 -   Autoplay switch for playlist
 -   Splash screen
 -   Edit icon next to sound/page names
 
 ### Changed
 
+-   Panic switch now has confirmation (double tap)
 -   Color picker in sound settings
 -   Fade in time now dropdown - much more intuitive
 -   Main settings redesigned
@@ -31,7 +33,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 -   Next playlist waveform doesn't load if another sound is playing
--
 
 ## [0.5.0] - 2019-01-13
 

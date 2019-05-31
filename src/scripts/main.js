@@ -1,6 +1,6 @@
-const { dialog } = require('electron').remote.dialog;
-const { app } = require('electron').remote.app;
-const { shell } = require('electron').shell;
+const dialog = require('electron').remote.dialog;
+const app = require('electron').remote.app;
+const shell = require('electron').shell;
 const jetpack = require('fs-jetpack');
 
 const clock = require('./scripts/clock.js');
@@ -281,7 +281,11 @@ function loadWaveformHandles() {
 function loadShow(pathToFile) {
     $('#loadedContainer').show();
     showInfo = JSON.parse(jetpack.read(pathToFile));
+    let showName = pathToFile.split('\\').pop();
+    showName = showName.substr(0, showName.length - 6);
+    $('title').text(`Flask v${pjson.version} - ${showName}`); // Add the version number to the title
 
+    console.log(pathToFile);
     sounds.resetLoadingBar();
     // Load settings
     //settingsInfo = storage.getInfoObj('settings'); // Load the program settings
@@ -325,6 +329,8 @@ function loadShow(pathToFile) {
     if (totalNumSounds === 0) {
         $('#loadedContainer').hide();
     }
+
+    waveforms.load('');
 
     var tabsInstance = M.Tabs.getInstance(document.getElementById('tabs'));
     tabsInstance.select('page1');

@@ -42,7 +42,7 @@ function loadWavesurfer(soundInfo) {
     $('#' + soundInfo.id).addClass('waveformed-key');
     prevTarget = soundInfo.id;
 
-    if (soundInfo.path === '') {
+    if (soundInfo.path === '' || soundInfo === '') {
         wavesurfer.empty();
         $('#waveform-song-name').text('');
         $('#waveform-region').css('left', 0);
@@ -108,7 +108,6 @@ function setWaveformTracking(soundInfo, doNotLoadPassed) {
         playing = false;
     }
 
-    //blog(waveformedInfo.name + ", " + playState);
     if (playing) {
         //blog('Tracking on waveform');
         sI = setInterval(trackOnWaveform, 50);
