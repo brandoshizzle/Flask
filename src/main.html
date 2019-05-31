@@ -168,20 +168,20 @@
 						</td>
 					</tr>
 					<tr class="settings-row">
-						<td>Played</td>
+						<td id="sound-settings-played-label">Played</td>
 						<td>
 							<div class="switch" style="text-align: right;">
 								<label>
-									<input id="sound-settings-played" type="checkbox">
+									<input class="sound-settings" id="sound-settings-played" type="checkbox">
 									<span class="lever"></span>
 								</label>
 							</div>
 						</td>
 					</tr>
 					<tr class="settings-row" id="color-row">
-						<td>Color</td>
+						<td id='color-picker-label'>Color</td>
 						<td>
-							<select class="browser-default" name="colorpicker" id="#color-picker">
+							<select class="browser-default sound-settings" name="colorpicker" id="color-picker">
 								<option value="#339af0">Blue</option>
 								<option value="#f03e3e">Red</option>
 								<option value="#d6336c">Pink</option>
@@ -197,9 +197,9 @@
 						</td>
 					</tr>
 					<tr class="settings-row" id="volume-row">
-						<td>Volume</td>
+						<td id="sound-settings-volume-label">Volume</td>
 						<td>
-							<div id="sound-settings-volume"></div>
+							<div id="sound-settings-volume" class="sound-settings"></div>
 						</td>
 					</tr>
 					<!--<tr class="settings-row">
@@ -218,17 +218,17 @@
 			<div class="settings-row">
 					<td>
 						<div class="row valign-wrapper">
-							<div class="col s2">
+							<div class="col s3" id="sound-settings-fadeInTime-label">
 								Fade In
 							</div>
 							<div class="col s4">
-								<input id="sound-settings-fadeInTime" type="text" style="width: 50px; text-align: center;"></input>
+								<input id="sound-settings-fadeInTime" class="sound-settings" type="text" style="width: 50px; text-align: center;"></input>
 								<label>seconds</label>
 							</div>
 							<div class="col s2"></div>
 							<div class="col s4">
 								<div class="input-field">
-									<select id="sound-settings-fadeInType"> 
+									<select id="sound-settings-fadeInType" class="sound-settings"> 
 										<option value="default">Default</option>
 										<option value="page">Page</option>
 										<option value="custom">Custom</option>
@@ -243,17 +243,17 @@
 			<div class="settings-row">
 				<td>
 					<div class="row valign-wrapper">
-						<div class="col s2">
+						<div class="col s3" id="sound-settings-fadeOutTime-label">
 							Fade Out
 						</div>
 						<div class="col s4">
-							<input id="sound-settings-fadeOutTime" type="text" style="width: 50px; text-align: center;"></input>
+							<input id="sound-settings-fadeOutTime" class="sound-settings" type="text" style="width: 50px; text-align: center;"></input>
 							<label>seconds</label>
 						</div>
 						<div class="col s2"></div>
 						<div class="col s4">
 							<div class="input-field">
-								<select id="sound-settings-fadeOutType">
+								<select id="sound-settings-fadeOutType" class="sound-settings">
 									<option value="default">Default</option>
 									<option value="page">Page</option>
 									<option value="custom">Custom</option>

@@ -7,7 +7,6 @@ const jetpack = require('fs-jetpack');
 //const playlist = require('./scripts/playlist');
 const app = require('electron').remote.app;
 const dialog = require('electron').remote.dialog;
-var userFilePath;
 
 var appDir = app.getPath('userData');
 $(function() {
@@ -172,6 +171,7 @@ function saveShow() {
     };
     if (userFilePath === undefined) {
         userFilePath = 'C:\\Users\\Brandon\\Documents\\Show.flask';
+        console.log('set custom userpath');
     }
     jetpack.writeAsync(userFilePath, showInfo, {
         atomic: true

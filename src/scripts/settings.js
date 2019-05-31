@@ -1,4 +1,33 @@
 var soundSettingsElArray;
+let multiSettingsToChange = [];
+
+// Set up adding multiparameter editing
+$(document).ready(function() {
+    let classname = document.getElementsByClassName('sound-settings');
+
+    for (var i = 0; i < classname.length; i++) {
+        classname[i].addEventListener('mousedown', soundSettingTouched, false);
+        classname[i].addEventListener('change', soundSettingTouched, false);
+    }
+});
+
+let soundSettingTouched = function(el) {
+    if (soundSettingsElArray.length < 2) {
+        return;
+    }
+    let id = this.id || el.id;
+    if (multiSettingsToChange.indexOf(id) === -1) {
+        if (id.indexOf('Type') > -1) {
+            id = id.replace('Type', 'Time');
+            console.log(id);
+        }
+        multiSettingsToChange.push(id);
+        let labelText = document.getElementById(id + '-label').innerHTML;
+        document.getElementById(id + '-label').innerHTML = labelText + ' *';
+        document.getElementById(id + '-label').style = 'color:red';
+        console.log(multiSettingsToChange);
+    }
+};
 
 // Open settings modal
 function openSettings() {
@@ -120,12 +149,16 @@ function openSoundSettings(elArray) {
     $(idStart + 'volume').val(soundInfo.volume * 125);
     $('#sound-settings-modal').modal('open');
 
+    if (!Array.isArray(elArray)) {
+        elArray = [elArray];
+    }
     soundSettingsElArray = elArray;
 
     // Set up volume event handler
     volSlider.noUiSlider.on('update', function() {
         var vol = volSlider.noUiSlider.get().replace('%', '') / 125;
         soundInfo.howl.volume(vol);
+        soundSettingTouched(volSlider);
     });
     // Set up select change handler
     $('#sound-settings-fadeInType').change(() => {
@@ -155,6 +188,13 @@ function openSoundSettings(elArray) {
             $('#sound-settings-fadeOutType').formSelect();
         }
     });
+    for (var i = 0; i < multiSettingsToChange.length; i++) {
+        let str = document.getElementById(multiSettingsToChange[i] + '-label').innerHTML;
+        str = str.replace(' *', '');
+        document.getElementById(multiSettingsToChange[i] + '-label').innerHTML = str;
+        document.getElementById(multiSettingsToChange[i] + '-label').style = 'color:black';
+    }
+    multiSettingsToChange = [];
 }
 
 /**
@@ -166,6 +206,14 @@ function saveSoundSettings() {
     if (!Array.isArray(soundSettingsElArray)) {
         soundSettingsElArray = [soundSettingsElArray];
     }
+
+    const shouldChange = id => {
+        if (multiSettingsToChange.indexOf(id) > -1 || soundSettingsElArray.length === 1) {
+            return true;
+        }
+        return false;
+    };
+
     console.log(soundSettingsElArray);
     for (var el of soundSettingsElArray) {
         let keyOrPlaylistInfo;
@@ -196,29 +244,34 @@ function saveSoundSettings() {
         }
 
         // If on the keyboard, set the color
-        if (tempSoundInfo.infoObj !== 'playlist') {
+        if (tempSoundInfo.infoObj !== 'playlist' && shouldChange('color-picker')) {
             colors.setKeyColor(tempSoundInfo);
         }
 
         // Set whether it is marked as played or not
-        if ($('#sound-settings-played').is(':checked')) {
+        if ($('#sound-settings-played').is(':checked') && shouldChange('sound-settings-played')) {
             $('#' + el.id).addClass('played');
         } else {
             $('#' + el.id).removeClass('played');
         }
 
         // Set volume percentage
-        tempSoundInfo.volume = volSlider.noUiSlider.get().replace('%', '') / 125;
+        if (shouldChange('sound-settings-volume')) {
+            tempSoundInfo.volume = volSlider.noUiSlider.get().replace('%', '') / 125;
+        }
 
         //tempSoundInfo.loop = $('#sound-settings-loop').is(':checked');
 
-        tempSoundInfo.fadeInType = document.querySelector('#sound-settings-fadeInType').value;
-        tempSoundInfo.fadeOutType = document.querySelector('#sound-settings-fadeOutType').value;
-        console.log(tempSoundInfo);
-
         // Set fade parameters
-        tempSoundInfo.fadeInTime = $('#sound-settings-fadeInTime').val() * 1000;
-        tempSoundInfo.fadeOutTime = $('#sound-settings-fadeOutTime').val() * 1000;
+        if (shouldChange('sound-settings-fadeInTime')) {
+            tempSoundInfo.fadeInType = document.querySelector('#sound-settings-fadeInType').value;
+            tempSoundInfo.fadeInTime = $('#sound-settings-fadeInTime').val() * 1000;
+        }
+
+        if (shouldChange('sound-settings-fadeInTime')) {
+            tempSoundInfo.fadeOutType = document.querySelector('#sound-settings-fadeOutType').value;
+            tempSoundInfo.fadeOutTime = $('#sound-settings-fadeOutTime').val() * 1000;
+        }
 
         // Add tempSoundInfo to keyInfo or playlistInfo and update
         if (keyOrPlaylistInfo === 'keyInfo') {
@@ -321,5 +374,6 @@ module.exports = {
     resetFade: resetFade,
     openPageSettings: openPageSettings,
     savePageSettings: savePageSettings,
-    resetVolumes: resetVolumes
+    resetVolumes: resetVolumes,
+    soundSettingTouched: soundSettingTouched
 };

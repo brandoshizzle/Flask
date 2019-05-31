@@ -33,6 +33,7 @@ var currentPage = 1;
 var totalNumSounds;
 var pagesNumSounds = 0;
 var reloadSound = false;
+let userFilePath;
 
 /* Set up program */
 $(document).ready(function() {
@@ -126,6 +127,7 @@ function loadPlugins() {
         .simplecolorpicker()
         .on('change', () => {
             colors.setPickedColor();
+            settings.soundSettingTouched(document.getElementById('color-picker'));
         });
 
     // Initialize edit-in-place text
@@ -279,6 +281,7 @@ function loadWaveformHandles() {
 }
 
 function loadShow(pathToFile) {
+    userFilePath = pathToFile;
     $('#loadedContainer').show();
     showInfo = JSON.parse(jetpack.read(pathToFile));
     let showName = pathToFile.split('\\').pop();
