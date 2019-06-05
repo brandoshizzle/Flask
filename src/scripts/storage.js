@@ -96,6 +96,7 @@ function storeObj(objName, obj) {
 
 function newShow() {
     // Show save dialog to send to file
+    $('#startup-modal').modal('close');
     const saveOptions = {
         title: 'New Show',
         defaultPath: 'Show',
@@ -115,11 +116,21 @@ function newShow() {
 }
 
 function clearShow() {
-    showInfo = { pagesInfo: {}, playlistInfo: {}, settingsInfo: {} };
+    showInfo = { pagesInfo: {}, playlistInfo: {}, settingsInfo: defaults.settings };
     pagesInfo = showInfo.pagesInfo;
     playlistInfo = showInfo.playlistInfo;
+    settingsInfo = defaults.settings;
     keyInfo = {};
+
+    // Clear playlist
     $('#playlist-songs').empty();
+
+    // Clear waveform
+    waveforms.reset();
+    $('#resize-handle-left').hide();
+    $('#resize-handle-right').hide();
+
+    // Clear keyboards
     const keyboards = document.getElementById('keyboard-container').children;
     for (let i = 0; i < keyboards.length; i++) {
         const rows = keyboards[i].children;
@@ -144,6 +155,7 @@ function clearShow() {
 }
 
 function openShow() {
+    $('#startup-modal').modal('close');
     const openOptions = {
         title: 'Open Show',
         filters: [{ name: 'Flask Shows', extensions: ['flask'] }],
@@ -177,6 +189,7 @@ function saveShow() {
         atomic: true
     });
     console.log('Saving show.');
+    localStorage.setItem('lastOpenShow', userFilePath);
 }
 
 function deleteObj(objName) {

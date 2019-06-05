@@ -73,7 +73,7 @@ function addToLoadingBar() {
     loadedCount++;
     var loadedPercent = (loadedCount / totalNumSounds) * 100 + '%';
     $('#loadedCount').width(loadedPercent);
-    if (loadedCount === totalNumSounds) {
+    if (loadedCount === totalNumSounds || totalNumSounds === -1) {
         $('#loadedContainer').css('display', 'none');
     }
 }

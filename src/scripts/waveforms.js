@@ -206,6 +206,7 @@ function reset() {
     $('#waveform-region').remove();
     $('#waveform').after('<div id="waveform-region"></div>');
     $('#waveform-song-name').text('');
+    recalculateRegionHandle();
 }
 
 function rWSDur() {

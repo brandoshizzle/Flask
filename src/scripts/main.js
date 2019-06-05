@@ -44,7 +44,8 @@ $(document).ready(function() {
     if (lastLoadedShow) {
         loadShow(lastLoadedShow);
     } else {
-        storage.newShow();
+        $('#loadedContainer').hide();
+        $('#startup-modal').modal('open');
     }
     events.setKeyEvents();
     clock.startClock();
@@ -83,6 +84,7 @@ function buildViews() {
     $('.version').text(pjson.version); // Add the version number to the "version" spans
     $('title').text(`Flask v${pjson.version}`); // Add the version number to the title
     $('.global-settings-table').hide();
+    console.log('done!');
 }
 
 function loadPlugins() {

@@ -65,7 +65,6 @@ function setKeyEvents() {
             pages.ensurePageExists(currentPage);
             pagesInfo[`page${currentPage}`].keyInfo = keyInfo;
             //storage.storeObj('pagesInfo', pagesInfo);
-            console.log('saving show');
             storage.saveShow();
             waveforms.load(keyInfo[first]);
         } catch (err) {}

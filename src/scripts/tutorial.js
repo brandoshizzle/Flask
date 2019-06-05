@@ -67,6 +67,7 @@ function startHopscotch() {
     };
 
     M.Sidenav.getInstance($('.sidenav')).close();
+    $('#startup-modal').modal('close');
     // Start the tour!
     hopscotch.startTour(tour, 0);
 }

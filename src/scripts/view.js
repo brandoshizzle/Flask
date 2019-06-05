@@ -35,6 +35,7 @@ function buildKeyboard() {
                     id = 'page' + kbNum + '_' + specialKeys[rows[i][j]];
                 }
                 // Create the key
+                console.log('creating key');
                 $('#keyboard' + kbNum + ' > #row' + rowNum).append(
                     `<div class='btn btn-key z-depth-4 waves-effect waves-light draggable droppable' id='${id}'>
 						<div class='keyLetter'>${rows[i][j]}</div>
@@ -45,6 +46,7 @@ function buildKeyboard() {
         }
     }
     keys = $('.btn-key'); // set keys to be an array of the audioName divs
+    $('#keyboard1').show();
 }
 
 /**
