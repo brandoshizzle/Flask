@@ -10,7 +10,7 @@ app.on('ready', function() {
         width: width,
         height: height,
         webPreferences: {
-            nodeintegration: true
+            nodeIntegration: true
         },
         darkTheme: true
     };
@@ -29,7 +29,10 @@ app.on('ready', function() {
         splashScreenOpts: {
             height: 500,
             width: 500,
-            transparent: true
+            transparent: true,
+            webPreferences: {
+                nodeIntegration: true
+            }
         }
     });
 
