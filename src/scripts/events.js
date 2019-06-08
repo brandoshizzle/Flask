@@ -190,6 +190,10 @@ function setKeyEvents() {
                 if (id === undefined) {
                     return;
                 }
+                if (waveformedInfo.howl.playing()) {
+                    waveformedInfo.howl.stop();
+                    $('#' + waveformedInfo.id).removeClass('playing-sound');
+                }
 
                 // If the deleted sound was in the keys
                 if (keyInfo.hasOwnProperty(id)) {
@@ -280,6 +284,10 @@ function setKeyEvents() {
 
         Mousetrap.bind(['command+x', 'ctrl+x'], function() {
             if (!$(e.target).is('input')) {
+                if (waveformedInfo.howl.playing()) {
+                    waveformedInfo.howl.stop();
+                    $('#' + waveformedInfo.id).removeClass('playing-sound');
+                }
                 util.cutKey(waveformedInfo);
                 return false;
             }

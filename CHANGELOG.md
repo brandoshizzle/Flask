@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 -   Next playlist waveform doesn't load if another sound is playing
+-   Cutting or deleting a sound stops it from playing
 
 ## [0.5.0] - 2019-01-13
 
