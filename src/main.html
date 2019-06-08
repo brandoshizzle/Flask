@@ -293,11 +293,13 @@
 							<tr>
 								<td onclick="view.showSettingsSection(this, 'settings-playlist')">Playlist</td>
 							</tr>
+							<tr>
+								<td onclick="view.showSettingsSection(this, 'settings-utilities')">Utility</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="col s9" id="settings-content" style='overflow-y:auto; height: 500px; padding-top: 10px;'>
-					<!-- <div class="row"> -->
 						<!-- GENERAL SETTINGS -->
 						<div class="settings-section" id="settings-general">
 							<div class="row">
@@ -326,14 +328,6 @@
 											<span class="lever"></span>
 										</label>
 									</div>
-								</div>
-							</div>
-							<div class="row valign-wrapper">
-								<div class="settings-description col s9">
-									<h3>Set all volumes to 100%</h3>
-								</div>
-								<div class="settings-switch col s3">
-									<div class="btn btn-settings" id="settings-resetVolume" style="float: right;" onclick="settings.resetVolumes()">Reset</div>
 								</div>
 							</div>
 						</div>
@@ -445,6 +439,26 @@
 								</div>
 								<div class="settings-switch col s3">
 									<div class="btn btn-settings" id="playlist-delete" style="float: right;" onclick="playlist.empty()">Empty</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- UTILITIES -->
+						<div class="settings-section" id="settings-utilities">
+							<div class="row valign-wrapper">
+								<div class="settings-description col s9">
+									<h3>Set all volumes to 100%</h3>
+								</div>
+								<div class="settings-switch col s3">
+									<div class="btn btn-settings" id="settings-resetVolume" style="float: right;" onclick="settings.resetVolumes()">Reset</div>
+								</div>
+							</div>
+							<div class="row valign-wrapper">
+								<div class="settings-description col s9">
+									<h3>Import Show from REACTion</h3>
+								</div>
+								<div class="settings-switch col s3">
+									<div class="btn btn-settings" id="settings-importREACTion" style="float: right;" onclick="storage.importReaction()">Import</div>
 								</div>
 							</div>
 						</div>
@@ -588,11 +602,14 @@
 		<div class="modal-content" style="text-align: center">
 			<p>Welcome to Flask!</p>
 			<div class="row">
-				<div class="col s6">
+				<div class="col s4">
 					<a class="waves-effect waves-light btn" onclick="storage.newShow()">New Show</a>
 				</div>
-				<div class="col s6">
+				<div class="col s4">
 					<a class="waves-effect waves-light btn" onclick="storage.openShow()">Open Show</a>
+				</div>
+				<div class="col s4">
+					<a class="waves-effect waves-light btn" onclick="storage.importReaction()">Reaction</a>
 				</div>
 			</div>
 		</div>

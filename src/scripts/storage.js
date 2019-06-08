@@ -94,7 +94,7 @@ function storeObj(objName, obj) {
     console.log('Storing new ' + objName + ' to json.');
 }
 
-function newShow() {
+function newShow(importingFromReaction) {
     // Show save dialog to send to file
     $('#startup-modal').modal('close');
     const saveOptions = {
@@ -103,15 +103,22 @@ function newShow() {
         buttonLabel: 'Create',
         filters: [{ name: 'Flask Shows', extensions: ['flask'] }]
     };
-    dialog.showSaveDialog(saveOptions, (filename, bookmark) => {
-        if (filename === undefined) {
-            return;
-        }
-        userFilePath = filename;
-        console.log(filename);
-        // Initialize everything
-        clearShow();
-        saveShow();
+    return new Promise((resolve, reject) => {
+        dialog.showSaveDialog(saveOptions, (filename, bookmark) => {
+            if (filename === undefined) {
+                reject('No file name entered');
+                return;
+            } else {
+                userFilePath = filename;
+                console.log(filename);
+                // Initialize everything
+                if (!importingFromReaction) {
+                    clearShow();
+                }
+                saveShow();
+                resolve(userFilePath);
+            }
+        });
     });
 }
 
@@ -192,6 +199,39 @@ function saveShow() {
     localStorage.setItem('lastOpenShow', userFilePath);
 }
 
+function importReaction() {
+    const userData = app.getPath('userData');
+    console.log(userData);
+    let reactionPath = userData.split('\\');
+    reactionPath.pop();
+    reactionPath = reactionPath.join('\\') + '\\REACTion\\data\\';
+    const pagesInfoPath = reactionPath + 'pagesInfo.json';
+    const playlistInfoPath = reactionPath + 'playlistInfo.json';
+    const settingsPath = reactionPath + 'settings.json';
+    if (jetpack.exists(pagesInfoPath) && jetpack.exists(playlistInfoPath) && jetpack.exists(settingsPath)) {
+        pagesInfo = jetpack.read(pagesInfoPath, 'json');
+        playlistInfo = jetpack.read(playlistInfoPath, 'json');
+        settingsInfo = jetpack.read(settingsPath, 'json');
+    } else {
+        M.toast({
+            html: 'At least one essential REACTion file is missing. Contact author for help!',
+            displayLength: 5000
+        });
+        return;
+    }
+    const newShowPromise = new Promise((res, rej) => {
+        res(newShow(true));
+    }).then(showPath => {
+        M.Sidenav.getInstance($('.sidenav')).close();
+        M.toast({
+            html: 'Import Successful! Restart Flask to load show.',
+            displayLength: 5000
+        });
+    });
+
+    console.log(pagesInfoPath);
+}
+
 function deleteObj(objName) {
     jetpack.remove(dataDir + objName + '.json');
 }
@@ -253,6 +293,7 @@ module.exports = {
     deleteObj: deleteObj,
     emptyObj: emptyObj,
     getInfoObj: getInfoObj,
+    importReaction: importReaction,
     newShow: newShow,
     openShow: openShow,
     saveShow: saveShow,

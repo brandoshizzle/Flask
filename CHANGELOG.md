@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Autoplay switch for playlist
 -   Splash screen
 -   Edit icon next to sound/page names
+-   Import REACTion projects
 
 ### Changed
 
