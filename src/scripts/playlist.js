@@ -14,23 +14,7 @@ function buildPlaylist() {
     sortable = Sortable.create(el, {
         animation: 50,
         onSort: function(evt) {
-            var first = true;
-            var sounds = $('.playlistSound');
-            // Go through each sound from first to where the dragged item was moved to
-            for (i = 0; i < evt.newIndex + 2; i++) {
-                if (sounds[i] === undefined) {
-                    return;
-                }
-                var style = window.getComputedStyle(sounds[i]);
-                if (style.display !== 'none') {
-                    if (first) {
-                        $(sounds[i]).css('background-color', 'var(--aM)');
-                        first = false;
-                    } else {
-                        $(sounds[i]).css('background-color', 'var(--bgL)');
-                    }
-                }
-            }
+            updateColors(evt);
         },
         store: {
             /**
@@ -108,6 +92,26 @@ $('.search').on('keyup paste', function(e) {
     }
 });
 
+function updateColors(evt) {
+    var first = true;
+    var sounds = $('.playlistSound');
+    // Go through each sound from first to where the dragged item was moved to
+    for (i = 0; i < evt.newIndex + 2; i++) {
+        if (sounds[i] === undefined) {
+            return;
+        }
+        var style = window.getComputedStyle(sounds[i]);
+        if (style.display !== 'none') {
+            if (first) {
+                $(sounds[i]).css('background-color', 'var(--aM)');
+                first = false;
+            } else {
+                $(sounds[i]).css('background-color', 'var(--bgL)');
+            }
+        }
+    }
+}
+
 function getFirstPlaylistItem() {
     var playlist = $('.playlistSound');
     for (var i = 0; i < playlist.length; i++) {
@@ -148,9 +152,7 @@ function moveSoundToBottom(id) {
     //$('#' + soundInfo.id).appendTo('#playlist-songs');
     $('#' + id).css('background-color', 'var(--bgL)');
     let order = sortable.toArray();
-    console.log(sortable.toArray());
     order.push(order.shift());
-    console.log(order);
     sortable.sort(order);
 }
 
@@ -185,6 +187,14 @@ function setOrder() {
     //$("#btn-playlist-actions").dropdown("close");
 }
 
+function shuffle() {
+    var ul = document.querySelector('#playlist-songs');
+    for (var i = ul.children.length; i >= 0; i--) {
+        ul.appendChild(ul.children[(Math.random() * i) | 0]);
+    }
+    updateColors({ newIndex: ul.children.length - 1 });
+}
+
 module.exports = {
     build: buildPlaylist,
     empty: empty,
@@ -192,5 +202,6 @@ module.exports = {
     moveSoundToBottom: moveSoundToBottom,
     registerPlaylistItems: registerPlaylistItems,
     saveOrder: saveOrder,
-    setOrder: setOrder
+    setOrder: setOrder,
+    shuffle: shuffle
 };

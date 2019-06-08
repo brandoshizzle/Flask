@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Waveform start and end time handles! - no Ctrl or Cmd required
 -   Separate playlist and pages fade times
 -   Autoplay switch for playlist
+-   Shuffle playlist
 -   Splash screen
 -   Edit icon next to sound/page names
 -   Import REACTion projects
