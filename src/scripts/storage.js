@@ -199,22 +199,27 @@ function saveShow() {
     localStorage.setItem('lastOpenShow', userFilePath);
 }
 
-function importReaction() {
-    const userData = app.getPath('userData');
+function importLegacy(version) {
+    let userData = app.getPath('userData');
     console.log(userData);
-    let reactionPath = userData.split('\\');
-    reactionPath.pop();
-    reactionPath = reactionPath.join('\\') + '\\REACTion\\data\\';
-    const pagesInfoPath = reactionPath + 'pagesInfo.json';
-    const playlistInfoPath = reactionPath + 'playlistInfo.json';
-    const settingsPath = reactionPath + 'settings.json';
+    if (version === 'REACTion') {
+        userData = userData.split('\\');
+        userData.pop();
+        userData = userData.join('\\') + '\\REACTion\\data\\';
+    } else {
+        userData = userData + '\\data\\';
+    }
+
+    const pagesInfoPath = userData + 'pagesInfo.json';
+    const playlistInfoPath = userData + 'playlistInfo.json';
+    const settingsPath = userData + 'settings.json';
     if (jetpack.exists(pagesInfoPath) && jetpack.exists(playlistInfoPath) && jetpack.exists(settingsPath)) {
         pagesInfo = jetpack.read(pagesInfoPath, 'json');
         playlistInfo = jetpack.read(playlistInfoPath, 'json');
         settingsInfo = jetpack.read(settingsPath, 'json');
     } else {
         M.toast({
-            html: 'At least one essential REACTion file is missing. Contact author for help!',
+            html: 'At least one essential Legacy file is missing. Contact author for help!',
             displayLength: 5000
         });
         return;
@@ -293,7 +298,7 @@ module.exports = {
     deleteObj: deleteObj,
     emptyObj: emptyObj,
     getInfoObj: getInfoObj,
-    importReaction: importReaction,
+    importLegacy: importLegacy,
     newShow: newShow,
     openShow: openShow,
     saveShow: saveShow,

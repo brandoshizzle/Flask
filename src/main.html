@@ -455,11 +455,19 @@
 								</div>
 							</div>
 							<div class="row valign-wrapper">
+									<div class="settings-description col s9">
+										<h3>Import Show from Flask v0.x</h3>
+									</div>
+									<div class="settings-switch col s3">
+										<div class="btn btn-settings" id="settings-importFlask" style="float: right;" onclick="storage.importLegacy('Flask')">Import</div>
+									</div>
+								</div>
+							<div class="row valign-wrapper">
 								<div class="settings-description col s9">
 									<h3>Import Show from REACTion</h3>
 								</div>
 								<div class="settings-switch col s3">
-									<div class="btn btn-settings" id="settings-importREACTion" style="float: right;" onclick="storage.importReaction()">Import</div>
+									<div class="btn btn-settings" id="settings-importREACTion" style="float: right;" onclick="storage.importLegacy('REACTion')">Import</div>
 								</div>
 							</div>
 						</div>
@@ -610,7 +618,7 @@
 					<a class="waves-effect waves-light btn" onclick="storage.openShow()">Open Show</a>
 				</div>
 				<div class="col s4">
-					<a class="waves-effect waves-light btn" onclick="storage.importReaction()">Reaction</a>
+					<a class="waves-effect waves-light btn" style="width:100px" onclick="storage.importLegacy()">Legacy Import</a>
 				</div>
 			</div>
 		</div>

@@ -6,6 +6,7 @@ const jetpack = require('fs-jetpack');
 const clock = require('./scripts/clock.js');
 const colors = require('./scripts/colors');
 const events = require('./scripts/events');
+const license = require('./scripts/license');
 const pages = require('./scripts/pages');
 const playlist = require('./scripts/playlist');
 const settings = require('./scripts/settings');
@@ -34,6 +35,7 @@ var totalNumSounds;
 var pagesNumSounds = 0;
 var reloadSound = false;
 let userFilePath;
+let proLicense;
 
 /* Set up program */
 $(document).ready(function() {
@@ -49,6 +51,10 @@ $(document).ready(function() {
     }
     events.setKeyEvents();
     clock.startClock();
+
+    license.getLocalLicenseInfo();
+    proLicense = license.doTheyHavePro();
+    console.log('Do you have a pro license?', proLicense);
 
     // Set production settings for updating and errors
     if (process.env.DEV === false) {
