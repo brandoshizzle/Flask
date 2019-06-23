@@ -39,6 +39,9 @@ body {
 i {
   vertical-align: middle !important; }
 
+.btn-flat:hover {
+  background: #ddd; }
+
 #header-logo {
   display: inline-block;
   height: 30px;

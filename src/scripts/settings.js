@@ -296,21 +296,21 @@ function resetFade(soundOrPage, inOrOut) {
             if (pagesInfo['page' + currentPage].fadeInTime !== undefined) {
                 fadeTime = pagesInfo['page' + currentPage].fadeInTime;
             } else {
-                fadeTime = settingsInfo.general.fadeInTime;
+                fadeTime = settingsInfo.pages.fadeInTime;
             }
         } else {
             if (pagesInfo['page' + currentPage].fadeOutTime !== undefined) {
                 fadeTime = pagesInfo['page' + currentPage].fadeOutTime;
             } else {
-                fadeTime = settingsInfo.general.fadeOutTime;
+                fadeTime = settingsInfo.pages.fadeOutTime;
             }
         }
     }
     if (soundOrPage === 'page') {
         if (inOrOut === 'in') {
-            fadeTime = settingsInfo.general.fadeInTime;
+            fadeTime = settingsInfo.pages.fadeInTime;
         } else {
-            fadeTime = settingsInfo.general.fadeOutTime;
+            fadeTime = settingsInfo.pages.fadeOutTime;
         }
     }
 

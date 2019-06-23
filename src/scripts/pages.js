@@ -133,13 +133,13 @@ function loadNames() {
 function getFadeTime(pageInfo, direction) {
     if (direction === 'in') {
         if (pageInfo.fadeInTime === undefined) {
-            return settingsInfo.general.fadeInTime / 1000;
+            return settingsInfo.pages.fadeInTime / 1000;
         } else {
             return pageInfo.fadeInTime / 1000;
         }
     } else if (direction === 'out') {
         if (pageInfo.fadeOutTime === undefined) {
-            return settingsInfo.general.fadeOutTime / 1000;
+            return settingsInfo.pages.fadeOutTime / 1000;
         } else {
             return pageInfo.fadeOutTime / 1000;
         }
