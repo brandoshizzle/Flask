@@ -40,7 +40,14 @@ i {
   vertical-align: middle !important; }
 
 .btn-flat:hover {
-  background: #ddd; }
+  background: #eee; }
+
+.btn-pro {
+  text-transform: capitalize;
+  text-align: left;
+  background: #3535fc !important; }
+  .btn-pro:hover {
+    background: #3a63d4 !important; }
 
 #header-logo {
   display: inline-block;

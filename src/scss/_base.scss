@@ -51,3 +51,12 @@ i {
 .btn-flat:hover {
 	background: #eee;
 }
+
+.btn-pro {
+	text-transform: capitalize;
+	text-align: left;
+	background: rgb(53, 53, 252) !important;
+	&:hover {
+		background: rgb(58, 99, 212) !important;
+	}
+}

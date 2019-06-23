@@ -553,7 +553,7 @@
 		<li><a class="waves-effect" href="#" onclick="settings.openSettings()"><i class="material-icons">settings</i>Preferences</a></li>
 		<!-- f<li><a class="waves-effect" href="#" onclick="restart()"><i class=" material-icons">autorenew</i>Restart Flask</a></li> -->
 		<li><div class="divider "></div></li>
-		<li><a class="btn-large btn waves-effect" href="https://brandoncathcart.com/flask" style="text-transform: capitalize; text-align: left;"><i class="material-icons upgrade-icon">stars</i>Upgrade to Pro!</a></li>
+		<li><a class="btn-large btn waves-effect btn-pro" href="#" onclick="license.openModal()"><i class="material-icons upgrade-icon">stars</i>Upgrade to Pro!</a></li>
 		<li><a class="waves-effect " href="mailto:cathcart.brandon@gmail.com" target="_blank "><i class="material-icons ">bug_report</i>Report
 				Issue</a></li>
 		<!-- <li><a class="waves-effect " href="http://paypal.me/BrandonCathcart"><i class="material-icons ">monetization_on</i>Donate</a></li> -->
@@ -570,6 +570,36 @@
 			<a href="#" class="modal-action modal-close waves-effect btn red white-text" id='confirm-empty-modal-delete'>Empty</a>
 		</div>
 	</div>
+
+	<!-- LICENSE MODAL -->
+	<div id="license-modal" class="modal">
+			<div class="modal-content" style="text-align: left">
+				<img src="assets/logo.png" style="display: inline-block; height: 30px; margin-bottom:-2px;" />
+				<h5 id="sound-settings-name" class="header" style="text-align: center; display: inline-block;">Thank you for supporting Flask!</h5>
+				<hr>
+				<h5>Purchase a License</h5>
+				<p>Flask Pro lets you unleash the full potential of Flask and directly support its development.</p>
+				<p>A personal license is only $15 and is good for your version of Flask - forever.</p>
+				<a class="btn waves-effect" href="#" style="text-align: center;"><i class="material-icons">launch</i> Go to Website</a>
+				<br>
+				<br>
+				<hr>
+				<h5>Enter a License Key</h5>
+				<p>Already bought a license? Thank you! Enter your license key here:</p>
+				<div class="row valign-wrapper">
+					<div class="col s8" style="padding-left: 0px;">
+						<div class="input-field" style="margin-top:0px; margin-bottom: 0px;">
+							<input id="enter-license" class="search" type="text" />
+							<label for="enter-license">License Key</label>
+						</div>
+					</div>
+					<div class="col s4">
+						<a class="btn waves-effect" href="#" style="text-align: center; width:100%;" onclick="license.validateKey()">Validate</a>
+					</div>
+				</div>
+					
+			</div>
+		</div>
 
 	<!-- ABOUT MODAL -->
 	<div id="about-modal" class="modal" style="width:500px">

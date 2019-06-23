@@ -38,7 +38,13 @@ async function doTheyHavePro() {
 	return false;
 }
 
+function openModal() {
+	M.Sidenav.getInstance($('.sidenav')).close();
+	$('#license-modal').modal('open');
+}
+
 module.exports = {
 	getLocalLicenseInfo: getLocalLicenseInfo,
-	doTheyHavePro: doTheyHavePro
+	doTheyHavePro: doTheyHavePro,
+	openModal: openModal
 };
