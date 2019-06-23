@@ -13,8 +13,7 @@
 
 body {
   margin: 0;
-  padding: 0;
-  overflow-y: hidden; }
+  padding: 0; }
 
 *:focus {
   outline: none; }
@@ -80,6 +79,9 @@ i {
 
 .tabs-row {
   width: 78%; }
+
+.pageName {
+  pointer-events: none; }
 
 #clock {
   float: right;

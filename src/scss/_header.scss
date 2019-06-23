@@ -1,88 +1,91 @@
 #header-logo {
-    display: inline-block;
-    height: 30px;
-    margin-bottom: -2px;
+	display: inline-block;
+	height: 30px;
+	margin-bottom: -2px;
 }
 
 #programTitle {
-    display: inline-block;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding-left: 0;
-    padding-top: 10px;
-    margin: 0px;
-    -webkit-user-select: none;
-    cursor: default;
-    font-family: 'Pacifico';
-    font-size: 28px;
-    text-shadow: 0px 2px 1px darkslategray;
-    font-size: 35px;
+	display: inline-block;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+	padding-top: 10px;
+	margin: 0px;
+	-webkit-user-select: none;
+	cursor: default;
+	font-family: 'Pacifico';
+	font-size: 28px;
+	text-shadow: 0px 2px 1px darkslategray;
+	font-size: 35px;
 
-    &:hover {
-        text-shadow: 0px 0px 2px white;
-    }
+	&:hover {
+		text-shadow: 0px 0px 2px white;
+	}
 }
 
 .menu-icon {
-    color: white;
-    margin-right: 10px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: 0.2s;
+	color: white;
+	margin-right: 10px;
+	margin-left: 10px;
+	cursor: pointer;
+	transition: 0.2s;
 
-    &:hover {
-        text-shadow: 0px 0px 3px white;
-    }
+	&:hover {
+		text-shadow: 0px 0px 3px white;
+	}
 }
 
 .tabs {
-    margin: 0;
-    padding: 0;
-    height: 40px;
-    background-color: inherit;
-    text-shadow: 0px 1px 1px black;
-    overflow-x: hidden;
+	margin: 0;
+	padding: 0;
+	height: 40px;
+	background-color: inherit;
+	text-shadow: 0px 1px 1px black;
+	overflow-x: hidden;
 }
 
 .tabs-row {
-    width: 78%;
+	width: 78%;
+}
+
+.pageName {
+	pointer-events: none;
 }
 
 #clock {
-    float: right;
-    padding-right: 20px;
-    margin-bottom: 0;
-    margin-top: 5px;
-    font-size: 4vh;
+	float: right;
+	padding-right: 20px;
+	margin-bottom: 0;
+	margin-top: 5px;
+	font-size: 4vh;
 }
 
 #loadedContainer {
-    display: inline-block;
-    width: 10%;
-    height: 20px;
-    border: 1px solid var(--oc-gray-1);
-    border-radius: 5px;
+	display: inline-block;
+	width: 10%;
+	height: 20px;
+	border: 1px solid var(--oc-gray-1);
+	border-radius: 5px;
 }
 
 #loadedCount {
-    width: 0%;
-    height: 100%;
-    border-radius: 5px;
-    background-color: var(--oc-green-7);
+	width: 0%;
+	height: 100%;
+	border-radius: 5px;
+	background-color: var(--oc-green-7);
 }
 
 #update-link {
-    display: inline-block;
-    text-shadow: 0px 2px 2px black;
+	display: inline-block;
+	text-shadow: 0px 2px 2px black;
 
-    &:hover {
-        text-shadow: 0px 0px 5px lightblue;
-        cursor: pointer;
-    }
+	&:hover {
+		text-shadow: 0px 0px 5px lightblue;
+		cursor: pointer;
+	}
 }
 
-
 .header-row i {
-    margin-top: -14px;
-    font-size: 28px;
+	margin-top: -14px;
+	font-size: 28px;
 }

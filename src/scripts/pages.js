@@ -3,18 +3,32 @@ var settingsPageNum;
 
 $(document).ready(function() {
     $('ul.tabs').on('click', 'a', function(e) {
-        switchPage(e);
+        const classes = e.target.parentNode.classList;
+        if (!classes.contains('disabled')) {
+            switchPage(e);
+        } else {
+            M.toast({
+                html: '<a href="www.brandoncathcart.com/flask">Support Flask development to use all pages!</a>'
+            });
+        }
     });
     $('ul.tabs').on('contextmenu', 'a', function(e) {
         var pageId = e.target.id;
+        console.log(document.getElementById(pageId).parentElement);
         if (!pageId) {
             pageId = $(e.target)
                 .closest('a')
                 .prop('id');
         }
-        settingsPageNum = pageId.substring(pageId.length - 1);
-        ensurePageExists(settingsPageNum);
-        settings.openPageSettings(settingsPageNum);
+        if (document.getElementById(pageId).parentElement.classList.contains('disabled')) {
+            M.toast({
+                html: '<a href="www.brandoncathcart.com/flask">Support Flask development to use all pages!</a>'
+            });
+        } else {
+            settingsPageNum = pageId.substring(pageId.length - 1);
+            ensurePageExists(settingsPageNum);
+            settings.openPageSettings(settingsPageNum);
+        }
     });
 
     $('#page-save-button').on('click', function(e) {
@@ -132,8 +146,18 @@ function getFadeTime(pageInfo, direction) {
     }
 }
 
+function disableExtraPages() {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        if (tab.children[0].id !== 'page1') {
+            tab.classList.add('disabled');
+        }
+    });
+}
+
 module.exports = {
     registerKeyInfos: registerKeyInfos,
+    disableExtraPages: disableExtraPages,
     ensurePageExists: ensurePageExists,
     switchPage: switchPage,
     loadNames: loadNames,

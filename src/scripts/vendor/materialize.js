@@ -4807,7 +4807,7 @@ var $jscomp$this = this;
 				{
 					key: '_handleTabClick',
 					value: function _handleTabClick(e) {
-						console.log(e);
+						//console.log(e);
 						var _this23 = this;
 
 						var tab = $(e.target).closest('li.tab');

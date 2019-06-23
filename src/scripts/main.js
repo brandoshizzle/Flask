@@ -53,7 +53,12 @@ $(document).ready(function() {
     clock.startClock();
 
     license.getLocalLicenseInfo();
-    proLicense = license.doTheyHavePro();
+    license.doTheyHavePro().then(license => {
+        proLicense = license;
+        if (!proLicense) {
+            pages.disableExtraPages();
+        }
+    });
     console.log('Do you have a pro license?', proLicense);
 
     // Set production settings for updating and errors
