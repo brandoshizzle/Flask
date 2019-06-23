@@ -84,20 +84,31 @@ function setKeyEvents() {
     $('.playlistBox').on('drop', function(e) {
         e.originalEvent.preventDefault(); // Prevent default action
         let first = true;
+        let alreadyWarned = false;
         for (const f of e.originalEvent.dataTransfer.files) {
-            // Create new soundInfo object
-            newSoundInfo = new sounds.SoundInfo(f.path);
-            console.log(newSoundInfo);
-            sounds.createNewHowl(newSoundInfo);
-            playlistInfo[newSoundInfo.id] = newSoundInfo;
-            view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
-            if (first) {
-                waveforms.load(newSoundInfo);
-                first = false;
+            // Check for license - if free, limit to 15 sounds
+            if (!proLicense && document.getElementById('playlist-songs').children.length >= 15) {
+                if (!alreadyWarned) {
+                    M.toast({
+                        html:
+							'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro for unlimited playlist sounds! <i class="material-icons">launch</i></a>'
+                    });
+                    alreadyWarned = true;
+                }
+            } else {
+                // Create new soundInfo object
+                newSoundInfo = new sounds.SoundInfo(f.path);
+                //console.log(newSoundInfo);
+                sounds.createNewHowl(newSoundInfo);
+                playlistInfo[newSoundInfo.id] = newSoundInfo;
+                view.createPlaylistItem(newSoundInfo); // Create a new li in the playlist
+                if (first) {
+                    waveforms.load(newSoundInfo);
+                    first = false;
+                }
             }
         }
         if (e.originalEvent.dataTransfer.files.length > 0) {
-            //storage.storeObj('playlistInfo', playlistInfo);
             storage.saveShow();
         }
         updatePlaylistClickFunctions(); // Ensure new songs react properly to clicking

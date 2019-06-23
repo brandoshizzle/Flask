@@ -143,8 +143,9 @@ function registerPlaylistItems() {
 function empty() {
     $('#confirm-empty-modal').modal('open');
     $('#confirm-empty-modal-delete').click(function() {
-        storage.emptyObj('playlistInfo', playlistInfo);
+        playlistInfo = {};
         $('#playlist-songs').empty();
+        storage.saveShow();
     });
 }
 

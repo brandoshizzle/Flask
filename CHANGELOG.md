@@ -18,16 +18,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Shuffle playlist
 -   Splash screen
 -   Edit icon next to sound/page names
--   Import REACTion projects
+-   Import REACTion and Flask v0.X.X projects
 
 ### Changed
 
+-   Pro and free versions - free version limits pages and playlist
 -   Panic switch now has confirmation (double tap)
 -   Color picker in sound settings
 -   Fade in time now dropdown - much more intuitive
 -   Main settings redesigned
 -   Ctrl/Cmd + P opens the settings
 -   Ctrl/Cmd + S tells you that Flask is always saving
+-   Visual updates
 -   Updated to Electron v4.1.4
 -   Updated Sortable JS to v1.8.4
 -   Updated Materialize to v1.0.0
@@ -36,6 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   Next playlist waveform doesn't load if another sound is playing
 -   Cutting or deleting a sound stops it from playing
+-   Links all open in default OS browser
 
 ## [0.5.0] - 2019-01-13
 

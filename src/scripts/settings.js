@@ -25,7 +25,7 @@ let soundSettingTouched = function(el) {
         let labelText = document.getElementById(id + '-label').innerHTML;
         document.getElementById(id + '-label').innerHTML = labelText + ' *';
         document.getElementById(id + '-label').style = 'color:red';
-        console.log(multiSettingsToChange);
+        //console.log(multiSettingsToChange);
     }
 };
 
@@ -214,7 +214,7 @@ function saveSoundSettings() {
         return false;
     };
 
-    console.log(soundSettingsElArray);
+    //console.log(soundSettingsElArray);
     for (var el of soundSettingsElArray) {
         let keyOrPlaylistInfo;
         let tempSoundInfo;

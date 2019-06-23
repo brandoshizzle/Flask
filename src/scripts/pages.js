@@ -8,7 +8,8 @@ $(document).ready(function() {
             switchPage(e);
         } else {
             M.toast({
-                html: '<a href="www.brandoncathcart.com/flask">Support Flask development to use all pages!</a>'
+                html:
+					'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro to use all pages! <i class="material-icons">launch</i></a>'
             });
         }
     });
@@ -22,7 +23,8 @@ $(document).ready(function() {
         }
         if (document.getElementById(pageId).parentElement.classList.contains('disabled')) {
             M.toast({
-                html: '<a href="www.brandoncathcart.com/flask">Support Flask development to use all pages!</a>'
+                html:
+					'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro to use all pages!  <i class="material-icons">launch</i></a>'
             });
         } else {
             settingsPageNum = pageId.substring(pageId.length - 1);

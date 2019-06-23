@@ -93,9 +93,7 @@ function buildViews() {
     view.buildKeyboard(); // Create all the key buttons
     waveforms.buildWaveform(); // Initialize the waveform
     $('.version').text(pjson.version); // Add the version number to the "version" spans
-    $('title').text(`Flask v${pjson.version}`); // Add the version number to the title
     $('.global-settings-table').hide();
-    console.log('done!');
 }
 
 function loadPlugins() {
@@ -299,7 +297,8 @@ function loadShow(pathToFile) {
     showInfo = JSON.parse(jetpack.read(pathToFile));
     let showName = pathToFile.split('\\').pop();
     showName = showName.substr(0, showName.length - 6);
-    $('title').text(`Flask v${pjson.version} - ${showName}`); // Add the version number to the title
+    let freeOrPro = proLicense ? 'Pro' : 'Free';
+    $('title').text(`Flask v${pjson.version} ${freeOrPro} - ${showName}`); // Add the version number to the title
 
     console.log(pathToFile);
     sounds.resetLoadingBar();

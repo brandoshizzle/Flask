@@ -17,6 +17,12 @@ function getLocalLicenseInfo() {
 		localStorage.setItem('licenseInfo', JSON.stringify(freeLicenseInfo));
 		licenseInfo = freeLicenseInfo;
 	}
+	document.getElementById('about-license-type').innerText = licenseInfo.key
+		? `v${licenseInfo.version} Pro License`
+		: 'Free License';
+	document.getElementById('about-license-to').innerHTML = licenseInfo.full_name
+		? `Licensed to ${licenseInfo.full_name}`
+		: '';
 	return 'License info gotten.';
 }
 
