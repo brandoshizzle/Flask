@@ -101,13 +101,12 @@ function validateKey() {
 }
 
 function rejectLicense(message) {
-    // todo: add rejection modal
     document.getElementById('license-reject-message').innerHTML = message;
     $('#reject-license-modal').modal('open');
 }
 
 function acceptLicense(email) {
-    // todo: add rejection modal
+    $('#license-modal').modal('close');
     $('#accept-license-modal').modal('open');
     licenseInfo = {
         key: licenseKey,

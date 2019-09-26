@@ -200,12 +200,13 @@ function autoplayCheck() {
     if (!proLicense) {
         M.toast({
             html:
-				'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro to autoplay your playlist! <i class="material-icons">launch</i></a>'
+				'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro to use autoplay! <i class="material-icons">launch</i></a>'
         });
     }
 }
 
 module.exports = {
+    autoplayCheck: autoplayCheck,
     build: buildPlaylist,
     empty: empty,
     getFirstPlaylistItem: getFirstPlaylistItem,

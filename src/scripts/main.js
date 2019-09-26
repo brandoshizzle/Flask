@@ -56,6 +56,7 @@ $(document).ready(function() {
     proLicense = license.doTheyHavePro();
     if (!proLicense) {
         pages.disableExtraPages();
+        $('#playlist-autoplay').attr('disabled', 'disabled');
     }
     console.log('Do you have a pro license?', proLicense);
 
