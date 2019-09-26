@@ -53,12 +53,10 @@ $(document).ready(function() {
     clock.startClock();
 
     license.getLocalLicenseInfo();
-    license.doTheyHavePro().then(license => {
-        proLicense = license;
-        if (!proLicense) {
-            pages.disableExtraPages();
-        }
-    });
+    proLicense = license.doTheyHavePro();
+    if (!proLicense) {
+        pages.disableExtraPages();
+    }
     console.log('Do you have a pro license?', proLicense);
 
     // Set production settings for updating and errors
@@ -297,7 +295,7 @@ function loadShow(pathToFile) {
     showInfo = JSON.parse(jetpack.read(pathToFile));
     let showName = pathToFile.split('\\').pop();
     showName = showName.substr(0, showName.length - 6);
-    let freeOrPro = proLicense ? 'Pro' : 'Free';
+    let freeOrPro = license.doTheyHavePro() ? 'Pro' : 'Free';
     $('title').text(`Flask v${pjson.version} ${freeOrPro} - ${showName}`); // Add the version number to the title
 
     console.log(pathToFile);

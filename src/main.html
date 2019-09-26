@@ -21,7 +21,7 @@
 		<div>
 			<a data-target="slide-out" class="sidenav-trigger menu-icon"><i class="material-icons">menu</i></a>
 			<img id="header-logo" src="assets/logo.png" />
-			<h4 id="programTitle">Flask</h4>
+			<h4 id="programTitle" style="margin-right:20px;">Flask</h4>
 			<!--<h6 id='volume' style='display:inline; margin-left: 50px;'></h6>-->
 			<div id="loadedContainer">
 				<div id="loadedCount">Loading</div>
@@ -103,7 +103,7 @@
 			<div class="switch" style="text-align: right; float: right;">
 					<label>
 						Autoplay
-						<input id="playlist-autoplay" type="checkbox">
+						<input id="playlist-autoplay" type="checkbox" disabled onclick="playlist.autoplayCheck()">
 						<span class="lever"></span>
 					</label>
 				</div>
@@ -571,6 +571,41 @@
 		</div>
 	</div>
 
+	<!-- License Rejection -->
+	<div id="reject-license-modal" class="modal model-fixed-footer" style="width:700px;">
+		<div class="modal-content">
+			<h4>Whoops!</h4>
+			<p id='license-reject-message'></p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="modal-action modal-close waves-effect btn red white-text" id='confirm-empty-modal-delete'>OK</a>
+		</div>
+	</div>
+
+	<!-- License Accepted -->
+	<div id="accept-license-modal" class="modal model-fixed-footer" style="width:700px;">
+		<div class="modal-content">
+			<h4>Thank you for supporting Flask!</h4>
+			<p>Your contribution is greatly appreciated. Enjoy all the benefits of Flask Pro!</p>
+			<p>- Brandon</p>
+			<br>
+			<p>Please restart FLASK to activate pro features.</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="modal-action modal-close waves-effect btn" id='confirm-empty-modal-delete'>OK</a>
+		</div>
+	</div>
+
+	<!-- License Verifying -->
+	<div id="verify-license-modal" class="modal" style="width:700px;">
+		<div class="modal-content">
+			<p>Verifying license via internet...</p>
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</div>
+	</div>
+
 	<!-- LICENSE MODAL -->
 	<div id="license-modal" class="modal">
 			<div class="modal-content" style="text-align: left">
@@ -579,6 +614,7 @@
 				<hr>
 				<h5>Purchase a License</h5>
 				<p>Flask Pro lets you unleash the full potential of Flask and directly support its development.</p>
+				<p>You get <strong>8 pages, unlimited playlist sounds, and playlist autoplay</strong></p>
 				<p>A personal license is only $15 and is good for your version of Flask - forever.</p>
 				<a class="btn waves-effect" href="#" style="text-align: center;"><i class="material-icons">launch</i> Go to Website</a>
 				<br>
@@ -594,7 +630,7 @@
 						</div>
 					</div>
 					<div class="col s4">
-						<a class="btn waves-effect" href="#" style="text-align: center; width:100%;" onclick="license.validateKey()">Validate</a>
+						<a class="btn waves-effect" href="#" style="text-align: center; width:100%;" id="validate-btn" onclick="license.validateKey()">Validate</a>
 					</div>
 				</div>
 					

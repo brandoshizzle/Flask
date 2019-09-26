@@ -196,6 +196,15 @@ function shuffle() {
     updateColors({ newIndex: ul.children.length - 1 });
 }
 
+function autoplayCheck() {
+    if (!proLicense) {
+        M.toast({
+            html:
+				'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro to autoplay your playlist! <i class="material-icons">launch</i></a>'
+        });
+    }
+}
+
 module.exports = {
     build: buildPlaylist,
     empty: empty,
