@@ -295,7 +295,7 @@
 								<td onclick="view.showSettingsSection(this, 'settings-playlist')">Playlist</td>
 							</tr>
 							<tr>
-								<td onclick="view.showSettingsSection(this, 'settings-utilities')">Utility</td>
+								<td onclick="view.showSettingsSection(this, 'settings-utilities')" id="utility-menu-option">Utility</td>
 							</tr>
 						</tbody>
 					</table>
@@ -571,6 +571,19 @@
 		</div>
 	</div>
 
+	<!-- Import Successful -->
+	<div id="import-success-modal" class="modal model-fixed-footer" style="width:700px;">
+		<div class="modal-content">
+			<h4>Legacy project found!</h4>
+			<p>The import went great. Please save this project in a new .flask file and you'll be good to go!</p>
+			<br>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+			<a href="#" class="modal-action modal-close waves-effect btn" onclick="storage.importSuccess()">Save</a>
+		</div>
+	</div>
+
 	<!-- License Rejection -->
 	<div id="reject-license-modal" class="modal model-fixed-footer" style="width:700px;">
 		<div class="modal-content">
@@ -578,7 +591,7 @@
 			<p id='license-reject-message'></p>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="modal-action modal-close waves-effect btn red white-text" id='confirm-empty-modal-delete'>OK</a>
+			<a href="#" class="modal-action modal-close waves-effect btn red white-text">OK</a>
 		</div>
 	</div>
 
@@ -592,7 +605,7 @@
 			<p>Please restart FLASK to activate pro features.</p>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="modal-action modal-close waves-effect btn" id='confirm-empty-modal-delete'>OK</a>
+			<a href="#" class="modal-action modal-close waves-effect btn">OK</a>
 		</div>
 	</div>
 
@@ -664,9 +677,11 @@
 	</div>
 
 	<!-- STARTUP MODAL -->
-	<div id="startup-modal" class="modal" style="width:500px; top: 40%;">
+	<div id="startup-modal" class="modal" style="width:650px; top: 40%;">
 		<div class="modal-content" style="text-align: center">
-			<p>Welcome to Flask!</p>
+			<h5>Welcome to Flask!</h5>
+			<p>Get started with one of the following options:</p>
+			<br>
 			<div class="row">
 				<div class="col s4">
 					<a class="waves-effect waves-light btn" onclick="storage.newShow()">New Show</a>
@@ -675,7 +690,7 @@
 					<a class="waves-effect waves-light btn" onclick="storage.openShow()">Open Show</a>
 				</div>
 				<div class="col s4">
-					<a class="waves-effect waves-light btn" style="width:100px" onclick="storage.importLegacy()">Legacy Import</a>
+					<a class="waves-effect waves-light btn" style="width:150px" onclick="storage.importLegacy()">Legacy Import</a>
 				</div>
 			</div>
 		</div>

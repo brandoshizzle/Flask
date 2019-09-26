@@ -200,6 +200,12 @@ function saveShow() {
 }
 
 function importLegacy(version) {
+    if (version == undefined) {
+        $('#settings-modal').modal('open');
+        view.showSettingsSection(document.getElementById('utility-menu-option'), 'settings-utilities');
+        $('#startup-modal').modal('close');
+        return;
+    }
     let userData = app.getPath('userData');
     console.log(userData);
     if (version === 'REACTion') {
@@ -219,22 +225,26 @@ function importLegacy(version) {
         settingsInfo = jetpack.read(settingsPath, 'json');
     } else {
         M.toast({
-            html: 'At least one essential Legacy file is missing. Contact author for help!',
+            html: 'At least one essential Legacy file is missing. Contact developer for help!',
             displayLength: 5000
         });
         return;
     }
+
+    $('#import-success-modal').modal('open');
+}
+
+function importSuccess() {
     const newShowPromise = new Promise((res, rej) => {
         res(newShow(true));
     }).then(showPath => {
         M.Sidenav.getInstance($('.sidenav')).close();
+        $('#import-legacy-modal').modal('close');
         M.toast({
             html: 'Import Successful! Restart Flask to load show.',
             displayLength: 5000
         });
     });
-
-    console.log(pagesInfoPath);
 }
 
 function deleteObj(objName) {
@@ -299,6 +309,7 @@ module.exports = {
     emptyObj: emptyObj,
     getInfoObj: getInfoObj,
     importLegacy: importLegacy,
+    importSuccess: importSuccess,
     newShow: newShow,
     openShow: openShow,
     saveShow: saveShow,
