@@ -1,0 +1,11 @@
+directories:
+  output: dist
+  buildResources: build
+win: {}
+mac:
+  category: public.app-category.music
+fileAssociations:
+  - ext: flask
+    name: Flask Show
+    role: Editor
+electronVersion: 4.2.3

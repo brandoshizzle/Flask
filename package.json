@@ -15,7 +15,14 @@
 		"win": {},
 		"mac": {
 			"category": "public.app-category.music"
-		}
+		},
+		"fileAssociations": [
+			{
+				"ext": "flask",
+				"name": "Flask Show",
+				"role": "Editor"
+			}
+		]
 	},
 	"repository": {
 		"type": "git",
@@ -28,6 +35,7 @@
 	},
 	"homepage": "https://github.com/brandoshizzle/REATion#readme",
 	"devDependencies": {
+		"electron": "^4.0",
 		"electron-builder": "^20.0",
 		"electron-builder-squirrel-windows": "^11.5.0",
 		"electron-connect": "^0.6.3",
@@ -48,10 +56,10 @@
 		"circular-json": "^0.3.1",
 		"compare-versions": "^3.4.0",
 		"dotenv": "^8.0",
-		"electron": "^4.0",
 		"fs-jetpack": "^2.0",
 		"gh-latest-release": "^1.0.0",
 		"marked": "^0.6.2",
-		"materialize-css": "^1.0.0"
+		"materialize-css": "^1.0.0",
+		"request": "^2.88.0"
 	}
 }

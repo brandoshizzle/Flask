@@ -43,10 +43,7 @@ app.on('ready', function() {
         win.maximize();
     });
 
-    //
-    // Connect to server process
-    //client.create(win);
-    //win.openDevTools();
+    win.openDevTools();
 });
 
 app.on('window-all-closed', function() {
