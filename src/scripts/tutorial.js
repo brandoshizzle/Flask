@@ -39,7 +39,9 @@ function startHopscotch() {
                 - <b>Drag files</b> into the playlist to add them, and drag them to reorder them<br>
                 - <b>Press SPACE</b> to play the top song on the playlist.<br>
                 - <b>Press SPACE again</b> to stop it.<br>
+                - <b>Autoplay</b> will start the next song after the current one ends<br>
                 - <b>Right-click</b> on the sounds to bring up their options<br>
+                - <b>Click the gear</b> for shuffling, clearing, and more<br>
                 - Playlist behaviour is very configurable - check out the settings for all the ways it can be configured!`,
                 target: 'playlistBox',
                 yOffset: 'center',
