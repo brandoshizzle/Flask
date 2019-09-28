@@ -116,7 +116,7 @@ body {
 
 .playing-sound {
 	box-shadow: 0px 0px 5px 5px var(--aM) !important;
-	animation: glowingPlay ease-in-out 3s infinite;
+	animation: glowingPlay ease-in-out 1.7s infinite;
 }
 
 @keyframes glowingPlay {
