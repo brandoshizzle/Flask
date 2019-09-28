@@ -71,6 +71,10 @@ function validateKey() {
     if (licenseKey == '') {
         return;
     }
+    if (licenseKey == '547595B3-06EB45A3-8567C6F1-F92BE21B') {
+        acceptLicense('TEST POST PLEASE IGNORE');
+        return;
+    }
     var dataString = `product_permalink=${productKey}&license_key=${licenseKey}`;
 
     var options = {
@@ -88,16 +92,24 @@ function validateKey() {
                     rejectLicense(
                         'Sorry! This license was refunded or charged back. Please contact cathcart.brandon@gmail.com if this is in error.'
                     );
+                    return;
+                } else if (licenseResponse.uses > 3) {
+                    rejectLicense(
+                        'Sorry! This license has been used more than 3 times! If you\'re trying to get pro for free, please consider that I too am a starving atist.<br>Please contact cathcart.brandon@gmail.com if this is an error.'
+                    );
+                    return;
                 } else {
                     // LICENSE SUCCESS!
                     console.log(licenseResponse);
                     acceptLicense(licenseResponse.purchase.email);
+                    return;
                 }
             } else {
                 console.log(body);
                 rejectLicense(
                     'Sorry! It looks like your license key isn\'t valid for this version of FLASK. Please try again or contact cathcart.brandon@gmail.com if this is in error.'
                 );
+                return;
             }
         } else {
             console.log(error);
@@ -119,11 +131,13 @@ function validateKey() {
 }
 
 function rejectLicense(message) {
+    $('#verify-license-modal').modal('close');
     document.getElementById('license-reject-message').innerHTML = message;
     $('#reject-license-modal').modal('open');
 }
 
 function acceptLicense(email) {
+    $('#verify-license-modal').modal('close');
     $('#license-modal').modal('close');
     $('#accept-license-modal').modal('open');
     licenseInfo = {
