@@ -24,8 +24,8 @@ app.on('ready', function() {
     const win = Splashscreen.initSplashScreen({
         windowOpts: windowOptions,
         templateUrl: '/build/splash/splash.html',
-        delay: 0, // force show immediately since example will load fast
-        minVisible: delay, // show for 1.5s so example is obvious
+        delay: 0,
+        minVisible: delay,
         splashScreenOpts: {
             height: 500,
             width: 500,

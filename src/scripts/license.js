@@ -28,7 +28,6 @@ function getLocalLicenseInfo() {
 function doTheyHavePro() {
     const licenseString = localStorage.getItem('licenseInfo');
     // If they have a legacy project open, go pro
-    console.log(settingsInfo);
     if (settingsInfo.hasOwnProperty('utility')) {
         if (settingsInfo.utility.legacy) {
             return true;
@@ -40,7 +39,6 @@ function doTheyHavePro() {
     } else {
         return false;
     }
-    console.log(licenseInfo);
     if (licenseInfo.key === null) {
         return false;
     }
@@ -123,9 +121,35 @@ function acceptLicense(email) {
     localStorage.setItem('licenseInfo', JSON.stringify(licenseInfo));
 }
 
+function weekPurchaseToast() {
+    const lastDateStr = localStorage.getItem('lastProNotification');
+    const installDateStr = localStorage.getItem('installDate');
+    const installDate = new Date(installDateStr);
+
+    if (lastDateStr == undefined) {
+        const now = new Date();
+        localStorage.setItem('lastProNotification', now.toISOString());
+        return;
+    }
+    const lastDate = new Date(lastDateStr);
+    const currentDate = new Date();
+    const daysDiff = (currentDate.getTime() - lastDate.getTime()) / (1000 * 3600 * 24);
+    if (daysDiff < 14) {
+        let installedDays = (currentDate.getTime() - installDate.getTime()) / (1000 * 3600 * 24);
+        installedDays = Math.floor(installedDays);
+        M.toast({
+            html: `<a href="https://www.brandoncathcart.com/flask" style="color:white">You've been using FLASK free for ${installedDays} days now. Consider supporting development by going Pro! <i class="material-icons">launch</i></a>`,
+            displayLength: 10000
+        });
+
+        localStorage.setItem('lastProNotification', currentDate.toISOString);
+    }
+}
+
 module.exports = {
     getLocalLicenseInfo: getLocalLicenseInfo,
     doTheyHavePro: doTheyHavePro,
     openModal: openModal,
-    validateKey: validateKey
+    validateKey: validateKey,
+    weekPurchaseToast: weekPurchaseToast
 };

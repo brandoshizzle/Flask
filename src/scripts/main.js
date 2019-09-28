@@ -100,6 +100,14 @@ $(document).ready(function() {
         };
     }
 
+    if (localStorage.getItem('installDate') == undefined) {
+        const now = new Date();
+        localStorage.setItem('installDate', now.toISOString());
+    }
+    if (!proLicense) {
+        license.weekPurchaseToast();
+    }
+
     // open links externally by default
     $(document).on('click', 'a[href^="http"]', function(event) {
         event.preventDefault();
@@ -318,7 +326,6 @@ function loadShow(pathToFile) {
     showName = showName.substr(0, showName.length - 6);
     let freeOrPro = license.doTheyHavePro() || showInfo.settingsInfo.utility.legacy ? 'Pro' : 'Free';
     $('title').text(`Flask v${pjson.version} ${freeOrPro} - ${showName}`); // Add the version number to the title
-    console.log(freeOrPro);
     if (freeOrPro === 'Free') {
         pages.disableExtraPages();
         $('#playlist-autoplay').attr('disabled', 'disabled');
