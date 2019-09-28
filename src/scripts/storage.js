@@ -170,6 +170,9 @@ function openShow() {
         properties: ['openFile']
     };
     dialog.showOpenDialog(openOptions, filepaths => {
+        if (filepaths === undefined) {
+            return;
+        }
         userFilePath = filepaths[0];
         clearShow();
         loadShow(userFilePath);
@@ -225,6 +228,7 @@ function importLegacy(version) {
         playlistInfo = jetpack.read(playlistInfoPath, 'json');
         settingsInfo = jetpack.read(settingsPath, 'json');
         settingsInfo.utility.legacy = true;
+        settingsInfo.utility.pVersion = pjson.version;
     } else {
         M.toast({
             html: 'At least one essential Legacy file is missing. Contact developer for help!',

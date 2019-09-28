@@ -1,5 +1,5 @@
 {
-	"name": "Flask",
+	"name": "FLASK",
 	"version": "1.0.0",
 	"description": "Software for improvising sound",
 	"main": "index.js",
@@ -59,7 +59,6 @@
 		"fs-jetpack": "^2.0",
 		"gh-latest-release": "^1.0.0",
 		"marked": "^0.6.2",
-		"materialize-css": "^1.0.0",
 		"request": "^2.88.0"
 	}
 }

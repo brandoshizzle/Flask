@@ -1,8 +1,8 @@
 version: 1.0.0
 files:
   - url: Flask-Setup-1.0.0.exe
-    sha512: cLGABu8K01OUd3fv9p5diU3B9r4B6fHLe/cY3/3On2LAS2aizTI4Iambu90X5gUbhDAyCwMxEatlsR8MMUNEsw==
-    size: 94482333
+    sha512: Zul0y4yW3oUNb0HRKU7HddzFnaeozRx3xdbgEIWePbw/qO/61/bJzzaOw0T9jjfjnQ69pYCGTB4+LGBwzjX/3w==
+    size: 94481458
 path: Flask-Setup-1.0.0.exe
-sha512: cLGABu8K01OUd3fv9p5diU3B9r4B6fHLe/cY3/3On2LAS2aizTI4Iambu90X5gUbhDAyCwMxEatlsR8MMUNEsw==
-releaseDate: '2019-09-28T22:16:40.750Z'
+sha512: Zul0y4yW3oUNb0HRKU7HddzFnaeozRx3xdbgEIWePbw/qO/61/bJzzaOw0T9jjfjnQ69pYCGTB4+LGBwzjX/3w==
+releaseDate: '2019-09-28T22:42:33.901Z'
