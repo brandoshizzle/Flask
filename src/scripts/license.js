@@ -39,7 +39,15 @@ function doTheyHavePro() {
     } else {
         return false;
     }
+    // If they don't have a license key, check if it's part of the 14 day trial
     if (licenseInfo.key === null) {
+        const now = new Date();
+        const installDate = new Date(localStorage.getItem('installDate'));
+        const daysLeft = 14 - Math.floor((now.getTime() - installDate.getTime()) / (1000 * 3600 * 24));
+        if (daysLeft > 0) {
+            M.toast({ html: `You have ${daysLeft} days left in your FLASK Pro trial!` });
+            return true;
+        }
         return false;
     }
 

@@ -324,7 +324,7 @@ function loadShow(pathToFile) {
     showInfo = JSON.parse(jetpack.read(pathToFile));
     let showName = pathToFile.split('\\').pop();
     showName = showName.substr(0, showName.length - 6);
-    let freeOrPro = license.doTheyHavePro() || showInfo.settingsInfo.utility.legacy ? 'Pro' : 'Free';
+    let freeOrPro = proLicense || showInfo.settingsInfo.utility.legacy ? 'Pro' : 'Free';
     $('title').text(`Flask v${pjson.version} ${freeOrPro} - ${showName}`); // Add the version number to the title
     if (freeOrPro === 'Free') {
         pages.disableExtraPages();
