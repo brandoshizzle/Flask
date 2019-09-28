@@ -13,11 +13,7 @@ function checkForUpdate() {
         if (!(release.prerelease === true && settingsInfo.general.prereleaseUpdates === false)) {
             var rVersion = release.tag_name.substring(1);
             var cVersion = pjson.version;
-            //cVersion = rVersion;	// For testing first time updates
-            console.log(rVersion);
-            console.log(cVersion);
-
-            if (compV(rVersion, cVersion)) {
+            if (compV(rVersion, cVersion) === 1) {
                 // NEWER VERSION DETECTED, POPULATE UPDATE FORM
                 $('#update-cVersion').text(cVersion);
                 $('#update-rVersion').text(rVersion);
@@ -31,25 +27,27 @@ function checkForUpdate() {
                 }
                 $('#download-btn').attr('href', release.html_url);
                 $('#update-link').text('Update to v' + rVersion + '!');
-            } else if (compV(pjson.version, settingsInfo.utility.pVersion)) {
-                // Flask has been updated and is being run for the first time!
-                $('#update-title').text('Flask Updated!');
-                $('#update-cVersion').text(pjson.version);
-                $('#update-rVersion').text(pjson.version);
-                $('#update-date').text(release.published_at.substring(0, 10));
-                $('#update-changelog').html(marked(release.body));
-                $('#update-changelog > h2').remove();
-                $('#download-btn').hide();
-                $('#update-link').text('Updated to v' + pjson.version + '!');
-                $('#build-type').hide();
-                $('#download-btn').hide();
-                $('#update-modal-footer a').text('Okay');
+            } else if (settingsInfo.hasOwnProperty('utility')) {
+                if (compV(pjson.version, settingsInfo.utility.pVersion)) {
+                    // Flask has been updated and is being run for the first time!
+                    $('#update-title').text('Flask Updated!');
+                    $('#update-cVersion').text(pjson.version);
+                    $('#update-rVersion').text(pjson.version);
+                    $('#update-date').text(release.published_at.substring(0, 10));
+                    $('#update-changelog').html(marked(release.body));
+                    $('#update-changelog > h2').remove();
+                    $('#download-btn').hide();
+                    $('#update-link').text('Updated to v' + pjson.version + '!');
+                    $('#build-type').hide();
+                    $('#download-btn').hide();
+                    $('#update-modal-footer a').text('Okay');
 
-                $('#update-modal').modal('open');
-                versionUpdates();
-                settingsInfo.utility.pVersion = pjson.version;
-                //storage.storeObj("settings", settingsInfo);
-                storage.saveShow();
+                    $('#update-modal').modal('open');
+                    versionUpdates();
+                    settingsInfo.utility.pVersion = pjson.version;
+                    //storage.storeObj("settings", settingsInfo);
+                    storage.saveShow();
+                }
             }
         }
     });
