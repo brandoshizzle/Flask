@@ -1,6 +1,3 @@
 node_modules
-dist/win-unpacked
-dist/win-ia32-unpacked
-dist/*.exe
-dist/mac
+dist/
 .env

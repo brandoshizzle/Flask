@@ -43,7 +43,7 @@ app.on('ready', function() {
         win.maximize();
     });
 
-    win.openDevTools();
+    // win.openDevTools();
 });
 
 app.on('window-all-closed', function() {

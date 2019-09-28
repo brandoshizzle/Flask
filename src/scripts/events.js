@@ -24,6 +24,7 @@ const playlistPlayingSound = {
 let curVol;
 let ctrl = false;
 let panicOnce = false;
+let secretDevMode = 0;
 
 /**
  *	@desc:	Sets all the events related to the keyboard keys
@@ -289,6 +290,20 @@ function setKeyEvents() {
                     // Remove drag selection
                     dragSelect.clearSelection();
                     panicOnce = false;
+                }
+            }
+            if (key === 'F12') {
+                // Show pop-up and start counter
+                if (secretDevMode < 10) {
+                    secretDevMode++;
+                    if (secretDevMode == 1) {
+                        setTimeout(() => {
+                            secretDevMode = 0;
+                        }, 5000);
+                    }
+                } else {
+                    var thisWindow = require('electron').remote.BrowserWindow.getAllWindows()[0];
+                    thisWindow.openDevTools();
                 }
             }
         }
