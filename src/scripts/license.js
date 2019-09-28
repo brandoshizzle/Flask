@@ -1,7 +1,6 @@
 const pjson = require('./../../package.json');
 const compV = require('compare-versions');
 const request = require('request');
-let licenseInfo;
 let licenseKey;
 
 function getLocalLicenseInfo() {
@@ -43,12 +42,17 @@ function doTheyHavePro() {
     if (licenseInfo.key === null) {
         const now = new Date();
         const installDate = new Date(localStorage.getItem('installDate'));
-        const daysLeft = 14 - Math.floor((now.getTime() - installDate.getTime()) / (1000 * 3600 * 24));
-        if (daysLeft > 0) {
+        let daysLeft = 14 - Math.floor((now.getTime() - installDate.getTime()) / (1000 * 3600 * 24));
+        if (daysLeft > 0 && daysLeft < 14) {
             M.toast({ html: `You have ${daysLeft} days left in your FLASK Pro trial!` });
             return true;
+        } else if (daysLeft < 0) {
+            if (localStorage.getItem('endedTrialNotification') == undefined) {
+                $('#post-trial-modal').modal('open');
+                localStorage.setItem('endedTrialNotification', 'true');
+            }
+            return false;
         }
-        return false;
     }
 
     return true;
@@ -142,14 +146,13 @@ function weekPurchaseToast() {
     const lastDate = new Date(lastDateStr);
     const currentDate = new Date();
     const daysDiff = (currentDate.getTime() - lastDate.getTime()) / (1000 * 3600 * 24);
-    if (daysDiff < 14) {
+    if (daysDiff > 14) {
         let installedDays = (currentDate.getTime() - installDate.getTime()) / (1000 * 3600 * 24);
         installedDays = Math.floor(installedDays);
         M.toast({
             html: `<a href="https://www.brandoncathcart.com/flask" style="color:white">You've been using FLASK free for ${installedDays} days now. Consider supporting development by going Pro! <i class="material-icons">launch</i></a>`,
             displayLength: 10000
         });
-
         localStorage.setItem('lastProNotification', currentDate.toISOString);
     }
 }

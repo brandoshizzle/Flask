@@ -36,12 +36,15 @@ var pagesNumSounds = 0;
 var reloadSound = false;
 let userFilePath;
 let proLicense;
+let licenseInfo;
 
 /* Set up program */
 $(document).ready(function() {
     buildViews();
     loadPlugins();
     loadWaveformHandles();
+    license.getLocalLicenseInfo();
+    proLicense = license.doTheyHavePro();
     const lastLoadedShow = localStorage.getItem('lastOpenShow');
     if (lastLoadedShow) {
         loadShow(lastLoadedShow);
@@ -59,28 +62,23 @@ $(document).ready(function() {
         localStorage.setItem('installDate', now.toISOString());
         $('#first-install-modal').modal('open');
     }
-    license.getLocalLicenseInfo();
-    proLicense = license.doTheyHavePro();
     if (!proLicense) {
         pages.disableExtraPages();
         $('#playlist-autoplay').attr('disabled', 'disabled');
     } else {
         // Copied code from doTheyHavePro but omit part about legacy
         // Change button on sidenav to less obnoxious one
-        const licenseString = localStorage.getItem('licenseInfo');
-        if (licenseString !== null) {
-            licenseInfo = JSON.parse(licenseString);
-            if (licenseInfo.key !== null) {
-                if (document.querySelector('.btn-pro')) {
-                    let proBtn = document.querySelector('.btn-pro');
-                    let proBtnText = document.getElementById('btn-pro-text');
-                    let proBtnIcon = document.querySelector('.btn-pro i');
-                    proBtnIcon.classList.remove('upgrade-icon');
-                    proBtn.className = '';
-                    proBtnText.innerHTML = 'License Info';
-                }
+        if (licenseInfo.key !== null) {
+            if (document.querySelector('.btn-pro')) {
+                let proBtn = document.querySelector('.btn-pro');
+                let proBtnText = document.getElementById('btn-pro-text');
+                let proBtnIcon = document.querySelector('.btn-pro i');
+                proBtnIcon.classList.remove('upgrade-icon');
+                proBtn.className = '';
+                proBtnText.innerHTML = 'License Info';
             }
         }
+
         pages.enableExtraPages();
         $('#playlist-autoplay').attr('disabled', false);
     }
@@ -328,7 +326,8 @@ function loadShow(pathToFile) {
     let showName = pathToFile.split('\\').pop();
     showName = showName.substr(0, showName.length - 6);
     let freeOrPro = proLicense || showInfo.settingsInfo.utility.legacy ? 'Pro' : 'Free';
-    $('title').text(`Flask v${pjson.version} ${freeOrPro} - ${showName}`); // Add the version number to the title
+    let trial = freeOrPro == 'Pro' && licenseInfo.key == null ? '(Trial)' : '';
+    $('title').text(`Flask v${pjson.version} ${freeOrPro} ${trial} - ${showName}`); // Add the version number to the title
     if (freeOrPro === 'Free') {
         pages.disableExtraPages();
         $('#playlist-autoplay').attr('disabled', 'disabled');
