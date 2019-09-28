@@ -2,6 +2,7 @@ const dialog = require('electron').remote.dialog;
 const app = require('electron').remote.app;
 const shell = require('electron').shell;
 const jetpack = require('fs-jetpack');
+require('dotenv').config();
 
 const clock = require('./scripts/clock.js');
 const colors = require('./scripts/colors');
@@ -85,7 +86,7 @@ $(document).ready(function() {
     console.log('Do you have a pro license?', proLicense);
 
     // Set production settings for updating and errors
-    if (process.env.DEV === false) {
+    if (process.env.DEV === 'false') {
         update.checkForUpdate();
         window.onerror = function(msg, url, line, col, error) {
             var extra = !col ? '' : '\ncolumn: ' + col;

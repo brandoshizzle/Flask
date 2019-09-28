@@ -2,7 +2,6 @@
 const electron = require('electron');
 const { app, BrowserWindow, dialog } = electron;
 const Splashscreen = require('@trodi/electron-splashscreen');
-//var client = require('electron-connect').client;
 
 app.on('ready', function() {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;

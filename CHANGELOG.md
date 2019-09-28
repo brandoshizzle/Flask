@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Splash screen
 -   Edit icon next to sound/page names
 -   Import REACTion and Flask v0.X.X projects
+-   Flask Pro active for imported legacy projects
+-   14-day free trial of Flask Pro
 
 ### Changed
 
