@@ -47,11 +47,18 @@ $(document).ready(function() {
         loadShow(lastLoadedShow);
     } else {
         $('#loadedContainer').hide();
+        var elem = document.querySelectorAll('#startup-modal');
+        var instance = M.Modal.init(elem, { dismissible: false });
         $('#startup-modal').modal('open');
     }
     events.setKeyEvents();
     clock.startClock();
 
+    if (localStorage.getItem('installDate') == undefined) {
+        const now = new Date();
+        localStorage.setItem('installDate', now.toISOString());
+        $('#first-install-modal').modal('open');
+    }
     license.getLocalLicenseInfo();
     proLicense = license.doTheyHavePro();
     if (!proLicense) {
@@ -100,10 +107,6 @@ $(document).ready(function() {
         };
     }
 
-    if (localStorage.getItem('installDate') == undefined) {
-        const now = new Date();
-        localStorage.setItem('installDate', now.toISOString());
-    }
     if (!proLicense) {
         license.weekPurchaseToast();
     }
