@@ -58,16 +58,24 @@ $(document).ready(function() {
         pages.disableExtraPages();
         $('#playlist-autoplay').attr('disabled', 'disabled');
     } else {
+        // Copied code from doTheyHavePro but omit part about legacy
+        // Change button on sidenav to less obnoxious one
+        const licenseString = localStorage.getItem('licenseInfo');
+        if (licenseString !== null) {
+            licenseInfo = JSON.parse(licenseString);
+            if (licenseInfo.key !== null) {
+                if (document.querySelector('.btn-pro')) {
+                    let proBtn = document.querySelector('.btn-pro');
+                    let proBtnText = document.getElementById('btn-pro-text');
+                    let proBtnIcon = document.querySelector('.btn-pro i');
+                    proBtnIcon.classList.remove('upgrade-icon');
+                    proBtn.className = '';
+                    proBtnText.innerHTML = 'License Info';
+                }
+            }
+        }
         pages.enableExtraPages();
         $('#playlist-autoplay').attr('disabled', false);
-        // if (document.querySelector('.btn-pro')) {
-        //     let proBtn = document.querySelector('.btn-pro');
-        //     let proBtnText = document.getElementById('btn-pro-text');
-        //     let proBtnIcon = document.querySelector('.btn-pro i');
-        //     proBtnIcon.classList.remove('upgrade-icon');
-        //     proBtn.className = '';
-        //     proBtnText.innerHTML = 'License Info';
-        // }
     }
     console.log('Do you have a pro license?', proLicense);
 
