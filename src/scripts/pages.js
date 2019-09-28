@@ -157,9 +157,19 @@ function disableExtraPages() {
     });
 }
 
+function enableExtraPages() {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        if (tab.children[0].id !== 'page1') {
+            tab.classList.remove('disabled');
+        }
+    });
+}
+
 module.exports = {
     registerKeyInfos: registerKeyInfos,
     disableExtraPages: disableExtraPages,
+    enableExtraPages: enableExtraPages,
     ensurePageExists: ensurePageExists,
     switchPage: switchPage,
     loadNames: loadNames,

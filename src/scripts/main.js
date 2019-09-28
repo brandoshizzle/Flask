@@ -57,6 +57,17 @@ $(document).ready(function() {
     if (!proLicense) {
         pages.disableExtraPages();
         $('#playlist-autoplay').attr('disabled', 'disabled');
+    } else {
+        pages.enableExtraPages();
+        $('#playlist-autoplay').attr('disabled', false);
+        // if (document.querySelector('.btn-pro')) {
+        //     let proBtn = document.querySelector('.btn-pro');
+        //     let proBtnText = document.getElementById('btn-pro-text');
+        //     let proBtnIcon = document.querySelector('.btn-pro i');
+        //     proBtnIcon.classList.remove('upgrade-icon');
+        //     proBtn.className = '';
+        //     proBtnText.innerHTML = 'License Info';
+        // }
     }
     console.log('Do you have a pro license?', proLicense);
 
@@ -114,7 +125,8 @@ function loadPlugins() {
     });
     // Initialize all modals
     $('.modal').modal({
-        opacity: 0.7
+        opacity: 0.7,
+        inDuration: 500
     });
     $('#settings-modal').modal({
         onCloseStart: () => {
@@ -296,8 +308,24 @@ function loadShow(pathToFile) {
     showInfo = JSON.parse(jetpack.read(pathToFile));
     let showName = pathToFile.split('\\').pop();
     showName = showName.substr(0, showName.length - 6);
-    let freeOrPro = license.doTheyHavePro() ? 'Pro' : 'Free';
+    let freeOrPro = license.doTheyHavePro() || showInfo.settingsInfo.utility.legacy ? 'Pro' : 'Free';
     $('title').text(`Flask v${pjson.version} ${freeOrPro} - ${showName}`); // Add the version number to the title
+    console.log(freeOrPro);
+    if (freeOrPro === 'Free') {
+        pages.disableExtraPages();
+        $('#playlist-autoplay').attr('disabled', 'disabled');
+    } else {
+        pages.enableExtraPages();
+        $('#playlist-autoplay').attr('disabled', false);
+        // if (document.querySelector('.btn-pro')) {
+        //     let proBtn = document.querySelector('.btn-pro');
+        //     let proBtnText = document.getElementById('btn-pro-text');
+        //     let proBtnIcon = document.querySelector('.btn-pro i');
+        //     proBtnIcon.classList.remove('upgrade-icon');
+        //     proBtn.className = '';
+        //     proBtnText.innerHTML = 'License Info';
+        // }
+    }
 
     console.log(pathToFile);
     sounds.resetLoadingBar();

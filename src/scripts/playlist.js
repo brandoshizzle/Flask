@@ -197,7 +197,8 @@ function shuffle() {
 }
 
 function autoplayCheck() {
-    if (!proLicense) {
+    var attr = $('#playlist-autoplay').attr('disabled');
+    if (typeof attr !== typeof undefined && attr !== false) {
         M.toast({
             html:
 				'<a href="https://www.brandoncathcart.com/flask" style="color:white">Buy Flask Pro to use autoplay! <i class="material-icons">launch</i></a>'

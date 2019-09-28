@@ -27,6 +27,13 @@ function getLocalLicenseInfo() {
 
 function doTheyHavePro() {
     const licenseString = localStorage.getItem('licenseInfo');
+    // If they have a legacy project open, go pro
+    console.log(settingsInfo);
+    if (settingsInfo.hasOwnProperty('utility')) {
+        if (settingsInfo.utility.legacy) {
+            return true;
+        }
+    }
     // Only parse it if it exists!
     if (licenseString !== null) {
         licenseInfo = JSON.parse(licenseString);
@@ -37,6 +44,7 @@ function doTheyHavePro() {
     if (licenseInfo.key === null) {
         return false;
     }
+
     return true;
 }
 

@@ -35,7 +35,8 @@ var defaults = {
             fadeOutTime: 1500
         },
         utility: {
-            pVersion: '0.1.0'
+            pVersion: '0.1.0',
+            legacy: false
         }
     },
     pageInfo: {
@@ -201,9 +202,9 @@ function saveShow() {
 
 function importLegacy(version) {
     if (version == undefined) {
-        $('#settings-modal').modal('open');
-        view.showSettingsSection(document.getElementById('utility-menu-option'), 'settings-utilities');
         $('#startup-modal').modal('close');
+        view.showSettingsSection(document.getElementById('utility-menu-option'), 'settings-utilities');
+        $('#settings-modal').modal('open');
         return;
     }
     let userData = app.getPath('userData');
@@ -223,6 +224,7 @@ function importLegacy(version) {
         pagesInfo = jetpack.read(pagesInfoPath, 'json');
         playlistInfo = jetpack.read(playlistInfoPath, 'json');
         settingsInfo = jetpack.read(settingsPath, 'json');
+        settingsInfo.utility.legacy = true;
     } else {
         M.toast({
             html: 'At least one essential Legacy file is missing. Contact developer for help!',
