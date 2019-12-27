@@ -7,7 +7,7 @@ Sound for Improv and Theatre
 ## Latest Release
 Latest Stable Release: [v1.0.0-rc](https://github.com/brandoshizzle/REACTion/releases/latest)
 
-[Download for Windows and OSX](https://brandoshizzle.github.io/REACTion/#download)
+[Download for Windows and OSX](https://www.brandoncathcart.com/flask/#download)
 
 
 ## Basic Instructions
