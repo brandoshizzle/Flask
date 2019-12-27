@@ -2,7 +2,7 @@
 
 Sound for Improv and Theatre
 
-![REACTion screenshot](https://www.brandoncathcart.com/flask/img/Screenshot.JPG "Flask screenshot")
+![Flask screenshot](https://www.brandoncathcart.com/flask/img/Screenshot.JPG "Flask screenshot")
 
 ## Latest Release
 Latest Stable Release: [v1.0.0-rc](https://github.com/brandoshizzle/REACTion/releases/latest)
@@ -27,7 +27,7 @@ See full Changelog [here](CHANGELOG.md)
 
 ## 3rd party libraries
 
-REACTion is lovingly built with these amazing projects:
+Flask is lovingly built with these amazing projects:
 * [Electron](http://electron.atom.io/)
 * [Materialize](http://materializecss.com/)
 * [Howler](https://github.com/goldfire/howler.js)
