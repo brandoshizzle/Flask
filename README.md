@@ -1,11 +1,11 @@
 # <img src="src/assets/logo.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" height="30" />Flask
 
-Making improvising sound easy.
+Sound for Improv and Theatre
 
-![REACTion screenshot](src/assets/screenshot.png "REACTion screenshot")
+![REACTion screenshot](https://www.brandoncathcart.com/flask/img/Screenshot.JPG "Flask screenshot")
 
 ## Latest Release
-Latest Stable Release: [v0.5.0](https://github.com/brandoshizzle/REACTion/releases/latest)
+Latest Stable Release: [v1.0.0-rc](https://github.com/brandoshizzle/REACTion/releases/latest)
 
 [Download for Windows and OSX](https://brandoshizzle.github.io/REACTion/#download)
 
@@ -15,9 +15,9 @@ Latest Stable Release: [v0.5.0](https://github.com/brandoshizzle/REACTion/releas
 * Drag sounds onto a key or the playlist to add it to the program
 * Press the key to play the sound, press it again to stop
 * Press space to play the first item of the playlist (highlighted in yellow)
-* Right click on a sound to bring up its settings
+* Right-click on a sound to bring up its settings
 * Click on a sound to load its waveform
-* Hold CTRL and drag the edge of the waveform to adjust start/end points
+* Drag the edge of the waveform to adjust start/end points
 * Drag playlist items to reorder, CTRL+C/X and CTRL+V to move sounds around on the keyboards
 * Press DELETE when a song is selected to delete it
 * F1-F8 to switch pages
