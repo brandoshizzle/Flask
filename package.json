@@ -48,7 +48,7 @@
 		"gulp-connect": "latest",
 		"gulp-sass": "latest",
 		"gulp-util": "^3.0.8",
-		"npm": "^6.13.4",
+		"npm": "^6.14.6",
 		"prettier": "^1.17.1"
 	},
 	"dependencies": {
